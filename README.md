@@ -1,4 +1,4 @@
-# Outland-Area
+# Outland Area
 Turn-based game.
 
 
