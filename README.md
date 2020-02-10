@@ -10,8 +10,18 @@ Turn-based game.
 
 Буду рад любой помощи, но справлюсь и сам :)
 
-__Contact__ 
+***
+
+__Stream__
+[Twitch](https://www.twitch.tv/outlandarea)
+
+
+__Donate__
+[PayPal](https://www.paypal.me/OutlandArea)
+
+
+__Contact__
 <Outland.Area@gmail.com>
 
-__Donate__ 
-[PayPal](https://www.paypal.me/OutlandArea)
+
+***
