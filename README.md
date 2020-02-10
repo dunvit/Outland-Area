@@ -10,4 +10,8 @@ Turn-based game.
 
 Буду рад любой помощи, но справлюсь и сам :)
 
-Contact <Outland.Area@gmail.com>
+__Contact__ 
+<Outland.Area@gmail.com>
+
+__Donate__ 
+[PayPal](https://www.paypal.me/OutlandArea)
