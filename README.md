@@ -12,16 +12,25 @@ __Turn-based game.__
 
 ***
 
-__Stream__
+__Stream__<br>
 [Twitch](https://www.twitch.tv/outlandarea)
 
 
-__Donate__
+__Donate__<br>
 [PayPal](https://www.paypal.me/OutlandArea)
 
 
-__Contact__
+__Contact__<br>
 <Outland.Area@gmail.com>
 
 
 ***
+
+__Current release__<br>
+None
+
+__Current release date__<br>
+Never
+
+__Current release changes__<br>
+None
