@@ -9,3 +9,5 @@ Turn-based game.
 ![New Edem](https://web.ccpgamescdn.com/newssystem/media/73606/1/MARSHAL_FIREWATCH.jpg)
 
 Буду рад любой помощи, но справлюсь и сам :)
+
+Contact <Outland.Area@gmail.com>
