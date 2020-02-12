@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaLogic.Configuration;
+using System.Drawing;
 
 namespace Tests.Configuration
 {
@@ -18,7 +19,11 @@ namespace Tests.Configuration
             settings.WriteSettingsToLog();
 
             Assert.AreNotEqual(version, string.Empty);
+
+            Assert.AreEqual(new Size(1920, 1080), settings.WindowSize);
         }
+
+
 
         private void Initialization()
         {

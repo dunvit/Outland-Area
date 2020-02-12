@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\SettingsTests.cs" />
@@ -61,9 +62,7 @@
     <None Include="Configuration\Logs.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configuration\OutlandArea.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Configuration\OutlandArea.config" />
     <None Include="Configuration\Version.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

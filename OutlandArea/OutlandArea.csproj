@@ -93,6 +93,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
+      <Project>{34984709-AF29-46A5-A39D-EC33B3A6A3FB}</Project>
+      <Name>OutlandAreaLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

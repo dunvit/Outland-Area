@@ -16,6 +16,16 @@ namespace OutlandAreaLogic.Configuration
             return defaultValue;
         }
 
+        public static int GetConfigOptionalIntValue(string keyName, string section, int defaultValue = 0)
+        {
+            if (string.IsNullOrWhiteSpace(keyName)) return defaultValue;
+
+            if (!(ConfigurationManager.GetSection(section) is NameValueCollection sectionCollection))
+                return defaultValue;
+
+            return Convert.ToInt32(sectionCollection[keyName]);
+        }
+
         public static bool GetConfigOptionalBoolValue(string keyName, bool defaultValue = false)
         {
             if (string.IsNullOrWhiteSpace(keyName)) return defaultValue;

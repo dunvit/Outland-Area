@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using System.Drawing;
+using log4net;
 
 namespace OutlandAreaLogic.Configuration
 {
@@ -8,10 +9,21 @@ namespace OutlandAreaLogic.Configuration
 
         public string Version => ConfigurationTools.GetConfigFromSectionOptionalStringValue("Current", "Version");
 
+        public Size WindowSize { get; set; } 
+
+        public Settings()
+        {
+            WindowSize = new Size(
+                ConfigurationTools.GetConfigOptionalIntValue("ClientWidth", "Settings", 1024), 
+                ConfigurationTools.GetConfigOptionalIntValue("ClientHeight", "Settings", 768)
+                );
+        }
+
         public void WriteSettingsToLog()
         {
             Logger.Debug("--------------------------------------------------------------");
             Logger.Debug("Version:              " + Version);
+            Logger.Debug("WindowSize:           " + WindowSize);
             Logger.Debug("--------------------------------------------------------------");
         }
     }
