@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.Configuration;
 
-namespace OutlandArea.Configuration
+namespace OutlandAreaLogic.Configuration
 {
     public static class ConfigurationTools
     {

@@ -1,6 +1,6 @@
 ﻿using log4net;
 
-namespace OutlandArea.Configuration
+namespace OutlandAreaLogic.Configuration
 {
     public class Settings
     {

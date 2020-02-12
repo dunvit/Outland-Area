@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OutlandAreaLogic.Configuration;
 
-namespace OutlandArea.Configuration.Tests
+namespace Tests.Configuration
 {
     [TestClass()]
     public class SettingsTests
