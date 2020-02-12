@@ -20,7 +20,7 @@ namespace OutlandArea
             // Load global application settings from configuration files
             Global.ApplicationSettings.WriteSettingsToLog();
 
-            var mainForm = new Form1{Size = Global.ApplicationSettings.WindowSize};
+            var mainForm = new WindowMain{Size = Global.ApplicationSettings.WindowSize};
 
             Application.Run(mainForm);
         }

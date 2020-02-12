@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace OutlandArea
+namespace OutlandArea.UI.Screens
 {
-    public partial class Form1 : Form
+    public partial class WindowSettings : Form
     {
-        public Form1()
+        public WindowSettings()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Close();
+            Application.Exit();
         }
     }
 }
