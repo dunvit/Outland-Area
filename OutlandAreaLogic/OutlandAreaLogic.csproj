@@ -34,6 +34,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -49,11 +52,16 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\ConfigurationTools.cs" />
     <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="DialogSystems\DialogAligment.cs" />
+    <Compile Include="DialogSystems\Dialogs.cs" />
+    <Compile Include="DialogSystems\Schemes\DialogRowScheme.cs" />
+    <Compile Include="DialogSystems\Schemes\DialogExitScheme.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

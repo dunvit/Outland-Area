@@ -10,7 +10,7 @@ namespace Tests.Configuration
         [TestMethod()]
         public void LoadSettingsTest()
         {
-            Initialization();
+            EnvironmentGlobal.Initialization();
 
             var settings = new Settings();
 
@@ -25,9 +25,6 @@ namespace Tests.Configuration
 
 
 
-        private void Initialization()
-        {
-            log4net.Config.XmlConfigurator.Configure();
-        }
+       
     }
 }

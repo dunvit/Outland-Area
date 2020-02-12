@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using OutlandAreaLogic;
 
 namespace OutlandArea
 {
@@ -14,8 +15,8 @@ namespace OutlandArea
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Log system initialization
-            log4net.Config.XmlConfigurator.Configure();
+            // Start initialization all systems: Logs, Dialogs...
+            Global.Initialization();
 
             // Load global application settings from configuration files
             Global.ApplicationSettings.WriteSettingsToLog();
