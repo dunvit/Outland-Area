@@ -1,4 +1,5 @@
-﻿using OutlandAreaLogic.Configuration;
+﻿using OutlandAreaLogic.CharacterSystem;
+using OutlandAreaLogic.Configuration;
 using OutlandAreaLogic.DialogSystems;
 
 namespace OutlandAreaLogic
@@ -8,6 +9,8 @@ namespace OutlandAreaLogic
         public static Settings ApplicationSettings = new Settings();
 
         public static Dialogs Dialogs = new Dialogs();
+
+        public static Characters Characters = new Characters();
 
         public static void Initialization()
         {

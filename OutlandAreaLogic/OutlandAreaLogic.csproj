@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterSystem\Character.cs" />
+    <Compile Include="CharacterSystem\Characters.cs" />
     <Compile Include="CharacterSystem\Schemes\CharacterScheme.cs" />
     <Compile Include="Configuration\ConfigurationTools.cs" />
     <Compile Include="Configuration\Settings.cs" />
