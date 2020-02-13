@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using log4net;
 using OutlandAreaLogic.DialogSystems;
 
@@ -14,13 +15,10 @@ namespace OutlandAreaLogic.CharacterSystem
         {
             Log.Info($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Get character: {characterId}");
 
-            foreach (var character in List)
+            foreach (var character in List.Where(character => character.Id == characterId))
             {
-                if (character.Id == characterId)
-                {
-                    Log.Info($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Character found: {characterId}");
-                    return character;
-                }
+                Log.Info($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Character found: {characterId}");
+                return character;
             }
 
             var newCharacter = new Character(characterId);
