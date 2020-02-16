@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OutlandAreaLogic;
 
 namespace Prototypes
 {
@@ -16,7 +17,10 @@ namespace Prototypes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
+
+            Application.Run(mainForm);
         }
     }
 }
