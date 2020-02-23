@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using OutlandAreaLogic;
 
@@ -17,6 +14,9 @@ namespace Prototypes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
+            // Start initialization all systems: Logs, Dialogs...
+            Global.Initialization();
 
             var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
 
