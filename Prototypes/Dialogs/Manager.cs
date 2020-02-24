@@ -8,7 +8,7 @@ namespace Prototypes.Dialogs
 
         public void Show(long id)
         {
-            var dialogRow = Global.Dialogs.Get(id);
+            var dialogRow = Global.GameManager.Dialogs.Get(id);
 
             Container.Execute(dialogRow);
         }

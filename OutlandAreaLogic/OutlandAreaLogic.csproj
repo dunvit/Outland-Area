@@ -57,8 +57,10 @@
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="DialogSystems\DialogAligment.cs" />
     <Compile Include="DialogSystems\Dialogs.cs" />
+    <Compile Include="DialogSystems\IDialogWindow.cs" />
     <Compile Include="DialogSystems\Schemes\DialogRowScheme.cs" />
     <Compile Include="DialogSystems\Schemes\DialogExitScheme.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

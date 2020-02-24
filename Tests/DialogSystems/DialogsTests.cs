@@ -13,8 +13,6 @@ namespace Tests.DialogSystems
 
             var dialogs = new Dialogs();
 
-            dialogs.Initialization();
-
             Assert.AreEqual(4, dialogs.List.Count);
         }
     }

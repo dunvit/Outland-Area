@@ -12,13 +12,27 @@ namespace OutlandAreaLogic.DialogSystems
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Dialogs));
 
+        public IDialogWindow Container { get; set; }
+
         public List<DialogRowScheme> List = new List<DialogRowScheme>();
 
-        public List<DialogRowScheme> Initialization()
+        public Dialogs()
+        {
+            Initialization();
+        }
+
+        private List<DialogRowScheme> Initialization()
         {
             ReadDialogsFromDirectory();
 
             return List;
+        }
+
+        public void Show(long id)
+        {
+            var dialogRow = Get(id);
+
+            Container.Execute(dialogRow);
         }
 
         public DialogRowScheme Get(long id)
