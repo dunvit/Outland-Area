@@ -38,13 +38,45 @@ namespace Prototypes
 
         public void Execute(DialogRowScheme dialogRow)
         {
-            var windowSimpleDialog = new WindowSimpleDialog();
+            //panel1
+
+            
+
+            //panel1.Controls.Clear();
+
+            var windowSimpleDialog = new WindowSimpleDialog(_dialogsManager);
 
             windowSimpleDialog.DrawDialogRow(dialogRow);
 
-            windowSimpleDialog.ShowDialog(this);
+            windowSimpleDialog.TopLevel = false;
+            windowSimpleDialog.AutoScroll = true;
 
-            _dialogsManager.Show(windowSimpleDialog.ExitId);
+            panel1.Controls.Add(windowSimpleDialog);
+            windowSimpleDialog.Show();
+
+            Control controlForRemove = null;
+
+            if (panel1.Controls.Count == 2)
+            {
+                foreach (Control panel1Control in panel1.Controls)
+                {
+                    if (controlForRemove == null)
+                    {
+                        controlForRemove = panel1Control;
+                    }
+                }
+
+                if (controlForRemove != null)
+                {
+                    panel1.Controls.Remove(controlForRemove);
+                }
+            }
+
+            
+
+            //windowSimpleDialog.ShowDialog(this);
+
+                //_dialogsManager.Show(windowSimpleDialog.ExitId);
         }
     }
 

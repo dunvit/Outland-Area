@@ -5,11 +5,15 @@ namespace Prototypes.Dialogs
 {
     public partial class WindowSimpleDialog : Form
     {
+        private readonly Manager _dialogsManager;
+
         public long ExitId { get; set; }
 
-        public WindowSimpleDialog()
+        public WindowSimpleDialog(Manager dialogsManager)
         {
             InitializeComponent();
+
+            _dialogsManager = dialogsManager;
         }
 
         public void DrawDialogRow(DialogRowScheme dialog)
@@ -45,7 +49,7 @@ namespace Prototypes.Dialogs
         {
             if (sender is Button control) ExitId = (long) control.Tag;
 
-            Close();
+            _dialogsManager.Show(ExitId);
         }
     }
 }
