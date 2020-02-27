@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OutlandAreaLogic.DialogSystems;
+﻿using OutlandAreaLogic.DialogSystems;
 
 
 namespace OutlandAreaLogic
@@ -19,5 +14,10 @@ namespace OutlandAreaLogic
             
         }
 
+        private bool HealthCheck()
+        {
+
+            return true;
+        }
     }
 }

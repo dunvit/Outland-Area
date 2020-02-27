@@ -37,6 +37,11 @@ namespace OutlandAreaLogic.DialogSystems
 
         public DialogRowScheme Get(long id)
         {
+            return GetDialogRowSchemeById(id);
+        }
+
+        private DialogRowScheme GetDialogRowSchemeById(long id)
+        {
             foreach (var dialogRowScheme in List.Where(dialogRowScheme => dialogRowScheme.Id == id))
             {
                 return dialogRowScheme;
