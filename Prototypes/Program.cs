@@ -20,8 +20,8 @@ namespace Prototypes
 
 
             
-            //var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
-            var mainForm = new WindowMain();
+            var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
+            //var mainForm = new WindowMain();
 
             Application.Run(mainForm);
         }
