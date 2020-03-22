@@ -42,6 +42,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +55,19 @@
     <Compile Include="CharacterSystem\Character.cs" />
     <Compile Include="CharacterSystem\Characters.cs" />
     <Compile Include="CharacterSystem\Schemes\CharacterScheme.cs" />
+    <Compile Include="Compartments\Cargo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Compartments\Cargo.Designer.cs">
+      <DependentUpon>Cargo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compartments\ICompartment.cs" />
+    <Compile Include="Compartments\Navigation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Compartments\Navigation.Designer.cs">
+      <DependentUpon>Navigation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\ConfigurationTools.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="DialogSystems\DialogAligment.cs" />
@@ -60,6 +75,26 @@
     <Compile Include="DialogSystems\IDialogWindow.cs" />
     <Compile Include="DialogSystems\Schemes\DialogRowScheme.cs" />
     <Compile Include="DialogSystems\Schemes\DialogExitScheme.cs" />
+    <Compile Include="Dialogs\IDialogWindow.cs" />
+    <Compile Include="Dialogs\Manager.cs" />
+    <Compile Include="Dialogs\SimpleDialogCharacter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SimpleDialogCharacter.Designer.cs">
+      <DependentUpon>SimpleDialogCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SimpleDialogRow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SimpleDialogRow.designer.cs">
+      <DependentUpon>SimpleDialogRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WindowSimpleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\WindowSimpleDialog.Designer.cs">
+      <DependentUpon>WindowSimpleDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameManager.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +102,22 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Compartments\Cargo.resx">
+      <DependentUpon>Cargo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compartments\Navigation.resx">
+      <DependentUpon>Navigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SimpleDialogCharacter.resx">
+      <DependentUpon>SimpleDialogCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SimpleDialogRow.resx">
+      <DependentUpon>SimpleDialogRow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\WindowSimpleDialog.resx">
+      <DependentUpon>WindowSimpleDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

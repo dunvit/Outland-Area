@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Engine.Compartments;
+using Engine.Dialogs;
 using OutlandAreaLogic.DialogSystems.Schemes;
-using Prototypes.Dialogs;
 
 namespace Prototypes
 {
@@ -31,7 +32,7 @@ namespace Prototypes
         {
             if (_isWindowActivated == false)
             {
-                _dialogsManager.Show(637066561468000000);
+                //_dialogsManager.ShowDialog(637066561468000000);
                 _isWindowActivated = true;
             }
         }
@@ -77,6 +78,41 @@ namespace Prototypes
             //windowSimpleDialog.ShowDialog(this);
 
                 //_dialogsManager.Show(windowSimpleDialog.ExitId);
+        }
+
+        public void ShowCompartment(UserControl compartment)
+        {
+            panel1.Controls.Add(compartment);
+
+            compartment.Show();
+
+            Control controlForRemove = null;
+
+            if (panel1.Controls.Count == 2)
+            {
+                foreach (Control panel1Control in panel1.Controls)
+                {
+                    if (controlForRemove == null)
+                    {
+                        controlForRemove = panel1Control;
+                    }
+                }
+
+                if (controlForRemove != null)
+                {
+                    panel1.Controls.Remove(controlForRemove);
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _dialogsManager.ShowCompartment("Navigation");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _dialogsManager.ShowCompartment("Cargo");
         }
     }
 

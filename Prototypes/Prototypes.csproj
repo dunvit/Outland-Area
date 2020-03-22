@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D8711B4E-C245-4388-B33F-A245CBAEE5F8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Prototypes</RootNamespace>
+    <RootNamespace>Engine</RootNamespace>
     <AssemblyName>Prototypes</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compartments\Cargo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Compartments\Cargo.Designer.cs">
+      <DependentUpon>Cargo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compartments\ICompartment.cs" />
+    <Compile Include="Compartments\Navigation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Compartments\Navigation.Designer.cs">
+      <DependentUpon>Navigation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\IDialogWindow.cs" />
     <Compile Include="Dialogs\Manager.cs" />
     <Compile Include="Dialogs\SimpleDialogCharacter.cs">
@@ -84,6 +97,12 @@
       <DependentUpon>WindowMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\Resize.cs" />
+    <EmbeddedResource Include="Compartments\Cargo.resx">
+      <DependentUpon>Cargo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compartments\Navigation.resx">
+      <DependentUpon>Navigation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SimpleDialogCharacter.resx">
       <DependentUpon>SimpleDialogCharacter.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +123,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>

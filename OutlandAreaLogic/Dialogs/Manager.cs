@@ -1,6 +1,7 @@
-﻿using OutlandAreaLogic;
+﻿using Engine.Dialogs;
+using OutlandAreaLogic;
 
-namespace Engine.Dialogs
+namespace Engine
 {
     public class Manager
     {
