@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Engine;
 using OutlandAreaLogic;
 
 namespace Prototypes
@@ -20,8 +21,8 @@ namespace Prototypes
 
 
             
-            var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
-            //var mainForm = new WindowMain();
+            //var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
+            var mainForm = new WindowResizeTests();
 
             Application.Run(mainForm);
         }

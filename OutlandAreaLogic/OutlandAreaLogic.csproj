@@ -70,12 +70,18 @@
     </Compile>
     <Compile Include="Configuration\ConfigurationTools.cs" />
     <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="Controls\OaButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\OaButton.Designer.cs">
+      <DependentUpon>OaButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogSystems\DialogAligment.cs" />
     <Compile Include="DialogSystems\Dialogs.cs" />
     <Compile Include="DialogSystems\IDialogWindow.cs" />
     <Compile Include="DialogSystems\Schemes\DialogRowScheme.cs" />
     <Compile Include="DialogSystems\Schemes\DialogExitScheme.cs" />
-    <Compile Include="Dialogs\IDialogWindow.cs" />
+    <Compile Include="Compartments\ICompartmentWindow.cs" />
     <Compile Include="Dialogs\Manager.cs" />
     <Compile Include="Dialogs\SimpleDialogCharacter.cs">
       <SubType>UserControl</SubType>
@@ -97,6 +103,9 @@
     </Compile>
     <Compile Include="GameManager.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Items\IItem.cs" />
+    <Compile Include="Items\Items.cs" />
+    <Compile Include="Items\Types\BaseItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +118,9 @@
     <EmbeddedResource Include="Compartments\Navigation.resx">
       <DependentUpon>Navigation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OaButton.resx">
+      <DependentUpon>OaButton.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SimpleDialogCharacter.resx">
       <DependentUpon>SimpleDialogCharacter.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,5 +131,6 @@
       <DependentUpon>WindowSimpleDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,11 @@
 ﻿using OutlandAreaLogic.CharacterSystem;
 using OutlandAreaLogic.Configuration;
-using OutlandAreaLogic.DialogSystems;
 
 namespace OutlandAreaLogic
 {
     public class Global
     {
         public static Settings ApplicationSettings = new Settings();
-
-        
 
         public static Characters Characters = new Characters();
 

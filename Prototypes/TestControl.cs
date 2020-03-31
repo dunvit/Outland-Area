@@ -8,16 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Engine.Compartments
+namespace Engine
 {
-    public partial class Cargo : UserControl, ICompartment
+    public partial class TestControl : UserControl
     {
-        public Cargo()
+        public TestControl()
         {
             InitializeComponent();
-
-            Name = "Cargo";
-
         }
     }
 }

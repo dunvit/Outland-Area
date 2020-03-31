@@ -1,14 +1,17 @@
-﻿using Engine.Dialogs;
+﻿using Engine.Compartments;
+using Engine.Dialogs;
 using OutlandAreaLogic;
+using System.Windows.Forms;
+using OutlandAreaLogic.Compartments;
 
 namespace Engine
 {
     public class Manager
     {
-        public IDialogWindow Container { get; set; }
+        public ICompartmentWindow Container { get; set; }
 
-        readonly Compartments.Navigation CompartmentNavigation = new Compartments.Navigation();
-        readonly Compartments.Cargo CompartmentCargo = new Compartments.Cargo();
+        readonly ICompartment _compartmentNavigation = new Navigation();
+        readonly ICompartment _compartmentCargo = new Cargo();
 
         public void ShowDialog(long id)
         {
@@ -22,11 +25,11 @@ namespace Engine
             switch (name)
             {
                 case "Navigation":
-                    Container.ShowCompartment(CompartmentNavigation);
+                    Container.ShowCompartment((UserControl)_compartmentNavigation);
                     break;
 
                 case "Cargo":
-                    Container.ShowCompartment(CompartmentCargo);
+                    Container.ShowCompartment((UserControl)_compartmentCargo);
                     break;
 
                 default:

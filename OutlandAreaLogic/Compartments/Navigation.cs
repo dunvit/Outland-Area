@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using OutlandAreaLogic.Compartments;
 
 namespace Engine.Compartments
 {
@@ -9,6 +10,11 @@ namespace Engine.Compartments
             InitializeComponent();
 
             Name = "Navigation";
+        }
+
+        public void Activate()
+        {
+            
         }
     }
 }

@@ -9,6 +9,8 @@ namespace OutlandAreaLogic
 
         public Dialogs Dialogs = new Dialogs();
 
+        public Items.Items Items = new Items.Items();
+
         public GameManager()
         {
             

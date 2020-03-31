@@ -2,10 +2,11 @@
 using Engine.Dialogs;
 using OutlandAreaLogic.DialogSystems.Schemes;
 using System.Windows.Forms;
+using OutlandAreaLogic.Compartments;
 
 namespace OutlandArea
 {
-    public partial class WindowMain : Form, IDialogWindow
+    public partial class WindowMain : Form, ICompartmentWindow
     {
         private readonly Manager _manager;
 

@@ -1,6 +1,6 @@
-﻿namespace Engine.Compartments
+﻿namespace OutlandAreaLogic.Controls
 {
-    partial class Navigation
+    partial class OaButton
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,33 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // OaButton
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Navigation";
-            // 
-            // Navigation
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
-            this.Controls.Add(this.label1);
-            this.Name = "Navigation";
-            this.Size = new System.Drawing.Size(733, 528);
+            this.Size = new System.Drawing.Size(211, 69);
+            this.MouseLeave += new System.EventHandler(this.OaButton_MouseLeave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OaButton_MouseMove);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
     }
 }

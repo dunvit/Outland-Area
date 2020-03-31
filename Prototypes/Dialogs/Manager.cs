@@ -6,8 +6,8 @@ namespace Engine.Dialogs
     {
         public IDialogWindow Container { get; set; }
 
-        readonly Compartments.Navigation CompartmentNavigation = new Compartments.Navigation();
-        readonly Compartments.Cargo CompartmentCargo = new Compartments.Cargo();
+        private readonly Compartments.Navigation CompartmentNavigation = new Compartments.Navigation();
+        private readonly Compartments.Cargo CompartmentCargo = new Compartments.Cargo();
 
         public void ShowDialog(long id)
         {

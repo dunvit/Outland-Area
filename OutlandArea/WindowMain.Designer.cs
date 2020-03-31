@@ -37,6 +37,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
@@ -44,7 +45,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(999, 573);
+            this.panel1.Size = new System.Drawing.Size(1536, 864);
             this.panel1.TabIndex = 1;
             // 
             // button3
@@ -72,10 +73,10 @@
             this.crlCompartment.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.crlCompartment.BackColor = System.Drawing.Color.DimGray;
-            this.crlCompartment.Location = new System.Drawing.Point(162, 3);
+            this.crlCompartment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
+            this.crlCompartment.Location = new System.Drawing.Point(180, 3);
             this.crlCompartment.Name = "crlCompartment";
-            this.crlCompartment.Size = new System.Drawing.Size(832, 565);
+            this.crlCompartment.Size = new System.Drawing.Size(1350, 856);
             this.crlCompartment.TabIndex = 0;
             // 
             // WindowMain
@@ -83,7 +84,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(999, 573);
+            this.ClientSize = new System.Drawing.Size(1536, 864);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
