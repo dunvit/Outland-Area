@@ -34,7 +34,9 @@
             this.txtName = new System.Windows.Forms.Label();
             this.imageAvatar = new System.Windows.Forms.PictureBox();
             this.txtRelations = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageAvatar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtRank
@@ -97,6 +99,15 @@
             this.txtRelations.Text = "Дружелюбна";
             this.txtRelations.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(175, 195);
+            this.pictureBox1.TabIndex = 44;
+            this.pictureBox1.TabStop = false;
+            // 
             // SimpleDialogCharacter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -107,10 +118,12 @@
             this.Controls.Add(this.txtCelestialObjectName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.imageAvatar);
+            this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.Name = "SimpleDialogCharacter";
             this.Size = new System.Drawing.Size(175, 198);
             ((System.ComponentModel.ISupportInitialize)(this.imageAvatar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -122,5 +135,6 @@
         private System.Windows.Forms.Label txtName;
         private System.Windows.Forms.PictureBox imageAvatar;
         private System.Windows.Forms.Label txtRelations;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

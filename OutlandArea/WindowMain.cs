@@ -2,11 +2,12 @@
 using Engine.Dialogs;
 using OutlandAreaLogic.DialogSystems.Schemes;
 using System.Windows.Forms;
+using OutlandAreaLogic;
 using OutlandAreaLogic.Compartments;
 
 namespace OutlandArea
 {
-    public partial class WindowMain : Form, ICompartmentWindow
+    public partial class WindowMain : BaseResizeWindowForm, ICompartmentWindow
     {
         private readonly Manager _manager;
 
@@ -15,6 +16,8 @@ namespace OutlandArea
             _manager = new Manager { Container = this };
 
             InitializeComponent();
+
+            Initialization();
         }
 
         public void Execute(DialogRowScheme dialogRow)
@@ -46,6 +49,8 @@ namespace OutlandArea
                     panel1.Controls.Remove(controlForRemove);
                 }
             }
+
+            //Size = Global.ApplicationSettings.WindowSize;
         }
 
         public void ShowCompartment(UserControl compartment)

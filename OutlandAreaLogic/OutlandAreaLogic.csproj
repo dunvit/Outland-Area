@@ -107,6 +107,10 @@
     <Compile Include="Items\Items.cs" />
     <Compile Include="Items\Types\BaseItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\BaseResizibleWindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\WinFormResize.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
