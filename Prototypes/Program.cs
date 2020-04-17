@@ -19,10 +19,11 @@ namespace Prototypes
             // Start initialization all systems: Logs, Dialogs...
             Global.Initialization();
 
+            GlobalPrototype.Manager.Activate();
 
-            
             //var mainForm = new Form1 { Size = Global.ApplicationSettings.WindowSize };
-            var mainForm = new WindowResizeTests();
+            //var mainForm = new WindowResizeTests();
+            var mainForm = new WindowMain();
 
             Application.Run(mainForm);
         }

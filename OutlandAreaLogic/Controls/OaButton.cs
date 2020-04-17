@@ -19,6 +19,14 @@ namespace OutlandAreaLogic.Controls
             Size = new Size(117, 23);
             //Text = "button";
             UseVisualStyleBackColor = false;
+
+            
+        }
+
+        public sealed override Color BackColor
+        {
+            get { return base.BackColor; }
+            set { base.BackColor = value; }
         }
 
         private void OaButton_MouseLeave(object sender, System.EventArgs e)
@@ -28,6 +36,7 @@ namespace OutlandAreaLogic.Controls
 
         private void OaButton_MouseMove(object sender, MouseEventArgs e)
         {
+            Cursor.Current = Cursors.Hand;
             ForeColor = Color.FromArgb(223, 223, 223);
         }
     }

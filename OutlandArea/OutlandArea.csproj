@@ -50,6 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScreenMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenMenu.Designer.cs">
+      <DependentUpon>ScreenMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenStartMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScreenStartMenu.Designer.cs">
+      <DependentUpon>ScreenStartMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +76,12 @@
     <Compile Include="UI\Screens\WindowSettings.Designer.cs">
       <DependentUpon>WindowSettings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ScreenMenu.resx">
+      <DependentUpon>ScreenMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenStartMenu.resx">
+      <DependentUpon>ScreenStartMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
     </EmbeddedResource>
