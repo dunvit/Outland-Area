@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="GameManager.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="IScreenCommands.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\Items.cs" />
     <Compile Include="Items\Types\BaseItem.cs" />

@@ -16,6 +16,8 @@ namespace OutlandAreaLogic.Tools
             Form = form; //the calling form
             FormSize = form.ClientSize; //Save initial form size
             FontSize = form.Font.Size; //Font size
+
+            _get_initial_size();
         }
 
         private float FontSize { get; set; }

@@ -21,9 +21,13 @@ namespace OutlandArea
             // Load global application settings from configuration files
             Global.ApplicationSettings.WriteSettingsToLog();
 
-            var mainForm = new ScreenStartMenu{ Size = Global.ApplicationSettings.WindowSize};
+            var screenMain = new ScreenStartMenu { Size = Global.ApplicationSettings.WindowSize };
 
-            Application.Run(mainForm);
+            // Add screen as interface screen commands - IScreenCommands
+            Global.GameManager.ScreenMain = screenMain;
+
+            // Load form as window forms
+            Application.Run(screenMain);
         }
     }
 }

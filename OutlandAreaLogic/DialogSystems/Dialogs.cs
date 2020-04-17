@@ -98,6 +98,7 @@ namespace OutlandAreaLogic.DialogSystems
                         Align = dialogRowScheme.Align,
                         Id = dialogRowScheme.Id,
                         Message = dialogRowScheme.Message,
+                        Background = dialogRowScheme.Background,
                         Exits = dialogRowScheme.Exits,
                         CharacterId = dialogRowScheme.CharacterId
                     });
