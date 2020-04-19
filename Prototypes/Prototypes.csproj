@@ -91,6 +91,12 @@
     <Compile Include="ScreenB.Designer.cs">
       <DependentUpon>ScreenB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\BattleScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screens\BattleScreen.Designer.cs">
+      <DependentUpon>BattleScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScreenB.resx">
       <DependentUpon>ScreenB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\BattleScreen.resx">
+      <DependentUpon>BattleScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestControl.resx">
       <DependentUpon>TestControl.cs</DependentUpon>
@@ -214,5 +223,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
