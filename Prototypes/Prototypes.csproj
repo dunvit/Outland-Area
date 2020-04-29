@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.5.12.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -97,11 +100,53 @@
     <Compile Include="Screens\BattleScreen.Designer.cs">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenNavigation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\ScreenNavigation.Designer.cs">
+      <DependentUpon>ScreenNavigation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\WindowBattleContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screens\WindowBattleContainer.Designer.cs">
+      <DependentUpon>WindowBattleContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\WindowCompartmentNavigation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screens\WindowCompartmentNavigation.Designer.cs">
+      <DependentUpon>WindowCompartmentNavigation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\WindowCompartmentTargeting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screens\WindowCompartmentTargeting.Designer.cs">
+      <DependentUpon>WindowCompartmentTargeting.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TestControl.Designer.cs">
       <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HexogonalButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HexogonalButton.Designer.cs">
+      <DependentUpon>HexogonalButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OaSmallPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\OaSmallPanel.Designer.cs">
+      <DependentUpon>OaSmallPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TurnStep.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TurnStep.Designer.cs">
+      <DependentUpon>TurnStep.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
@@ -147,8 +192,29 @@
     <EmbeddedResource Include="Screens\BattleScreen.resx">
       <DependentUpon>BattleScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Screens\ScreenNavigation.resx">
+      <DependentUpon>ScreenNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\WindowBattleContainer.resx">
+      <DependentUpon>WindowBattleContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\WindowCompartmentNavigation.resx">
+      <DependentUpon>WindowCompartmentNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\WindowCompartmentTargeting.resx">
+      <DependentUpon>WindowCompartmentTargeting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestControl.resx">
       <DependentUpon>TestControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HexogonalButton.resx">
+      <DependentUpon>HexogonalButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\OaSmallPanel.resx">
+      <DependentUpon>OaSmallPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TurnStep.resx">
+      <DependentUpon>TurnStep.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
@@ -222,6 +288,26 @@
     <Content Include="Data\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\ACTION_03.png" />
+    <None Include="Resources\Toolbar_01.png" />
+    <None Include="Resources\Frame_Box_02.png" />
+    <None Include="Resources\Character_0000000011.png" />
+    <None Include="Resources\Character_000000001.png" />
+    <None Include="Resources\Frame_Box_01.png" />
+    <None Include="Resources\BG_ECM.png" />
+    <None Include="Resources\BG_SENSOR.png" />
+    <None Include="Resources\BG_DRONES.png" />
+    <None Include="Resources\BG_WEAPON.png" />
+    <None Include="Resources\BG_TARGETING.png" />
+    <None Include="Resources\BG_ENGINEERING1.png" />
+    <None Include="Resources\BG_ENGINEERING.png" />
+    <None Include="Resources\BG_NAVIGATION1.png" />
+    <None Include="Resources\Hex2ButtonPng_Selected.png" />
+    <None Include="Resources\Hex2ButtonPng.png" />
+    <None Include="Resources\BG_NAVIGATION.png" />
+    <None Include="Resources\BackGround.png" />
+    <None Include="Resources\HexButtonPng_03.png" />
+    <None Include="Resources\HexButtonPng_02.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

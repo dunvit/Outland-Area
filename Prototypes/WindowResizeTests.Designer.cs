@@ -38,6 +38,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.hexogonalButton1 = new Engine.UserControls.HexogonalButton();
+            this.hexogonalButton2 = new Engine.UserControls.HexogonalButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +49,8 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.hexogonalButton2);
+            this.panel1.Controls.Add(this.hexogonalButton1);
             this.panel1.Controls.Add(this.simpleDialogCharacter2);
             this.panel1.Controls.Add(this.simpleDialogCharacter1);
             this.panel1.Controls.Add(this.testControl1);
@@ -138,6 +142,24 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // hexogonalButton1
+            // 
+            this.hexogonalButton1.BackColor = System.Drawing.Color.Transparent;
+            this.hexogonalButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.hexogonalButton1.Location = new System.Drawing.Point(280, 150);
+            this.hexogonalButton1.Name = "hexogonalButton1";
+            this.hexogonalButton1.Size = new System.Drawing.Size(196, 74);
+            this.hexogonalButton1.TabIndex = 11;
+            // 
+            // hexogonalButton2
+            // 
+            this.hexogonalButton2.BackColor = System.Drawing.Color.Transparent;
+            this.hexogonalButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.hexogonalButton2.Location = new System.Drawing.Point(505, 456);
+            this.hexogonalButton2.Name = "hexogonalButton2";
+            this.hexogonalButton2.Size = new System.Drawing.Size(196, 74);
+            this.hexogonalButton2.TabIndex = 12;
+            // 
             // WindowResizeTests
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -165,5 +187,7 @@
         private TestControl testControl1;
         private WorkSpace.Prototypes.SimpleDialogCharacter simpleDialogCharacter2;
         private WorkSpace.Prototypes.SimpleDialogCharacter simpleDialogCharacter1;
+        private UserControls.HexogonalButton hexogonalButton2;
+        private UserControls.HexogonalButton hexogonalButton1;
     }
 }
