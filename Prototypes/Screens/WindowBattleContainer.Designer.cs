@@ -30,9 +30,33 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.turnStep6 = new Engine.UserControls.TurnStep();
+            this.turnStep5 = new Engine.UserControls.TurnStep();
+            this.turnStep4 = new Engine.UserControls.TurnStep();
+            this.turnStep3 = new Engine.UserControls.TurnStep();
+            this.turnStep2 = new Engine.UserControls.TurnStep();
+            this.turnStep1 = new Engine.UserControls.TurnStep();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelCompartmentsContainer = new System.Windows.Forms.Panel();
             this.hexogonalButton7 = new Engine.UserControls.HexogonalButton();
             this.hexogonalButton6 = new Engine.UserControls.HexogonalButton();
@@ -41,40 +65,16 @@
             this.hexogonalButton2 = new Engine.UserControls.HexogonalButton();
             this.hexogonalButton1 = new Engine.UserControls.HexogonalButton();
             this.hexogonalButton3 = new Engine.UserControls.HexogonalButton();
-            this.turnStep1 = new Engine.UserControls.TurnStep();
-            this.turnStep2 = new Engine.UserControls.TurnStep();
-            this.turnStep3 = new Engine.UserControls.TurnStep();
-            this.turnStep4 = new Engine.UserControls.TurnStep();
-            this.turnStep5 = new Engine.UserControls.TurnStep();
-            this.turnStep6 = new Engine.UserControls.TurnStep();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -114,10 +114,225 @@
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(924, 0);
+            this.panel3.Location = new System.Drawing.Point(930, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(354, 718);
+            this.panel3.Size = new System.Drawing.Size(348, 718);
             this.panel3.TabIndex = 3;
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.SeaShell;
+            this.label8.Location = new System.Drawing.Point(309, 34);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(40, 23);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "3/6";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Constantia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Peru;
+            this.label7.Location = new System.Drawing.Point(244, 33);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(71, 23);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "Actions:";
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.Olive;
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Location = new System.Drawing.Point(86, 40);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(126, 14);
+            this.panel9.TabIndex = 3;
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.OrangeRed;
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.panel8);
+            this.panel7.Location = new System.Drawing.Point(86, 57);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(150, 14);
+            this.panel7.TabIndex = 1;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.Olive;
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Location = new System.Drawing.Point(-6, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(57, 14);
+            this.panel8.TabIndex = 2;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.OrangeRed;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Location = new System.Drawing.Point(86, 40);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(150, 14);
+            this.panel6.TabIndex = 1;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.OrangeRed;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.panel10);
+            this.panel5.Location = new System.Drawing.Point(86, 23);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(150, 14);
+            this.panel5.TabIndex = 1;
+            // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.Color.Olive;
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Location = new System.Drawing.Point(-6, -1);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(103, 14);
+            this.panel10.TabIndex = 3;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.OrangeRed;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.panel11);
+            this.panel4.Location = new System.Drawing.Point(86, 6);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(150, 14);
+            this.panel4.TabIndex = 0;
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.DarkCyan;
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Location = new System.Drawing.Point(-7, -1);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(126, 14);
+            this.panel11.TabIndex = 20;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.label6.Location = new System.Drawing.Point(17, 57);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(97, 17);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "G-FORCE";
+            // 
+            // label5
+            // 
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.label5.Location = new System.Drawing.Point(17, 39);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 17);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "SPEED";
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.label4.Location = new System.Drawing.Point(17, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 17);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "ENERGY";
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.label3.Location = new System.Drawing.Point(17, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 17);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "SHIELD";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pictureBox4.Location = new System.Drawing.Point(9, 11);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(2, 50);
+            this.pictureBox4.TabIndex = 15;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBox3.Location = new System.Drawing.Point(20, 76);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(315, 2);
+            this.pictureBox3.TabIndex = 14;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pictureBox2.Location = new System.Drawing.Point(9, 89);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(2, 595);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // turnStep6
+            // 
+            this.turnStep6.BackColor = System.Drawing.Color.Black;
+            this.turnStep6.Location = new System.Drawing.Point(17, 614);
+            this.turnStep6.Name = "turnStep6";
+            this.turnStep6.Size = new System.Drawing.Size(329, 99);
+            this.turnStep6.TabIndex = 13;
+            // 
+            // turnStep5
+            // 
+            this.turnStep5.BackColor = System.Drawing.Color.Black;
+            this.turnStep5.Location = new System.Drawing.Point(17, 509);
+            this.turnStep5.Name = "turnStep5";
+            this.turnStep5.Size = new System.Drawing.Size(329, 99);
+            this.turnStep5.TabIndex = 12;
+            // 
+            // turnStep4
+            // 
+            this.turnStep4.BackColor = System.Drawing.Color.Black;
+            this.turnStep4.Location = new System.Drawing.Point(17, 404);
+            this.turnStep4.Name = "turnStep4";
+            this.turnStep4.Size = new System.Drawing.Size(329, 99);
+            this.turnStep4.TabIndex = 11;
+            // 
+            // turnStep3
+            // 
+            this.turnStep3.BackColor = System.Drawing.Color.Black;
+            this.turnStep3.Location = new System.Drawing.Point(17, 299);
+            this.turnStep3.Name = "turnStep3";
+            this.turnStep3.Size = new System.Drawing.Size(329, 99);
+            this.turnStep3.TabIndex = 10;
+            // 
+            // turnStep2
+            // 
+            this.turnStep2.BackColor = System.Drawing.Color.Black;
+            this.turnStep2.Location = new System.Drawing.Point(17, 194);
+            this.turnStep2.Name = "turnStep2";
+            this.turnStep2.Size = new System.Drawing.Size(329, 99);
+            this.turnStep2.TabIndex = 9;
+            // 
+            // turnStep1
+            // 
+            this.turnStep1.BackColor = System.Drawing.Color.Black;
+            this.turnStep1.Location = new System.Drawing.Point(17, 89);
+            this.turnStep1.Name = "turnStep1";
+            this.turnStep1.Size = new System.Drawing.Size(329, 99);
+            this.turnStep1.TabIndex = 8;
             // 
             // label2
             // 
@@ -143,15 +358,15 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.panelCompartmentsContainer);
             this.panel2.Controls.Add(this.hexogonalButton7);
             this.panel2.Controls.Add(this.hexogonalButton6);
             this.panel2.Controls.Add(this.hexogonalButton5);
             this.panel2.Controls.Add(this.hexogonalButton4);
             this.panel2.Controls.Add(this.hexogonalButton2);
-            this.panel2.Controls.Add(this.hexogonalButton1);
             this.panel2.Controls.Add(this.hexogonalButton3);
+            this.panel2.Controls.Add(this.hexogonalButton1);
+            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.panelCompartmentsContainer);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
@@ -159,19 +374,29 @@
             this.panel2.TabIndex = 0;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 76);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(900, 2);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // panelCompartmentsContainer
             // 
+            this.panelCompartmentsContainer.BackColor = System.Drawing.Color.Transparent;
             this.panelCompartmentsContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelCompartmentsContainer.Location = new System.Drawing.Point(0, 86);
+            this.panelCompartmentsContainer.Location = new System.Drawing.Point(0, 84);
             this.panelCompartmentsContainer.Name = "panelCompartmentsContainer";
-            this.panelCompartmentsContainer.Size = new System.Drawing.Size(1278, 632);
+            this.panelCompartmentsContainer.Size = new System.Drawing.Size(1278, 634);
             this.panelCompartmentsContainer.TabIndex = 18;
             // 
             // hexogonalButton7
             // 
             this.hexogonalButton7.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton7.Location = new System.Drawing.Point(761, 6);
+            this.hexogonalButton7.Location = new System.Drawing.Point(761, 7);
             this.hexogonalButton7.Name = "hexogonalButton7";
             this.hexogonalButton7.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton7.TabIndex = 17;
@@ -182,7 +407,7 @@
             // 
             this.hexogonalButton6.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton6.Location = new System.Drawing.Point(642, 6);
+            this.hexogonalButton6.Location = new System.Drawing.Point(642, 7);
             this.hexogonalButton6.Name = "hexogonalButton6";
             this.hexogonalButton6.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton6.TabIndex = 16;
@@ -193,7 +418,7 @@
             // 
             this.hexogonalButton5.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton5.Location = new System.Drawing.Point(519, 6);
+            this.hexogonalButton5.Location = new System.Drawing.Point(519, 7);
             this.hexogonalButton5.Name = "hexogonalButton5";
             this.hexogonalButton5.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton5.TabIndex = 15;
@@ -204,7 +429,7 @@
             // 
             this.hexogonalButton4.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton4.Location = new System.Drawing.Point(396, 6);
+            this.hexogonalButton4.Location = new System.Drawing.Point(396, 7);
             this.hexogonalButton4.Name = "hexogonalButton4";
             this.hexogonalButton4.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton4.TabIndex = 14;
@@ -215,7 +440,7 @@
             // 
             this.hexogonalButton2.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton2.Location = new System.Drawing.Point(267, 6);
+            this.hexogonalButton2.Location = new System.Drawing.Point(267, 7);
             this.hexogonalButton2.Name = "hexogonalButton2";
             this.hexogonalButton2.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton2.TabIndex = 13;
@@ -227,248 +452,25 @@
             // 
             this.hexogonalButton1.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton1.Location = new System.Drawing.Point(130, 6);
+            this.hexogonalButton1.Location = new System.Drawing.Point(3, 7);
             this.hexogonalButton1.Name = "hexogonalButton1";
             this.hexogonalButton1.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton1.TabIndex = 12;
             this.hexogonalButton1.Text = "ENGINEERING";
             this.hexogonalButton1.TextAddition = global::Engine.Properties.Resources.BG_ENGINEERING1;
+            this.hexogonalButton1.Click += new System.EventHandler(this.hexogonalButton1_Click);
             // 
             // hexogonalButton3
             // 
             this.hexogonalButton3.BackColor = System.Drawing.Color.Transparent;
             this.hexogonalButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hexogonalButton3.Location = new System.Drawing.Point(3, 6);
+            this.hexogonalButton3.Location = new System.Drawing.Point(135, 7);
             this.hexogonalButton3.Name = "hexogonalButton3";
             this.hexogonalButton3.Size = new System.Drawing.Size(196, 64);
             this.hexogonalButton3.TabIndex = 11;
             this.hexogonalButton3.Text = "NAVIGATION";
             this.hexogonalButton3.TextAddition = global::Engine.Properties.Resources.BG_NAVIGATION1;
             this.hexogonalButton3.Click += new System.EventHandler(this.hexogonalButton3_Click);
-            // 
-            // turnStep1
-            // 
-            this.turnStep1.BackColor = System.Drawing.Color.Black;
-            this.turnStep1.Location = new System.Drawing.Point(17, 89);
-            this.turnStep1.Name = "turnStep1";
-            this.turnStep1.Size = new System.Drawing.Size(329, 99);
-            this.turnStep1.TabIndex = 8;
-            // 
-            // turnStep2
-            // 
-            this.turnStep2.BackColor = System.Drawing.Color.Black;
-            this.turnStep2.Location = new System.Drawing.Point(17, 194);
-            this.turnStep2.Name = "turnStep2";
-            this.turnStep2.Size = new System.Drawing.Size(329, 99);
-            this.turnStep2.TabIndex = 9;
-            // 
-            // turnStep3
-            // 
-            this.turnStep3.BackColor = System.Drawing.Color.Black;
-            this.turnStep3.Location = new System.Drawing.Point(20, 299);
-            this.turnStep3.Name = "turnStep3";
-            this.turnStep3.Size = new System.Drawing.Size(329, 99);
-            this.turnStep3.TabIndex = 10;
-            // 
-            // turnStep4
-            // 
-            this.turnStep4.BackColor = System.Drawing.Color.Black;
-            this.turnStep4.Location = new System.Drawing.Point(17, 404);
-            this.turnStep4.Name = "turnStep4";
-            this.turnStep4.Size = new System.Drawing.Size(329, 99);
-            this.turnStep4.TabIndex = 11;
-            // 
-            // turnStep5
-            // 
-            this.turnStep5.BackColor = System.Drawing.Color.Black;
-            this.turnStep5.Location = new System.Drawing.Point(20, 509);
-            this.turnStep5.Name = "turnStep5";
-            this.turnStep5.Size = new System.Drawing.Size(329, 99);
-            this.turnStep5.TabIndex = 12;
-            // 
-            // turnStep6
-            // 
-            this.turnStep6.BackColor = System.Drawing.Color.Black;
-            this.turnStep6.Location = new System.Drawing.Point(20, 614);
-            this.turnStep6.Name = "turnStep6";
-            this.turnStep6.Size = new System.Drawing.Size(329, 99);
-            this.turnStep6.TabIndex = 13;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 76);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(900, 2);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBox2.Location = new System.Drawing.Point(9, 89);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(2, 595);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBox3.Location = new System.Drawing.Point(20, 76);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(315, 2);
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBox4.Location = new System.Drawing.Point(9, 11);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(2, 50);
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.label3.Location = new System.Drawing.Point(17, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 17);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "SHIELD";
-            // 
-            // label4
-            // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.label4.Location = new System.Drawing.Point(17, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 17);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "ENERGY";
-            // 
-            // label5
-            // 
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.label5.Location = new System.Drawing.Point(17, 39);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 17);
-            this.label5.TabIndex = 18;
-            this.label5.Text = "SPEED";
-            // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.label6.Location = new System.Drawing.Point(17, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 17);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "G-FORCE";
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.OrangeRed;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.panel11);
-            this.panel4.Location = new System.Drawing.Point(86, 6);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(150, 14);
-            this.panel4.TabIndex = 0;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.OrangeRed;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.panel10);
-            this.panel5.Location = new System.Drawing.Point(86, 23);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(150, 14);
-            this.panel5.TabIndex = 1;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.OrangeRed;
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Location = new System.Drawing.Point(86, 40);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(150, 14);
-            this.panel6.TabIndex = 1;
-            // 
-            // panel7
-            // 
-            this.panel7.BackColor = System.Drawing.Color.OrangeRed;
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.panel8);
-            this.panel7.Location = new System.Drawing.Point(86, 57);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(150, 14);
-            this.panel7.TabIndex = 1;
-            // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.Color.Olive;
-            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel8.Location = new System.Drawing.Point(-6, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(57, 14);
-            this.panel8.TabIndex = 2;
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.Color.Olive;
-            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Location = new System.Drawing.Point(86, 40);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(126, 14);
-            this.panel9.TabIndex = 3;
-            // 
-            // panel10
-            // 
-            this.panel10.BackColor = System.Drawing.Color.Olive;
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel10.Location = new System.Drawing.Point(-6, -1);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(103, 14);
-            this.panel10.TabIndex = 3;
-            // 
-            // panel11
-            // 
-            this.panel11.BackColor = System.Drawing.Color.DarkCyan;
-            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Location = new System.Drawing.Point(-7, -1);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(126, 14);
-            this.panel11.TabIndex = 20;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Constantia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Peru;
-            this.label7.Location = new System.Drawing.Point(244, 33);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(71, 23);
-            this.label7.TabIndex = 20;
-            this.label7.Text = "Actions:";
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.SeaShell;
-            this.label8.Location = new System.Drawing.Point(309, 34);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 23);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "3/6";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // WindowBattleContainer
             // 
@@ -485,16 +487,17 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "WindowBattleContainer";
+            this.Activated += new System.EventHandler(this.WindowBattleContainer_Activated);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -16,5 +16,15 @@ namespace Engine.Screens
         {
             InitializeComponent();
         }
+
+        private void ScreenNavigation_Load(object sender, EventArgs e)
+        {
+            //gridTable.Rows.Add(null, "Atron", "Francesca Shelby", "143.12", "12.22");
+        }
+
+        private void oaSmallPanel4_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

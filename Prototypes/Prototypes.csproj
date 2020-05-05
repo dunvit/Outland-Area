@@ -106,6 +106,12 @@
     <Compile Include="Screens\ScreenNavigation.Designer.cs">
       <DependentUpon>ScreenNavigation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenShipInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screens\ScreenShipInformation.Designer.cs">
+      <DependentUpon>ScreenShipInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Screens\WindowBattleContainer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\ScreenNavigation.resx">
       <DependentUpon>ScreenNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\ScreenShipInformation.resx">
+      <DependentUpon>ScreenShipInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screens\WindowBattleContainer.resx">
       <DependentUpon>WindowBattleContainer.cs</DependentUpon>
@@ -288,6 +297,32 @@
     <Content Include="Data\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Radar_Prototype_Blue.png" />
+    <None Include="Resources\Radar_Prototype_Dark.png" />
+    <None Include="Resources\Radar_Prototype1.png" />
+    <None Include="Resources\Radar_Prototype.png" />
+    <None Include="Resources\PleerFrigateGrid3.png" />
+    <None Include="Resources\PleerFrigateGrid2.png" />
+    <None Include="Resources\PleerFrigateGrid1.png" />
+    <None Include="Resources\PleerFrigateGrid.png" />
+    <None Include="Resources\NeitralFrigateGrid1.png" />
+    <None Include="Resources\FriendFrigateGrid1.png" />
+    <None Include="Resources\NeitralFrigateGrid.png" />
+    <None Include="Resources\EnemyFrigateGrid1.png" />
+    <None Include="Resources\FriendFrigateGrid.png" />
+    <None Include="Resources\EnemyFrigateGrid.png" />
+    <None Include="Resources\Panel_100x100.png" />
+    <None Include="Resources\Radar.png" />
+    <None Include="Resources\module_scrambler.png" />
+    <None Include="Resources\module_ShieldExtender.png" />
+    <None Include="Resources\module_AntiEM.png" />
+    <None Include="Resources\module_SensorBooster.png" />
+    <None Include="Resources\module_500MN.png" />
+    <None Include="Resources\icon.png" />
+    <None Include="Resources\Panel_50x50_Disabled.png" />
+    <None Include="Resources\Panel_50x50.png" />
+    <None Include="Resources\Ship_002.png" />
+    <None Include="Resources\Ship_001.png" />
     <None Include="Resources\ACTION_03.png" />
     <None Include="Resources\Toolbar_01.png" />
     <None Include="Resources\Frame_Box_02.png" />

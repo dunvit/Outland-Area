@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Engine.Screens
@@ -17,12 +11,16 @@ namespace Engine.Screens
 
         private WindowCompartmentNavigation _compartmentNavigation;
         private WindowCompartmentTargeting _compartmentTargeting;
+        private ScreenShipInformation _screenShipInformation;
+        private ScreenNavigation _screenNavigation;
 
         public WindowBattleContainer()
         {
             InitializeComponent();
 
             Initialization();
+
+            //OpenChildControl(new ScreenShipInformation());
         }
 
 
@@ -46,6 +44,10 @@ namespace Engine.Screens
 
         private void OpenChildControl(UserControl childForm)
         {
+            if(currentChildUserControl != null) currentChildUserControl.Hide();
+
+            childForm.BackColor = Color.Transparent;
+
             //open only form
             currentChildUserControl = childForm;
             //End
@@ -64,7 +66,12 @@ namespace Engine.Screens
 
         private void hexogonalButton3_Click(object sender, EventArgs e)
         {
-            OpenChildControl(new ScreenNavigation());
+            if (_screenNavigation == null)
+            {
+                _screenNavigation = new ScreenNavigation();
+            }
+
+            OpenChildControl(_screenNavigation);
         }
 
         private void hexogonalButton2_Click(object sender, EventArgs e)
@@ -80,6 +87,32 @@ namespace Engine.Screens
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private bool isActivated;
+
+        private void WindowBattleContainer_Activated(object sender, EventArgs e)
+        {
+            if (isActivated) return;
+
+            isActivated = true;
+
+            if (_screenShipInformation == null)
+            {
+                _screenShipInformation = new ScreenShipInformation();
+            }
+
+            OpenChildControl(_screenShipInformation);
+        }
+
+        private void hexogonalButton1_Click(object sender, EventArgs e)
+        {
+            if (_screenShipInformation == null)
+            {
+                _screenShipInformation = new ScreenShipInformation();
+            }
+
+            OpenChildControl(new ScreenShipInformation());
         }
     }
 
