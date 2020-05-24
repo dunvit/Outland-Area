@@ -52,16 +52,20 @@
             // pictureBox2
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Location = new System.Drawing.Point(16, 28);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(20, 20);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 41;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.label1_Click);
+            this.pictureBox2.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
             // 
             // imageAvatar
             // 
             this.imageAvatar.BackColor = System.Drawing.Color.Transparent;
+            this.imageAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imageAvatar.Image = global::Engine.Properties.Resources.Hex2ButtonPng;
             this.imageAvatar.Location = new System.Drawing.Point(3, 1);
             this.imageAvatar.Name = "imageAvatar";
@@ -69,6 +73,9 @@
             this.imageAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageAvatar.TabIndex = 40;
             this.imageAvatar.TabStop = false;
+            this.imageAvatar.Click += new System.EventHandler(this.label1_Click);
+            this.imageAvatar.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
+            this.imageAvatar.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
             // HexogonalButton
             // 

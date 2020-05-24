@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Engine.UserControls
 {
     public partial class HexogonalButton : UserControl
     {
-        private EventHandler onClick;
+        private EventHandler _onClick;
 
-        public event EventHandler Click
+        public new event EventHandler Click
         {
-            add { onClick += value; }
-            remove { onClick -= value; }
+            add { _onClick += value; }
+            remove { _onClick -= value; }
         }
 
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -74,12 +69,8 @@ namespace Engine.UserControls
 
         private void label1_Click(object sender, EventArgs e)
         {
-            onClick?.Invoke(this, e);
+            _onClick?.Invoke(this, e);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
