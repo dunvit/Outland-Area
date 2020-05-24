@@ -26,9 +26,11 @@ namespace Prototypes
             //var mainForm = new WindowResizeTests();
             //var mainForm = new WindowMain();
             //var mainForm = new BattleScreen { Size = Global.ApplicationSettings.WindowSize };
-            var mainForm = new WindowBattleContainer { Size = Global.ApplicationSettings.WindowSize };
+            
             //var mainForm = new WindowResizeTests { Size = Global.ApplicationSettings.WindowSize };
-
+            var mainForm = new WindowBattleContainer { Size = Global.ApplicationSettings.WindowSize };
+            
+            //var mainForm = new PrototypeRadar { Size = Global.ApplicationSettings.WindowSize };
 
             Application.Run(mainForm);
         }

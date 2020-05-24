@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using OutlandAreaLogic.Tools;
 
 namespace Engine.Screens
 {
@@ -44,16 +45,8 @@ namespace Engine.Screens
 
         private void OpenChildControl(UserControl childForm)
         {
-            if(currentChildUserControl != null) currentChildUserControl.Hide();
-
-            childForm.BackColor = Color.Transparent;
-
-            //open only form
-            currentChildUserControl = childForm;
-            //End
-            //childForm.TopLevel = false;
-            //childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
+            //childForm.BackColor = Color.Transparent;
+            //childForm.Dock = DockStyle.Fill;
 
             panelCompartmentsContainer.Controls.Add(childForm);
             panelCompartmentsContainer.Tag = childForm;
@@ -61,6 +54,9 @@ namespace Engine.Screens
             childForm.Show();
             //lblTitleChildForm.Text = childForm.Text;
 
+            if (currentChildUserControl != null) currentChildUserControl.Hide();
+
+            currentChildUserControl = childForm;
         }
 
 
@@ -94,6 +90,9 @@ namespace Engine.Screens
         private void WindowBattleContainer_Activated(object sender, EventArgs e)
         {
             if (isActivated) return;
+
+            if (DebugTools.IsInDesignMode()) return;
+
 
             isActivated = true;
 

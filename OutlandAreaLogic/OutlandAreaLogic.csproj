@@ -111,6 +111,7 @@
     <Compile Include="Screens\BaseResizibleWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="Tools\WinFormResize.cs" />
   </ItemGroup>
   <ItemGroup>

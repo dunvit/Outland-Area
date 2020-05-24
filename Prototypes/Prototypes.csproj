@@ -148,6 +148,12 @@
     <Compile Include="UserControls\OaSmallPanel.Designer.cs">
       <DependentUpon>OaSmallPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PrototypeRadar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrototypeRadar.Designer.cs">
+      <DependentUpon>PrototypeRadar.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TurnStep.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -221,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\OaSmallPanel.resx">
       <DependentUpon>OaSmallPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\PrototypeRadar.resx">
+      <DependentUpon>PrototypeRadar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TurnStep.resx">
       <DependentUpon>TurnStep.cs</DependentUpon>
