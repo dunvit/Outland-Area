@@ -136,6 +136,25 @@
     <Compile Include="TestControl.Designer.cs">
       <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Common.cs" />
+    <Compile Include="UI\Screens\Battle\BattleScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\Battle\BattleScreen.Designer.cs">
+      <DependentUpon>BattleScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BattleMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\BattleMapControl.Designer.cs">
+      <DependentUpon>BattleMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BattleMapScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\BattleMapScreen.Designer.cs">
+      <DependentUpon>BattleMapScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\HexogonalButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +173,7 @@
     <Compile Include="UserControls\PrototypeRadar.Designer.cs">
       <DependentUpon>PrototypeRadar.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ScreenParameters.cs" />
     <Compile Include="UserControls\TurnStep.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -221,6 +241,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestControl.resx">
       <DependentUpon>TestControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\Battle\BattleScreen.resx">
+      <DependentUpon>BattleScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\BattleMapControl.resx">
+      <DependentUpon>BattleMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\BattleMapScreen.resx">
+      <DependentUpon>BattleMapScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\HexogonalButton.resx">
       <DependentUpon>HexogonalButton.cs</DependentUpon>

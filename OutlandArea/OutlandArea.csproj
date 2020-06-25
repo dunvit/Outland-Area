@@ -68,6 +68,12 @@
     <Compile Include="ScreenStartMenu.Designer.cs">
       <DependentUpon>ScreenStartMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\BattleMap\BattleMapScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleMap\BattleMapScreen.Designer.cs">
+      <DependentUpon>BattleMapScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.cs">
       <SubType>Form</SubType>
     </Compile>

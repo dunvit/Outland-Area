@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Engine;
 using Engine.Screens;
+using Engine.UserControls;
 using OutlandAreaLogic;
 
 namespace Prototypes
@@ -26,11 +28,17 @@ namespace Prototypes
             //var mainForm = new WindowResizeTests();
             //var mainForm = new WindowMain();
             //var mainForm = new BattleScreen { Size = Global.ApplicationSettings.WindowSize };
-            
+
             //var mainForm = new WindowResizeTests { Size = Global.ApplicationSettings.WindowSize };
-            var mainForm = new WindowBattleContainer { Size = Global.ApplicationSettings.WindowSize };
-            
+            //var mainForm = new WindowBattleContainer { Size = Global.ApplicationSettings.WindowSize };
+
             //var mainForm = new PrototypeRadar { Size = Global.ApplicationSettings.WindowSize };
+
+            //var mainForm = new BattleMapScreen { Size = Global.ApplicationSettings.WindowSize };
+            //var mainForm = new BattleMapScreen { Size = new Size(800, 800) };
+
+            //
+            var mainForm = new Engine.UI.Screens.Battle.BattleScreen { Size = Global.ApplicationSettings.WindowSize };
 
             Application.Run(mainForm);
         }
