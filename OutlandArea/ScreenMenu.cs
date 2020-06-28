@@ -30,5 +30,11 @@ namespace OutlandArea
             Global.GameManager.ScreenMain.Execute("Dialog Screen");
             Close();
         }
+
+        private void Event_StartBattle(object sender, EventArgs e)
+        {
+            Global.GameManager.ScreenMain.Execute("Battle Board");
+            Close();
+        }
     }
 }

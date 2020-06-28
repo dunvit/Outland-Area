@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle\ICommand.cs" />
+    <Compile Include="Battle\Manager.cs" />
+    <Compile Include="Battle\Turn.cs" />
     <Compile Include="ScreenMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,11 +71,23 @@
     <Compile Include="ScreenStartMenu.Designer.cs">
       <DependentUpon>ScreenStartMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\BattleMap\BattleMapScreen.cs">
+    <Compile Include="UI\Screens\BattleBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Screens\BattleMap\BattleMapScreen.Designer.cs">
-      <DependentUpon>BattleMapScreen.cs</DependentUpon>
+    <Compile Include="UI\Screens\BattleBoard.Designer.cs">
+      <DependentUpon>BattleBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\TacticalMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\TacticalMap.Designer.cs">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\TurnInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\TurnInformation.Designer.cs">
+      <DependentUpon>TurnInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.cs">
       <SubType>Form</SubType>
@@ -102,6 +117,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScreenStartMenu.resx">
       <DependentUpon>ScreenStartMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoard.resx">
+      <DependentUpon>BattleBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\TacticalMap.resx">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\TurnInformation.resx">
+      <DependentUpon>TurnInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>

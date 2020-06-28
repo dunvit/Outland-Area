@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Engine;
+using OutlandArea.UI.Screens;
 using OutlandArea.UI.Screens.Dialog;
 using OutlandAreaLogic;
 
@@ -11,6 +12,8 @@ namespace OutlandArea
         private Form WindowMenu { get; set; } = new ScreenMenu();
 
         private Form DialogScreen { get; set; } = new DialogScreen { Size = Global.ApplicationSettings.WindowSize };
+
+        private Form BattleBoardScreen { get; set; } = new BattleBoard();
 
         private bool IsActivated { get; set; }
 
@@ -45,6 +48,10 @@ namespace OutlandArea
                 case "Dialog Screen":
 
                     DialogScreen.ShowDialog();
+                    break;
+
+                case "Battle Board":
+                    BattleBoardScreen.ShowDialog();
                     break;
             }
 

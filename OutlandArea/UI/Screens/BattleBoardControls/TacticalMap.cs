@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OutlandArea.UI.Screens.BattleMap
+namespace OutlandArea.UI.Screens.BattleBoardControls
 {
-    public partial class BattleMapScreen : Form
+    public partial class TacticalMap : UserControl
     {
-        public BattleMapScreen()
+        public TacticalMap()
         {
             InitializeComponent();
         }

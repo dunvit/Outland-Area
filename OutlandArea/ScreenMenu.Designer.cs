@@ -33,6 +33,7 @@
             this.commandStartNewGame = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton1 = new OutlandAreaLogic.Controls.OaButton();
             this.commandExit = new OutlandAreaLogic.Controls.OaButton();
+            this.commandStartBattle = new OutlandAreaLogic.Controls.OaButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,6 +41,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.commandStartBattle);
             this.panel1.Controls.Add(this.oaButton3);
             this.panel1.Controls.Add(this.commandStartNewGame);
             this.panel1.Controls.Add(this.oaButton1);
@@ -109,6 +111,21 @@
             this.commandExit.UseVisualStyleBackColor = false;
             this.commandExit.Click += new System.EventHandler(this.commandExit_Click);
             // 
+            // commandStartBattle
+            // 
+            this.commandStartBattle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.commandStartBattle.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.commandStartBattle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.commandStartBattle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.commandStartBattle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
+            this.commandStartBattle.Location = new System.Drawing.Point(100, 247);
+            this.commandStartBattle.Name = "commandStartBattle";
+            this.commandStartBattle.Size = new System.Drawing.Size(117, 23);
+            this.commandStartBattle.TabIndex = 4;
+            this.commandStartBattle.Text = "Start battle";
+            this.commandStartBattle.UseVisualStyleBackColor = false;
+            this.commandStartBattle.Click += new System.EventHandler(this.Event_StartBattle);
+            // 
             // ScreenMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -134,5 +151,6 @@
         private OutlandAreaLogic.Controls.OaButton oaButton1;
         private OutlandAreaLogic.Controls.OaButton oaButton3;
         private OutlandAreaLogic.Controls.OaButton commandStartNewGame;
+        private OutlandAreaLogic.Controls.OaButton commandStartBattle;
     }
 }
