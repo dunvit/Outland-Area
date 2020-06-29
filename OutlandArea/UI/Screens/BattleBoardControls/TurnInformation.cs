@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using OutlandArea.Battle;
+using OutlandArea.TacticalBattleLayer;
 
 namespace OutlandArea.UI.Screens.BattleBoardControls
 {

@@ -50,9 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Battle\ICommand.cs" />
-    <Compile Include="Battle\Manager.cs" />
-    <Compile Include="Battle\Turn.cs" />
+    <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
+    <Compile Include="TacticalBattleLayer\Battle.cs" />
+    <Compile Include="TacticalBattleLayer\ICelestialObject.cs" />
+    <Compile Include="TacticalBattleLayer\ICommand.cs" />
+    <Compile Include="TacticalBattleLayer\ISpacecraft.cs" />
+    <Compile Include="TacticalBattleLayer\Manager.cs" />
+    <Compile Include="TacticalBattleLayer\ScreenParameters.cs" />
+    <Compile Include="TacticalBattleLayer\Spacecrafts\Dragoon.cs" />
+    <Compile Include="TacticalBattleLayer\State.cs" />
+    <Compile Include="TacticalBattleLayer\TacticalMap.cs" />
+    <Compile Include="TacticalBattleLayer\Turn.cs" />
     <Compile Include="ScreenMenu.cs">
       <SubType>Form</SubType>
     </Compile>

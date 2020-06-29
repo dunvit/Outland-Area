@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OutlandArea.Battle
+namespace OutlandArea.TacticalBattleLayer
 {
     public class Turn
     {
@@ -9,5 +9,12 @@ namespace OutlandArea.Battle
         public bool IsFinished { get; set; }
 
         public List<ICommand> Commands { get; set; } = new List<ICommand>();
+
+        public List<ICelestialObject> CelestialObjects { get; }
+
+        public Turn(List<ICelestialObject> celestialObjects)
+        {
+            CelestialObjects = celestialObjects;
+        }
     }
 }
