@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace OutlandArea.TacticalBattleLayer
 {
@@ -13,9 +8,14 @@ namespace OutlandArea.TacticalBattleLayer
         public int Width { get; }
         public int Height { get; }
 
+        public Point CenterScreenOnMap { get; set; }
+
         public ScreenParameters(int width, int height)
         {
             Center = new Point(width / 2, height / 2);
+
+            // Start player ship coordinates in each battle (10000, 10000)
+            CenterScreenOnMap = new Point(10000, 10000);
 
             Width = width;
             Height = height;

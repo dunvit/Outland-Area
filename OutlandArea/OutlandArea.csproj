@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
     <Compile Include="TacticalBattleLayer\ICelestialObject.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="TacticalBattleLayer\Manager.cs" />
     <Compile Include="TacticalBattleLayer\ScreenParameters.cs" />
     <Compile Include="TacticalBattleLayer\Spacecrafts\Dragoon.cs" />
+    <Compile Include="TacticalBattleLayer\Spacecrafts\Thorax.cs" />
     <Compile Include="TacticalBattleLayer\State.cs" />
     <Compile Include="TacticalBattleLayer\TacticalMap.cs" />
     <Compile Include="TacticalBattleLayer\Turn.cs" />

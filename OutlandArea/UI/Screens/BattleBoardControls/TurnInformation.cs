@@ -15,6 +15,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         public void Refresh(Turn turn)
         {
+            if (turn == null) return;
+
             CurrentTurn = turn;
 
             labelTurnNumber.Text = CurrentTurn.Number.ToString();
