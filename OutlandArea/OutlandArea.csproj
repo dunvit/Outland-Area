@@ -151,6 +151,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UI\Screens\WindowSettings.resx">
       <DependentUpon>WindowSettings.cs</DependentUpon>
@@ -199,7 +200,9 @@
       <Name>OutlandAreaLogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -225,7 +228,13 @@
     <Content Include="Data\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Targets\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\TradeGoods\Antibiotics.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\CenterTarget.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\TradeGoods\Wheat.png">

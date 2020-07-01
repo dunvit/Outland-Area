@@ -15,8 +15,6 @@ namespace OutlandArea.UI.Screens
             controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
 
             Manager.OnStartNewTurn += Event_StartNewTurn;
-
-            
         }
 
         private void Event_StartNewTurn(Turn turn)
@@ -34,5 +32,7 @@ namespace OutlandArea.UI.Screens
         {
             Manager.FinishInitialization();
         }
+
+
     }
 }
