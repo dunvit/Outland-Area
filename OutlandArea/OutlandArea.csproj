@@ -231,6 +231,12 @@
     <Content Include="Images\Targets\EnemySpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Targets\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\TradeGoods\Antibiotics.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

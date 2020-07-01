@@ -19,6 +19,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         private ScreenParameters _screenParameters;
 
         private Point currentMouseCoordinates;
+        private Point MouseMapCoordinates { get; set; }
 
         public TacticalMap()
         {
@@ -80,47 +81,48 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             foreach (var celestialObject in CurrentTurn.CelestialObjects)
             {
-                var absoluteCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
-
                 if (celestialObject is BaseSpacecraft)
                 {
-                    var spaceCraft = celestialObject as BaseSpacecraft;
-
-                    if (spaceCraft.IsPlayerSpacecraft)
-                    {
-                        graphics.DrawLine(new Pen(Color.CadetBlue, 4), absoluteCoordinates.X, absoluteCoordinates.Y - 8, absoluteCoordinates.X, absoluteCoordinates.Y + 8);
-                        graphics.DrawLine(new Pen(Color.CadetBlue, 4), absoluteCoordinates.X - 8, absoluteCoordinates.Y, absoluteCoordinates.X + 8, absoluteCoordinates.Y);
-
-                        continue;
-                    }
-                    else
-                    {
-                        float[] dashValues = { 2, 2, 2, 2 };
-                        Pen blackPen = new Pen(Color.Black, 1);
-                        blackPen.DashPattern = dashValues;
-
-                        var directionCoordinates = MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
-
-                        graphics.DrawLine(new Pen(Color.Violet, 1), absoluteCoordinates.X , absoluteCoordinates.Y , directionCoordinates.X , directionCoordinates.Y );
-                        graphics.DrawLine(blackPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y ), new Point(directionCoordinates.X , directionCoordinates.Y ));
-
-                        var target = LoadImage("EnemySpaceship");
-
-                        var bmpSpacecraft = RotateImage(target, celestialObject.Direction);
-
-                        graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 12, absoluteCoordinates.Y - 12));
-
-                        graphics.FillEllipse(new SolidBrush(Color.Beige), new Rectangle(absoluteCoordinates.X - 1, absoluteCoordinates.Y - 1,2,2) );
-                    }
+                    DrawSpacecraft(graphics, celestialObject);
                 }
-
-                
-
-
-
-                
-                
             }
+        }
+
+        private void DrawSpacecraft(Graphics graphics, ICelestialObject celestialObject)
+        {
+            //TODO: Create colors ENUM by relation ships color
+            //TODO: Add previous spacecraft movement steps
+            var spaceCraft = celestialObject as BaseSpacecraft;
+
+            var absoluteCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
+
+            float[] dashValues = { 2, 2, 2, 2 };
+            var blackPen = new Pen(Color.Black, 1) {DashPattern = dashValues};
+
+            var mainColor = Color.DarkRed;
+            var mainIcon = "EnemySpaceship";
+
+            if (spaceCraft != null && spaceCraft.IsPlayerSpacecraft)
+            {
+                mainColor = Color.DarkOliveGreen;
+                mainIcon = "PlayerSpaceship";
+            }
+
+            var directionCoordinates = MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
+
+            graphics.DrawLine(new Pen(mainColor, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+            graphics.DrawLine(blackPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y), new Point(directionCoordinates.X, directionCoordinates.Y));
+
+            graphics.FillEllipse(new SolidBrush(mainColor), directionCoordinates.X - 2, directionCoordinates.Y - 2, 4, 4);
+
+            var target = LoadImage(mainIcon);
+
+            var bmpSpacecraft = RotateImage(target, celestialObject.Direction);
+
+            graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 12, absoluteCoordinates.Y - 12));
+
+            graphics.FillEllipse(new SolidBrush(mainColor), new Rectangle(absoluteCoordinates.X - 1, absoluteCoordinates.Y - 1, 2, 2));
+
         }
 
         #region Draw radar parts
@@ -185,6 +187,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         private void Event_MouseMove(object sender, MouseEventArgs e)
         {
             currentMouseCoordinates = ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            MouseMapCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, e.Location);
         }
 
 
