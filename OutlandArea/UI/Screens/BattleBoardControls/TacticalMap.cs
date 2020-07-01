@@ -110,16 +110,16 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             var directionCoordinates = MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
 
-            graphics.DrawLine(new Pen(mainColor, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+            graphics.DrawLine(new Pen(Color.DimGray, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
             graphics.DrawLine(blackPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y), new Point(directionCoordinates.X, directionCoordinates.Y));
 
-            graphics.FillEllipse(new SolidBrush(mainColor), directionCoordinates.X - 2, directionCoordinates.Y - 2, 4, 4);
+            graphics.FillEllipse(new SolidBrush(Color.DimGray), directionCoordinates.X - 2, directionCoordinates.Y - 2, 4, 4);
 
             var target = LoadImage(mainIcon);
 
             var bmpSpacecraft = RotateImage(target, celestialObject.Direction);
 
-            graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 12, absoluteCoordinates.Y - 12));
+            graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 15, absoluteCoordinates.Y - 15));
 
             graphics.FillEllipse(new SolidBrush(mainColor), new Rectangle(absoluteCoordinates.X - 1, absoluteCoordinates.Y - 1, 2, 2));
 
@@ -221,7 +221,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         public static Bitmap LoadImage(string file)
         {
-            var patternsFolder = Path.Combine(Environment.CurrentDirectory, "Images", "Targets");
+            var patternsFolder = Path.Combine(Environment.CurrentDirectory, "Images", "Ships");
 
             var fileFullName = Path.Combine(patternsFolder, file + ".png");
 

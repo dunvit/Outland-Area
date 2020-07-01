@@ -228,6 +228,15 @@
     <Content Include="Data\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Ships\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Targets\EnemySpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
