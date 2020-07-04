@@ -10,6 +10,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 {
     public partial class TacticalMap : UserControl
     {
+        public event Action<ICelestialObject> OnMouseMoveOnCelestialObject;
+
         private readonly Pen _radarLinePenSecond = new Pen(Color.FromArgb(45, 45, 45), 1);
         private readonly Pen _radarLinePen = new Pen(Color.FromArgb(30, 30, 30), 1);
         private Turn CurrentTurn { get; set; }
@@ -17,6 +19,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         private Timer _refreshScreenTimer;
         
         private ScreenParameters _screenParameters;
+
+        private ICelestialObject _selectedCelestialObject = null;
 
         private Point currentMouseCoordinates;
         private Point MouseMapCoordinates { get; set; }
@@ -66,6 +70,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             DrawRadarCross(graphics);
 
+            DrawSelectedCelestialObjectConnector(graphics);
+
             DrawCelestialObjects(graphics);
 
             DrawMouseCoordinates(graphics);
@@ -73,6 +79,47 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             
 
             pictureBox1.Image = image;
+        }
+
+        private void DrawSelectedCelestialObjectConnector(Graphics graphics)
+        {
+            var i = 0;
+
+            foreach (var celestialObject in CurrentTurn.CelestialObjects)
+            {
+                var absoluteCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
+
+                if (celestialObject is BaseSpacecraft)
+                {
+                    i++;
+
+                    var coordinatesMap = " (" + Math.Abs(celestialObject.Location.X).ToString("D5") + ":" + Math.Abs(celestialObject.Location.Y).ToString("D5") + ") " + celestialObject.Name + "";
+
+                    using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
+                    {
+                        graphics.DrawString(coordinatesMap, font, new SolidBrush(Color.DimGray), new PointF(_screenParameters.Center.X / 2, i * 30 + 90));
+                    }
+
+                    if (celestialObject.Location.X < MouseMapCoordinates.X + 15 &&
+                        celestialObject.Location.X > MouseMapCoordinates.X - 15 &&
+                        celestialObject.Location.Y < MouseMapCoordinates.Y + 15 &&
+                        celestialObject.Location.Y > MouseMapCoordinates.Y - 15)
+                    {
+                        if (_selectedCelestialObject == null || ( _selectedCelestialObject.Id != celestialObject.Id))
+                        {
+                            _selectedCelestialObject = celestialObject;
+
+                            OnMouseMoveOnCelestialObject?.Invoke(celestialObject);
+                        }
+
+                        graphics.DrawLine(new Pen(Color.Bisque, 1), absoluteCoordinates.X, absoluteCoordinates.Y, _screenParameters.Center.X, _screenParameters.Center.Y);
+
+                        graphics.FillEllipse(new SolidBrush(Color.Black), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
+
+                        graphics.DrawEllipse(new Pen(Color.LightGray, 1), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
+                    }
+                }
+            }
         }
 
         private void DrawCelestialObjects(Graphics graphics)
@@ -166,21 +213,19 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             var relativeLocation = ToRelativeCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
 
 
-            var coordinatesScreen = " Screen (x,y) (" + currentMouseCoordinates.X.ToString("D3") + ":" + currentMouseCoordinates.Y.ToString("D3") + ")";
+            var coordinatesScreen = "(" + currentMouseCoordinates.X.ToString("D3") + ":" + currentMouseCoordinates.Y.ToString("D3") + ") - Screen";
 
             using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
             {
                 graphics.DrawString(coordinatesScreen, font, new SolidBrush(Color.BlanchedAlmond), new PointF(_screenParameters.Center.X / 2, 10));
             }
 
-            var coordinatesMap = "Map (x,y) (" + Math.Abs(relativeLocation.X).ToString("D5") + ":" + Math.Abs(relativeLocation.Y).ToString("D5") + ")";
+            var coordinatesMap = "(" + Math.Abs(MouseMapCoordinates.X).ToString("D5") + ":" + Math.Abs(MouseMapCoordinates.Y).ToString("D5") + ") - Map";
 
             using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
             {
                 graphics.DrawString(coordinatesMap, font, new SolidBrush(Color.BlanchedAlmond), new PointF(_screenParameters.Center.X / 2, 30));
             }
-
-
 
         }
 
@@ -188,10 +233,22 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         {
             currentMouseCoordinates = ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            MouseMapCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, e.Location);
+            //var relativeX = (currentMouseCoordinates.X + _screenParameters.CenterScreenOnMap.X);
+            //var relativeY = (currentMouseCoordinates.Y + _screenParameters.CenterScreenOnMap.Y);
+
+            //MouseMapCoordinates = new Point(relativeX, relativeY);
+
+            MouseMapCoordinates =
+                ToTacticalMapCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
         }
 
+        public Point ToTacticalMapCoordinates(Point currentMouseCoordinates, Point centerPosition)
+        {
+            var relativeX = (centerPosition.X + currentMouseCoordinates.X);
+            var relativeY = (centerPosition.Y + currentMouseCoordinates.Y);
 
+            return new Point(relativeX, relativeY);
+        }
 
         public Point ToAbsoluteCoordinates(Point centerRadarLocation, Point centerPosition, Point celestialObjectPosition)
         {
