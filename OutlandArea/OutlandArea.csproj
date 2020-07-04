@@ -53,6 +53,7 @@
     <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
+    <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
     <Compile Include="TacticalBattleLayer\ICelestialObject.cs" />
     <Compile Include="TacticalBattleLayer\ICommand.cs" />
     <Compile Include="TacticalBattleLayer\ISpacecraft.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="ScreenStartMenu.Designer.cs">
       <DependentUpon>ScreenStartMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="UI\Screens\BattleBoard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="TacticalBattleLayer\Commands\Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">

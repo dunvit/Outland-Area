@@ -5,12 +5,14 @@ using System.Drawing.Text;
 using System.IO;
 using System.Windows.Forms;
 using OutlandArea.TacticalBattleLayer;
+using OutlandArea.Tools;
 
 namespace OutlandArea.UI.Screens.BattleBoardControls
 {
     public partial class TacticalMap : UserControl
     {
-        public event Action<ICelestialObject> OnMouseMoveOnCelestialObject;
+        public event Action<ICelestialObject> OnMouseMoveCelestialObject;
+        public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
 
         private readonly Pen _radarLinePenSecond = new Pen(Color.FromArgb(45, 45, 45), 1);
         private readonly Pen _radarLinePen = new Pen(Color.FromArgb(30, 30, 30), 1);
@@ -49,6 +51,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         private void Event_RefreshScreenTimer(object sender, EventArgs e)
         {
             if (CurrentTurn == null) return;
+
+            if (DebugTools.IsInDesignMode()) return;
 
             DrawScreen();
         }
@@ -109,7 +113,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
                         {
                             _selectedCelestialObject = celestialObject;
 
-                            OnMouseMoveOnCelestialObject?.Invoke(celestialObject);
+                            OnMouseMoveCelestialObject?.Invoke(celestialObject);
                         }
 
                         graphics.DrawLine(new Pen(Color.Bisque, 1), absoluteCoordinates.X, absoluteCoordinates.Y, _screenParameters.Center.X, _screenParameters.Center.Y);
@@ -117,6 +121,14 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
                         graphics.FillEllipse(new SolidBrush(Color.Black), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
 
                         graphics.DrawEllipse(new Pen(Color.LightGray, 1), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
+                    }
+                    else
+                    {
+                        if (_selectedCelestialObject != null && _selectedCelestialObject.Id == celestialObject.Id)
+                        {
+                            OnMouseLeaveCelestialObject?.Invoke(null);
+                            _selectedCelestialObject = null;
+                        }
                     }
                 }
             }
