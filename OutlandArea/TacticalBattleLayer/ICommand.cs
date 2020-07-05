@@ -8,5 +8,8 @@ namespace OutlandArea.TacticalBattleLayer
 {
     public interface ICommand
     {
+        string Description { get;}
+        int TimePointCost { get; }
+        int SuccessChance { get; }
     }
 }

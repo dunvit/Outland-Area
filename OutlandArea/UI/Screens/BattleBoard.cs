@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using log4net;
 using OutlandArea.TacticalBattleLayer;
+using OutlandArea.UI.Screens.BattleBoardControls;
 
 namespace OutlandArea.UI.Screens
 {
@@ -18,9 +19,19 @@ namespace OutlandArea.UI.Screens
             controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
             controlTacticalMap.OnMouseMoveCelestialObject += EventMouseMoveCelestialObject;
             controlTacticalMap.OnMouseLeaveCelestialObject += EventMouseLeaveCelestialObject;
+
+            controlNavigationCommands.OnSelectCommand += Event_ShowCommand;
+
             Manager.OnStartNewTurn += Event_StartNewTurn;
 
             Manager.SetLogger(LogWrite);
+        }
+
+        private void Event_ShowCommand(ICommand obj)
+        {
+            var windowShowCommand = new WindowShowCommand();
+
+            windowShowCommand.ShowDialog(this);
         }
 
         private void EventMouseMoveCelestialObject(ICelestialObject celestialObject)
@@ -82,6 +93,16 @@ namespace OutlandArea.UI.Screens
                 log.Debug(message);
             }
 
+        }
+
+        private void oaButton2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Event_ShowNavigationCommandsControl(object sender, EventArgs e)
+        {
+            controlNavigationCommands.Visible = !controlNavigationCommands.Visible;
         }
     }
 }

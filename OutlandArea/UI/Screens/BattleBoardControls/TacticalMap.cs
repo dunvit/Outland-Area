@@ -213,7 +213,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         {
             graphics.DrawLine(_radarLinePen, center.X - 450, center.Y, center.X + 450, center.Y);
 
-            graphics.DrawLine(_radarLinePen, center.X , center.Y- 450, center.X, center.Y + 450);
+            graphics.DrawLine(_radarLinePen, center.X , center.Y - 450, center.X, center.Y + 450);
 
             graphics.FillEllipse(new SolidBrush(Color.Black), center.X - 40, center.Y - 40, 80, 80);
         }

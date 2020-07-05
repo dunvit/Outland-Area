@@ -92,6 +92,18 @@
     <Compile Include="UI\Screens\BattleBoard.Designer.cs">
       <DependentUpon>BattleBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\Command.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\Command.Designer.cs">
+      <DependentUpon>Command.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\NavigationCommands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\NavigationCommands.Designer.cs">
+      <DependentUpon>NavigationCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -103,6 +115,12 @@
     </Compile>
     <Compile Include="UI\Screens\BattleBoardControls\TurnInformation.Designer.cs">
       <DependentUpon>TurnInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\WindowShowCommand.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\WindowShowCommand.Designer.cs">
+      <DependentUpon>WindowShowCommand.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.cs">
       <SubType>Form</SubType>
@@ -136,11 +154,20 @@
     <EmbeddedResource Include="UI\Screens\BattleBoard.resx">
       <DependentUpon>BattleBoard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\Command.resx">
+      <DependentUpon>Command.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\NavigationCommands.resx">
+      <DependentUpon>NavigationCommands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\BattleBoardControls\TacticalMap.resx">
       <DependentUpon>TacticalMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\BattleBoardControls\TurnInformation.resx">
       <DependentUpon>TurnInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\WindowShowCommand.resx">
+      <DependentUpon>WindowShowCommand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>
@@ -205,9 +232,7 @@
       <Name>OutlandAreaLogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -260,6 +285,14 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Front1.png" />
+    <None Include="Resources\decreseSpeed.png" />
+    <None Include="Resources\IncreseSpeed.png" />
+    <None Include="Resources\turnRight.png" />
+    <None Include="Resources\turnleft.png" />
+    <None Include="Resources\points.png" />
+    <None Include="Resources\Front.png" />
+    <None Include="Resources\ToolBar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
