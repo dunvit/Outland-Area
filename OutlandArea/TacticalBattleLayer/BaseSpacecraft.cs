@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace OutlandArea.TacticalBattleLayer
 {
@@ -10,5 +7,7 @@ namespace OutlandArea.TacticalBattleLayer
     {
         public long Id { get; set; } = DateTime.UtcNow.Ticks;
         public bool IsPlayerSpacecraft { get; set; } = false;
+
+        
     }
 }

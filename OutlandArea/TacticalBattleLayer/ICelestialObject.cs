@@ -11,5 +11,7 @@ namespace OutlandArea.TacticalBattleLayer
         int Velocity { get; set; }
         Point Location { get; set; }
         string ImageSmall { get; set; }
+
+        Point LocationInLastTurn { get; set; }
     }
 }

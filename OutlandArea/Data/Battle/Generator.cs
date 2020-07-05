@@ -7,9 +7,9 @@ namespace OutlandArea.Data.Battle
 {
     public class Generator
     {
-        public static TacticalBattleLayer.Battle GetBasicBattle()
+        public static TacticalBattleLayer.Battle GetBasicBattle(Action<string> logger)
         {
-            var battle = new TacticalBattleLayer.Battle();
+            var battle = new TacticalBattleLayer.Battle{Logger = logger};
 
             var playerShip = new Thorax
             {

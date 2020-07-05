@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using OutlandArea.Tools;
 
 namespace OutlandArea.TacticalBattleLayer
 {
@@ -38,23 +41,36 @@ namespace OutlandArea.TacticalBattleLayer
             CelestialObjects.Add(celestialObject);
         }
 
-        internal void EndTurn()
+        internal void EndTurn(List<ICommand> commands)
         {
+            if (Turn > 0)
+            {
+                RecalculateCelestialObjectsPositions(commands);
+
+                Logger?.Invoke($"[Battle] End turn. New turn is {Turn}");
+            }
+            else
+            {
+                Logger?.Invoke("[Battle] Everything is prepared to start the battle.");
+            }
+
             Turn++;
-
-            RecalculateCelestialObjectsPositions();
-
-            Logger?.Invoke($"[Battle] End turn. New turn is {Turn}");
 
             OnChangeInformation?.Invoke();
         }
 
-        private void RecalculateCelestialObjectsPositions()
+        private void RecalculateCelestialObjectsPositions(List<ICommand> commands)
         {
-            foreach (var item in CelestialObjects)
+            foreach (var spacecraft in CelestialObjects.Where(celestialObject => celestialObject is BaseSpacecraft))
             {
+                spacecraft.LocationInLastTurn = spacecraft.Location;
 
+                spacecraft.Location = Common.MoveCelestialObjects(spacecraft.Location, spacecraft.Velocity / 10, spacecraft.Direction);
+
+                Logger?.Invoke($"[Battle] Spacecraft id='{spacecraft.Id}' moved from ({spacecraft.LocationInLastTurn.X},{spacecraft.LocationInLastTurn.Y}) to ({spacecraft.Location.X},{spacecraft.Location.Y})");
             }
         }
+
+        
     }
 }

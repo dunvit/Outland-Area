@@ -19,6 +19,8 @@ namespace OutlandArea.UI.Screens
             controlTacticalMap.OnMouseMoveCelestialObject += EventMouseMoveCelestialObject;
             controlTacticalMap.OnMouseLeaveCelestialObject += EventMouseLeaveCelestialObject;
             Manager.OnStartNewTurn += Event_StartNewTurn;
+
+            Manager.SetLogger(LogWrite);
         }
 
         private void EventMouseMoveCelestialObject(ICelestialObject celestialObject)
