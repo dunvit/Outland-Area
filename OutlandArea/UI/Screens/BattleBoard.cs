@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 using OutlandArea.TacticalBattleLayer;
@@ -16,35 +17,50 @@ namespace OutlandArea.UI.Screens
         {
             InitializeComponent();
 
-            controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
+            controlNavigationCommands.SpacecraftId = Manager.GetSpacecraftId();
+
+            controlTacticalMap.Size = new Size(1918, 1078);
             controlTacticalMap.OnMouseMoveCelestialObject += EventMouseMoveCelestialObject;
             controlTacticalMap.OnMouseLeaveCelestialObject += EventMouseLeaveCelestialObject;
 
             controlNavigationCommands.OnSelectCommand += Event_ShowCommand;
+
+            Manager.GetSpacecraftId();
 
             Manager.OnStartNewTurn += Event_StartNewTurn;
 
             Manager.SetLogger(LogWrite);
         }
 
-        private void Event_ShowCommand(ICommand obj)
+        private void Event_ShowCommand(ICommand command)
         {
-            var windowShowCommand = new WindowShowCommand();
+            var windowShowCommand = new WindowShowCommand {Command = command, Location = new Point(Cursor.Position.X - 100, Cursor.Position.Y - 100)};
+
+            LogWrite("[BattleBoard] Open window AddCommand for " + command.Description);
+
+            windowShowCommand.OnAddCommand += Event_AddCommandToTurn;
 
             windowShowCommand.ShowDialog(this);
+        }
+
+        private void Event_AddCommandToTurn(ICommand command)
+        {
+            LogWrite("[BattleBoard] Add command for " + command.Description);
+
+            Manager.AddCommand(command);
         }
 
         private void EventMouseMoveCelestialObject(ICelestialObject celestialObject)
         {
             currentCelestialObject = celestialObject;
-            LogWrite("MouseMove_CelestialObject - " + celestialObject.Name);
+            LogWrite("[BattleBoard] MouseMove_CelestialObject - " + celestialObject.Name);
         }
 
         private void EventMouseLeaveCelestialObject(ICelestialObject celestialObject)
         {
             if (currentCelestialObject != null)
             {
-                LogWrite("MouseLeave_CelestialObject - " + currentCelestialObject.Name);
+                LogWrite("[BattleBoard] MouseLeave_CelestialObject - " + currentCelestialObject.Name);
             }
 
             currentCelestialObject = null;
@@ -92,11 +108,6 @@ namespace OutlandArea.UI.Screens
 
                 log.Debug(message);
             }
-
-        }
-
-        private void oaButton2_Click(object sender, EventArgs e)
-        {
 
         }
 

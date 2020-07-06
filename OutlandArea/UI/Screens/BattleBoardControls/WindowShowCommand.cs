@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using OutlandArea.TacticalBattleLayer;
 
 namespace OutlandArea.UI.Screens.BattleBoardControls
 {
     public partial class WindowShowCommand : Form
     {
+        public event Action<ICommand> OnAddCommand;
+
+        public ICommand Command { get; set; }
+
         public WindowShowCommand()
         {
             InitializeComponent();
@@ -19,6 +17,13 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         private void cmdCancel_Click_1(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void Event_AddCommand(object sender, EventArgs e)
+        {
+            OnAddCommand?.Invoke(Command);
+
             Close();
         }
     }

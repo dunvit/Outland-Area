@@ -120,7 +120,7 @@
             this.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdCancel.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.cmdCancel.Location = new System.Drawing.Point(18, 334);
+            this.cmdCancel.Location = new System.Drawing.Point(220, 340);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(117, 23);
             this.cmdCancel.TabIndex = 87;
@@ -136,12 +136,13 @@
             this.cmdAddCommand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdAddCommand.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdAddCommand.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.cmdAddCommand.Location = new System.Drawing.Point(220, 334);
+            this.cmdAddCommand.Location = new System.Drawing.Point(18, 340);
             this.cmdAddCommand.Name = "cmdAddCommand";
             this.cmdAddCommand.Size = new System.Drawing.Size(117, 23);
             this.cmdAddCommand.TabIndex = 86;
-            this.cmdAddCommand.Text = "Add commands";
+            this.cmdAddCommand.Text = "Add command";
             this.cmdAddCommand.UseVisualStyleBackColor = false;
+            this.cmdAddCommand.Click += new System.EventHandler(this.Event_AddCommand);
             // 
             // label5
             // 
@@ -298,7 +299,9 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowShowCommand";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "WindowShowCommand";
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

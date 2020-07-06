@@ -8,6 +8,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
     {
         public event Action<ICommand> OnSelectCommand;
 
+        public long SpacecraftId { get; set; }
+
         public NavigationCommands()
         {
             InitializeComponent();
@@ -21,8 +23,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         private void Event_SelectCommand(object sender, EventArgs e)
         {
-            var command = new TacticalBattleLayer.Commands.Navigation(
-                "", 100, 100);
+            var command = new TacticalBattleLayer.Commands.Navigation(SpacecraftId, "Turn on 10 degrees left", 2, 87);
 
             OnSelectCommand?.Invoke(command);
         }

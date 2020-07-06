@@ -9,6 +9,8 @@ namespace OutlandArea.TacticalBattleLayer
     public interface ICommand
     {
         string Description { get;}
+
+        long SpacecraftId { get; set; }
         int TimePointCost { get; }
         int SuccessChance { get; }
     }

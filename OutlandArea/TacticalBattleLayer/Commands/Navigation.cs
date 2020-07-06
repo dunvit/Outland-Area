@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace OutlandArea.TacticalBattleLayer.Commands
 {
     class Navigation: ICommand
     {
         public string Description { get; }
+        public long SpacecraftId { get; set; }
         public int TimePointCost { get; }
         public int SuccessChance { get; }
 
-        public Navigation(string description, int timePointCost, int successChance)
+        public Navigation(long spacecraftId, string description, int timePointCost, int successChance)
         {
+            SpacecraftId = spacecraftId;
             TimePointCost = timePointCost;
             Description = description;
             SuccessChance = successChance;
