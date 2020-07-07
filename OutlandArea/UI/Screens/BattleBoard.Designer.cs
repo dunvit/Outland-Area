@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.oaButton6 = new OutlandAreaLogic.Controls.OaButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.cmdNavigation = new OutlandAreaLogic.Controls.OaButton();
+            this.oaButton2 = new OutlandAreaLogic.Controls.OaButton();
+            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.oaButton5 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton3 = new OutlandAreaLogic.Controls.OaButton();
-            this.oaButton2 = new OutlandAreaLogic.Controls.OaButton();
-            this.cmdNavigation = new OutlandAreaLogic.Controls.OaButton();
-            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
+            this.oaButton6 = new OutlandAreaLogic.Controls.OaButton();
             this.turnInformation1 = new OutlandArea.UI.Screens.BattleBoardControls.TurnInformation();
             this.manelLog = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.controlTacticalMap = new OutlandArea.UI.Screens.BattleBoardControls.TacticalMap();
             this.commandClose = new OutlandAreaLogic.Controls.OaButton();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
-            this.manelLog.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.manelLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -62,63 +62,17 @@
             this.panel1.Size = new System.Drawing.Size(1920, 1080);
             this.panel1.TabIndex = 0;
             // 
-            // oaButton6
+            // panel2
             // 
-            this.oaButton6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.oaButton6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.oaButton6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.oaButton6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oaButton6.ForeColor = System.Drawing.Color.Gold;
-            this.oaButton6.Location = new System.Drawing.Point(1412, 9);
-            this.oaButton6.Name = "oaButton6";
-            this.oaButton6.Size = new System.Drawing.Size(498, 23);
-            this.oaButton6.TabIndex = 6;
-            this.oaButton6.Text = "Compartments";
-            this.oaButton6.UseVisualStyleBackColor = false;
-            // 
-            // oaButton5
-            // 
-            this.oaButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.oaButton5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.oaButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.oaButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oaButton5.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.oaButton5.Location = new System.Drawing.Point(381, 3);
-            this.oaButton5.Name = "oaButton5";
-            this.oaButton5.Size = new System.Drawing.Size(120, 23);
-            this.oaButton5.TabIndex = 5;
-            this.oaButton5.Text = "Engineering";
-            this.oaButton5.UseVisualStyleBackColor = false;
-
-            // 
-            // oaButton3
-            // 
-            this.oaButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.oaButton3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.oaButton3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.oaButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oaButton3.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.oaButton3.Location = new System.Drawing.Point(255, 3);
-            this.oaButton3.Name = "oaButton3";
-            this.oaButton3.Size = new System.Drawing.Size(120, 23);
-            this.oaButton3.TabIndex = 5;
-            this.oaButton3.Text = "Weapon C2";
-            this.oaButton3.UseVisualStyleBackColor = false;
-
-            // 
-            // oaButton2
-            // 
-            this.oaButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.oaButton2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.oaButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.oaButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oaButton2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.oaButton2.Location = new System.Drawing.Point(129, 3);
-            this.oaButton2.Name = "oaButton2";
-            this.oaButton2.Size = new System.Drawing.Size(120, 23);
-            this.oaButton2.TabIndex = 5;
-            this.oaButton2.Text = "Weapon C1";
-            this.oaButton2.UseVisualStyleBackColor = false;
+            this.panel2.Controls.Add(this.cmdNavigation);
+            this.panel2.Controls.Add(this.oaButton2);
+            this.panel2.Controls.Add(this.controlNavigationCommands);
+            this.panel2.Controls.Add(this.oaButton5);
+            this.panel2.Controls.Add(this.oaButton3);
+            this.panel2.Location = new System.Drawing.Point(1409, 38);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(506, 438);
+            this.panel2.TabIndex = 7;
             // 
             // cmdNavigation
             // 
@@ -135,21 +89,80 @@
             this.cmdNavigation.UseVisualStyleBackColor = false;
             this.cmdNavigation.Click += new System.EventHandler(this.Event_ShowNavigationCommandsControl);
             // 
+            // oaButton2
+            // 
+            this.oaButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.oaButton2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.oaButton2.Location = new System.Drawing.Point(129, 3);
+            this.oaButton2.Name = "oaButton2";
+            this.oaButton2.Size = new System.Drawing.Size(120, 23);
+            this.oaButton2.TabIndex = 5;
+            this.oaButton2.Text = "Weapon C1";
+            this.oaButton2.UseVisualStyleBackColor = false;
+            // 
             // controlNavigationCommands
             // 
             this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
             this.controlNavigationCommands.Location = new System.Drawing.Point(4, 32);
+            this.controlNavigationCommands.Manager = null;
             this.controlNavigationCommands.Name = "controlNavigationCommands";
             this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
+            this.controlNavigationCommands.SpacecraftId = ((long)(0));
             this.controlNavigationCommands.TabIndex = 4;
             this.controlNavigationCommands.Visible = false;
+            // 
+            // oaButton5
+            // 
+            this.oaButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.oaButton5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton5.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.oaButton5.Location = new System.Drawing.Point(381, 3);
+            this.oaButton5.Name = "oaButton5";
+            this.oaButton5.Size = new System.Drawing.Size(120, 23);
+            this.oaButton5.TabIndex = 5;
+            this.oaButton5.Text = "Engineering";
+            this.oaButton5.UseVisualStyleBackColor = false;
+            // 
+            // oaButton3
+            // 
+            this.oaButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.oaButton3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton3.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.oaButton3.Location = new System.Drawing.Point(255, 3);
+            this.oaButton3.Name = "oaButton3";
+            this.oaButton3.Size = new System.Drawing.Size(120, 23);
+            this.oaButton3.TabIndex = 5;
+            this.oaButton3.Text = "Weapon C2";
+            this.oaButton3.UseVisualStyleBackColor = false;
+            // 
+            // oaButton6
+            // 
+            this.oaButton6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.oaButton6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton6.ForeColor = System.Drawing.Color.Gold;
+            this.oaButton6.Location = new System.Drawing.Point(1412, 9);
+            this.oaButton6.Name = "oaButton6";
+            this.oaButton6.Size = new System.Drawing.Size(498, 23);
+            this.oaButton6.TabIndex = 6;
+            this.oaButton6.Text = "Compartments";
+            this.oaButton6.UseVisualStyleBackColor = false;
             // 
             // turnInformation1
             // 
             this.turnInformation1.BackColor = System.Drawing.Color.Black;
             this.turnInformation1.Location = new System.Drawing.Point(11, 12);
+            this.turnInformation1.Manager = null;
             this.turnInformation1.Name = "turnInformation1";
-            this.turnInformation1.Size = new System.Drawing.Size(336, 347);
+            this.turnInformation1.Size = new System.Drawing.Size(336, 372);
             this.turnInformation1.TabIndex = 3;
             // 
             // manelLog
@@ -188,6 +201,7 @@
             this.controlTacticalMap.BackColor = System.Drawing.Color.Black;
             this.controlTacticalMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.controlTacticalMap.Location = new System.Drawing.Point(0, 0);
+            this.controlTacticalMap.Manager = null;
             this.controlTacticalMap.Margin = new System.Windows.Forms.Padding(6);
             this.controlTacticalMap.Name = "controlTacticalMap";
             this.controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
@@ -208,18 +222,6 @@
             this.commandClose.UseVisualStyleBackColor = false;
             this.commandClose.Click += new System.EventHandler(this.Event_CloseApplication);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.cmdNavigation);
-            this.panel2.Controls.Add(this.oaButton2);
-            this.panel2.Controls.Add(this.controlNavigationCommands);
-            this.panel2.Controls.Add(this.oaButton5);
-            this.panel2.Controls.Add(this.oaButton3);
-            this.panel2.Location = new System.Drawing.Point(1409, 38);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(506, 438);
-            this.panel2.TabIndex = 7;
-            // 
             // BattleBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,9 +238,9 @@
             this.Text = "BattleBoard";
             this.Load += new System.EventHandler(this.Event_BoardLoad);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.manelLog.ResumeLayout(false);
             this.manelLog.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

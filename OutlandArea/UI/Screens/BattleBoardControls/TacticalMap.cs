@@ -4,14 +4,18 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using OutlandArea.TacticalBattleLayer;
+using OutlandArea.TacticalBattleLayer.Commands;
 using OutlandArea.Tools;
 
 namespace OutlandArea.UI.Screens.BattleBoardControls
 {
-    public partial class TacticalMap : UserControl
+    public partial class TacticalMap : UserControl, IBattleManager
     {
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
+
+        public Manager Manager { get; set; }
+
 
         private readonly Pen _radarLinePenSecond = new Pen(Color.FromArgb(45, 45, 45), 1);
         private readonly Pen _radarLinePen = new Pen(Color.FromArgb(30, 30, 30), 1);
@@ -35,6 +39,31 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             InitializeComponent();
         }
 
+        public void Activate(Manager manager)
+        {
+            Manager = manager;
+
+            Manager.OnChangeCommandsQueue += Event_ChangeCommandsQueue;
+        }
+
+        private NavigationChanges navigationChanges = new NavigationChanges();
+
+        private void Event_ChangeCommandsQueue()
+        {
+            navigationChanges = new NavigationChanges();
+
+            var commands = Manager.GetCurrentTurnCommands();
+
+            foreach (var command in commands)
+            {
+                if (command is Navigation navigation)
+                {
+                    navigationChanges.VelocityDelta += navigation.Request.VelocityDelta;
+                    navigationChanges.DirectionDelta += navigation.Request.DirectionDelta;
+                }
+            }
+        }
+
         private void Event_MapLoad(object sender, EventArgs e)
         {
             _screenParameters = new ScreenParameters(Width, Height);
@@ -46,6 +75,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         public void Refresh(Turn turn)
         {
+            navigationChanges = new NavigationChanges();
+
             CurrentTurn = turn;
 
             if (turn.Number == 1)
@@ -114,7 +145,9 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             foreach (var celestialObject in CurrentTurn.CelestialObjects)
             {
-                var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, center, celestialObject.Location);
+                //var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, center, celestialObject.Location);
+                var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
+
 
                 if (celestialObject is BaseSpacecraft)
                 {
@@ -180,6 +213,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             float[] dashValues = { 2, 2, 2, 2 };
             var blackPen = new Pen(Color.Black, 1) {DashPattern = dashValues};
+            var greenPen = new Pen(Color.Green, 1) { DashPattern = dashValues };
 
             var mainColor = Color.DarkRed;
             var mainIcon = "EnemySpaceship";
@@ -188,6 +222,20 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             {
                 mainColor = Color.DarkOliveGreen;
                 mainIcon = "PlayerSpaceship";
+            }
+
+            if (spaceCraft.IsPlayerSpacecraft)
+            {
+                if (navigationChanges.VelocityDelta != 0 || navigationChanges.DirectionDelta != 0)
+                {
+                    var directionChangeCoordinates = Common.MoveCelestialObjects(absoluteCoordinates, 50,
+                        celestialObject.Direction + navigationChanges.DirectionDelta);
+
+                    graphics.DrawLine(new Pen(Color.DimGray, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionChangeCoordinates.X, directionChangeCoordinates.Y);
+                    graphics.DrawLine(greenPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y), new Point(directionChangeCoordinates.X, directionChangeCoordinates.Y));
+
+                    graphics.FillEllipse(new SolidBrush(Color.DimGray), directionChangeCoordinates.X - 2, directionChangeCoordinates.Y - 2, 4, 4);
+                }
             }
 
             var directionCoordinates = Common.MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
@@ -205,6 +253,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             graphics.FillEllipse(new SolidBrush(mainColor), new Rectangle(absoluteCoordinates.X - 1, absoluteCoordinates.Y - 1, 2, 2));
 
+            
         }
 
         #region Draw radar parts

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using OutlandArea.TacticalBattleLayer.Commands;
 using OutlandArea.Tools;
 
 namespace OutlandArea.TacticalBattleLayer
@@ -27,7 +28,7 @@ namespace OutlandArea.TacticalBattleLayer
 
         private void Initialization()
         {
-            Turn = 0;
+            Turn = 1;
             State = State.Preparation;
             CelestialObjects = new List<ICelestialObject>();
         }
@@ -39,6 +40,16 @@ namespace OutlandArea.TacticalBattleLayer
         public void AddCelestialObjects(ICelestialObject celestialObject)
         {
             CelestialObjects.Add(celestialObject);
+        }
+
+        private ICelestialObject GetCelestialObject(long id)
+        {
+            foreach (var celestialObject in CelestialObjects.Where(celestialObject => celestialObject.Id == id))
+            {
+                return celestialObject;
+            }
+
+            throw new Exception("Celestial object not found.");
         }
 
         internal void EndTurn(List<ICommand> commands)
@@ -59,8 +70,19 @@ namespace OutlandArea.TacticalBattleLayer
             OnChangeInformation?.Invoke();
         }
 
-        private void RecalculateCelestialObjectsPositions(List<ICommand> commands)
+        private void RecalculateCelestialObjectsPositions(IEnumerable<ICommand> commands)
         {
+            foreach (var command in commands)
+            {
+                if (command is Navigation navigation)
+                {
+                    var celestialObject = GetCelestialObject(command.SpacecraftId);
+
+                    celestialObject.Velocity += navigation.Request.VelocityDelta;
+                    celestialObject.Direction += navigation.Request.DirectionDelta;
+                }
+            }
+
             foreach (var spacecraft in CelestialObjects.Where(celestialObject => celestialObject is BaseSpacecraft))
             {
                 spacecraft.LocationInLastTurn = spacecraft.Location;

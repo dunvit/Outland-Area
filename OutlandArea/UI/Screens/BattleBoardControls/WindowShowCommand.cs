@@ -13,6 +13,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         public WindowShowCommand()
         {
             InitializeComponent();
+
+            
         }
 
         private void cmdCancel_Click_1(object sender, EventArgs e)
@@ -25,6 +27,12 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             OnAddCommand?.Invoke(Command);
 
             Close();
+        }
+
+        private void WindowShowCommand_Activated(object sender, EventArgs e)
+        {
+            pictureBox6.Image = Tools.UI.LoadGenericImage(@"Images\Commands\" + Command.Image);
+            pictureBox5.Image = Tools.UI.LoadGenericImage(@"Data\Characters\" + Command.PilotID + @"\Front");
         }
     }
 }

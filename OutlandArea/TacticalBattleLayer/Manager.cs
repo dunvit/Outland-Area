@@ -1,65 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+using System.Linq;
 
 namespace OutlandArea.TacticalBattleLayer
 {
-    public static class Manager
+    public class Manager
     {
-        public static event Action<Turn> OnStartNewTurn;
-        private static Turn CurrentTurn { get; set; }
+        public event Action<Turn> OnStartNewTurn;
 
-        private static Battle Battle { get; }
+        public event Action OnChangeCommandsQueue;
 
-        public static TacticalMap Map { get; }
+        private Turn CurrentTurn { get; set; }
 
-        private static Action<string> _logger;
+        private Battle Battle { get; }
 
-        static Manager()
+        public TacticalMap Map { get; }
+
+        private Action<string> _logger;
+
+        public Manager()
         {
             Map = new TacticalMap {PlayerShip = new Point(10, 10)};
 
             Battle = Data.Battle.Generator.GetBasicBattle(Logger);
         }
 
-        public static long GetSpacecraftId()
+        public List<ICommand> GetCurrentTurnCommands()
+        {
+            return CurrentTurn.Commands.ToList();
+        }
+
+        public long GetSpacecraftId()
         {
             return Battle.Spacecraft.Id;
         }
 
-        public static void SetLogger(Action<string> logger)
+        public void SetLogger(Action<string> logger)
         {
             _logger = logger;
 
             Logger("Add logger successful.");
         }
 
-        private static void Logger(string message)
+        private void Logger(string message)
         {
             _logger(" " + message);
         }
 
-        public static void EndTurn(List<ICommand> commands)
+        public void EndTurn()
         {
-            Battle.EndTurn(commands);
+            Battle.EndTurn(CurrentTurn.Commands);
 
             CurrentTurn = new Turn(Battle.CelestialObjects){Number = Battle.Turn};
 
             OnStartNewTurn?.Invoke(CurrentTurn);
         }
 
-        public static void FinishInitialization()
+        public void FinishInitialization()
         {
-            EndTurn(null);
+            CurrentTurn = new Turn(Battle.CelestialObjects) { Number = Battle.Turn };
+
+            OnStartNewTurn?.Invoke(CurrentTurn);
         }
 
-        public static bool AddCommand(ICommand command)
+        public bool AddCommand(ICommand command)
         {
-
             Logger($"[Manager] Add command to queue. Ship Id = {command.SpacecraftId}. Command {command.Description}");
 
             CurrentTurn.Commands.Add(command);
+
+            OnChangeCommandsQueue?.Invoke();
 
             return true;
         }

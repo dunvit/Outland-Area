@@ -64,16 +64,16 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.cmdCancel = new OutlandAreaLogic.Controls.OaButton();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.cmdCommandSecond = new System.Windows.Forms.PictureBox();
             this.cmdCommandFirst = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.cmdCancel = new OutlandAreaLogic.Controls.OaButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
@@ -90,7 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmdCommandSecond)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmdCommandFirst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.panel2.SuspendLayout();
@@ -139,7 +139,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.pictureBox9);
             this.panel1.Controls.Add(this.pictureBox8);
-            this.panel1.Controls.Add(this.pictureBox7);
+            this.panel1.Controls.Add(this.cmdCommandSecond);
             this.panel1.Controls.Add(this.cmdCommandFirst);
             this.panel1.Controls.Add(this.pictureBox5);
             this.panel1.Controls.Add(this.panel2);
@@ -377,7 +377,6 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Enabled = false;
             this.pictureBox2.Image = global::OutlandArea.Properties.Resources.decreseSpeed;
             this.pictureBox2.Location = new System.Drawing.Point(396, 183);
             this.pictureBox2.Name = "pictureBox2";
@@ -385,12 +384,12 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 47;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Enabled = false;
             this.pictureBox3.Image = global::OutlandArea.Properties.Resources.IncreseSpeed;
             this.pictureBox3.Location = new System.Drawing.Point(312, 183);
             this.pictureBox3.Name = "pictureBox3";
@@ -398,12 +397,12 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 46;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Enabled = false;
             this.pictureBox4.Image = global::OutlandArea.Properties.Resources.turnRight;
             this.pictureBox4.Location = new System.Drawing.Point(228, 182);
             this.pictureBox4.Name = "pictureBox4";
@@ -411,12 +410,12 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 45;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox10
             // 
             this.pictureBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox10.Enabled = false;
             this.pictureBox10.Image = global::OutlandArea.Properties.Resources.turnleft;
             this.pictureBox10.Location = new System.Drawing.Point(144, 183);
             this.pictureBox10.Name = "pictureBox10";
@@ -424,6 +423,7 @@
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox10.TabIndex = 44;
             this.pictureBox10.TabStop = false;
+            this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
             // 
             // label15
             // 
@@ -565,6 +565,22 @@
             this.label7.Text = "6";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cmdCancel
+            // 
+            this.cmdCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.cmdCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.cmdCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmdCancel.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
+            this.cmdCancel.Location = new System.Drawing.Point(189, 364);
+            this.cmdCancel.Name = "cmdCancel";
+            this.cmdCancel.Size = new System.Drawing.Size(117, 23);
+            this.cmdCancel.TabIndex = 28;
+            this.cmdCancel.Text = "Hide";
+            this.cmdCancel.UseVisualStyleBackColor = false;
+            this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
+            // 
             // pictureBox16
             // 
             this.pictureBox16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -591,7 +607,7 @@
             // 
             this.pictureBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox9.Enabled = false;
+            this.pictureBox9.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox9.Image = global::OutlandArea.Properties.Resources.decreseSpeed;
             this.pictureBox9.Location = new System.Drawing.Point(396, 73);
             this.pictureBox9.Name = "pictureBox9";
@@ -599,12 +615,13 @@
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox9.TabIndex = 9;
             this.pictureBox9.TabStop = false;
+            this.pictureBox9.Click += new System.EventHandler(this.pictureBox9_Click);
             // 
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox8.Enabled = false;
+            this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox8.Image = global::OutlandArea.Properties.Resources.IncreseSpeed;
             this.pictureBox8.Location = new System.Drawing.Point(312, 73);
             this.pictureBox8.Name = "pictureBox8";
@@ -612,19 +629,21 @@
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox8.TabIndex = 8;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.Click += new System.EventHandler(this.pictureBox8_Click);
             // 
-            // pictureBox7
+            // cmdCommandSecond
             // 
-            this.pictureBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.pictureBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox7.Enabled = false;
-            this.pictureBox7.Image = global::OutlandArea.Properties.Resources.turnRight;
-            this.pictureBox7.Location = new System.Drawing.Point(228, 72);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox7.TabIndex = 7;
-            this.pictureBox7.TabStop = false;
+            this.cmdCommandSecond.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.cmdCommandSecond.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cmdCommandSecond.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmdCommandSecond.Image = global::OutlandArea.Properties.Resources.turnRight;
+            this.cmdCommandSecond.Location = new System.Drawing.Point(228, 72);
+            this.cmdCommandSecond.Name = "cmdCommandSecond";
+            this.cmdCommandSecond.Size = new System.Drawing.Size(50, 50);
+            this.cmdCommandSecond.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cmdCommandSecond.TabIndex = 7;
+            this.cmdCommandSecond.TabStop = false;
+            this.cmdCommandSecond.Click += new System.EventHandler(this.cmdCommandSecond_Click);
             // 
             // cmdCommandFirst
             // 
@@ -672,22 +691,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Navigation compartment +";
             // 
-            // cmdCancel
-            // 
-            this.cmdCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.cmdCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.cmdCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmdCancel.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.cmdCancel.Location = new System.Drawing.Point(189, 364);
-            this.cmdCancel.Name = "cmdCancel";
-            this.cmdCancel.Size = new System.Drawing.Size(117, 23);
-            this.cmdCancel.TabIndex = 28;
-            this.cmdCancel.Text = "Hide";
-            this.cmdCancel.UseVisualStyleBackColor = false;
-            this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
-            // 
             // NavigationCommands
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -712,7 +715,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmdCommandSecond)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmdCommandFirst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.panel2.ResumeLayout(false);
@@ -729,7 +732,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox cmdCommandSecond;
         private System.Windows.Forms.PictureBox cmdCommandFirst;
         private System.Windows.Forms.PictureBox pictureBox5;
         private OutlandAreaLogic.Controls.OaButton cmdCancel;

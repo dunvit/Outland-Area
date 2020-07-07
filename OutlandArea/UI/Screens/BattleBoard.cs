@@ -7,15 +7,20 @@ using OutlandArea.UI.Screens.BattleBoardControls;
 
 namespace OutlandArea.UI.Screens
 {
-    public partial class BattleBoard : Form
+    public partial class BattleBoard : Form, IBattleManager
     {
+        public Manager Manager { get; set; }
+        
+
         private ICelestialObject currentCelestialObject;
 
         ILog log = LogManager.GetLogger(typeof(BattleBoard));
 
-        public BattleBoard()
+        public BattleBoard(Manager manager)
         {
             InitializeComponent();
+
+            Manager = manager;
 
             controlNavigationCommands.SpacecraftId = Manager.GetSpacecraftId();
 
@@ -25,11 +30,18 @@ namespace OutlandArea.UI.Screens
 
             controlNavigationCommands.OnSelectCommand += Event_ShowCommand;
 
-            Manager.GetSpacecraftId();
+            turnInformation1.Activate(Manager);
+            controlTacticalMap.Activate(Manager);
 
             Manager.OnStartNewTurn += Event_StartNewTurn;
+            
 
             Manager.SetLogger(LogWrite);
+        }
+
+        public void Activate(Manager manager)
+        {
+
         }
 
         private void Event_ShowCommand(ICommand command)
@@ -115,5 +127,7 @@ namespace OutlandArea.UI.Screens
         {
             controlNavigationCommands.Visible = !controlNavigationCommands.Visible;
         }
+
+        
     }
 }

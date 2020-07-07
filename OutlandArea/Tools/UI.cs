@@ -4,13 +4,31 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace OutlandArea.Tools
 {
     class UI
     {
+        public static Bitmap LoadGenericImage(string file)
+        {
+            var fileFullName = Path.Combine(Environment.CurrentDirectory, file + ".png");
+
+            if (File.Exists(fileFullName))
+            {
+                var orig = new Bitmap(fileFullName);
+                var clone = new Bitmap(orig.Width, orig.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (var gr = Graphics.FromImage(clone))
+                {
+                    gr.DrawImage(orig, new Rectangle(0, 0, clone.Width, clone.Height));
+                }
+
+                return clone;
+            }
+
+            return null;
+        }
+
         public static Bitmap LoadImage(string file)
         {
             var patternsFolder = Path.Combine(Environment.CurrentDirectory, "Images", "Ships");

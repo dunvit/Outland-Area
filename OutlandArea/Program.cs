@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using OutlandArea.TacticalBattleLayer;
 using OutlandArea.UI.Screens;
 using OutlandAreaLogic;
 
@@ -24,7 +25,10 @@ namespace OutlandArea
 
             //var screenMain = new ScreenStartMenu { Size = Global.ApplicationSettings.WindowSize };
 
-            var screenMain = new BattleBoard { Size = Global.ApplicationSettings.WindowSize };
+            var screenMain = new BattleBoard(new Manager())
+            {
+                Size = Global.ApplicationSettings.WindowSize
+            };
 
             // Add screen as interface screen commands - IScreenCommands
             //Global.GameManager.ScreenMain = screenMain;
