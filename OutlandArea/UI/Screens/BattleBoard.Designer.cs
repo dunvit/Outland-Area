@@ -32,28 +32,25 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmdNavigation = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton2 = new OutlandAreaLogic.Controls.OaButton();
-            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.oaButton5 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton3 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton6 = new OutlandAreaLogic.Controls.OaButton();
-            this.turnInformation1 = new OutlandArea.UI.Screens.BattleBoardControls.TurnInformation();
-            this.manelLog = new System.Windows.Forms.Panel();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.controlTacticalMap = new OutlandArea.UI.Screens.BattleBoardControls.TacticalMap();
             this.commandClose = new OutlandAreaLogic.Controls.OaButton();
+            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
+            this.turnInformation1 = new OutlandArea.UI.Screens.BattleBoardControls.TurnInformation();
+            this.controlTacticalMap = new OutlandArea.UI.Screens.BattleBoardControls.TacticalMap();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.manelLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.txtLog);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.oaButton6);
             this.panel1.Controls.Add(this.turnInformation1);
-            this.panel1.Controls.Add(this.manelLog);
             this.panel1.Controls.Add(this.controlTacticalMap);
             this.panel1.Controls.Add(this.commandClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -103,17 +100,6 @@
             this.oaButton2.Text = "Weapon C1";
             this.oaButton2.UseVisualStyleBackColor = false;
             // 
-            // controlNavigationCommands
-            // 
-            this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
-            this.controlNavigationCommands.Location = new System.Drawing.Point(4, 32);
-            this.controlNavigationCommands.Manager = null;
-            this.controlNavigationCommands.Name = "controlNavigationCommands";
-            this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
-            this.controlNavigationCommands.SpacecraftId = ((long)(0));
-            this.controlNavigationCommands.TabIndex = 4;
-            this.controlNavigationCommands.Visible = false;
-            // 
             // oaButton5
             // 
             this.oaButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
@@ -156,56 +142,15 @@
             this.oaButton6.Text = "Compartments";
             this.oaButton6.UseVisualStyleBackColor = false;
             // 
-            // turnInformation1
-            // 
-            this.turnInformation1.BackColor = System.Drawing.Color.Black;
-            this.turnInformation1.Location = new System.Drawing.Point(11, 12);
-            this.turnInformation1.Manager = null;
-            this.turnInformation1.Name = "turnInformation1";
-            this.turnInformation1.Size = new System.Drawing.Size(336, 372);
-            this.turnInformation1.TabIndex = 3;
-            // 
-            // manelLog
-            // 
-            this.manelLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.manelLog.Controls.Add(this.txtLog);
-            this.manelLog.Controls.Add(this.panel3);
-            this.manelLog.Location = new System.Drawing.Point(11, 381);
-            this.manelLog.Name = "manelLog";
-            this.manelLog.Size = new System.Drawing.Size(336, 252);
-            this.manelLog.TabIndex = 2;
-            // 
             // txtLog
             // 
             this.txtLog.BackColor = System.Drawing.Color.Black;
-            this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLog.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.txtLog.Location = new System.Drawing.Point(0, 29);
+            this.txtLog.Location = new System.Drawing.Point(11, 499);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(334, 221);
+            this.txtLog.Size = new System.Drawing.Size(336, 221);
             this.txtLog.TabIndex = 2;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(334, 29);
-            this.panel3.TabIndex = 1;
-            // 
-            // controlTacticalMap
-            // 
-            this.controlTacticalMap.BackColor = System.Drawing.Color.Black;
-            this.controlTacticalMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.controlTacticalMap.Location = new System.Drawing.Point(0, 0);
-            this.controlTacticalMap.Manager = null;
-            this.controlTacticalMap.Margin = new System.Windows.Forms.Padding(6);
-            this.controlTacticalMap.Name = "controlTacticalMap";
-            this.controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
-            this.controlTacticalMap.TabIndex = 1;
             // 
             // commandClose
             // 
@@ -221,6 +166,37 @@
             this.commandClose.Text = "Close";
             this.commandClose.UseVisualStyleBackColor = false;
             this.commandClose.Click += new System.EventHandler(this.Event_CloseApplication);
+            // 
+            // controlNavigationCommands
+            // 
+            this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
+            this.controlNavigationCommands.Location = new System.Drawing.Point(4, 32);
+            this.controlNavigationCommands.Manager = null;
+            this.controlNavigationCommands.Name = "controlNavigationCommands";
+            this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
+            this.controlNavigationCommands.SpacecraftId = ((long)(0));
+            this.controlNavigationCommands.TabIndex = 4;
+            this.controlNavigationCommands.Visible = false;
+            // 
+            // turnInformation1
+            // 
+            this.turnInformation1.BackColor = System.Drawing.Color.Black;
+            this.turnInformation1.Location = new System.Drawing.Point(11, 12);
+            this.turnInformation1.Manager = null;
+            this.turnInformation1.Name = "turnInformation1";
+            this.turnInformation1.Size = new System.Drawing.Size(336, 384);
+            this.turnInformation1.TabIndex = 3;
+            // 
+            // controlTacticalMap
+            // 
+            this.controlTacticalMap.BackColor = System.Drawing.Color.Black;
+            this.controlTacticalMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.controlTacticalMap.Location = new System.Drawing.Point(0, 0);
+            this.controlTacticalMap.Manager = null;
+            this.controlTacticalMap.Margin = new System.Windows.Forms.Padding(6);
+            this.controlTacticalMap.Name = "controlTacticalMap";
+            this.controlTacticalMap.Size = new System.Drawing.Size(1918, 1078);
+            this.controlTacticalMap.TabIndex = 1;
             // 
             // BattleBoard
             // 
@@ -238,9 +214,8 @@
             this.Text = "BattleBoard";
             this.Load += new System.EventHandler(this.Event_BoardLoad);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.manelLog.ResumeLayout(false);
-            this.manelLog.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -251,9 +226,7 @@
         private OutlandAreaLogic.Controls.OaButton commandClose;
         private BattleBoardControls.TacticalMap controlTacticalMap;
         private BattleBoardControls.TurnInformation turnInformation1;
-        private System.Windows.Forms.Panel manelLog;
         private System.Windows.Forms.TextBox txtLog;
-        private System.Windows.Forms.Panel panel3;
         private OutlandAreaLogic.Controls.OaButton oaButton2;
         private OutlandAreaLogic.Controls.OaButton cmdNavigation;
         private BattleBoardControls.NavigationCommands controlNavigationCommands;

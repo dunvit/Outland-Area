@@ -313,15 +313,25 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             MouseMapCoordinates = Common.ToTacticalMapCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
         }
 
+        private void Event_Click(object sender, EventArgs e)
+        {
+            if (e is MouseEventArgs me && me.Button == MouseButtons.Right)
+            {
+                ResetScreenCenterCoordinates(me);
+            }
+        }
 
-        
+        private void ResetScreenCenterCoordinates(MouseEventArgs me)
+        {
+            currentMouseCoordinates = Common.ToRelativeCoordinates(me.Location, _screenParameters.Center);
 
-        
+            MouseMapCoordinates = Common.ToTacticalMapCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
 
-        
+            _screenParameters.CenterScreenOnMap = MouseMapCoordinates;
 
-        
+            var coordinates = CurrentTurn.GetPlayerSpacecraftLocation();
 
-        
+            circlesCenter = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, coordinates);
+        }
     }
 }
