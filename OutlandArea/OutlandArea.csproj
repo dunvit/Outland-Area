@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Control.Draggable, Version=1.0.5049.269, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Control.Draggable.1.0.5049.269\lib\net35-Client\Control.Draggable.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -130,6 +133,12 @@
     <Compile Include="UI\Screens\Dialog\DialogScreen.Designer.cs">
       <DependentUpon>DialogScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\TargetingCommands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\TargetingCommands.Designer.cs">
+      <DependentUpon>TargetingCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\TargetingCommands.resx">
+      <DependentUpon>TargetingCommands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
@@ -266,6 +278,12 @@
     <Content Include="Images\Commands\IncreseSpeed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Commands\TargetGet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetRemove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Commands\turnleft.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -290,6 +308,9 @@
     <Content Include="Images\Targets\PlayerSpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Targets\TargetOnMap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\TradeGoods\Antibiotics.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -299,6 +320,8 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\TargetRemove.png" />
+    <None Include="Resources\TargetGet.png" />
     <None Include="Resources\Front1.png" />
     <None Include="Resources\decreseSpeed.png" />
     <None Include="Resources\IncreseSpeed.png" />

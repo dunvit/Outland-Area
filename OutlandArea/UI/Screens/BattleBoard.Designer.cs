@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmdNavigation = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton2 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton5 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton3 = new OutlandAreaLogic.Controls.OaButton();
             this.oaButton6 = new OutlandAreaLogic.Controls.OaButton();
-            this.txtLog = new System.Windows.Forms.TextBox();
             this.commandClose = new OutlandAreaLogic.Controls.OaButton();
+//            this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
             this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.turnInformation1 = new OutlandArea.UI.Screens.BattleBoardControls.TurnInformation();
             this.controlTacticalMap = new OutlandArea.UI.Screens.BattleBoardControls.TacticalMap();
@@ -47,6 +48,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            //this.panel1.Controls.Add(this.targetingCommands1);
             this.panel1.Controls.Add(this.txtLog);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.oaButton6);
@@ -58,6 +60,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1920, 1080);
             this.panel1.TabIndex = 0;
+            // 
+            // txtLog
+            // 
+            this.txtLog.BackColor = System.Drawing.Color.Black;
+            this.txtLog.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtLog.Location = new System.Drawing.Point(11, 499);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(336, 221);
+            this.txtLog.TabIndex = 2;
             // 
             // panel2
             // 
@@ -113,6 +125,7 @@
             this.oaButton5.TabIndex = 5;
             this.oaButton5.Text = "Engineering";
             this.oaButton5.UseVisualStyleBackColor = false;
+            this.oaButton5.Click += new System.EventHandler(this.oaButton5_Click);
             // 
             // oaButton3
             // 
@@ -142,16 +155,6 @@
             this.oaButton6.Text = "Compartments";
             this.oaButton6.UseVisualStyleBackColor = false;
             // 
-            // txtLog
-            // 
-            this.txtLog.BackColor = System.Drawing.Color.Black;
-            this.txtLog.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.txtLog.Location = new System.Drawing.Point(11, 499);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(336, 221);
-            this.txtLog.TabIndex = 2;
-            // 
             // commandClose
             // 
             this.commandClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
@@ -167,6 +170,10 @@
             this.commandClose.UseVisualStyleBackColor = false;
             this.commandClose.Click += new System.EventHandler(this.Event_CloseApplication);
             // 
+            // targetingCommands1
+            // 
+            
+            // 
             // controlNavigationCommands
             // 
             this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
@@ -180,6 +187,7 @@
             // 
             // turnInformation1
             // 
+            this.turnInformation1.AllowDrop = true;
             this.turnInformation1.BackColor = System.Drawing.Color.Black;
             this.turnInformation1.Location = new System.Drawing.Point(11, 12);
             this.turnInformation1.Manager = null;
@@ -234,5 +242,6 @@
         private OutlandAreaLogic.Controls.OaButton oaButton5;
         private OutlandAreaLogic.Controls.OaButton oaButton3;
         private System.Windows.Forms.Panel panel2;
+
     }
 }

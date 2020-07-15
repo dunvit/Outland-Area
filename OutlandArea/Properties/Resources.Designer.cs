@@ -122,6 +122,26 @@ namespace OutlandArea.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TargetGet {
+            get {
+                object obj = ResourceManager.GetObject("TargetGet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TargetRemove {
+            get {
+                object obj = ResourceManager.GetObject("TargetRemove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ToolBar {
             get {
                 object obj = ResourceManager.GetObject("ToolBar", resourceCulture);

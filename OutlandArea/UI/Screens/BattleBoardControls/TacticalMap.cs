@@ -25,7 +25,7 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         
         private ScreenParameters _screenParameters;
 
-        private ICelestialObject _selectedCelestialObject = null;
+        private ICelestialObject _selectedCelestialObject;
 
         private Point circlesCenter;
 
@@ -33,6 +33,8 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         private Point MouseMapCoordinates { get; set; }
 
         private bool isCenterOnPlayerShip = false;
+
+        public bool StatusIsStartLockTarget;
 
         public TacticalMap()
         {
@@ -127,7 +129,26 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
             DrawMouseCoordinates(graphics);
 
+            DrawStatuses(graphics);
+
             pictureBox1.Image = image;
+        }
+
+        private void DrawStatuses(Graphics graphics)
+        {
+            var target = Tools.UI.LoadGenericImage(@"Images\Targets\PlayerSpaceship");
+
+            var mouseLocation = PointToClient(Cursor.Position);
+
+            var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, currentMouseCoordinates);
+
+            if (StatusIsStartLockTarget)
+            {
+                graphics.DrawImage(target, new PointF(_screenParameters.Center.X + currentMouseCoordinates.X - 15, _screenParameters.Center.Y + currentMouseCoordinates.Y - 15));
+
+                graphics.FillEllipse(new SolidBrush(Color.Pink), _screenParameters.Center.X + currentMouseCoordinates.X - 15 - 40, currentMouseCoordinates.Y - 15, 80, 80);
+            }
+            
         }
 
         private void DrawRadarElements(Graphics graphics, Point center)
@@ -332,6 +353,11 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             var coordinates = CurrentTurn.GetPlayerSpacecraftLocation();
 
             circlesCenter = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, coordinates);
+        }
+
+        public void StartLockTarget(ICommand command)
+        {
+            StatusIsStartLockTarget = true;
         }
     }
 }
