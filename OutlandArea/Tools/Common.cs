@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using OutlandArea.TacticalBattleLayer;
 
 namespace OutlandArea.Tools
 {
@@ -41,6 +42,14 @@ namespace OutlandArea.Tools
             var relativeY = (celestialObjectPosition.Y - centerRadarLocation.Y);
 
             return new Point(centerPosition.X + relativeX, centerPosition.Y + relativeY);
+        }
+
+        public static Point ToScreenCoordinates(ScreenParameters screenParameters, Point celestialObjectPosition)
+        {
+            var relativeX = (celestialObjectPosition.X - screenParameters.CenterScreenOnMap.X) + screenParameters.Width / 2;
+            var relativeY = (celestialObjectPosition.Y - screenParameters.CenterScreenOnMap.Y) + screenParameters.Height / 2;
+
+            return new Point(relativeX,  relativeY);
         }
     }
 }

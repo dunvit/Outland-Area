@@ -9,7 +9,9 @@ namespace OutlandAreaLogic.Configuration
 
         public string Version => ConfigurationTools.GetConfigFromSectionOptionalStringValue("Current", "Version");
 
-        public Size WindowSize { get; set; } 
+        public Size WindowSize { get; set; }
+
+        public string ServerAddress => ConfigurationTools.GetConfigFromSectionOptionalStringValue("ServerAddress", "Settings");
 
         public Settings()
         {
@@ -17,6 +19,8 @@ namespace OutlandAreaLogic.Configuration
                 ConfigurationTools.GetConfigOptionalIntValue("ClientWidth", "Settings", 1024), 
                 ConfigurationTools.GetConfigOptionalIntValue("ClientHeight", "Settings", 768)
                 );
+
+
         }
 
         public void WriteSettingsToLog()
@@ -24,6 +28,8 @@ namespace OutlandAreaLogic.Configuration
             Logger.Debug("--------------------------------------------------------------");
             Logger.Debug("Version:              " + Version);
             Logger.Debug("WindowSize:           " + WindowSize);
+            Logger.Debug("ServerAddress:        " + ServerAddress);
+            
             Logger.Debug("--------------------------------------------------------------");
         }
     }

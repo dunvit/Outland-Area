@@ -1,0 +1,25 @@
+{
+  "Id": "756e54ac-3e41-49db-98be-03ac8358179f",
+  "CelestialObjects": [
+    {
+      "PositionX": 10000,
+      "PositionY": 10000,
+      "Name": "kya2a",
+      "Direction": 248,
+      "Speed": 174,
+      "Signature": 9250,
+      "Classification": 1,
+      "IsScanned": false
+    },
+    {
+      "PositionX": 10100,
+      "PositionY": 10100,
+      "Name": "kya3a",
+      "Direction": 248,
+      "Speed": 174,
+      "Signature": 9250,
+      "Classification": 1,
+      "IsScanned": false
+    }
+  ]
+}

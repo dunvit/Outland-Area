@@ -39,6 +39,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -54,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Battle\Generator.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="Map\Asteroid.cs" />
+    <Compile Include="Map\CelestialMap.cs" />
+    <Compile Include="Map\ICelestialObject.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
     <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
@@ -139,6 +146,12 @@
     <Compile Include="UI\Screens\TargetingCommands.Designer.cs">
       <DependentUpon>TargetingCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\WindowBattleBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\WindowBattleBoard.Designer.cs">
+      <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +199,9 @@
     <EmbeddedResource Include="UI\Screens\TargetingCommands.resx">
       <DependentUpon>TargetingCommands.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\WindowBattleBoard.resx">
+      <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,6 +240,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Dialogs\1001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

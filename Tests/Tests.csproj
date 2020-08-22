@@ -72,6 +72,8 @@
     <Compile Include="CharacterSystem\CharacterTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
+    <Compile Include="Examples\ExtensionTests.cs" />
+    <Compile Include="Examples\AnonymousTypeTests.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMapTests.cs" />
@@ -97,6 +99,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Examples\Examples.csproj">
+      <Project>{09a3e9d0-3b4f-4c22-af64-beb112fc13af}</Project>
+      <Name>Examples</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
       <Project>{34984709-AF29-46A5-A39D-EC33B3A6A3FB}</Project>
       <Name>OutlandAreaLogic</Name>
