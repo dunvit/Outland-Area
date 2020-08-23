@@ -59,7 +59,7 @@ namespace OutlandArea
                 //Console.WriteLine(responseFromServer);
             }
 
-            // mapContent = GetSavedMap("Map_001"); //responseFromServer;
+            mapContent = GetSavedMap("Map_001"); //responseFromServer;
 
             dynamic jsonResponse = JsonConvert.DeserializeObject(mapContent);
 

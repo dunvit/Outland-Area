@@ -134,6 +134,12 @@
     <Compile Include="UI\Screens\BattleBoardControls\WindowShowCommand.Designer.cs">
       <DependentUpon>WindowShowCommand.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\Controls\PanelObjectView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\Controls\PanelObjectView.Designer.cs">
+      <DependentUpon>PanelObjectView.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\BattleBoardControls\WindowShowCommand.resx">
       <DependentUpon>WindowShowCommand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\Controls\PanelObjectView.resx">
+      <DependentUpon>PanelObjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>
@@ -307,6 +316,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Commands\turnRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\Big.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Ships\EnemySpaceship.png">

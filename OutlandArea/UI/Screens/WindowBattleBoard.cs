@@ -31,6 +31,19 @@ namespace OutlandArea.UI.Screens
 
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
             _gameManager = manager;
+
+            manager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
+            manager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
+        }
+
+        private void Event_MouseMoveCelestialObject(ICelestialObject obj)
+        {
+            crlPanelCelestialObjectInfo.ShowCelestialObjectInfo(obj);
+        }
+
+        private void Event_MouseLeaveCelestialObject(ICelestialObject obj)
+        {
+            crlPanelCelestialObjectInfo.ClearCelestialObjectInfo();
         }
 
         private void WindowBattleBoard_Load(object sender, EventArgs e)
@@ -43,10 +56,23 @@ namespace OutlandArea.UI.Screens
             Application.Exit();
         }
 
+        private ICelestialObject tempCelestialObject;
+
         private void crlRefreshMapTrigger_Tick(object sender, EventArgs e)
         {
             if (_celestialMap != null)
             {
+                if (tempCelestialObject == null)
+                {
+                    tempCelestialObject = new Asteroid{Name = "MORE", PositionX = 10000, PositionY = 10000, Classification = 1};
+                }
+                else
+                {
+                    tempCelestialObject.PositionX = tempCelestialObject.PositionX - 5;
+                    tempCelestialObject.PositionY = tempCelestialObject.PositionY - 5;
+                }
+
+                _celestialMap.UpdateCelestialObjects(tempCelestialObject);
                 // Only for debug in static map.
                 DrawScreen(_celestialMap);
                 return;

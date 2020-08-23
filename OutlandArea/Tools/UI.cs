@@ -29,6 +29,8 @@ namespace OutlandArea.Tools
             return null;
         }
 
+        
+
         public static Bitmap LoadImage(string file)
         {
             var patternsFolder = Path.Combine(Environment.CurrentDirectory, "Images", "Ships");

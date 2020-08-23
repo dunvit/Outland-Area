@@ -35,6 +35,7 @@
             this.txtLog = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.crlRefreshMousePosition = new System.Windows.Forms.Timer(this.components);
+            this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,12 +99,21 @@
             this.crlRefreshMousePosition.Enabled = true;
             this.crlRefreshMousePosition.Tick += new System.EventHandler(this.crlRefreshMousePosition_Tick);
             // 
+            // crlPanelCelestialObjectInfo
+            // 
+            this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
+            this.crlPanelCelestialObjectInfo.Location = new System.Drawing.Point(12, 326);
+            this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
+            this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
+            this.crlPanelCelestialObjectInfo.TabIndex = 7;
+            // 
             // WindowBattleBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.crlPanelCelestialObjectInfo);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.commandApplicationExit);
@@ -127,5 +137,6 @@
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer crlRefreshMousePosition;
+        private Controls.PanelObjectView crlPanelCelestialObjectInfo;
     }
 }
