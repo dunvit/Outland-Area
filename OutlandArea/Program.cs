@@ -32,7 +32,7 @@ namespace OutlandArea
 
             // Add screen as interface screen commands - IScreenCommands
             //Global.GameManager.ScreenMain = screenMain;
-
+            
             // Load form as window forms
             //Application.Run(screenMain);
             Application.Run(new WindowBattleBoard(new GameManager()));

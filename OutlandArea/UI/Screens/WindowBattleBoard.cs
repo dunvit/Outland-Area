@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using log4net;
 using OutlandArea.Map;
 using OutlandArea.TacticalBattleLayer;
 using OutlandArea.Tools;
@@ -25,6 +26,8 @@ namespace OutlandArea.UI.Screens
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
 
+        ILog log = LogManager.GetLogger(typeof(BattleBoard));
+
         public WindowBattleBoard(GameManager manager)
         {
             InitializeComponent();
@@ -32,8 +35,17 @@ namespace OutlandArea.UI.Screens
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
             _gameManager = manager;
 
-            manager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
-            manager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
+            _gameManager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
+            _gameManager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
+            _gameManager.OnRefreshMap += Event_RefreshMap;
+            _gameManager.Initialization(LogWrite);
+        }
+
+        private void Event_RefreshMap()
+        {
+            txtUpdateLastTime.Text = DateTime.UtcNow.Minute.ToString("D2") + @":" +
+                                     DateTime.UtcNow.Second.ToString("D2") + @":" +
+                                     DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
         }
 
         private void Event_MouseMoveCelestialObject(ICelestialObject obj)
@@ -73,12 +85,15 @@ namespace OutlandArea.UI.Screens
                 }
 
                 _celestialMap.UpdateCelestialObjects(tempCelestialObject);
+
+                RefreshCelestialMap();
+
                 // Only for debug in static map.
                 DrawScreen(_celestialMap);
                 return;
             }
 
-            _celestialMap = _gameManager.RefreshCelestialMap();
+            RefreshCelestialMap();
 
             if (DebugTools.IsInDesignMode()) return;
 
@@ -86,6 +101,46 @@ namespace OutlandArea.UI.Screens
 
             // Refresh view by celestial objects map each 1000 milliseconds 
             DrawScreen(_celestialMap);
+        }
+
+        private void RefreshCelestialMap()
+        {
+            _celestialMap = _gameManager.RefreshCelestialMap();
+            
+            textBox1.Text = DateTime.UtcNow.Minute.ToString("D2") + @":" +
+                            DateTime.UtcNow.Second.ToString("D2") + @":" +
+                            DateTime.UtcNow.Millisecond.ToString("D2") + @":" +
+                            $@"Refresh Map {_celestialMap.Id}" + Environment.NewLine + textBox1.Text;
+        }
+
+
+        private delegate void SetTextCallback(string text);
+
+        private void LogWrite(string message)
+        {
+            if (txtLog.InvokeRequired)
+            {
+                var d = new SetTextCallback(LogWrite);
+                Invoke(d, message);
+            }
+            else
+            {
+                txtLog.Text = DateTime.Now.ToString("HH:mm:ss") + @" - " + message + Environment.NewLine + txtLog.Text;
+
+                if (txtLog.Lines.Length > 35)
+                {
+                    var newLines = new string[35];
+
+                    Array.Copy(txtLog.Lines, 0, newLines, 0, 35);
+
+                    txtLog.Lines = newLines;
+                }
+
+                txtLog.Refresh();
+
+                log.Debug(message);
+            }
+
         }
 
         private void DrawScreen(CelestialMap celestialMap)
@@ -251,14 +306,14 @@ namespace OutlandArea.UI.Screens
 
             MouseMapCoordinates = Common.ToTacticalMapCoordinates(MouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            txtLog.Text = Environment.NewLine + $"({e.Location.X},{e.Location.Y}) e.Location" +
-                          Environment.NewLine + $"({MouseScreenCoordinates.X},{MouseScreenCoordinates.Y}) MapCoordinates" + 
-                          Environment.NewLine + $"({MouseMapCoordinates.X},{MouseMapCoordinates.Y}) ScreenCoordinates";
+            //txtLog.Text = Environment.NewLine + $"({e.Location.X},{e.Location.Y}) e.Location" +
+            //              Environment.NewLine + $"({MouseScreenCoordinates.X},{MouseScreenCoordinates.Y}) MapCoordinates" + 
+            //              Environment.NewLine + $"({MouseMapCoordinates.X},{MouseMapCoordinates.Y}) ScreenCoordinates";
 
-            if (_activeCelestialObject != null)
-            {
-                txtLog.Text = txtLog.Text + Environment.NewLine + $@"Active object is '{_activeCelestialObject.Name}'";
-            }
+            //if (_activeCelestialObject != null)
+            //{
+            //    txtLog.Text = txtLog.Text + Environment.NewLine + $@"Active object is '{_activeCelestialObject.Name}'";
+            //}
         }
 
         private void DrawMouseCoordinates(Graphics graphics)

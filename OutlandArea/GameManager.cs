@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
@@ -16,12 +17,13 @@ namespace OutlandArea
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
+        public event Action OnRefreshMap;
+
+        private Action<string> _logger;
 
         public GameManager()
         {
             _applicationSettings = LoadConfiguration();
-
-            _celestialMap = MapInitialization();
         }
 
         private Settings LoadConfiguration()
@@ -31,11 +33,33 @@ namespace OutlandArea
 
         public CelestialMap MapInitialization()
         {
-            return RefreshCelestialMap(@"/init/9000/9000");
+            _logger($"Generate celestial map");
+            return RefreshCelestialMapInternal(@"/init/9000/9000");
         }
 
-        public CelestialMap RefreshCelestialMap(string route = @"/init/9000/9000")
+        public CelestialMap RefreshCelestialMap()
         {
+            var stopwatch = Stopwatch.StartNew();
+
+            _logger($"Refresh celestial map {_celestialMap.Id}");
+
+            RefreshCelestialMapInternal(@"/status/" + _celestialMap.Id);
+
+            stopwatch.Stop();
+
+            _logger($"Refresh celestial map {_celestialMap.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
+
+            OnRefreshMap?.Invoke();
+
+            return _celestialMap;
+        }
+
+       
+
+        private CelestialMap RefreshCelestialMapInternal(string route)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
             // Create a request for the URL.
             var request = WebRequest.Create(_applicationSettings.ServerAddress + route);
             // If required by the server, set the credentials.
@@ -44,7 +68,7 @@ namespace OutlandArea
             // Get the response.
             var response = request.GetResponse();
             // Display the status.
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
 
             var mapContent = "";
             // Get the stream containing content returned by the server.
@@ -59,12 +83,22 @@ namespace OutlandArea
                 //Console.WriteLine(responseFromServer);
             }
 
-            mapContent = GetSavedMap("Map_001"); //responseFromServer;
+            response.Close();
+
+            stopwatch.Stop();
+
+            //_logger($"Get celestial map from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
+
+            stopwatch.Start();
+
+            var stopwatch1 = Stopwatch.StartNew();
+
+            //mapContent = GetSavedMap("Map_001"); //responseFromServer;
 
             dynamic jsonResponse = JsonConvert.DeserializeObject(mapContent);
 
             var celestialMap = new CelestialMap {Id = jsonResponse.Id};
-            
+
             foreach (var celestialObjects in jsonResponse.CelestialObjects)
             {
                 var asteroid = new Asteroid
@@ -82,7 +116,11 @@ namespace OutlandArea
                 celestialMap.CelestialObjects.Add(asteroid);
             }
 
-            response.Close();
+            stopwatch1.Stop();
+
+            //_logger($"Rebuild celestial map finished for {stopwatch1.Elapsed.TotalMilliseconds}");
+
+            //_logger($"[RefreshCelestialMapInternal] finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
             return celestialMap;
         }
@@ -112,6 +150,20 @@ namespace OutlandArea
         public void SelectCelestialObject(ICelestialObject celestialObject)
         {
             OnSelectCelestialObject?.Invoke(celestialObject);
+        }
+
+        public void Initialization(Action<string> logger)
+        {
+            _logger = logger;
+
+            _celestialMap = MapInitialization();
+
+            Logger("Initialization finished successful.");
+        }
+
+        private void Logger(string message)
+        {
+            _logger(" " + message);
         }
     }
 }

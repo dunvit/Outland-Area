@@ -36,6 +36,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.crlRefreshMousePosition = new System.Windows.Forms.Timer(this.components);
             this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
+            this.txtUpdateLastTime = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,12 +108,22 @@
             this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
             this.crlPanelCelestialObjectInfo.TabIndex = 7;
             // 
+            // txtUpdateLastTime
+            // 
+            this.txtUpdateLastTime.ForeColor = System.Drawing.Color.White;
+            this.txtUpdateLastTime.Location = new System.Drawing.Point(250, 21);
+            this.txtUpdateLastTime.Name = "txtUpdateLastTime";
+            this.txtUpdateLastTime.Size = new System.Drawing.Size(134, 14);
+            this.txtUpdateLastTime.TabIndex = 8;
+            this.txtUpdateLastTime.Text = "Updated: ";
+            // 
             // WindowBattleBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.txtUpdateLastTime);
             this.Controls.Add(this.crlPanelCelestialObjectInfo);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtLog);
@@ -138,5 +149,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer crlRefreshMousePosition;
         private Controls.PanelObjectView crlPanelCelestialObjectInfo;
+        private System.Windows.Forms.Label txtUpdateLastTime;
     }
 }
