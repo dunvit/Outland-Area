@@ -34,29 +34,46 @@ namespace OutlandArea
         public CelestialMap MapInitialization()
         {
             _logger($"Generate celestial map");
-            return RefreshCelestialMapInternal(@"/init/9000/9000");
+            return RefreshCelestialMapInternal(@"/init/10000/10000");
         }
 
         public CelestialMap RefreshCelestialMap()
         {
-            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                var stopwatch = Stopwatch.StartNew();
 
-            _logger($"Refresh celestial map {_celestialMap.Id}");
+                _logger($"Refresh celestial map {_celestialMap.Id}");
 
-            RefreshCelestialMapInternal(@"/status/" + _celestialMap.Id);
+                var celestialMap = RefreshCelestialMapInternal(@"/status/" + _celestialMap.Id);
 
-            stopwatch.Stop();
+                stopwatch.Stop();
 
-            _logger($"Refresh celestial map {_celestialMap.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
+                _logger($"Refresh celestial map {_celestialMap.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
-            OnRefreshMap?.Invoke();
+                OnRefreshMap?.Invoke();
 
-            return _celestialMap;
+                return celestialMap;
+            }
+            catch (Exception e)
+            {
+                return _celestialMap;
+            }
+
         }
 
-       
+        public void ResumeSession()
+        {
+            ExecuteRequest(@"/resume/" + _celestialMap.Id);
+        }
 
-        private CelestialMap RefreshCelestialMapInternal(string route)
+        public void Command()
+        {
+            // (gameMapID, spaceshipID, moduleID, personID)
+            ExecuteRequest($@"/command/{_celestialMap.Id}/5005/201/401");
+        }
+
+        private void ExecuteRequest(string route)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -87,7 +104,45 @@ namespace OutlandArea
 
             stopwatch.Stop();
 
-            //_logger($"Get celestial map from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
+            _logger($"Get answer from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
+
+            stopwatch.Start();
+        }
+
+        private CelestialMap RefreshCelestialMapInternal(string route)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            // Create a request for the URL.
+            var request = WebRequest.Create(_applicationSettings.ServerAddress + route);
+            // If required by the server, set the credentials.
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            // Get the response.
+            var response = request.GetResponse();
+            // Display the status.
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            var mapContent = "";
+            // Get the stream containing content returned by the server.
+            // The using block ensures the stream is automatically closed.
+            using (var dataStream = response.GetResponseStream())
+            {
+                // Open the stream using a StreamReader for easy access.
+                var reader = new StreamReader(dataStream);
+                // Read the content.
+                mapContent = reader.ReadToEnd();
+                // Display the content.
+                //Console.WriteLine(responseFromServer);
+            }
+
+            response.Close();
+
+            //mapContent = GetSavedMap("Map_001");
+
+            stopwatch.Stop();
+
+            _logger($"Get celestial map from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
             stopwatch.Start();
 
@@ -97,20 +152,26 @@ namespace OutlandArea
 
             dynamic jsonResponse = JsonConvert.DeserializeObject(mapContent);
 
-            var celestialMap = new CelestialMap {Id = jsonResponse.Id};
+            var celestialMap = new CelestialMap
+            {
+                Id = jsonResponse.id, 
+                IsEnabled = jsonResponse.isEnabled,
+                Turn = jsonResponse.turn
+            };
 
-            foreach (var celestialObjects in jsonResponse.CelestialObjects)
+            foreach (var celestialObjects in jsonResponse.celestialObjects)
             {
                 var asteroid = new Asteroid
                 {
-                    Name = celestialObjects.Name.Value,
-                    PositionX = (int)celestialObjects.PositionX.Value,
-                    PositionY = (int)celestialObjects.PositionY.Value,
-                    Direction = (int)celestialObjects.Direction.Value,
-                    Signature = (int)celestialObjects.Signature.Value,
-                    Speed = (int)celestialObjects.Speed.Value,
-                    Classification = (int)celestialObjects.Classification.Value,
-                    IsScanned = (bool)celestialObjects.IsScanned.Value
+                    Id = (int)celestialObjects.id.Value,
+                    Name = celestialObjects.name.Value,
+                    PositionX = (int)celestialObjects.positionX.Value,
+                    PositionY = (int)celestialObjects.positionY.Value,
+                    Direction = (int)celestialObjects.direction.Value,
+                    Signature = (int)celestialObjects.signature.Value,
+                    Speed = (int)celestialObjects.speed.Value,
+                    Classification = (int)celestialObjects.classification.Value,
+                    IsScanned = (bool)celestialObjects.isScanned.Value
                 };
 
                 celestialMap.CelestialObjects.Add(asteroid);

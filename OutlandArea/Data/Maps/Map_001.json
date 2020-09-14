@@ -1,25 +1,27 @@
 {
-  "Id": "111222333444555",
-  "CelestialObjects": [
+  "id": "1066213065",
+  "isEnabled": false,
+  "celestialObjects": [
     {
-      "PositionX": 10000,
-      "PositionY": 10000,
-      "Name": "kya2a",
-      "Direction": 248,
-      "Speed": 174,
-      "Signature": 9250,
-      "Classification": 1,
-      "IsScanned": false
+      "positionX": 9611,
+      "positionY": 10178,
+      "name": "RBtmd",
+      "direction": 33,
+      "speed": 4,
+      "signature": 4904,
+      "classification": 1,
+      "isScanned": false
     },
     {
-      "PositionX": 10100,
-      "PositionY": 10100,
-      "Name": "kya3a",
-      "Direction": 248,
-      "Speed": 174,
-      "Signature": 9250,
-      "Classification": 1,
-      "IsScanned": false
+      "positionX": 10000,
+      "positionY": 10000,
+      "name": "Red-White Star",
+      "direction": 45,
+      "speed": 0,
+      "signature": 200,
+      "classification": 2,
+      "isScanned": false
     }
-  ]
+  ],
+  "turn": 0
 }

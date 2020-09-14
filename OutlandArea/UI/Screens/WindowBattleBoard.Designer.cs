@@ -35,9 +35,24 @@
             this.txtLog = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.crlRefreshMousePosition = new System.Windows.Forms.Timer(this.components);
-            this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
             this.txtUpdateLastTime = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.crlMapSettingsCoordinadesVisibility = new System.Windows.Forms.CheckBox();
+            this.btnResume = new OutlandAreaLogic.Controls.OaButton();
+            this.txtMapInfoStatus = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtMapInfoTurn = new System.Windows.Forms.Label();
+            this.txtMapInfoObjectsCount = new System.Windows.Forms.Label();
+            this.txtMapInfoID = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtNameLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
+            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
+            this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // crlRefreshMapTrigger
@@ -53,7 +68,7 @@
             this.commandApplicationExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.commandApplicationExit.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.commandApplicationExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.commandApplicationExit.Location = new System.Drawing.Point(1862, 12);
+            this.commandApplicationExit.Location = new System.Drawing.Point(1862, 1045);
             this.commandApplicationExit.Name = "commandApplicationExit";
             this.commandApplicationExit.Size = new System.Drawing.Size(46, 23);
             this.commandApplicationExit.TabIndex = 3;
@@ -100,6 +115,156 @@
             this.crlRefreshMousePosition.Enabled = true;
             this.crlRefreshMousePosition.Tick += new System.EventHandler(this.crlRefreshMousePosition_Tick);
             // 
+            // txtUpdateLastTime
+            // 
+            this.txtUpdateLastTime.ForeColor = System.Drawing.Color.White;
+            this.txtUpdateLastTime.Location = new System.Drawing.Point(33, 109);
+            this.txtUpdateLastTime.Name = "txtUpdateLastTime";
+            this.txtUpdateLastTime.Size = new System.Drawing.Size(134, 14);
+            this.txtUpdateLastTime.TabIndex = 8;
+            this.txtUpdateLastTime.Text = "Updated: ";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.crlMapSettingsCoordinadesVisibility);
+            this.panel1.Controls.Add(this.btnResume);
+            this.panel1.Controls.Add(this.txtUpdateLastTime);
+            this.panel1.Controls.Add(this.txtMapInfoStatus);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.txtMapInfoTurn);
+            this.panel1.Controls.Add(this.txtMapInfoObjectsCount);
+            this.panel1.Controls.Add(this.txtMapInfoID);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.txtNameLabel);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(12, 501);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(224, 250);
+            this.panel1.TabIndex = 9;
+            // 
+            // crlMapSettingsCoordinadesVisibility
+            // 
+            this.crlMapSettingsCoordinadesVisibility.AutoSize = true;
+            this.crlMapSettingsCoordinadesVisibility.Checked = true;
+            this.crlMapSettingsCoordinadesVisibility.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.crlMapSettingsCoordinadesVisibility.ForeColor = System.Drawing.Color.White;
+            this.crlMapSettingsCoordinadesVisibility.Location = new System.Drawing.Point(15, 144);
+            this.crlMapSettingsCoordinadesVisibility.Name = "crlMapSettingsCoordinadesVisibility";
+            this.crlMapSettingsCoordinadesVisibility.Size = new System.Drawing.Size(111, 17);
+            this.crlMapSettingsCoordinadesVisibility.TabIndex = 12;
+            this.crlMapSettingsCoordinadesVisibility.Text = "Show coordinates";
+            this.crlMapSettingsCoordinadesVisibility.UseVisualStyleBackColor = true;
+            this.crlMapSettingsCoordinadesVisibility.CheckStateChanged += new System.EventHandler(this.Event_MapSettingsChange_SetCoordinatesVisibility);
+            // 
+            // btnResume
+            // 
+            this.btnResume.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.btnResume.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.btnResume.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.btnResume.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResume.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResume.ForeColor = System.Drawing.Color.Black;
+            this.btnResume.Location = new System.Drawing.Point(15, 209);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(192, 23);
+            this.btnResume.TabIndex = 11;
+            this.btnResume.Text = "Resume";
+            this.btnResume.UseVisualStyleBackColor = false;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            // 
+            // txtMapInfoStatus
+            // 
+            this.txtMapInfoStatus.BackColor = System.Drawing.Color.Transparent;
+            this.txtMapInfoStatus.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtMapInfoStatus.Location = new System.Drawing.Point(101, 89);
+            this.txtMapInfoStatus.Name = "txtMapInfoStatus";
+            this.txtMapInfoStatus.Size = new System.Drawing.Size(73, 17);
+            this.txtMapInfoStatus.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label4.Location = new System.Drawing.Point(12, 89);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 17);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Status:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtMapInfoTurn
+            // 
+            this.txtMapInfoTurn.BackColor = System.Drawing.Color.Transparent;
+            this.txtMapInfoTurn.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtMapInfoTurn.Location = new System.Drawing.Point(101, 72);
+            this.txtMapInfoTurn.Name = "txtMapInfoTurn";
+            this.txtMapInfoTurn.Size = new System.Drawing.Size(73, 17);
+            this.txtMapInfoTurn.TabIndex = 8;
+            // 
+            // txtMapInfoObjectsCount
+            // 
+            this.txtMapInfoObjectsCount.BackColor = System.Drawing.Color.Transparent;
+            this.txtMapInfoObjectsCount.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtMapInfoObjectsCount.Location = new System.Drawing.Point(101, 55);
+            this.txtMapInfoObjectsCount.Name = "txtMapInfoObjectsCount";
+            this.txtMapInfoObjectsCount.Size = new System.Drawing.Size(73, 17);
+            this.txtMapInfoObjectsCount.TabIndex = 7;
+            // 
+            // txtMapInfoID
+            // 
+            this.txtMapInfoID.BackColor = System.Drawing.Color.Transparent;
+            this.txtMapInfoID.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtMapInfoID.Location = new System.Drawing.Point(101, 38);
+            this.txtMapInfoID.Name = "txtMapInfoID";
+            this.txtMapInfoID.Size = new System.Drawing.Size(73, 17);
+            this.txtMapInfoID.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label3.Location = new System.Drawing.Point(12, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 17);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Turn:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label2.Location = new System.Drawing.Point(12, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 17);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Object count:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txtNameLabel
+            // 
+            this.txtNameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.txtNameLabel.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtNameLabel.Location = new System.Drawing.Point(12, 38);
+            this.txtNameLabel.Name = "txtNameLabel";
+            this.txtNameLabel.Size = new System.Drawing.Size(73, 17);
+            this.txtNameLabel.TabIndex = 3;
+            this.txtNameLabel.Text = "ID:";
+            this.txtNameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Chocolate;
+            this.label1.Location = new System.Drawing.Point(46, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(128, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Map Information";
+            // 
             // crlPanelCelestialObjectInfo
             // 
             this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
@@ -108,14 +273,24 @@
             this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
             this.crlPanelCelestialObjectInfo.TabIndex = 7;
             // 
-            // txtUpdateLastTime
+            // controlNavigationCommands
             // 
-            this.txtUpdateLastTime.ForeColor = System.Drawing.Color.White;
-            this.txtUpdateLastTime.Location = new System.Drawing.Point(250, 21);
-            this.txtUpdateLastTime.Name = "txtUpdateLastTime";
-            this.txtUpdateLastTime.Size = new System.Drawing.Size(134, 14);
-            this.txtUpdateLastTime.TabIndex = 8;
-            this.txtUpdateLastTime.Text = "Updated: ";
+            this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
+            this.controlNavigationCommands.Location = new System.Drawing.Point(1408, 12);
+            this.controlNavigationCommands.Manager = null;
+            this.controlNavigationCommands.Name = "controlNavigationCommands";
+            this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
+            this.controlNavigationCommands.SpacecraftId = ((long)(0));
+            this.controlNavigationCommands.TabIndex = 10;
+            // 
+            // targetingCommands1
+            // 
+            this.targetingCommands1.BackColor = System.Drawing.Color.Black;
+            this.targetingCommands1.Location = new System.Drawing.Point(1408, 429);
+            this.targetingCommands1.Name = "targetingCommands1";
+            this.targetingCommands1.Size = new System.Drawing.Size(500, 400);
+            this.targetingCommands1.SpacecraftId = ((long)(0));
+            this.targetingCommands1.TabIndex = 11;
             // 
             // WindowBattleBoard
             // 
@@ -123,7 +298,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
-            this.Controls.Add(this.txtUpdateLastTime);
+            this.Controls.Add(this.targetingCommands1);
+            this.Controls.Add(this.controlNavigationCommands);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.crlPanelCelestialObjectInfo);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtLog);
@@ -135,6 +312,8 @@
             this.Text = "WindowBattleBoard";
             this.Load += new System.EventHandler(this.WindowBattleBoard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,5 +329,19 @@
         private System.Windows.Forms.Timer crlRefreshMousePosition;
         private Controls.PanelObjectView crlPanelCelestialObjectInfo;
         private System.Windows.Forms.Label txtUpdateLastTime;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtMapInfoTurn;
+        private System.Windows.Forms.Label txtMapInfoObjectsCount;
+        private System.Windows.Forms.Label txtMapInfoID;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label txtNameLabel;
+        private System.Windows.Forms.Label txtMapInfoStatus;
+        private System.Windows.Forms.Label label4;
+        private OutlandAreaLogic.Controls.OaButton btnResume;
+        private System.Windows.Forms.CheckBox crlMapSettingsCoordinadesVisibility;
+        private BattleBoardControls.NavigationCommands controlNavigationCommands;
+        private TargetingCommands targetingCommands1;
     }
 }

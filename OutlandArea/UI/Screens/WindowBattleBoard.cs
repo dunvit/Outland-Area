@@ -17,8 +17,12 @@ namespace OutlandArea.UI.Screens
         private readonly GameManager _gameManager;
         private CelestialMap _celestialMap;
         private readonly ScreenParameters _screenParameters;
+
         private Point MouseScreenCoordinates { get; set; }
         private Point MouseMapCoordinates { get; set; }
+
+        private MapSettings mapSettings = new MapSettings();
+
         private ICelestialObject _activeCelestialObject;
         private ICelestialObject _selectedCelestialObject;
 
@@ -26,7 +30,7 @@ namespace OutlandArea.UI.Screens
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
 
-        ILog log = LogManager.GetLogger(typeof(BattleBoard));
+        private readonly ILog _log = LogManager.GetLogger(typeof(BattleBoard));
 
         public WindowBattleBoard(GameManager manager)
         {
@@ -39,11 +43,19 @@ namespace OutlandArea.UI.Screens
             _gameManager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
             _gameManager.OnRefreshMap += Event_RefreshMap;
             _gameManager.Initialization(LogWrite);
+
+            controlNavigationCommands.OnSelectCommand += Event_SendCommand;
+        }
+
+        private void Event_SendCommand(ICommand obj)
+        {
+            _gameManager.Command();
         }
 
         private void Event_RefreshMap()
         {
-            txtUpdateLastTime.Text = DateTime.UtcNow.Minute.ToString("D2") + @":" +
+            txtUpdateLastTime.Text = @"Updated: " + 
+                                     DateTime.UtcNow.Minute.ToString("D2") + @":" +
                                      DateTime.UtcNow.Second.ToString("D2") + @":" +
                                      DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
         }
@@ -111,8 +123,21 @@ namespace OutlandArea.UI.Screens
                             DateTime.UtcNow.Second.ToString("D2") + @":" +
                             DateTime.UtcNow.Millisecond.ToString("D2") + @":" +
                             $@"Refresh Map {_celestialMap.Id}" + Environment.NewLine + textBox1.Text;
-        }
 
+            txtMapInfoID.Text = _celestialMap.Id;
+            txtMapInfoObjectsCount.Text = _celestialMap.CelestialObjects.Count.ToString();
+            txtMapInfoTurn.Text = _celestialMap.Turn.ToString();
+            txtMapInfoStatus.Text = _celestialMap.IsEnabled ? "active" : "paused";
+
+            if (_celestialMap.IsEnabled)
+            {
+                btnResume.Visible = false;
+            }
+            else
+            {
+                btnResume.Visible = true;
+            }
+        }
 
         private delegate void SetTextCallback(string text);
 
@@ -138,13 +163,24 @@ namespace OutlandArea.UI.Screens
 
                 txtLog.Refresh();
 
-                log.Debug(message);
+                _log.Debug(message);
             }
 
         }
 
+        // TODO: ReDraw tactical map once for turn
+        private int lastRenderedTurn = -1;
+
         private void DrawScreen(CelestialMap celestialMap)
         {
+            //if (celestialMap.Turn == lastRenderedTurn)
+            //{
+            //    // No need to draw the game board twice.
+            //    return;
+            //}
+
+            lastRenderedTurn = celestialMap.Turn;
+
             Image image = new Bitmap(Width, Height);
 
             var graphics = Graphics.FromImage(image);
@@ -159,13 +195,27 @@ namespace OutlandArea.UI.Screens
             foreach (var celestialObject in celestialMap.CelestialObjects)
             {
                 // TODO: Draw Spacecrafts
+                /* classification
+                    1 - Asteroid
+                    2 - Spacecraft
+                    3 - Drone
+                    4 - Missile
+                 */
                 //if (celestialObject is BaseSpacecraft)
                 //{
                 //    DrawSpacecraft(graphics, celestialObject);
                 //}
-                if (celestialObject.Classification == 1)
+
+                switch (celestialObject.Classification)
                 {
-                    DrawAsteroid(celestialObject, graphics);
+                    case 1:
+                        // Regular asteroid
+                        DrawAsteroid(celestialObject, graphics);
+                        break;
+                    case 2:
+                        // Player spaceship
+                        DrawSpaceship(celestialObject, graphics);
+                        break;
                 }
             }
 
@@ -174,9 +224,32 @@ namespace OutlandArea.UI.Screens
 
             DrawActiveCelestialObject(_activeCelestialObject, graphics);
 
-            DrawCelestialObjectCoordinates(celestialMap, graphics);
+            if(mapSettings.IsDrawCelestialObjectCoordinates)
+                DrawCelestialObjectCoordinates(celestialMap, graphics);
+
+            if (mapSettings.IsDrawCelestialObjectDirections)
+                DrawCelestialObjectDirections(celestialMap, graphics);
 
             pictureBox1.Image = image;
+        }
+
+        private void DrawCelestialObjectDirections(CelestialMap celestialMap, Graphics graphics)
+        {
+            float[] dashValues = { 2, 2, 2, 2 };
+            var blackPen = new Pen(Color.Black, 1) { DashPattern = dashValues };
+
+            foreach (var celestialObject in celestialMap.CelestialObjects)
+            {
+                var screenCoordinates = Common.ToScreenCoordinates(_screenParameters,
+                    new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+                var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, 50, celestialObject.Direction);
+
+                graphics.DrawLine(new Pen(Color.DimGray, 1), screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+                graphics.DrawLine(blackPen, new Point(screenCoordinates.X, screenCoordinates.Y), new Point(directionCoordinates.X, directionCoordinates.Y));
+
+                //TODO: Draw arrows
+            }
         }
 
         private void DrawCelestialObjectCoordinates(CelestialMap celestialMap, Graphics graphics)
@@ -205,8 +278,6 @@ namespace OutlandArea.UI.Screens
             graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 5, screenCoordinates.Y - 5, 10, 10);
 
         }
-
-
 
         private void CalculateMouseEvents(CelestialMap celestialMap)
         {
@@ -289,6 +360,25 @@ namespace OutlandArea.UI.Screens
             graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
         }
 
+        private void DrawSpaceship(ICelestialObject celestialObject, Graphics graphics)
+        {
+            var mainColor = Color.DarkRed;
+            var mainIcon = "EnemySpaceship";
+
+            //if (isPlayerSpacecraft)
+            //{
+                mainColor = Color.DarkOliveGreen;
+                mainIcon = "PlayerSpaceship";
+            //}
+            // Convert celestial object coordinates to screen coordinates
+            var screenCoordinates = Common.ToScreenCoordinates(_screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+            var bmpSpacecraft = Tools.UI.RotateImage(Tools.UI.LoadImage(mainIcon), celestialObject.Direction);
+
+            graphics.DrawImage(bmpSpacecraft, new PointF(screenCoordinates.X - 15, screenCoordinates.Y - 15));
+            //graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+        }
+
         private void DrawCenterScreenCross(Graphics graphics)
         {
             var _radarLinePen = new Pen(Color.FromArgb(30, 30, 30), 1);
@@ -361,5 +451,16 @@ namespace OutlandArea.UI.Screens
 
             CalculateMouseEvents(_celestialMap);
         }
+
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            _gameManager.ResumeSession();
+        }
+
+        private void Event_MapSettingsChange_SetCoordinatesVisibility(object sender, EventArgs e)
+        {
+            mapSettings.IsDrawCelestialObjectCoordinates = crlMapSettingsCoordinadesVisibility.Checked;
+        }
+
     }
 }

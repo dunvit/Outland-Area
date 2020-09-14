@@ -22,7 +22,19 @@ namespace OutlandArea.UI.Screens.Controls
             txtSignatureValue.Text = _celestialObject.Signature + @" m";
             txtSpeedValue.Text = _celestialObject.Speed + @" m/s";
 
-            pictureBox2.Image = Tools.UI.LoadGenericImage(@"Images\Ore\" + new Random().Next(1, 3));
+            switch (celestialObject.Classification)
+            {
+                case 1:
+                    // Regular asteroid
+                    pictureBox2.Image = Tools.UI.LoadGenericImage(@"Images\Ore\" + new Random().Next(1, 3));
+                    break;
+                case 2:
+                    // Player spaceship
+                    pictureBox2.Image = Tools.UI.LoadGenericImage(@"Images\Ships\Small\1");
+                    break;
+            }
+
+            
         }
 
         public void ClearCelestialObjectInfo()

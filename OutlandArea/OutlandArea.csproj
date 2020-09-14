@@ -61,6 +61,7 @@
     <Compile Include="Map\Asteroid.cs" />
     <Compile Include="Map\CelestialMap.cs" />
     <Compile Include="Map\ICelestialObject.cs" />
+    <Compile Include="Map\MapSettings.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
     <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
@@ -333,10 +334,16 @@
     <Content Include="Images\Ships\EnemySpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Ships\Large\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Ships\NeutralSpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Ships\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Small\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Targets\EnemySpaceship.png">
