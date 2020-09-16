@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using log4net;
+using OutlandArea.BL;
 using OutlandArea.Map;
 using OutlandArea.TacticalBattleLayer;
 using OutlandArea.Tools;
@@ -15,7 +16,7 @@ namespace OutlandArea.UI.Screens
     {
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private readonly GameManager _gameManager;
-        private CelestialMap _celestialMap;
+        private GameSession _gameSession;
         private readonly ScreenParameters _screenParameters;
 
         private Point MouseScreenCoordinates { get; set; }
@@ -84,7 +85,7 @@ namespace OutlandArea.UI.Screens
 
         private void crlRefreshMapTrigger_Tick(object sender, EventArgs e)
         {
-            if (_celestialMap != null)
+            if (_gameSession != null)
             {
                 if (tempCelestialObject == null)
                 {
@@ -96,12 +97,12 @@ namespace OutlandArea.UI.Screens
                     tempCelestialObject.PositionY = tempCelestialObject.PositionY - 5;
                 }
 
-                _celestialMap.UpdateCelestialObjects(tempCelestialObject);
+                _gameSession.Map.UpdateCelestialObjects(tempCelestialObject);
 
                 RefreshCelestialMap();
 
                 // Only for debug in static map.
-                DrawScreen(_celestialMap);
+                DrawScreen(_gameSession.Map);
                 return;
             }
 
@@ -112,24 +113,24 @@ namespace OutlandArea.UI.Screens
             
 
             // Refresh view by celestial objects map each 1000 milliseconds 
-            DrawScreen(_celestialMap);
+            DrawScreen(_gameSession.Map);
         }
 
         private void RefreshCelestialMap()
         {
-            _celestialMap = _gameManager.RefreshCelestialMap();
+            _gameSession = _gameManager.RefreshCelestialMap();
             
             textBox1.Text = DateTime.UtcNow.Minute.ToString("D2") + @":" +
                             DateTime.UtcNow.Second.ToString("D2") + @":" +
                             DateTime.UtcNow.Millisecond.ToString("D2") + @":" +
-                            $@"Refresh Map {_celestialMap.Id}" + Environment.NewLine + textBox1.Text;
+                            $@"Refresh Map {_gameSession.Id}" + Environment.NewLine + textBox1.Text;
 
-            txtMapInfoID.Text = _celestialMap.Id;
-            txtMapInfoObjectsCount.Text = _celestialMap.CelestialObjects.Count.ToString();
-            txtMapInfoTurn.Text = _celestialMap.Turn.ToString();
-            txtMapInfoStatus.Text = _celestialMap.IsEnabled ? "active" : "paused";
+            txtMapInfoID.Text = _gameSession.Id.ToString();
+            txtMapInfoObjectsCount.Text = _gameSession.Map.CelestialObjects.Count.ToString();
+            txtMapInfoTurn.Text = _gameSession.Map.Turn.ToString();
+            txtMapInfoStatus.Text = _gameSession.Map.IsEnabled ? "active" : "paused";
 
-            if (_celestialMap.IsEnabled)
+            if (_gameSession.Map.IsEnabled)
             {
                 btnResume.Visible = false;
             }
@@ -447,9 +448,9 @@ namespace OutlandArea.UI.Screens
 
         private void crlRefreshMousePosition_Tick(object sender, EventArgs e)
         {
-            if (_celestialMap == null) return;
+            if (_gameSession == null) return;
 
-            CalculateMouseEvents(_celestialMap);
+            CalculateMouseEvents(_gameSession.Map);
         }
 
         private void btnResume_Click(object sender, EventArgs e)

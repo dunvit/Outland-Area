@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using OutlandArea.BL;
 using OutlandArea.Map;
 using OutlandAreaLogic.Configuration;
 
@@ -12,7 +14,7 @@ namespace OutlandArea
     public class GameManager
     {
         private Settings _applicationSettings;
-        private CelestialMap _celestialMap;
+        private GameSession _gameSession;
 
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
@@ -20,6 +22,8 @@ namespace OutlandArea
         public event Action OnRefreshMap;
 
         private Action<string> _logger;
+
+        public List<string> History { get; private set; } = new List<string>();
 
         public GameManager()
         {
@@ -31,25 +35,27 @@ namespace OutlandArea
             return new Settings();
         }
 
-        public CelestialMap MapInitialization()
+        public GameSession MapInitialization()
         {
             _logger($"Generate celestial map");
             return RefreshCelestialMapInternal(@"/init/10000/10000");
         }
 
-        public CelestialMap RefreshCelestialMap()
+        public GameSession RefreshCelestialMap()
         {
             try
             {
                 var stopwatch = Stopwatch.StartNew();
 
-                _logger($"Refresh celestial map {_celestialMap.Id}");
+                _logger($"Refresh celestial map {_gameSession.Id}");
 
-                var celestialMap = RefreshCelestialMapInternal(@"/status/" + _celestialMap.Id);
+                var celestialMap = RefreshCelestialMapInternal(@"/status/" + _gameSession.Id);
+
+                History.Add(_gameSession.Id + " / " + _gameSession.Map.Turn);
 
                 stopwatch.Stop();
 
-                _logger($"Refresh celestial map {_celestialMap.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
+                _logger($"Refresh celestial map {_gameSession.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
                 OnRefreshMap?.Invoke();
 
@@ -57,20 +63,20 @@ namespace OutlandArea
             }
             catch (Exception e)
             {
-                return _celestialMap;
+                return _gameSession;
             }
 
         }
 
         public void ResumeSession()
         {
-            ExecuteRequest(@"/resume/" + _celestialMap.Id);
+            ExecuteRequest(@"/resume/" + _gameSession.Id);
         }
 
         public void Command()
         {
             // (gameMapID, spaceshipID, moduleID, personID)
-            ExecuteRequest($@"/command/{_celestialMap.Id}/5005/201/401");
+            ExecuteRequest($@"/command/{_gameSession.Id}/5005/201/401");
         }
 
         private void ExecuteRequest(string route)
@@ -109,7 +115,7 @@ namespace OutlandArea
             stopwatch.Start();
         }
 
-        private CelestialMap RefreshCelestialMapInternal(string route)
+        private GameSession RefreshCelestialMapInternal(string route)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -152,15 +158,25 @@ namespace OutlandArea
 
             dynamic jsonResponse = JsonConvert.DeserializeObject(mapContent);
 
-            var celestialMap = new CelestialMap
+            var gameSession = new GameSession
             {
-                Id = jsonResponse.id, 
-                IsEnabled = jsonResponse.isEnabled,
-                Turn = jsonResponse.turn
+                Id = (int) jsonResponse.celestialMap.id
             };
 
-            foreach (var celestialObjects in jsonResponse.celestialObjects)
+            var celestialMap = new CelestialMap
             {
+                Id = jsonResponse.celestialMap.id, 
+                IsEnabled = jsonResponse.celestialMap.isEnabled,
+                Turn = jsonResponse.celestialMap.turn
+            };
+
+            
+
+            foreach (var celestialObjects in jsonResponse.celestialMap.celestialObjects)
+            {
+                var id = celestialObjects.name.Value;
+
+
                 var asteroid = new Asteroid
                 {
                     Id = (int)celestialObjects.id.Value,
@@ -183,7 +199,9 @@ namespace OutlandArea
 
             //_logger($"[RefreshCelestialMapInternal] finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
-            return celestialMap;
+            gameSession.Map = celestialMap;
+
+            return gameSession;
         }
 
         private string GetSavedMap(string mapName)
@@ -217,7 +235,7 @@ namespace OutlandArea
         {
             _logger = logger;
 
-            _celestialMap = MapInitialization();
+            _gameSession = MapInitialization();
 
             Logger("Initialization finished successful.");
         }

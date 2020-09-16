@@ -56,8 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\GameSession.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
-    <Compile Include="GameManager.cs" />
+    <Compile Include="BL\GameManager.cs" />
     <Compile Include="Map\Asteroid.cs" />
     <Compile Include="Map\CelestialMap.cs" />
     <Compile Include="Map\ICelestialObject.cs" />
