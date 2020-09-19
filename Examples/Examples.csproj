@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,9 +48,48 @@
     <Compile Include="Extension\ExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scheduler\GameManagerScheduler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scheduler\GameManagerScheduler.Designer.cs">
+      <DependentUpon>GameManagerScheduler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scheduler\ScreenSchedulerExample.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scheduler\ScreenSchedulerExample.Designer.cs">
+      <DependentUpon>ScreenSchedulerExample.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Configuration\Logs.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\OutlandArea.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\Version.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scheduler\GameManagerScheduler.resx">
+      <DependentUpon>GameManagerScheduler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scheduler\ScreenSchedulerExample.resx">
+      <DependentUpon>ScreenSchedulerExample.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
+      <Project>{34984709-af29-46a5-a39d-ec33b3a6a3fb}</Project>
+      <Name>OutlandAreaLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OutlandArea\OutlandArea.csproj">
+      <Project>{7625bba0-1c3e-4853-9d50-4541e30f0c13}</Project>
+      <Name>OutlandArea</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

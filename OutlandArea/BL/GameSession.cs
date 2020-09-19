@@ -6,6 +6,8 @@ namespace OutlandArea.BL
     { 
         public int Id { get; set; }
 
+        public int Turn { get; set; }
+
         public CelestialMap Map { get; set; }
 
         public int Commands { get; set; }

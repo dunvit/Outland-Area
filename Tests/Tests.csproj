@@ -72,6 +72,8 @@
     <Compile Include="CharacterSystem\CharacterTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
+    <Compile Include="Engine\GameManagerTests.cs" />
+    <Compile Include="Engine\TaskSchedulerTests.cs" />
     <Compile Include="Examples\ExtensionTests.cs" />
     <Compile Include="Examples\AnonymousTypeTests.cs" />
     <Compile Include="Global.cs" />

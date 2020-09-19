@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Newtonsoft.Json;
 using OutlandArea.BL;
 using OutlandArea.Map;
@@ -71,6 +72,11 @@ namespace OutlandArea
         public void ResumeSession()
         {
             ExecuteRequest(@"/resume/" + _gameSession.Id);
+        }
+
+        public void PauseSession()
+        {
+            ExecuteRequest(@"/pause/" + _gameSession.Id);
         }
 
         public void Command()
@@ -148,11 +154,11 @@ namespace OutlandArea
 
             stopwatch.Stop();
 
-            _logger($"Get celestial map from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
+            _logger($"Get game session from server {_applicationSettings.ServerAddress + route} finished for {stopwatch.Elapsed.TotalMilliseconds}.");
 
             stopwatch.Start();
 
-            var stopwatch1 = Stopwatch.StartNew();
+            var stopwatchParsing = Stopwatch.StartNew();
 
             //mapContent = GetSavedMap("Map_001"); //responseFromServer;
 
@@ -160,7 +166,8 @@ namespace OutlandArea
 
             var gameSession = new GameSession
             {
-                Id = (int) jsonResponse.celestialMap.id
+                Id = (int) jsonResponse.id,
+                Turn = (int)jsonResponse.turn
             };
 
             var celestialMap = new CelestialMap
@@ -169,13 +176,10 @@ namespace OutlandArea
                 IsEnabled = jsonResponse.celestialMap.isEnabled,
                 Turn = jsonResponse.celestialMap.turn
             };
-
-            
-
+ 
             foreach (var celestialObjects in jsonResponse.celestialMap.celestialObjects)
             {
                 var id = celestialObjects.name.Value;
-
 
                 var asteroid = new Asteroid
                 {
@@ -193,13 +197,14 @@ namespace OutlandArea
                 celestialMap.CelestialObjects.Add(asteroid);
             }
 
-            stopwatch1.Stop();
-
-            //_logger($"Rebuild celestial map finished for {stopwatch1.Elapsed.TotalMilliseconds}");
-
-            //_logger($"[RefreshCelestialMapInternal] finished for {stopwatch.Elapsed.TotalMilliseconds}");
+            stopwatchParsing.Stop();
 
             gameSession.Map = celestialMap;
+
+            _logger($"Get game session parsing finished for {stopwatchParsing.Elapsed.TotalMilliseconds}. " +
+                    $"Game session id = {gameSession.Id}. " +
+                    $" Turn = {gameSession.Turn}. " +
+                    $" Map objects count is {gameSession.Map.CelestialObjects.Count}.");
 
             return gameSession;
         }
@@ -231,13 +236,38 @@ namespace OutlandArea
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
-        public void Initialization(Action<string> logger)
+        public GameSession Initialization(Action<string> logger)
         {
             _logger = logger;
 
             _gameSession = MapInitialization();
 
             Logger("Initialization finished successful.");
+
+            InitializationGameSessionUpdater(logger);
+
+            return _gameSession;
+        }
+
+        private void InitializationGameSessionUpdater(Action<string> logger)
+        {
+            TaskScheduler.Instance.ScheduleTask(5000, 100, GameSessionUpdater, logger);
+        }
+
+        private void GameSessionUpdater()
+        {
+            var timeMetricGetGameSession = Stopwatch.StartNew();
+
+            var gameSession = RefreshCelestialMap();
+
+            timeMetricGetGameSession.Stop();
+
+            //GameTurnsCollection.AddOrUpdate(cell, "value is " + cell, (key, oldValue) => "value is " + cell);
+
+            _logger($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
+                    $"Game session id = {gameSession.Id}." +
+                    $" Turn = {gameSession.Turn}." +
+                    $" Map objects count is {gameSession.Map.CelestialObjects.Count}.");
         }
 
         private void Logger(string message)

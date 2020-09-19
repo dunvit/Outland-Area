@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\GameSession.cs" />
+    <Compile Include="BL\TaskScheduler.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="BL\GameManager.cs" />
     <Compile Include="Map\Asteroid.cs" />
