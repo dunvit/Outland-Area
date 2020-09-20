@@ -48,9 +48,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
-            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
+            this.oaButton1 = new OutlandAreaLogic.Controls.OaButton();
             this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
+            this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
+            this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
+            this.txtTurn = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +129,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.txtTurn);
+            this.panel1.Controls.Add(this.oaButton1);
             this.panel1.Controls.Add(this.crlMapSettingsCoordinadesVisibility);
             this.panel1.Controls.Add(this.btnResume);
             this.panel1.Controls.Add(this.txtUpdateLastTime);
@@ -150,7 +154,7 @@
             this.crlMapSettingsCoordinadesVisibility.Checked = true;
             this.crlMapSettingsCoordinadesVisibility.CheckState = System.Windows.Forms.CheckState.Checked;
             this.crlMapSettingsCoordinadesVisibility.ForeColor = System.Drawing.Color.White;
-            this.crlMapSettingsCoordinadesVisibility.Location = new System.Drawing.Point(15, 144);
+            this.crlMapSettingsCoordinadesVisibility.Location = new System.Drawing.Point(15, 157);
             this.crlMapSettingsCoordinadesVisibility.Name = "crlMapSettingsCoordinadesVisibility";
             this.crlMapSettingsCoordinadesVisibility.Size = new System.Drawing.Size(111, 17);
             this.crlMapSettingsCoordinadesVisibility.TabIndex = 12;
@@ -166,9 +170,9 @@
             this.btnResume.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResume.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnResume.ForeColor = System.Drawing.Color.Black;
-            this.btnResume.Location = new System.Drawing.Point(15, 209);
+            this.btnResume.Location = new System.Drawing.Point(20, 209);
             this.btnResume.Name = "btnResume";
-            this.btnResume.Size = new System.Drawing.Size(192, 23);
+            this.btnResume.Size = new System.Drawing.Size(86, 23);
             this.btnResume.TabIndex = 11;
             this.btnResume.Text = "Resume";
             this.btnResume.UseVisualStyleBackColor = false;
@@ -265,13 +269,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Map Information";
             // 
-            // crlPanelCelestialObjectInfo
+            // oaButton1
             // 
-            this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
-            this.crlPanelCelestialObjectInfo.Location = new System.Drawing.Point(12, 326);
-            this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
-            this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
-            this.crlPanelCelestialObjectInfo.TabIndex = 7;
+            this.oaButton1.BackColor = System.Drawing.Color.IndianRed;
+            this.oaButton1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton1.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.oaButton1.ForeColor = System.Drawing.Color.Black;
+            this.oaButton1.Location = new System.Drawing.Point(112, 209);
+            this.oaButton1.Name = "oaButton1";
+            this.oaButton1.Size = new System.Drawing.Size(86, 23);
+            this.oaButton1.TabIndex = 13;
+            this.oaButton1.Text = "Pause";
+            this.oaButton1.UseVisualStyleBackColor = false;
+            this.oaButton1.Click += new System.EventHandler(this.oaButton1_Click);
+            // 
+            // targetingCommands1
+            // 
+            this.targetingCommands1.BackColor = System.Drawing.Color.Black;
+            this.targetingCommands1.Location = new System.Drawing.Point(1408, 429);
+            this.targetingCommands1.Name = "targetingCommands1";
+            this.targetingCommands1.Size = new System.Drawing.Size(500, 400);
+            this.targetingCommands1.SpacecraftId = ((long)(0));
+            this.targetingCommands1.TabIndex = 11;
             // 
             // controlNavigationCommands
             // 
@@ -283,14 +304,22 @@
             this.controlNavigationCommands.SpacecraftId = ((long)(0));
             this.controlNavigationCommands.TabIndex = 10;
             // 
-            // targetingCommands1
+            // crlPanelCelestialObjectInfo
             // 
-            this.targetingCommands1.BackColor = System.Drawing.Color.Black;
-            this.targetingCommands1.Location = new System.Drawing.Point(1408, 429);
-            this.targetingCommands1.Name = "targetingCommands1";
-            this.targetingCommands1.Size = new System.Drawing.Size(500, 400);
-            this.targetingCommands1.SpacecraftId = ((long)(0));
-            this.targetingCommands1.TabIndex = 11;
+            this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
+            this.crlPanelCelestialObjectInfo.Location = new System.Drawing.Point(12, 326);
+            this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
+            this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
+            this.crlPanelCelestialObjectInfo.TabIndex = 7;
+            // 
+            // txtTurn
+            // 
+            this.txtTurn.ForeColor = System.Drawing.Color.White;
+            this.txtTurn.Location = new System.Drawing.Point(33, 127);
+            this.txtTurn.Name = "txtTurn";
+            this.txtTurn.Size = new System.Drawing.Size(134, 14);
+            this.txtTurn.TabIndex = 14;
+            this.txtTurn.Text = "Turn: ";
             // 
             // WindowBattleBoard
             // 
@@ -343,5 +372,7 @@
         private System.Windows.Forms.CheckBox crlMapSettingsCoordinadesVisibility;
         private BattleBoardControls.NavigationCommands controlNavigationCommands;
         private TargetingCommands targetingCommands1;
+        private OutlandAreaLogic.Controls.OaButton oaButton1;
+        private System.Windows.Forms.Label txtTurn;
     }
 }

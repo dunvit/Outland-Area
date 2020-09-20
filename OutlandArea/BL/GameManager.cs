@@ -17,10 +17,10 @@ namespace OutlandArea
         private Settings _applicationSettings;
         private GameSession _gameSession;
 
+        public event Action<GameSession> OnEndTurn;
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
-        public event Action OnRefreshMap;
 
         private Action<string> _logger;
 
@@ -39,10 +39,10 @@ namespace OutlandArea
         public GameSession MapInitialization()
         {
             _logger($"Generate celestial map");
-            return RefreshCelestialMapInternal(@"/init/10000/10000");
+            return GetGameSession(@"/init/10000/10000");
         }
 
-        public GameSession RefreshCelestialMap()
+        public GameSession RefreshGameSession()
         {
             try
             {
@@ -50,7 +50,7 @@ namespace OutlandArea
 
                 _logger($"Refresh celestial map {_gameSession.Id}");
 
-                var celestialMap = RefreshCelestialMapInternal(@"/status/" + _gameSession.Id);
+                var gameSession = GetGameSession(@"/status/" + _gameSession.Id);
 
                 History.Add(_gameSession.Id + " / " + _gameSession.Map.Turn);
 
@@ -58,9 +58,7 @@ namespace OutlandArea
 
                 _logger($"Refresh celestial map {_gameSession.Id} finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
-                OnRefreshMap?.Invoke();
-
-                return celestialMap;
+                return gameSession;
             }
             catch (Exception e)
             {
@@ -121,7 +119,7 @@ namespace OutlandArea
             stopwatch.Start();
         }
 
-        private GameSession RefreshCelestialMapInternal(string route)
+        private GameSession GetGameSession(string route)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -251,16 +249,23 @@ namespace OutlandArea
 
         private void InitializationGameSessionUpdater(Action<string> logger)
         {
-            TaskScheduler.Instance.ScheduleTask(5000, 100, GameSessionUpdater, logger);
+            TaskScheduler.Instance.ScheduleTask(5000, 100, GetDataFromServer, logger);
         }
 
-        private void GameSessionUpdater()
+        private int turn = 0;
+
+        private void GetDataFromServer()
         {
             var timeMetricGetGameSession = Stopwatch.StartNew();
 
-            var gameSession = RefreshCelestialMap();
+            var gameSession = RefreshGameSession();
 
             timeMetricGetGameSession.Stop();
+
+            if (gameSession.Turn > turn)
+            {
+                EndTurn(gameSession);
+            }
 
             //GameTurnsCollection.AddOrUpdate(cell, "value is " + cell, (key, oldValue) => "value is " + cell);
 
@@ -268,6 +273,13 @@ namespace OutlandArea
                     $"Game session id = {gameSession.Id}." +
                     $" Turn = {gameSession.Turn}." +
                     $" Map objects count is {gameSession.Map.CelestialObjects.Count}.");
+        }
+
+        private void EndTurn(GameSession gameSession)
+        {
+            turn = gameSession.Turn;
+
+            OnEndTurn?.Invoke(gameSession);
         }
 
         private void Logger(string message)

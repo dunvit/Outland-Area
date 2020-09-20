@@ -42,10 +42,17 @@ namespace OutlandArea.UI.Screens
 
             _gameManager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
             _gameManager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
-            _gameManager.OnRefreshMap += Event_RefreshMap;
+            _gameManager.OnEndTurn += Event_NewTurnDataRefresh;
             _gameManager.Initialization(LogWrite);
 
             controlNavigationCommands.OnSelectCommand += Event_SendCommand;
+        }
+
+        private void Event_NewTurnDataRefresh(GameSession gameSession)
+        {
+            _gameSession = gameSession;
+
+            Event_RefreshMap(gameSession);
         }
 
         private void Event_SendCommand(ICommand obj)
@@ -53,12 +60,12 @@ namespace OutlandArea.UI.Screens
             _gameManager.Command();
         }
 
-        private void Event_RefreshMap()
+        private void Event_RefreshMap(GameSession gameSession)
         {
-            txtUpdateLastTime.Text = @"Updated: " + 
-                                     DateTime.UtcNow.Minute.ToString("D2") + @":" +
-                                     DateTime.UtcNow.Second.ToString("D2") + @":" +
-                                     DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
+            //txtUpdateLastTime.Text = $@"Turn #{gameSession.Turn} Updated: " + 
+            //                         DateTime.UtcNow.Minute.ToString("D2") + @":" +
+            //                         DateTime.UtcNow.Second.ToString("D2") + @":" +
+            //                         DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
         }
 
         private void Event_MouseMoveCelestialObject(ICelestialObject obj)
@@ -118,14 +125,10 @@ namespace OutlandArea.UI.Screens
 
         private void RefreshCelestialMap()
         {
-            _gameSession = _gameManager.RefreshCelestialMap();
-            
-            textBox1.Text = DateTime.UtcNow.Minute.ToString("D2") + @":" +
-                            DateTime.UtcNow.Second.ToString("D2") + @":" +
-                            DateTime.UtcNow.Millisecond.ToString("D2") + @":" +
-                            $@"Refresh Map {_gameSession.Id}" + Environment.NewLine + textBox1.Text;
+            _gameSession = _gameManager.RefreshGameSession();
 
             txtMapInfoID.Text = _gameSession.Id.ToString();
+            txtTurn.Text = @"Turn: " + _gameSession.Turn;
             txtMapInfoObjectsCount.Text = _gameSession.Map.CelestialObjects.Count.ToString();
             txtMapInfoTurn.Text = _gameSession.Map.Turn.ToString();
             txtMapInfoStatus.Text = _gameSession.Map.IsEnabled ? "active" : "paused";
@@ -463,5 +466,9 @@ namespace OutlandArea.UI.Screens
             mapSettings.IsDrawCelestialObjectCoordinates = crlMapSettingsCoordinadesVisibility.Checked;
         }
 
+        private void oaButton1_Click(object sender, EventArgs e)
+        {
+            _gameManager.PauseSession();
+        }
     }
 }

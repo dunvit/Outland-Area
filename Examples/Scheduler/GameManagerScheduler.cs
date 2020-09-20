@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OutlandArea;
+using OutlandArea.BL;
 
 namespace Examples.Scheduler
 {
@@ -24,8 +25,37 @@ namespace Examples.Scheduler
         {
             _gameManager = new GameManager();
 
+            _gameManager.OnEndTurn += Event_EndTurn;
+
             //_gameManager.OnRefreshMap += Event_RefreshMap;
             var result = _gameManager.Initialization(LogWrite);
+        }
+
+        private delegate void SetTurnHistoryCallback(GameSession gameSession);
+
+        private void Event_EndTurn(GameSession gameSession)
+        {
+            if (txtTurnsHistory.InvokeRequired)
+            {
+                var d = new SetTurnHistoryCallback(Event_EndTurn);
+                Invoke(d, gameSession);
+            }
+            else
+            {
+                txtTurnsHistory.Text = DateTime.Now.ToString("HH:mm:ss:ffff") + @" - Turn #" + gameSession.Turn + Environment.NewLine + txtTurnsHistory.Text;
+
+                if (txtTurnsHistory.Lines.Length > 35)
+                {
+                    var newLines = new string[35];
+
+                    Array.Copy(txtTurnsHistory.Lines, 0, newLines, 0, 35);
+
+                    txtTurnsHistory.Lines = newLines;
+                }
+
+                txtTurnsHistory.Refresh();
+
+            }
         }
 
         #region Write log to text box

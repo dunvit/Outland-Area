@@ -23,6 +23,8 @@ namespace Examples.Scheduler
             OutlandArea.BL.TaskScheduler.Instance.ScheduleTask(5000, 200, Task, LogWrite);
         }
 
+        private int _turn = 0;
+
         private void Task()
         {
             var cell = Random.Next(10);
