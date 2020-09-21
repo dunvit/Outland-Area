@@ -23,12 +23,12 @@ namespace Examples.Scheduler
 
         private void GameManagerScheduler_Load(object sender, EventArgs e)
         {
-            _gameManager = new GameManager();
+            _gameManager = new GameManager(LogWrite);
 
             _gameManager.OnEndTurn += Event_EndTurn;
 
             //_gameManager.OnRefreshMap += Event_RefreshMap;
-            var result = _gameManager.Initialization(LogWrite);
+            var result = _gameManager.Initialization();
         }
 
         private delegate void SetTurnHistoryCallback(GameSession gameSession);

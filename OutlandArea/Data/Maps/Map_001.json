@@ -1,27 +1,31 @@
 {
-  "id": "1066213065",
-  "isEnabled": false,
-  "celestialObjects": [
-    {
-      "positionX": 9611,
-      "positionY": 10178,
-      "name": "RBtmd",
-      "direction": 33,
-      "speed": 4,
-      "signature": 4904,
-      "classification": 1,
-      "isScanned": false
-    },
-    {
-      "positionX": 10000,
-      "positionY": 10000,
-      "name": "Red-White Star",
-      "direction": 45,
-      "speed": 0,
-      "signature": 200,
-      "classification": 2,
-      "isScanned": false
-    }
-  ],
-  "turn": 0
+  "id": 1005302115,
+  "turn": 0,
+  "celestialMap": {
+    "id": "1066213065",
+    "isEnabled": false,
+    "celestialObjects": [
+      {
+        "positionX": 9611,
+        "positionY": 10178,
+        "name": "RBtmd",
+        "direction": 33,
+        "speed": 4,
+        "signature": 4904,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
+        "positionX": 10000,
+        "positionY": 10000,
+        "name": "Red-White Star",
+        "direction": 45,
+        "speed": 0,
+        "signature": 200,
+        "classification": 2,
+        "isScanned": false
+      }
+    ],
+    "turn": 0
+  }
 }

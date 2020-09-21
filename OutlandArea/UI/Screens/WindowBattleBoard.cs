@@ -33,17 +33,17 @@ namespace OutlandArea.UI.Screens
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BattleBoard));
 
-        public WindowBattleBoard(GameManager manager)
+        public WindowBattleBoard()
         {
             InitializeComponent();
 
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
-            _gameManager = manager;
+            _gameManager = new GameManager(LogWrite);
 
             _gameManager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
             _gameManager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
             _gameManager.OnEndTurn += Event_NewTurnDataRefresh;
-            _gameManager.Initialization(LogWrite);
+            _gameSession = _gameManager.Initialization();
 
             controlNavigationCommands.OnSelectCommand += Event_SendCommand;
         }
@@ -64,8 +64,8 @@ namespace OutlandArea.UI.Screens
 
         private void Event_RefreshMap(GameSession gameSession)
         {
-            var delegatRefresh_UpdateLastTime = new SetGameSessionCallback(Refresh_UpdateLastTime);
-            Invoke(delegatRefresh_UpdateLastTime, gameSession);
+            var delegateRefresh_UpdateLastTime = new SetGameSessionCallback(Refresh_UpdateLastTime);
+            Invoke(delegateRefresh_UpdateLastTime, gameSession);
 
             var delegatRefresh_MapInfoStatus = new SetGameSessionCallback(Refresh_MapInfoStatus);
             Invoke(delegatRefresh_MapInfoStatus, gameSession);
@@ -108,55 +108,13 @@ namespace OutlandArea.UI.Screens
 
         private void crlRefreshMapTrigger_Tick(object sender, EventArgs e)
         {
-            if (_gameSession != null)
-            {
-                if (tempCelestialObject == null)
-                {
-                    tempCelestialObject = new Asteroid{Name = "MORE", PositionX = 10000, PositionY = 10000, Classification = 1};
-                }
-                else
-                {
-                    tempCelestialObject.PositionX = tempCelestialObject.PositionX - 5;
-                    tempCelestialObject.PositionY = tempCelestialObject.PositionY - 5;
-                }
-
-                _gameSession.Map.UpdateCelestialObjects(tempCelestialObject);
-
-                RefreshCelestialMap();
-
-                // Only for debug in static map.
-                DrawScreen(_gameSession.Map);
-                return;
-            }
-
-            RefreshCelestialMap();
-
             if (DebugTools.IsInDesignMode()) return;
 
-            
+            if (_gameSession == null)
+                return;
 
             // Refresh view by celestial objects map each 1000 milliseconds 
             DrawScreen(_gameSession.Map);
-        }
-
-        private void RefreshCelestialMap()
-        {
-            _gameSession = _gameManager.RefreshGameSession();
-
-            txtMapInfoID.Text = _gameSession.Id.ToString();
-            txtTurn.Text = @"Turn: " + _gameSession.Turn;
-            txtMapInfoObjectsCount.Text = _gameSession.Map.CelestialObjects.Count.ToString();
-            txtMapInfoTurn.Text = _gameSession.Map.Turn.ToString();
-            txtMapInfoStatus.Text = _gameSession.Map.IsEnabled ? "active" : "paused";
-
-            if (_gameSession.Map.IsEnabled)
-            {
-                btnResume.Visible = false;
-            }
-            else
-            {
-                btnResume.Visible = true;
-            }
         }
 
         private delegate void SetTextCallback(string text);
@@ -478,7 +436,6 @@ namespace OutlandArea.UI.Screens
             btnResume.Visible = false;
 
             _gameManager.ResumeSession();
-            _gameSession= _gameManager.RefreshGameSession();
         }
 
         private void Event_MapSettingsChange_SetCoordinatesVisibility(object sender, EventArgs e)
@@ -492,7 +449,6 @@ namespace OutlandArea.UI.Screens
             btnResume.Visible = true;
 
             _gameManager.PauseSession();
-            _gameSession = _gameManager.RefreshGameSession();
         }
     }
 }

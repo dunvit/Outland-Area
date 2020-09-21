@@ -56,7 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Convertor.cs" />
+    <Compile Include="BL\Data\ScalaGameServer.cs" />
     <Compile Include="BL\GameSession.cs" />
+    <Compile Include="BL\Data\IGameServer.cs" />
     <Compile Include="BL\TaskScheduler.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="BL\GameManager.cs" />
@@ -255,6 +258,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_002.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

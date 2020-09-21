@@ -13,6 +13,8 @@ namespace OutlandAreaLogic.Configuration
 
         public string ServerAddress => ConfigurationTools.GetConfigFromSectionOptionalStringValue("ServerAddress", "Settings");
 
+        public int ServerType => ConfigurationTools.GetConfigOptionalIntValue("ServerType", "Settings");
+
         public Settings()
         {
             WindowSize = new Size(
