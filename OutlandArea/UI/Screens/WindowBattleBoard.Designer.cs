@@ -37,6 +37,8 @@
             this.crlRefreshMousePosition = new System.Windows.Forms.Timer(this.components);
             this.txtUpdateLastTime = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtTurn = new System.Windows.Forms.Label();
+            this.btnPause = new OutlandAreaLogic.Controls.OaButton();
             this.crlMapSettingsCoordinadesVisibility = new System.Windows.Forms.CheckBox();
             this.btnResume = new OutlandAreaLogic.Controls.OaButton();
             this.txtMapInfoStatus = new System.Windows.Forms.Label();
@@ -48,11 +50,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.oaButton1 = new OutlandAreaLogic.Controls.OaButton();
             this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
             this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
-            this.txtTurn = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -122,7 +122,7 @@
             this.txtUpdateLastTime.ForeColor = System.Drawing.Color.White;
             this.txtUpdateLastTime.Location = new System.Drawing.Point(33, 109);
             this.txtUpdateLastTime.Name = "txtUpdateLastTime";
-            this.txtUpdateLastTime.Size = new System.Drawing.Size(134, 14);
+            this.txtUpdateLastTime.Size = new System.Drawing.Size(186, 14);
             this.txtUpdateLastTime.TabIndex = 8;
             this.txtUpdateLastTime.Text = "Updated: ";
             // 
@@ -130,7 +130,7 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.txtTurn);
-            this.panel1.Controls.Add(this.oaButton1);
+            this.panel1.Controls.Add(this.btnPause);
             this.panel1.Controls.Add(this.crlMapSettingsCoordinadesVisibility);
             this.panel1.Controls.Add(this.btnResume);
             this.panel1.Controls.Add(this.txtUpdateLastTime);
@@ -147,6 +147,31 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(224, 250);
             this.panel1.TabIndex = 9;
+            // 
+            // txtTurn
+            // 
+            this.txtTurn.ForeColor = System.Drawing.Color.White;
+            this.txtTurn.Location = new System.Drawing.Point(33, 127);
+            this.txtTurn.Name = "txtTurn";
+            this.txtTurn.Size = new System.Drawing.Size(134, 14);
+            this.txtTurn.TabIndex = 14;
+            this.txtTurn.Text = "Turn: ";
+            // 
+            // btnPause
+            // 
+            this.btnPause.BackColor = System.Drawing.Color.IndianRed;
+            this.btnPause.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.btnPause.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPause.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPause.ForeColor = System.Drawing.Color.Black;
+            this.btnPause.Location = new System.Drawing.Point(112, 209);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(86, 23);
+            this.btnPause.TabIndex = 13;
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = false;
+            this.btnPause.Click += new System.EventHandler(this.oaButton1_Click);
             // 
             // crlMapSettingsCoordinadesVisibility
             // 
@@ -269,22 +294,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Map Information";
             // 
-            // oaButton1
-            // 
-            this.oaButton1.BackColor = System.Drawing.Color.IndianRed;
-            this.oaButton1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.oaButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.oaButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.oaButton1.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oaButton1.ForeColor = System.Drawing.Color.Black;
-            this.oaButton1.Location = new System.Drawing.Point(112, 209);
-            this.oaButton1.Name = "oaButton1";
-            this.oaButton1.Size = new System.Drawing.Size(86, 23);
-            this.oaButton1.TabIndex = 13;
-            this.oaButton1.Text = "Pause";
-            this.oaButton1.UseVisualStyleBackColor = false;
-            this.oaButton1.Click += new System.EventHandler(this.oaButton1_Click);
-            // 
             // targetingCommands1
             // 
             this.targetingCommands1.BackColor = System.Drawing.Color.Black;
@@ -311,15 +320,6 @@
             this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
             this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
             this.crlPanelCelestialObjectInfo.TabIndex = 7;
-            // 
-            // txtTurn
-            // 
-            this.txtTurn.ForeColor = System.Drawing.Color.White;
-            this.txtTurn.Location = new System.Drawing.Point(33, 127);
-            this.txtTurn.Name = "txtTurn";
-            this.txtTurn.Size = new System.Drawing.Size(134, 14);
-            this.txtTurn.TabIndex = 14;
-            this.txtTurn.Text = "Turn: ";
             // 
             // WindowBattleBoard
             // 
@@ -372,7 +372,7 @@
         private System.Windows.Forms.CheckBox crlMapSettingsCoordinadesVisibility;
         private BattleBoardControls.NavigationCommands controlNavigationCommands;
         private TargetingCommands targetingCommands1;
-        private OutlandAreaLogic.Controls.OaButton oaButton1;
+        private OutlandAreaLogic.Controls.OaButton btnPause;
         private System.Windows.Forms.Label txtTurn;
     }
 }

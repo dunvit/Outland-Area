@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Autofac;
 using Examples.Scheduler;
 
 namespace Examples
@@ -11,6 +12,7 @@ namespace Examples
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new GameManagerScheduler());
         }
     }

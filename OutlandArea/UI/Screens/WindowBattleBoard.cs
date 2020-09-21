@@ -60,12 +60,28 @@ namespace OutlandArea.UI.Screens
             _gameManager.Command();
         }
 
+        private delegate void SetGameSessionCallback(GameSession gameSession);
+
         private void Event_RefreshMap(GameSession gameSession)
         {
-            //txtUpdateLastTime.Text = $@"Turn #{gameSession.Turn} Updated: " + 
-            //                         DateTime.UtcNow.Minute.ToString("D2") + @":" +
-            //                         DateTime.UtcNow.Second.ToString("D2") + @":" +
-            //                         DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
+            var delegatRefresh_UpdateLastTime = new SetGameSessionCallback(Refresh_UpdateLastTime);
+            Invoke(delegatRefresh_UpdateLastTime, gameSession);
+
+            var delegatRefresh_MapInfoStatus = new SetGameSessionCallback(Refresh_MapInfoStatus);
+            Invoke(delegatRefresh_MapInfoStatus, gameSession);
+        }
+
+        private void Refresh_UpdateLastTime(GameSession gameSession)
+        {
+            txtUpdateLastTime.Text = $@"Turn #{gameSession.Turn} Updated: " +
+                                     DateTime.UtcNow.Minute.ToString("D2") + @":" +
+                                     DateTime.UtcNow.Second.ToString("D2") + @":" +
+                                     DateTime.UtcNow.Millisecond.ToString("D3") + @" ";
+        }
+
+        private void Refresh_MapInfoStatus(GameSession gameSession)
+        {
+            txtMapInfoStatus.Text = _gameSession.Map.IsEnabled ? "active" : "paused";
         }
 
         private void Event_MouseMoveCelestialObject(ICelestialObject obj)
@@ -458,7 +474,11 @@ namespace OutlandArea.UI.Screens
 
         private void btnResume_Click(object sender, EventArgs e)
         {
+            btnPause.Visible = true;
+            btnResume.Visible = false;
+
             _gameManager.ResumeSession();
+            _gameSession= _gameManager.RefreshGameSession();
         }
 
         private void Event_MapSettingsChange_SetCoordinatesVisibility(object sender, EventArgs e)
@@ -468,7 +488,11 @@ namespace OutlandArea.UI.Screens
 
         private void oaButton1_Click(object sender, EventArgs e)
         {
+            btnPause.Visible = false;
+            btnResume.Visible = true;
+
             _gameManager.PauseSession();
+            _gameSession = _gameManager.RefreshGameSession();
         }
     }
 }
