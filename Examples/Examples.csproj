@@ -54,6 +54,7 @@
     <Compile Include="Extension\ExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resharper\Examples.cs" />
     <Compile Include="Scheduler\GameManagerScheduler.cs">
       <SubType>Form</SubType>
     </Compile>

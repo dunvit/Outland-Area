@@ -221,12 +221,25 @@ namespace OutlandArea.UI.Screens
                 var screenCoordinates = Common.ToScreenCoordinates(_screenParameters,
                     new Point(celestialObject.PositionX, celestialObject.PositionY));
 
-                var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, 50, celestialObject.Direction);
+                var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed * 2, celestialObject.Direction);
 
-                graphics.DrawLine(new Pen(Color.DimGray, 1), screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                graphics.DrawLine(blackPen, new Point(screenCoordinates.X, screenCoordinates.Y), new Point(directionCoordinates.X, directionCoordinates.Y));
+                var pen = new Pen(Color.DimGray, 1) {StartCap = LineCap.ArrowAnchor};
 
-                //TODO: Draw arrows
+                using (var capPath = new GraphicsPath())
+                {
+                    const int triangleSize = 4;
+                    // A triangle
+                    capPath.AddLine(-triangleSize, 0, triangleSize, 0);
+                    capPath.AddLine(-triangleSize, 0, 0, triangleSize);
+                    capPath.AddLine(0, triangleSize, triangleSize, 0);
+
+                    pen.CustomEndCap = new CustomLineCap(null, capPath);
+
+                    graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+                    graphics.DrawLine(blackPen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+                }
+
+
             }
         }
 

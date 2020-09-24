@@ -40,6 +40,9 @@ namespace OutlandArea
                 case 1:
                     _gameServer = new ScalaGameServer(_applicationSettings, _logger);
                     break;
+                case 2:
+                    _gameServer = new LocalStaticGameServer();
+                    break;
             }
         }
 
@@ -62,7 +65,6 @@ namespace OutlandArea
         {
             _gameServer.Command(_gameSession.Id, 100, 200, 300);
         }
-        
 
         public void MouseMoveCelestialObject(ICelestialObject celestialObject)
         {
@@ -81,11 +83,7 @@ namespace OutlandArea
 
         public GameSession Initialization()
         {
-            
-
-
-
-            _gameSession = _gameServer.Initialization(_logger);
+            _gameSession = _gameServer.Initialization();
 
             Logger("Initialization finished successful.");
 
@@ -99,8 +97,6 @@ namespace OutlandArea
         private void GetDataFromServer()
         {
             var timeMetricGetGameSession = Stopwatch.StartNew();
-
-            
             
             var gameSession = _gameServer.RefreshGameSession(_gameSession.Id);
 

@@ -20,7 +20,7 @@ namespace Tests.Engine
 
             var stopwatchDynamic = Stopwatch.StartNew();
 
-            var gameSessionDynamic = Convertor.ConvertStringToGameSession(jsonGameSession);
+            //var gameSessionDynamic = Convertor.ConvertStringToGameSession(jsonGameSession);
 
             var time = stopwatchDynamic.ElapsedMilliseconds;
 

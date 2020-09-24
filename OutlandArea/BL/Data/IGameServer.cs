@@ -8,7 +8,7 @@ namespace OutlandArea.BL.Data
 {
     public interface IGameServer
     {
-        GameSession Initialization(Action<string> logger);
+        GameSession Initialization();
 
         GameSession RefreshGameSession(int id);
 

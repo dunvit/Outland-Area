@@ -21,7 +21,7 @@ namespace OutlandArea.BL.Data
             _logger = logger;
         }
 
-        public GameSession Initialization(Action<string> logger)
+        public GameSession Initialization()
         {
             _logger($"Request to server {_applicationSettings.ServerAddress} for generate game session.");
             return GetGameSession(@"/init/10000/10000");

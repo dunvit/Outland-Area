@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\Convertor.cs" />
+    <Compile Include="BL\Data\LocalStaticGameServer.cs" />
     <Compile Include="BL\Data\ScalaGameServer.cs" />
     <Compile Include="BL\GameSession.cs" />
     <Compile Include="BL\Data\IGameServer.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="Tools\UI.cs" />
+    <Compile Include="UI\DrawTools\Draw.cs" />
     <Compile Include="UI\Screens\BattleBoard.cs">
       <SubType>Form</SubType>
     </Compile>
