@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OutlandArea.BL.Data
+﻿namespace OutlandArea.BL.Data
 {
     public interface IGameServer
     {
@@ -16,10 +10,7 @@ namespace OutlandArea.BL.Data
 
         void PauseSession(int id);
 
-        /// <summary>
-        /// gameSessionID, spaceshipID, moduleID, personID
-        /// </summary>
-        /// <param name="id"></param>
-        void Command(int id, int spaceshipId, int moduleId, int personId);
+        void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId);
+
     }
 }

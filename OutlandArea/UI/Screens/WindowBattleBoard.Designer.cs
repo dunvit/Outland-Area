@@ -50,9 +50,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.oaButton1 = new OutlandAreaLogic.Controls.OaButton();
             this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
             this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
+            this.commandIncreaseSpeed = new OutlandAreaLogic.Controls.OaButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -294,6 +296,22 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Map Information";
             // 
+            // oaButton1
+            // 
+            this.oaButton1.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.oaButton1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.oaButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.oaButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.oaButton1.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.oaButton1.ForeColor = System.Drawing.Color.Black;
+            this.oaButton1.Location = new System.Drawing.Point(134, 276);
+            this.oaButton1.Name = "oaButton1";
+            this.oaButton1.Size = new System.Drawing.Size(86, 23);
+            this.oaButton1.TabIndex = 15;
+            this.oaButton1.Text = "Refresh";
+            this.oaButton1.UseVisualStyleBackColor = false;
+            this.oaButton1.Click += new System.EventHandler(this.oaButton1_Click_1);
+            // 
             // targetingCommands1
             // 
             this.targetingCommands1.BackColor = System.Drawing.Color.Black;
@@ -321,12 +339,30 @@
             this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
             this.crlPanelCelestialObjectInfo.TabIndex = 7;
             // 
+            // commandIncreaseSpeed
+            // 
+            this.commandIncreaseSpeed.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.commandIncreaseSpeed.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.commandIncreaseSpeed.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.commandIncreaseSpeed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.commandIncreaseSpeed.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.commandIncreaseSpeed.ForeColor = System.Drawing.Color.Gainsboro;
+            this.commandIncreaseSpeed.Location = new System.Drawing.Point(591, 15);
+            this.commandIncreaseSpeed.Name = "commandIncreaseSpeed";
+            this.commandIncreaseSpeed.Size = new System.Drawing.Size(86, 23);
+            this.commandIncreaseSpeed.TabIndex = 16;
+            this.commandIncreaseSpeed.Text = "Forward";
+            this.commandIncreaseSpeed.UseVisualStyleBackColor = false;
+            this.commandIncreaseSpeed.Click += new System.EventHandler(this.commandIncreaseSpeed_Click);
+            // 
             // WindowBattleBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.commandIncreaseSpeed);
+            this.Controls.Add(this.oaButton1);
             this.Controls.Add(this.targetingCommands1);
             this.Controls.Add(this.controlNavigationCommands);
             this.Controls.Add(this.panel1);
@@ -374,5 +410,7 @@
         private TargetingCommands targetingCommands1;
         private OutlandAreaLogic.Controls.OaButton btnPause;
         private System.Windows.Forms.Label txtTurn;
+        private OutlandAreaLogic.Controls.OaButton oaButton1;
+        private OutlandAreaLogic.Controls.OaButton commandIncreaseSpeed;
     }
 }

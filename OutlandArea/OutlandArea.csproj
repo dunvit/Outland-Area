@@ -45,6 +45,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,8 +61,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\Convertor.cs" />
+    <Compile Include="BL\Data\Calculation\CommandExecuteResult.cs" />
+    <Compile Include="BL\Data\Calculation\Coordinates.cs" />
+    <Compile Include="BL\Data\Calculation\Commands.cs" />
+    <Compile Include="BL\Data\LocalGameServer.cs" />
     <Compile Include="BL\Data\LocalStaticGameServer.cs" />
     <Compile Include="BL\Data\ScalaGameServer.cs" />
+    <Compile Include="BL\GameCommand.cs" />
     <Compile Include="BL\GameSession.cs" />
     <Compile Include="BL\Data\IGameServer.cs" />
     <Compile Include="BL\TaskScheduler.cs" />
@@ -104,6 +113,7 @@
     </Compile>
     <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\DebugTools.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="Tools\UI.cs" />
     <Compile Include="UI\DrawTools\Draw.cs" />
     <Compile Include="UI\Screens\BattleBoard.cs">
@@ -260,6 +270,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_003.json">

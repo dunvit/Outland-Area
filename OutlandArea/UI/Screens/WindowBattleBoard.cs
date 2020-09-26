@@ -57,18 +57,27 @@ namespace OutlandArea.UI.Screens
 
         private void Event_SendCommand(ICommand obj)
         {
-            _gameManager.Command();
+            //_gameManager.Command();
         }
 
         private delegate void SetGameSessionCallback(GameSession gameSession);
 
         private void Event_RefreshMap(GameSession gameSession)
         {
-            var delegateRefresh_UpdateLastTime = new SetGameSessionCallback(Refresh_UpdateLastTime);
-            Invoke(delegateRefresh_UpdateLastTime, gameSession);
+            try
+            {
+                var delegateRefresh_UpdateLastTime = new SetGameSessionCallback(Refresh_UpdateLastTime);
+                Invoke(delegateRefresh_UpdateLastTime, gameSession);
 
-            var delegatRefresh_MapInfoStatus = new SetGameSessionCallback(Refresh_MapInfoStatus);
-            Invoke(delegatRefresh_MapInfoStatus, gameSession);
+                var delegatRefresh_MapInfoStatus = new SetGameSessionCallback(Refresh_MapInfoStatus);
+                Invoke(delegatRefresh_MapInfoStatus, gameSession);
+
+            }
+            catch (Exception e)
+            {
+                
+            }
+            
         }
 
         private void Refresh_UpdateLastTime(GameSession gameSession)
@@ -462,6 +471,16 @@ namespace OutlandArea.UI.Screens
             btnResume.Visible = true;
 
             _gameManager.PauseSession();
+        }
+
+        private void oaButton1_Click_1(object sender, EventArgs e)
+        {
+            Event_RefreshMap(_gameSession);
+        }
+
+        private void commandIncreaseSpeed_Click(object sender, EventArgs e)
+        {
+            _gameManager.Command(_gameSession.Id, 5005, 5005, 1001, 100001, 1);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OutlandArea.Tools;
 using OutlandAreaLogic.Configuration;
 
 namespace OutlandArea.BL.Data
@@ -33,9 +34,13 @@ namespace OutlandArea.BL.Data
             _gameSession.Map.IsEnabled = false;
         }
 
-        public void Command(int id, int spaceshipId, int moduleId, int personId)
+        public void Command(int sessionId, int objectId, int targetCelestialObjectID, int memberID, int targetCell,
+            int typeId)
         {
             
         }
+
+
+        
     }
 }

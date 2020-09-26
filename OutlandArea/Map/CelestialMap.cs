@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OutlandArea.Map
 {
+    [Serializable]
     public class CelestialMap
     {
         public string Id { get; set; }
@@ -13,26 +14,26 @@ namespace OutlandArea.Map
         public bool IsEnabled { get; set; }
         public List<ICelestialObject> CelestialObjects { get; set; } = new List<ICelestialObject>();
 
-        public void UpdateCelestialObjects(ICelestialObject replacedCelestialObject)
-        {
-            var isNeedAddToCelestialObjects = true;
+        //public void UpdateCelestialObjects(ICelestialObject replacedCelestialObject)
+        //{
+        //    var isNeedAddToCelestialObjects = true;
 
-            foreach (var celestialObject in CelestialObjects)
-            {
-                if (celestialObject.Name == replacedCelestialObject.Name)
-                {
-                    celestialObject.PositionX = celestialObject.PositionX;
-                    celestialObject.PositionY = celestialObject.PositionY;
+        //    foreach (var celestialObject in CelestialObjects)
+        //    {
+        //        if (celestialObject.Name == replacedCelestialObject.Name)
+        //        {
+        //            celestialObject.PositionX = celestialObject.PositionX;
+        //            celestialObject.PositionY = celestialObject.PositionY;
 
-                    isNeedAddToCelestialObjects = false;
-                }
+        //            isNeedAddToCelestialObjects = false;
+        //        }
                
-            }
+        //    }
 
-            if (isNeedAddToCelestialObjects)
-            {
-                CelestialObjects.Add(replacedCelestialObject);
-            }
-        }
+        //    if (isNeedAddToCelestialObjects)
+        //    {
+        //        CelestialObjects.Add(replacedCelestialObject);
+        //    }
+        //}
     }
 }

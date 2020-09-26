@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using OutlandArea.TacticalBattleLayer;
 
 namespace OutlandArea.Tools
@@ -51,5 +53,9 @@ namespace OutlandArea.Tools
 
             return new Point(relativeX,  relativeY);
         }
+
+        
     }
+
+    
 }

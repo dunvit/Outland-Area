@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using OutlandAreaLogic.Configuration;
 
 namespace OutlandArea.BL.Data
@@ -37,10 +33,11 @@ namespace OutlandArea.BL.Data
             ExecuteRequest(@"/pause/" + id);
         }
 
-        public void Command(int id, int spaceshipId, int moduleId, int personId)
+        public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
         {
-            ExecuteRequest($@"/command/{id}/{spaceshipId}/{moduleId}/{personId}");
+            ExecuteRequest($@"/command/{sessionId}/{objectId}/{targetObjectId}/{memberId}/{targetCell}/{typeId}");
         }
+
 
         private GameSession GetGameSession(string route)
         {

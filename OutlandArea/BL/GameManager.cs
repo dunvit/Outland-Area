@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Windows.Forms.VisualStyles;
-using Newtonsoft.Json;
 using OutlandArea.BL;
 using OutlandArea.BL.Data;
 using OutlandArea.Map;
@@ -43,6 +37,10 @@ namespace OutlandArea
                 case 2:
                     _gameServer = new LocalStaticGameServer();
                     break;
+
+                case 3:
+                    _gameServer = new LocalGameServer();
+                    break;
             }
         }
 
@@ -61,9 +59,9 @@ namespace OutlandArea
             _gameServer.PauseSession(_gameSession.Id);
         }
 
-        public void Command()
+        public void Command(int gameSessionId, int celestialObjectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId)
         {
-            _gameServer.Command(_gameSession.Id, 100, 200, 300);
+            _gameServer.Command(gameSessionId, celestialObjectId, targetCelestialObjectId, memberId, targetCell, typeId);
         }
 
         public void MouseMoveCelestialObject(ICelestialObject celestialObject)
