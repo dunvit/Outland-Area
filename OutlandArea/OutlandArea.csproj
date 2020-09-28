@@ -73,10 +73,11 @@
     <Compile Include="BL\TaskScheduler.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="BL\GameManager.cs" />
-    <Compile Include="Map\Asteroid.cs" />
+    <Compile Include="Map\Objects\Asteroid.cs" />
     <Compile Include="Map\CelestialMap.cs" />
     <Compile Include="Map\ICelestialObject.cs" />
     <Compile Include="Map\MapSettings.cs" />
+    <Compile Include="Map\Objects\Spaceship.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
     <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
@@ -113,6 +114,7 @@
     </Compile>
     <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\DebugTools.cs" />
+    <Compile Include="Tools\DrawTacticalMap.cs" />
     <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="Tools\UI.cs" />
     <Compile Include="UI\DrawTools\Draw.cs" />

@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncInitialization\Foo.cs" />
+    <Compile Include="AsyncInitialization\Demo.cs" />
     <Compile Include="Extension\ExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

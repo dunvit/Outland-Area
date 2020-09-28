@@ -113,8 +113,6 @@ namespace OutlandArea.UI.Screens
             Application.Exit();
         }
 
-        private ICelestialObject tempCelestialObject;
-
         private void crlRefreshMapTrigger_Tick(object sender, EventArgs e)
         {
             if (DebugTools.IsInDesignMode()) return;
@@ -179,6 +177,9 @@ namespace OutlandArea.UI.Screens
 
             DrawCenterScreenCross(graphics);
 
+            if (mapSettings.IsDrawCelestialObjectDirections)
+                DrawTacticalMap.DrawCelestialObjectDirections(celestialMap, graphics, _screenParameters);
+
             foreach (var celestialObject in celestialMap.CelestialObjects)
             {
                 // TODO: Draw Spacecrafts
@@ -197,11 +198,11 @@ namespace OutlandArea.UI.Screens
                 {
                     case 1:
                         // Regular asteroid
-                        DrawAsteroid(celestialObject, graphics);
+                        DrawTacticalMap.DrawAsteroid(celestialObject, graphics, _screenParameters);
                         break;
                     case 2:
                         // Player spaceship
-                        DrawSpaceship(celestialObject, graphics);
+                        DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
                         break;
                 }
             }
@@ -209,75 +210,21 @@ namespace OutlandArea.UI.Screens
             // TODO: Create configuration for show/hide Mouse Coordinates
             //DrawMouseCoordinates(graphics);
 
-            DrawActiveCelestialObject(_activeCelestialObject, graphics);
+            DrawTacticalMap.DrawActiveCelestialObject(_activeCelestialObject, graphics, _screenParameters);
 
             if(mapSettings.IsDrawCelestialObjectCoordinates)
-                DrawCelestialObjectCoordinates(celestialMap, graphics);
+                DrawTacticalMap.DrawCelestialObjectCoordinates(celestialMap, graphics, _screenParameters);
 
-            if (mapSettings.IsDrawCelestialObjectDirections)
-                DrawCelestialObjectDirections(celestialMap, graphics);
+            
 
             pictureBox1.Image = image;
         }
 
-        private void DrawCelestialObjectDirections(CelestialMap celestialMap, Graphics graphics)
-        {
-            float[] dashValues = { 2, 2, 2, 2 };
-            var blackPen = new Pen(Color.Black, 1) { DashPattern = dashValues };
+        
 
-            foreach (var celestialObject in celestialMap.CelestialObjects)
-            {
-                var screenCoordinates = Common.ToScreenCoordinates(_screenParameters,
-                    new Point(celestialObject.PositionX, celestialObject.PositionY));
+        
 
-                var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed * 2, celestialObject.Direction);
-
-                var pen = new Pen(Color.DimGray, 1) {StartCap = LineCap.ArrowAnchor};
-
-                using (var capPath = new GraphicsPath())
-                {
-                    const int triangleSize = 4;
-                    // A triangle
-                    capPath.AddLine(-triangleSize, 0, triangleSize, 0);
-                    capPath.AddLine(-triangleSize, 0, 0, triangleSize);
-                    capPath.AddLine(0, triangleSize, triangleSize, 0);
-
-                    pen.CustomEndCap = new CustomLineCap(null, capPath);
-
-                    graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                    graphics.DrawLine(blackPen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                }
-
-
-            }
-        }
-
-        private void DrawCelestialObjectCoordinates(CelestialMap celestialMap, Graphics graphics)
-        {
-            foreach (var celestialObject in celestialMap.CelestialObjects)
-            {
-                var screenCoordinates = Common.ToScreenCoordinates(_screenParameters, 
-                    new Point(celestialObject.PositionX - 25, celestialObject.PositionY + 5));
-
-                using (var font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Pixel))
-                {
-                    graphics.DrawString($"({celestialObject.PositionX} : {celestialObject.PositionY})", font, new SolidBrush(Color.DimGray), new PointF(screenCoordinates.X - 15, screenCoordinates.Y));
-                }
-
-            }
-        }
-
-        private void DrawActiveCelestialObject(ICelestialObject celestialObject, Graphics graphics)
-        {
-            if (_activeCelestialObject == null) return;
-
-            var screenCoordinates = Common.ToScreenCoordinates(_screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
-
-            graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-
-            graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 5, screenCoordinates.Y - 5, 10, 10);
-
-        }
+        
 
         private void CalculateMouseEvents(CelestialMap celestialMap)
         {
@@ -352,32 +299,9 @@ namespace OutlandArea.UI.Screens
             return w < distance && h < distance;
         }
 
-        private void DrawAsteroid(ICelestialObject celestialObject, Graphics graphics)
-        {
-            // Convert celestial object coordinates to screen coordinates
-            var screenCoordinates = Common.ToScreenCoordinates(_screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+        
 
-            graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-        }
-
-        private void DrawSpaceship(ICelestialObject celestialObject, Graphics graphics)
-        {
-            var mainColor = Color.DarkRed;
-            var mainIcon = "EnemySpaceship";
-
-            //if (isPlayerSpacecraft)
-            //{
-                mainColor = Color.DarkOliveGreen;
-                mainIcon = "PlayerSpaceship";
-            //}
-            // Convert celestial object coordinates to screen coordinates
-            var screenCoordinates = Common.ToScreenCoordinates(_screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
-
-            var bmpSpacecraft = Tools.UI.RotateImage(Tools.UI.LoadImage(mainIcon), celestialObject.Direction);
-
-            graphics.DrawImage(bmpSpacecraft, new PointF(screenCoordinates.X - 15, screenCoordinates.Y - 15));
-            //graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-        }
+        
 
         private void DrawCenterScreenCross(Graphics graphics)
         {

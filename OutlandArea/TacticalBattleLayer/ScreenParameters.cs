@@ -2,7 +2,7 @@
 
 namespace OutlandArea.TacticalBattleLayer
 {
-    internal class ScreenParameters
+    public class ScreenParameters
     {
         public Point Center { get; }
         public int Width { get; }

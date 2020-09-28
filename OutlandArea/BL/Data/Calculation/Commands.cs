@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using OutlandArea.Map;
+using OutlandArea.Map.Objects;
 using OutlandArea.Tools;
 
 namespace OutlandArea.BL.Data.Calculation
@@ -47,9 +48,16 @@ namespace OutlandArea.BL.Data.Calculation
 
             foreach (var celestialObject in objects)
             {
-                if (celestialObject.Id == command.CelestialObjectId)
+                if (celestialObject.Id == command.CelestialObjectId && celestialObject is Spaceship)
                 {
-                    celestialObject.Speed += 1;
+                    if ((celestialObject as Spaceship).Speed < (celestialObject as Spaceship).MaxSpeed)
+                    {
+                        celestialObject.Speed += 1;
+                    }
+                    else
+                    {
+                        isResume = false;
+                    }
                 }
             }
 

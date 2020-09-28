@@ -23,6 +23,7 @@
         "name": "Red-White Star",
         "direction": 45,
         "speed": 0,
+        "maxSpeed": 12,
         "signature": 200,
         "classification": 2,
         "isScanned": false
