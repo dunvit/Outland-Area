@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.Remoting.Messaging;
-using OutlandArea.BL.Data;
 using OutlandArea.Map;
 using OutlandArea.TacticalBattleLayer;
 using ICelestialObject = OutlandArea.Map.ICelestialObject;
@@ -10,6 +8,10 @@ namespace OutlandArea.Tools
 {
     public class DrawTacticalMap
     {
+        private const int drawSpaceshipInformationLenght = 40;
+        private const int drawSpaceshipInformationShelfLenght = 90;
+
+
         public static void DrawSpaceship(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
             var mainColor = Color.DarkRed;
@@ -26,6 +28,65 @@ namespace OutlandArea.Tools
 
             graphics.DrawImage(bmpSpacecraft, new PointF(screenCoordinates.X - bmpSpacecraft.Width / 2, screenCoordinates.Y - bmpSpacecraft.Height / 2));
 
+        }
+
+        public static void DrawSpaceshipInformation(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        {
+            var screenCoordinates = Common.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+            var drawSpaceshipInformationAngle = 0;
+            var drawSpaceshipInformationShelf = 0;
+
+            var pen = new Pen(Color.DimGray, 2);
+
+            if (celestialObject.Direction >= 0 && celestialObject.Direction < 90)
+            {
+                drawSpaceshipInformationAngle = 135;
+                drawSpaceshipInformationShelf = 90;
+            }
+
+            if (celestialObject.Direction >= 90 && celestialObject.Direction < 180)
+            {
+                drawSpaceshipInformationAngle = 45;
+                drawSpaceshipInformationShelf = 90;
+            }
+
+            if (celestialObject.Direction >= 180 && celestialObject.Direction < 270)
+            {
+                drawSpaceshipInformationAngle = 135;
+                drawSpaceshipInformationShelf = 90;
+            }
+
+            if (celestialObject.Direction >= 270 && celestialObject.Direction < 360)
+            {
+                drawSpaceshipInformationAngle = 45;
+                drawSpaceshipInformationShelf = 90;
+            }
+
+            var footCoordinates = Common.MoveCelestialObjects(screenCoordinates, drawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
+
+
+            graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, footCoordinates.X, footCoordinates.Y);
+
+            
+            var shelfCoordinates = Common.MoveCelestialObjects(footCoordinates, drawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
+
+            graphics.DrawLine(pen, footCoordinates.X, footCoordinates.Y, shelfCoordinates.X, shelfCoordinates.Y);
+
+            var pointInformationBase = new Point(footCoordinates.X + 3, footCoordinates.Y);
+
+            #region Detail information
+
+            graphics.FillRectangle(new SolidBrush(Color.Chartreuse), new Rectangle(pointInformationBase.X, pointInformationBase.Y - 13, 10, 10) );
+
+            using (var font = new Font("Times New Roman", 10, FontStyle.Bold, GraphicsUnit.Pixel))
+            {
+                graphics.DrawString($"{celestialObject.Name}", font, new SolidBrush(Color.WhiteSmoke), new PointF(pointInformationBase.X + 15, pointInformationBase.Y - 13));
+            }
+
+            // TODO: Check size string for draw line length
+
+            #endregion
         }
 
         public static void DrawAsteroid(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
@@ -101,5 +162,7 @@ namespace OutlandArea.Tools
 
             }
         }
+
+        
     }
 }

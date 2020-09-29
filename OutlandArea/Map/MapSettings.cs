@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OutlandArea.Map
+﻿namespace OutlandArea.Map
 {
     public class MapSettings
     {
-        public bool IsDrawCelestialObjectCoordinates { get; set; } = true;
+        public bool IsDrawCelestialObjectCoordinates { get; set; } = false;
 
         public bool IsDrawCelestialObjectDirections { get; set; } = true;
+
+        public bool IsDrawSpaceshipInformation { get; set; } = true;
     }
 }

@@ -201,8 +201,13 @@ namespace OutlandArea.UI.Screens
                         DrawTacticalMap.DrawAsteroid(celestialObject, graphics, _screenParameters);
                         break;
                     case 2:
-                        // Player spaceship
+                        // Spaceship
+
+                        if (mapSettings.IsDrawSpaceshipInformation)
+                            DrawTacticalMap.DrawSpaceshipInformation(celestialObject, graphics, _screenParameters);
+
                         DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
+                        
                         break;
                 }
             }
