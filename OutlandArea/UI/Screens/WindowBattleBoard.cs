@@ -5,6 +5,7 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using log4net;
 using OutlandArea.BL;
+using OutlandArea.BL.Data.Calculation;
 using OutlandArea.Map;
 using OutlandArea.TacticalBattleLayer;
 using OutlandArea.Tools;
@@ -203,8 +204,8 @@ namespace OutlandArea.UI.Screens
                     case 2:
                         // Spaceship
 
-                        if (mapSettings.IsDrawSpaceshipInformation)
-                            DrawTacticalMap.DrawSpaceshipInformation(celestialObject, graphics, _screenParameters);
+                        //if (mapSettings.IsDrawSpaceshipInformation)
+                        //    DrawTacticalMap.DrawSpaceshipInformation(celestialObject, graphics, _screenParameters);
 
                         DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
                         
@@ -220,16 +221,37 @@ namespace OutlandArea.UI.Screens
             if(mapSettings.IsDrawCelestialObjectCoordinates)
                 DrawTacticalMap.DrawCelestialObjectCoordinates(celestialMap, graphics, _screenParameters);
 
-            
+            DrawTrajectory(graphics, _screenParameters);
 
             pictureBox1.Image = image;
         }
 
-        
+        private void DrawTrajectory(Graphics graphics, ScreenParameters screenParameters)
+        {
+            var pointCurrentLocation = new Point(10000, 10000);
+            var pointTargetLocation = new Point(10100, 10200);
+            var prevPointCurrentLocation = new Point(10000, 10000);
+            var currentDirection = 10;
 
-        
+            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, currentDirection, 80);
 
-        
+            foreach (var objectLocation in result)
+            {
+                var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
+
+                var screenCurrentObjectLocation = Common.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
+                var screenPreviousObjectLocation = Common.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
+
+                graphics.DrawLine(pen, screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y);
+
+                prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
+            }
+
+        }
+
+
+
+
 
         private void CalculateMouseEvents(CelestialMap celestialMap)
         {

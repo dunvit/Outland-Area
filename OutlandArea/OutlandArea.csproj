@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\v1\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -64,6 +64,7 @@
     <Compile Include="BL\Data\Calculation\CommandExecuteResult.cs" />
     <Compile Include="BL\Data\Calculation\Coordinates.cs" />
     <Compile Include="BL\Data\Calculation\Commands.cs" />
+    <Compile Include="BL\Data\Calculation\ObjectLocation.cs" />
     <Compile Include="BL\Data\LocalGameServer.cs" />
     <Compile Include="BL\Data\LocalStaticGameServer.cs" />
     <Compile Include="BL\Data\ScalaGameServer.cs" />

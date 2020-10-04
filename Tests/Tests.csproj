@@ -72,6 +72,7 @@
     <Compile Include="CharacterSystem\CharacterTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
+    <Compile Include="Engine\Data\Calculation\CoordinatesTests.cs" />
     <Compile Include="Engine\GameManagerTests.cs" />
     <Compile Include="Engine\TaskSchedulerTests.cs" />
     <Compile Include="Examples\ExtensionTests.cs" />

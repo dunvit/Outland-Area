@@ -2671,9 +2671,10 @@
         "positionX": 10000,
         "positionY": 10000,
         "id": 5005,
-        "name": "Red-White Star",
-        "direction": 45,
+        "name": "HMS Glowworm",
+        "direction": 245,
         "speed": 0,
+        "maxSpeed": 12,
         "signature": 200,
         "classification": 2,
         "isScanned": false

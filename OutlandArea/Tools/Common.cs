@@ -6,11 +6,11 @@ using OutlandArea.TacticalBattleLayer;
 
 namespace OutlandArea.Tools
 {
-    class Common
+    public class Common
     {
         public static Point MoveCelestialObjects(Point currentLocation, int speed, int angleInGraduses)
         {
-            var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180;
+            var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 
             var x = (int)(currentLocation.X + speed * Math.Cos(angleInRadians));
             var y = (int)(currentLocation.Y + speed * Math.Sin(angleInRadians));
@@ -51,6 +51,13 @@ namespace OutlandArea.Tools
             var relativeX = (celestialObjectPosition.X - screenParameters.CenterScreenOnMap.X) + screenParameters.Width / 2;
             var relativeY = (celestialObjectPosition.Y - screenParameters.CenterScreenOnMap.Y) + screenParameters.Height / 2;
 
+            var Xc = screenParameters.Width / 2;
+            var Yc = screenParameters.Height / 2;
+
+            var Xscr = Xc + (celestialObjectPosition.X - screenParameters.CenterScreenOnMap.X);
+            var Yscr = Yc - (celestialObjectPosition.Y - screenParameters.CenterScreenOnMap.Y);
+
+            //return new Point(Xscr, Yscr);
             return new Point(relativeX,  relativeY);
         }
 

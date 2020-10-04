@@ -347,7 +347,7 @@
             this.commandIncreaseSpeed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.commandIncreaseSpeed.Font = new System.Drawing.Font("Mongolian Baiti", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.commandIncreaseSpeed.ForeColor = System.Drawing.Color.Gainsboro;
-            this.commandIncreaseSpeed.Location = new System.Drawing.Point(591, 15);
+            this.commandIncreaseSpeed.Location = new System.Drawing.Point(251, 15);
             this.commandIncreaseSpeed.Name = "commandIncreaseSpeed";
             this.commandIncreaseSpeed.Size = new System.Drawing.Size(86, 23);
             this.commandIncreaseSpeed.TabIndex = 16;

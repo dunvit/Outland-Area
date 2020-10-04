@@ -21,7 +21,7 @@
         "positionY": 10000,
         "id": 5005,
         "name": "HMS Glowworm",
-        "direction": 245,
+        "direction": 10,
         "speed": 0,
         "maxSpeed": 12,
         "signature": 200,
