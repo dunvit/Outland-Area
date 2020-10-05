@@ -12,5 +12,6 @@
 
         void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId);
 
+
     }
 }

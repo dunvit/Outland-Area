@@ -12,7 +12,7 @@ namespace OutlandArea.BL.Data
 
         public GameSession Initialization()
         {
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_004"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_003"));
 
             _gameSession.Commands = new List<GameCommand>();
 

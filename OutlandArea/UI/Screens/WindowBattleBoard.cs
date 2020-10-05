@@ -221,19 +221,25 @@ namespace OutlandArea.UI.Screens
             if(mapSettings.IsDrawCelestialObjectCoordinates)
                 DrawTacticalMap.DrawCelestialObjectCoordinates(celestialMap, graphics, _screenParameters);
 
-            DrawTrajectory(graphics, _screenParameters);
+            if (_selectedCelestialObject != null)
+            {
+                DrawTrajectory(celestialMap.GetPlayerSpaceShip(), _selectedCelestialObject, graphics, _screenParameters);
+            }
+
+            
 
             pictureBox1.Image = image;
         }
 
-        private void DrawTrajectory(Graphics graphics, ScreenParameters screenParameters)
+        private void DrawTrajectory(ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
         {
-            var pointCurrentLocation = new Point(10000, 10000);
-            var pointTargetLocation = new Point(10100, 10200);
-            var prevPointCurrentLocation = new Point(10000, 10000);
-            var currentDirection = 10;
+            var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
+            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
+            var prevPointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
 
-            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, currentDirection, 80);
+            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+
+            int temp = 0;
 
             foreach (var objectLocation in result)
             {
@@ -245,6 +251,14 @@ namespace OutlandArea.UI.Screens
                 graphics.DrawLine(pen, screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y);
 
                 prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
+
+                temp++;
+                if (temp == 5)
+                {
+                    temp = 0;
+                    graphics.FillEllipse(new SolidBrush(Color.Red), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+                        
+                }
             }
 
         }
@@ -393,6 +407,10 @@ namespace OutlandArea.UI.Screens
 
                 OnSelectCelestialObject?.Invoke(_selectedCelestialObject);
                 _gameManager.SelectCelestialObject(_selectedCelestialObject);
+            }
+            else
+            {
+                _selectedCelestialObject = null;
             }
         }
 

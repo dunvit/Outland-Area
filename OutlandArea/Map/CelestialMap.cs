@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OutlandArea.Tools;
 
 namespace OutlandArea.Map
 {
@@ -14,26 +12,19 @@ namespace OutlandArea.Map
         public bool IsEnabled { get; set; }
         public List<ICelestialObject> CelestialObjects { get; set; } = new List<ICelestialObject>();
 
-        //public void UpdateCelestialObjects(ICelestialObject replacedCelestialObject)
-        //{
-        //    var isNeedAddToCelestialObjects = true;
+        public ICelestialObject GetPlayerSpaceShip()
+        {
+            foreach (var celestialObject in CelestialObjects)
+            {
+                // TODO: Add player space ship type
+                if (celestialObject.Id == 5005)
+                {
+                    return celestialObject.DeepClone();
+                }
+            }
 
-        //    foreach (var celestialObject in CelestialObjects)
-        //    {
-        //        if (celestialObject.Name == replacedCelestialObject.Name)
-        //        {
-        //            celestialObject.PositionX = celestialObject.PositionX;
-        //            celestialObject.PositionY = celestialObject.PositionY;
+            return null;
+        }
 
-        //            isNeedAddToCelestialObjects = false;
-        //        }
-               
-        //    }
-
-        //    if (isNeedAddToCelestialObjects)
-        //    {
-        //        CelestialObjects.Add(replacedCelestialObject);
-        //    }
-        //}
     }
 }

@@ -2673,7 +2673,7 @@
         "id": 5005,
         "name": "HMS Glowworm",
         "direction": 245,
-        "speed": 0,
+        "speed": 6,
         "maxSpeed": 12,
         "signature": 200,
         "classification": 2,

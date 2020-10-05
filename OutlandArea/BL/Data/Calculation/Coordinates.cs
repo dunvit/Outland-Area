@@ -38,23 +38,27 @@ namespace OutlandArea.BL.Data.Calculation
             return result;
         }
 
-        public static List<ObjectLocation> GetTrajectoryApproach(Point currentLocation, Point targetLocation, int currentDirection, int iterations)
+        public static List<ObjectLocation> GetTrajectoryApproach(Point currentLocation, Point targetLocation, int currentDirection, int speed, int iterations)
         {
-            const int speed = 5;
-
             var result = new List<ObjectLocation>();
 
             var previousIterationLocation = currentLocation;
             var previousIterationDirection = currentDirection;
+            var previousIterationDistance = GetDistance(targetLocation, currentLocation);
 
             for (var iteration = 0; iteration < iterations; iteration++)
             {
-                var iterationResult = RecalculateLocation(previousIterationLocation, targetLocation, previousIterationDirection, speed);
+                if (previousIterationDistance > 10)
+                {
+                    var iterationResult = RecalculateLocation(previousIterationLocation, targetLocation, previousIterationDirection, speed);
 
-                previousIterationLocation = iterationResult.Coordinates;
-                previousIterationDirection = iterationResult.Direction;
-
-                result.Add(iterationResult);
+                    previousIterationLocation = iterationResult.Coordinates;
+                    previousIterationDirection = iterationResult.Direction;
+                    previousIterationDistance = iterationResult.Distance;
+                
+                    result.Add(iterationResult);
+                }
+                
             }
 
             return result;
@@ -62,7 +66,9 @@ namespace OutlandArea.BL.Data.Calculation
 
         public static ObjectLocation RecalculateLocation(Point currentLocation, Point targetLocation, int currentDirection, int speed)
         {
-            var iterationObjectLocation = new ObjectLocation();
+            var distance = GetDistance(targetLocation, currentLocation);
+
+            var iterationObjectLocation = new ObjectLocation {Distance = distance};
 
             var vectorToTarget = GetRotation(targetLocation, currentLocation);
 
@@ -76,6 +82,14 @@ namespace OutlandArea.BL.Data.Calculation
             iterationObjectLocation.Coordinates = Common.MoveCelestialObjects(new Point(currentLocation.X, currentLocation.Y), speed, iterationObjectLocation.Direction);
 
             return iterationObjectLocation;
+        }
+
+        public static double GetDistance(Point p1, Point p2)
+        {
+            double xDelta = p1.X - p2.X;
+            double yDelta = p1.Y - p2.Y;
+
+            return Math.Sqrt(Math.Pow(xDelta, 2) + Math.Pow(yDelta, 2));
         }
 
         public static int GetRotation(Point destination, Point center)
@@ -144,6 +158,11 @@ namespace OutlandArea.BL.Data.Calculation
             if (newDirection < 0)
             {
                 newDirection = 360 + newDirection;
+            }
+
+            if (newDirection > 360)
+            {
+                newDirection = newDirection - 360;
             }
 
             return newDirection;
