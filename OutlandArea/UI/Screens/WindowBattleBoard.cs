@@ -207,7 +207,7 @@ namespace OutlandArea.UI.Screens
                         //if (mapSettings.IsDrawSpaceshipInformation)
                         //    DrawTacticalMap.DrawSpaceshipInformation(celestialObject, graphics, _screenParameters);
 
-                        DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
+                        //DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
                         
                         break;
                 }
@@ -231,8 +231,12 @@ namespace OutlandArea.UI.Screens
             pictureBox1.Image = image;
         }
 
+        readonly ILog _mapCalculationLog = LogManager.GetLogger("MapCalculation");
+
         private void DrawTrajectory(ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
         {
+            
+
             var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
             var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
             var prevPointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
@@ -240,13 +244,21 @@ namespace OutlandArea.UI.Screens
             var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
 
             int temp = 0;
+            int iteration = 0;
+
+            var screenCurrentObjectLocation = new Point(0,0);
+            var screenPreviousObjectLocation = new Point(0, 0);
+
+            bool isDrawConnectionLine = true;
 
             foreach (var objectLocation in result)
             {
+                iteration++;
+
                 var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
 
-                var screenCurrentObjectLocation = Common.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
-                var screenPreviousObjectLocation = Common.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
+                screenCurrentObjectLocation = Common.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
+                screenPreviousObjectLocation = Common.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
 
                 graphics.DrawLine(pen, screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y);
 
@@ -257,9 +269,37 @@ namespace OutlandArea.UI.Screens
                 {
                     temp = 0;
                     graphics.FillEllipse(new SolidBrush(Color.Red), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
-                        
                 }
+
+                // Debug only
+                //if (iteration == 38)
+                //{
+                //    var screenTargetObjectLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
+
+                //    graphics.DrawLine(new Pen(new SolidBrush(Color.DimGray)), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetObjectLocation.X, screenTargetObjectLocation.Y);
+                //}
+
+                if (objectLocation.IsLinearMotion)
+                {
+                    graphics.FillEllipse(new SolidBrush(Color.Yellow), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+
+                    if (isDrawConnectionLine)
+                    {
+                        var screenTargetObjectLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
+
+                        graphics.DrawLine(new Pen(new SolidBrush(Color.DimGray)), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetObjectLocation.X, screenTargetObjectLocation.Y);
+
+                        isDrawConnectionLine = false;
+                    }
+                }
+
+                _mapCalculationLog.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
             }
+
+            var screenTargetLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
+
+            graphics.DrawLine(new Pen(Color.DimGray, 1), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetLocation.X, screenTargetLocation.Y);
+
 
         }
 
