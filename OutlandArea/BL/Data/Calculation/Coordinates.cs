@@ -64,83 +64,67 @@ namespace OutlandArea.BL.Data.Calculation
         {
             var result = new List<ObjectLocation>();
 
-            var previousIterationLocation = currentLocation;
-            double previousIterationDirection = currentDirection;
-            var previousIterationDistance = GetDistance(targetLocation, currentLocation);
-
             var initial = new ObjectLocation
             {
-                Distance = GetDistance(targetLocation, currentLocation), Direction = currentDirection
+                Distance = GetDistance(targetLocation, currentLocation), 
+                Direction = currentDirection,
+                Coordinates = MoveObject(new Point(currentLocation.X, currentLocation.Y), speed, currentDirection)
             };
-
-            initial.Coordinates = MoveObject(new Point(currentLocation.X, currentLocation.Y), speed, initial.Direction);
 
             result.Add(initial);
 
-            ObjectLocation previousIterationResult = null;
+            ObjectLocation previousIteration = initial;
 
             ObjectLocation linearMotionStartPoint = null;
 
             for (var iteration = 0; iteration < iterations; iteration++)
             {
-                
+                if (!(previousIteration.Distance > 10)) continue;
 
-
-                if (previousIterationDistance > 10)
+                var iterationResult = new ObjectLocation
                 {
+                    IsLinearMotion = previousIteration.IsLinearMotion,
+                    Direction = previousIteration.Direction,
+                    VectorToTarget = previousIteration.VectorToTarget,
+                    Iteration = iteration,
+                    Coordinates = MoveObject(previousIteration.Coordinates, speed, previousIteration.Direction)
+                };
 
-                    ObjectLocation iterationResult;
+                if (IsLinearMotion(iterationResult, targetLocation))
+                {
+                    if (linearMotionStartPoint == null)
+                        linearMotionStartPoint = iterationResult;
 
-                    if (previousIterationResult != null && previousIterationResult.IsLinearMotion)
-                    {
-                        //Linear motion 
-                        iterationResult = new ObjectLocation
-                        {
-                            IsLinearMotion = true,
-                            Direction = previousIterationResult.Direction,
-                            VectorToTarget = previousIterationResult.VectorToTarget
-                        };
 
-                        //var oldCoordinatesCalculation = MoveObject(previousIterationResult.Coordinates, speed, previousIterationResult.Direction);
+                    iterationResult.Coordinates = MoveObject(linearMotionStartPoint.Coordinates, targetLocation,
+                        (iteration - linearMotionStartPoint.Iteration) * speed);
 
-                        //iterationResult.Coordinates = MoveObject(previousIterationResult.Coordinates, targetLocation, speed);
-
-                        iterationResult.Coordinates = MoveObject(linearMotionStartPoint.Coordinates, targetLocation, 
-                            (iteration - linearMotionStartPoint.Iteration) * speed);
-
-                        iterationResult.Iteration = iteration;
-                        iterationResult.Distance = GetDistance(targetLocation, iterationResult.Coordinates);
-                    }
-                    else
-                    {
-                        //Rotate motion
-                        iterationResult = RecalculateLocation(previousIterationLocation, targetLocation, previousIterationDirection, speed);
-
-                        iterationResult.Iteration = iteration;
-
-                        if (iterationResult.IsLinearMotion)
-                        {
-                            linearMotionStartPoint = iterationResult;
-                        }
-                    }
-
-                    
-
-                    result.Add(iterationResult);
-
-                    
-
-                    previousIterationLocation = iterationResult.Coordinates;
-                    previousIterationDirection = iterationResult.Direction;
-                    previousIterationDistance = iterationResult.Distance;
-                    previousIterationResult = iterationResult;
+                    iterationResult.IsLinearMotion = true;
+                }
+                else
+                {
+                    iterationResult.Direction = GetRotationAngle(iterationResult.Coordinates, targetLocation, previousIteration.Direction, 5);
+                    iterationResult.IsLinearMotion = false;
                 }
 
-                
+                iterationResult.Distance = GetDistance(targetLocation, iterationResult.Coordinates);
 
+                result.Add(iterationResult);
+     
+                previousIteration = iterationResult;
             }
 
             return result;
+        }
+
+        public static bool IsLinearMotion(ObjectLocation currentLocation, Point targetLocation)
+        {
+            if (currentLocation.IsLinearMotion)
+                return true;
+
+            var vectorToTarget = GetRotation(targetLocation, currentLocation.Coordinates);
+
+            return (int) vectorToTarget == (int)currentLocation.Direction;
         }
 
         public static ObjectLocation RecalculateLocation(Point currentLocation, Point targetLocation, double currentDirection, int speed)
