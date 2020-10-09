@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -251,16 +252,41 @@ namespace OutlandArea.UI.Screens
 
             bool isDrawConnectionLine = true;
 
+            var points = new List<Point>(); ;
+
+            foreach (var objectLocation in result)
+            {
+                screenCurrentObjectLocation = Common.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
+
+                points.Add(new Point(screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y));
+            }
+
+            //var screenTargetLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
+
+            //graphics.DrawLine(new Pen(Color.DimGray, 1), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetLocation.X, screenTargetLocation.Y);
+
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            // Draw arc to screen.
+            graphics.DrawLines(new Pen(Color.FromArgb(18, 18, 18), 4), points.ToArray());
+            graphics.DrawLines(new Pen(Color.FromArgb(22, 22, 22), 2), points.ToArray());
+            graphics.DrawLines(new Pen(Color.FromArgb(28, 28, 28), 1), points.ToArray());
+
             foreach (var objectLocation in result)
             {
                 iteration++;
 
-                var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
+                var pen = new Pen(Color.Black, 1);// { StartCap = LineCap.ArrowAnchor };
 
                 screenCurrentObjectLocation = Common.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
                 screenPreviousObjectLocation = Common.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
 
-                graphics.DrawLine(pen, screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y);
+                Point[] linePoints =
+                {
+                    new Point(screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y),
+                    new Point(screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y)
+                };
+
+                graphics.DrawLines(pen, linePoints);
 
                 prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
 
@@ -268,43 +294,22 @@ namespace OutlandArea.UI.Screens
                 if (temp == 5)
                 {
                     temp = 0;
-                    graphics.FillEllipse(new SolidBrush(Color.Red), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+                    graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
                 }
 
-                // Debug only
-                //if (iteration == 38)
-                //{
-                //    var screenTargetObjectLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
-
-                //    graphics.DrawLine(new Pen(new SolidBrush(Color.DimGray)), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetObjectLocation.X, screenTargetObjectLocation.Y);
-                //}
-
-                if (objectLocation.IsLinearMotion)
+                if (objectLocation.IsLinearMotion && isDrawConnectionLine)
                 {
                     graphics.FillEllipse(new SolidBrush(Color.Yellow), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
 
-                    if (isDrawConnectionLine)
-                    {
-                        var screenTargetObjectLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
-
-                        graphics.DrawLine(new Pen(new SolidBrush(Color.DimGray)), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetObjectLocation.X, screenTargetObjectLocation.Y);
-
-                        isDrawConnectionLine = false;
-                    }
+                    isDrawConnectionLine = false;
                 }
 
                 _mapCalculationLog.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
             }
-
-            var screenTargetLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
-
-            graphics.DrawLine(new Pen(Color.DimGray, 1), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetLocation.X, screenTargetLocation.Y);
-
-
         }
 
 
-
+        
 
 
         private void CalculateMouseEvents(CelestialMap celestialMap)

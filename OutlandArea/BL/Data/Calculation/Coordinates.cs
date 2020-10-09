@@ -44,8 +44,6 @@ namespace OutlandArea.BL.Data.Calculation
         {
             var result = spaceMap.DeepClone();
 
-            //var random = new Random((int)DateTime.UtcNow.Ticks);
-
             foreach (var celestialObject in result.CelestialObjects)
             {
                 var position = Common.MoveCelestialObjects(
@@ -73,7 +71,7 @@ namespace OutlandArea.BL.Data.Calculation
 
             result.Add(initial);
 
-            ObjectLocation previousIteration = initial;
+            var previousIteration = initial;
 
             ObjectLocation linearMotionStartPoint = null;
 
@@ -124,37 +122,10 @@ namespace OutlandArea.BL.Data.Calculation
 
             var vectorToTarget = GetRotation(targetLocation, currentLocation.Coordinates);
 
-            return (int) vectorToTarget == (int)currentLocation.Direction;
+            return ((int)Math.Abs(vectorToTarget - currentLocation.Direction) < 5);
         }
 
-        public static ObjectLocation RecalculateLocation(Point currentLocation, Point targetLocation, double currentDirection, int speed)
-        {
-            var distance = GetDistance(targetLocation, currentLocation);
-
-            var vectorToTarget = GetRotation(targetLocation, currentLocation);
-
-            var iterationObjectLocation = new ObjectLocation
-            {
-                Distance = distance, 
-                VectorToTarget = vectorToTarget, 
-                Direction = currentDirection,
-                Coordinates = currentLocation,
-                IsLinearMotion = false
-            };
-
-            if ((int)vectorToTarget != (int)currentDirection)
-            {
-                iterationObjectLocation.Direction = GetRotationAngle(currentLocation, targetLocation, currentDirection, 5);
-            }
-            else
-            {
-                iterationObjectLocation.IsLinearMotion = true;
-            }
-            
-            iterationObjectLocation.Coordinates = MoveObject(new Point(currentLocation.X, currentLocation.Y), speed, iterationObjectLocation.Direction);
-
-            return iterationObjectLocation;
-        }
+        
 
         public static double GetDistance(Point p1, Point p2)
         {
