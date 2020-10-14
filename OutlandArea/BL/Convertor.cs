@@ -82,6 +82,47 @@ namespace OutlandArea.BL
                             IsScanned = (bool)jCelestialObject["isScanned"]
                         };
 
+                        if (jCelestialObject["systems"] != null)
+                        {
+                            foreach (var allModulesSystems in jCelestialObject["systems"].ToArray())
+                            {
+                                if (allModulesSystems["propulsion"] != null)
+                                {
+                                    foreach (var propulsionModule in allModulesSystems["propulsion"].ToArray())
+                                    {
+                                        spaceship.Modules.Add(Equipment.Factory.CreateMicroWarpDrive((string)propulsionModule["id"]));
+                                    }
+                                }
+
+                                if (allModulesSystems["weapon"] != null)
+                                {
+                                    foreach (var weaponModule in allModulesSystems["weapon"].ToArray())
+                                    {
+                                        spaceship.Modules.Add(Equipment.Factory.CreateWeaponModule((string)weaponModule["id"]));
+                                    }
+                                }
+
+                                if (allModulesSystems["general"] != null)
+                                {
+                                    foreach (var generalModule in allModulesSystems["general"].ToArray())
+                                    {
+                                        spaceship.Modules.Add(Equipment.Factory.CreateGeneralModule((string)generalModule["id"]));
+                                    }
+                                }
+
+                                if (allModulesSystems["shields"] != null)
+                                {
+                                    foreach (var generalModule in allModulesSystems["shields"].ToArray())
+                                    {
+                                        spaceship.Modules.Add(Equipment.Factory.CreateShieldModule((string)generalModule["id"]));
+                                    }
+                                }
+
+                            }
+                        }
+
+                        
+
                         celestialMap.CelestialObjects.Add(spaceship);
                         break;
                 }

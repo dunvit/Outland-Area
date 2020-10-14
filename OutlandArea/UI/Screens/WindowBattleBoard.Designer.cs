@@ -51,10 +51,11 @@
             this.txtNameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.oaButton1 = new OutlandAreaLogic.Controls.OaButton();
+            this.commandIncreaseSpeed = new OutlandAreaLogic.Controls.OaButton();
+            this.crlTargetInfo = new OutlandArea.UI.Screens.ShipInfo.ShipInformation();
             this.targetingCommands1 = new OutlandArea.UI.Screens.TargetingCommands();
             this.controlNavigationCommands = new OutlandArea.UI.Screens.BattleBoardControls.NavigationCommands();
             this.crlPanelCelestialObjectInfo = new OutlandArea.UI.Screens.Controls.PanelObjectView();
-            this.commandIncreaseSpeed = new OutlandAreaLogic.Controls.OaButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +103,7 @@
             this.txtLog.Name = "txtLog";
             this.txtLog.Size = new System.Drawing.Size(220, 145);
             this.txtLog.TabIndex = 5;
+            this.txtLog.Visible = false;
             // 
             // textBox1
             // 
@@ -113,6 +115,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(220, 145);
             this.textBox1.TabIndex = 6;
+            this.textBox1.Visible = false;
             // 
             // crlRefreshMousePosition
             // 
@@ -149,6 +152,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(224, 250);
             this.panel1.TabIndex = 9;
+            this.panel1.Visible = false;
             // 
             // txtTurn
             // 
@@ -310,34 +314,8 @@
             this.oaButton1.TabIndex = 15;
             this.oaButton1.Text = "Refresh";
             this.oaButton1.UseVisualStyleBackColor = false;
+            this.oaButton1.Visible = false;
             this.oaButton1.Click += new System.EventHandler(this.oaButton1_Click_1);
-            // 
-            // targetingCommands1
-            // 
-            this.targetingCommands1.BackColor = System.Drawing.Color.Black;
-            this.targetingCommands1.Location = new System.Drawing.Point(1408, 429);
-            this.targetingCommands1.Name = "targetingCommands1";
-            this.targetingCommands1.Size = new System.Drawing.Size(500, 400);
-            this.targetingCommands1.SpacecraftId = ((long)(0));
-            this.targetingCommands1.TabIndex = 11;
-            // 
-            // controlNavigationCommands
-            // 
-            this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
-            this.controlNavigationCommands.Location = new System.Drawing.Point(1408, 12);
-            this.controlNavigationCommands.Manager = null;
-            this.controlNavigationCommands.Name = "controlNavigationCommands";
-            this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
-            this.controlNavigationCommands.SpacecraftId = ((long)(0));
-            this.controlNavigationCommands.TabIndex = 10;
-            // 
-            // crlPanelCelestialObjectInfo
-            // 
-            this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
-            this.crlPanelCelestialObjectInfo.Location = new System.Drawing.Point(12, 326);
-            this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
-            this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
-            this.crlPanelCelestialObjectInfo.TabIndex = 7;
             // 
             // commandIncreaseSpeed
             // 
@@ -353,7 +331,48 @@
             this.commandIncreaseSpeed.TabIndex = 16;
             this.commandIncreaseSpeed.Text = "Forward";
             this.commandIncreaseSpeed.UseVisualStyleBackColor = false;
+            this.commandIncreaseSpeed.Visible = false;
             this.commandIncreaseSpeed.Click += new System.EventHandler(this.commandIncreaseSpeed_Click);
+            // 
+            // crlTargetInfo
+            // 
+            this.crlTargetInfo.BackColor = System.Drawing.Color.Black;
+            this.crlTargetInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crlTargetInfo.Location = new System.Drawing.Point(358, 15);
+            this.crlTargetInfo.Name = "crlTargetInfo";
+            this.crlTargetInfo.Size = new System.Drawing.Size(266, 128);
+            this.crlTargetInfo.TabIndex = 17;
+            this.crlTargetInfo.Visible = false;
+            // 
+            // targetingCommands1
+            // 
+            this.targetingCommands1.BackColor = System.Drawing.Color.Black;
+            this.targetingCommands1.Location = new System.Drawing.Point(1408, 429);
+            this.targetingCommands1.Name = "targetingCommands1";
+            this.targetingCommands1.Size = new System.Drawing.Size(500, 400);
+            this.targetingCommands1.SpacecraftId = ((long)(0));
+            this.targetingCommands1.TabIndex = 11;
+            this.targetingCommands1.Visible = false;
+            // 
+            // controlNavigationCommands
+            // 
+            this.controlNavigationCommands.BackColor = System.Drawing.Color.Black;
+            this.controlNavigationCommands.Location = new System.Drawing.Point(1408, 12);
+            this.controlNavigationCommands.Manager = null;
+            this.controlNavigationCommands.Name = "controlNavigationCommands";
+            this.controlNavigationCommands.Size = new System.Drawing.Size(500, 400);
+            this.controlNavigationCommands.SpacecraftId = ((long)(0));
+            this.controlNavigationCommands.TabIndex = 10;
+            this.controlNavigationCommands.Visible = false;
+            // 
+            // crlPanelCelestialObjectInfo
+            // 
+            this.crlPanelCelestialObjectInfo.BackColor = System.Drawing.Color.Black;
+            this.crlPanelCelestialObjectInfo.Location = new System.Drawing.Point(12, 326);
+            this.crlPanelCelestialObjectInfo.Name = "crlPanelCelestialObjectInfo";
+            this.crlPanelCelestialObjectInfo.Size = new System.Drawing.Size(224, 169);
+            this.crlPanelCelestialObjectInfo.TabIndex = 7;
+            this.crlPanelCelestialObjectInfo.Visible = false;
             // 
             // WindowBattleBoard
             // 
@@ -361,6 +380,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.crlTargetInfo);
             this.Controls.Add(this.commandIncreaseSpeed);
             this.Controls.Add(this.oaButton1);
             this.Controls.Add(this.targetingCommands1);
@@ -412,5 +432,6 @@
         private System.Windows.Forms.Label txtTurn;
         private OutlandAreaLogic.Controls.OaButton oaButton1;
         private OutlandAreaLogic.Controls.OaButton commandIncreaseSpeed;
+        private ShipInfo.ShipInformation crlTargetInfo;
     }
 }

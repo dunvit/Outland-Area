@@ -68,9 +68,21 @@
     <Compile Include="BL\Data\LocalGameServer.cs" />
     <Compile Include="BL\Data\LocalStaticGameServer.cs" />
     <Compile Include="BL\Data\ScalaGameServer.cs" />
+    <Compile Include="BL\Equipment\Factory.cs" />
+    <Compile Include="BL\Equipment\General\Reactor\IReactor.cs" />
+    <Compile Include="BL\Equipment\General\Reactor\Reactor.cs" />
+    <Compile Include="BL\Equipment\IModule.cs" />
+    <Compile Include="BL\Equipment\Category.cs" />
+    <Compile Include="BL\Equipment\Propulsion\IPropulsionModule.cs" />
+    <Compile Include="BL\Equipment\Propulsion\MicroWarpDrive.cs" />
+    <Compile Include="BL\Equipment\Shield\IShieldModule.cs" />
+    <Compile Include="BL\Equipment\Shield\ShieldModule.cs" />
+    <Compile Include="BL\Equipment\Weapon\IWeaponModule.cs" />
+    <Compile Include="BL\Equipment\Weapon\RailGun.cs" />
     <Compile Include="BL\GameCommand.cs" />
     <Compile Include="BL\GameSession.cs" />
     <Compile Include="BL\Data\IGameServer.cs" />
+    <Compile Include="BL\GameSessionTools.cs" />
     <Compile Include="BL\TaskScheduler.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
     <Compile Include="BL\GameManager.cs" />
@@ -78,7 +90,9 @@
     <Compile Include="Map\CelestialMap.cs" />
     <Compile Include="Map\ICelestialObject.cs" />
     <Compile Include="Map\MapSettings.cs" />
-    <Compile Include="Map\Objects\Spaceship.cs" />
+    <Compile Include="Map\Objects\Spaceships\Spaceship.cs" />
+    <Compile Include="Map\Objects\Spaceships\ISpaceship.cs" />
+    <Compile Include="Map\Objects\Spaceships\SpaceShipInfo.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
     <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
@@ -167,6 +181,12 @@
     <Compile Include="UI\Screens\Dialog\DialogScreen.Designer.cs">
       <DependentUpon>DialogScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\ShipInfo\ShipInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\ShipInfo\ShipInformation.Designer.cs">
+      <DependentUpon>ShipInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Screens\TargetingCommands.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,6 +198,12 @@
     </Compile>
     <Compile Include="UI\Screens\WindowBattleBoard.Designer.cs">
       <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TacticalLevel\ScreenTacticalLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TacticalLevel\ScreenTacticalLevel.Designer.cs">
+      <DependentUpon>ScreenTacticalLevel.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
@@ -226,11 +252,17 @@
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\ShipInfo\ShipInformation.resx">
+      <DependentUpon>ShipInformation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\TargetingCommands.resx">
       <DependentUpon>TargetingCommands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\WindowBattleBoard.resx">
       <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TacticalLevel\ScreenTacticalLevel.resx">
+      <DependentUpon>ScreenTacticalLevel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
@@ -304,7 +336,9 @@
       <Name>OutlandAreaLogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="BL\Equipment\Weapon\Railgun\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -396,6 +430,11 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\25713.png" />
+    <None Include="Resources\35774.png" />
+    <None Include="Resources\target.png" />
+    <None Include="Resources\ScreenTacticalLevel.png" />
+    <None Include="Resources\thorax.jpg" />
     <None Include="Resources\TargetRemove.png" />
     <None Include="Resources\TargetGet.png" />
     <None Include="Resources\Front1.png" />

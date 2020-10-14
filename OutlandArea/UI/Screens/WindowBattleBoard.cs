@@ -8,6 +8,8 @@ using log4net;
 using OutlandArea.BL;
 using OutlandArea.BL.Data.Calculation;
 using OutlandArea.Map;
+using OutlandArea.Map.Objects;
+using OutlandArea.Map.Objects.Spaceships;
 using OutlandArea.TacticalBattleLayer;
 using OutlandArea.Tools;
 using ICelestialObject = OutlandArea.Map.ICelestialObject;
@@ -35,12 +37,15 @@ namespace OutlandArea.UI.Screens
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BattleBoard));
 
-        public WindowBattleBoard()
+        public WindowBattleBoard(GameManager gameManager)
         {
             InitializeComponent();
 
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
-            _gameManager = new GameManager(LogWrite);
+
+            _gameManager = gameManager;
+
+            
 
             _gameManager.OnMouseLeaveCelestialObject += Event_MouseLeaveCelestialObject;
             _gameManager.OnMouseMoveCelestialObject += Event_MouseMoveCelestialObject;
@@ -227,7 +232,10 @@ namespace OutlandArea.UI.Screens
                 DrawTrajectory(celestialMap.GetPlayerSpaceShip(), _selectedCelestialObject, graphics, _screenParameters);
             }
 
-            
+            var playerShip = GameSessionTools.GetCelestialObject(5005, _gameSession);
+
+            var a = new SpaceShipInfo((Spaceship)playerShip);
+
 
             pictureBox1.Image = image;
         }
@@ -261,6 +269,9 @@ namespace OutlandArea.UI.Screens
                 points.Add(new Point(screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y));
             }
 
+
+            if (points.Count < 2)
+                return;
             //var screenTargetLocation = Common.ToScreenCoordinates(screenParameters, pointTargetLocation);
 
             //graphics.DrawLine(new Pen(Color.DimGray, 1), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetLocation.X, screenTargetLocation.Y);
@@ -434,6 +445,8 @@ namespace OutlandArea.UI.Screens
 
         }
 
+        
+
         private void Event_MapMouseClick(object sender, MouseEventArgs e)
         {
             MouseScreenCoordinates = Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
@@ -449,6 +462,13 @@ namespace OutlandArea.UI.Screens
                                 DateTime.UtcNow.Second.ToString("D2") + @":" +
                                 DateTime.UtcNow.Millisecond.ToString("D2") + @":" +
                                 $"MouseLeave {_selectedCelestialObject.Name}" + Environment.NewLine + textBox1.Text;
+
+
+                crlTargetInfo.Location = new Point(e.Location.X, e.Location.Y);
+
+                crlTargetInfo.Visible = true;
+
+
 
                 OnSelectCelestialObject?.Invoke(_selectedCelestialObject);
                 _gameManager.SelectCelestialObject(_selectedCelestialObject);

@@ -19,6 +19,15 @@ namespace OutlandArea.BL.Data
             return _gameSession;
         }
 
+        public GameSession Initialization(string map = "Map_004")
+        {
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap(map));
+
+            _gameSession.Commands = new List<GameCommand>();
+
+            return _gameSession;
+        }
+
         public GameSession RefreshGameSession(int id)
         {
             return _gameSession;

@@ -115,7 +115,7 @@ namespace OutlandArea
                 EndTurn(_gameSession);
             }
 
-            _logger($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
+            _logger?.Invoke($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {_gameSession.Id}." +
                     $" Turn = {_gameSession.Turn}." +
                     $" Map objects count is {_gameSession.Map.CelestialObjects.Count}.");
@@ -130,7 +130,7 @@ namespace OutlandArea
 
         private void Logger(string message)
         {
-            _logger(" " + message);
+            _logger?.Invoke(" " + message);
         }
     }
 }

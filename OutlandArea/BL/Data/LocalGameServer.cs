@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using log4net.Util;
-using OutlandArea.Map;
+﻿using System.Collections.Generic;
 using OutlandArea.Tools;
 
 namespace OutlandArea.BL.Data
@@ -20,6 +17,8 @@ namespace OutlandArea.BL.Data
 
             return _gameSession;
         }
+
+        
 
         public GameSession RefreshGameSession(int id)
         {

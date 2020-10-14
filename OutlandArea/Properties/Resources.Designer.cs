@@ -61,6 +61,26 @@ namespace OutlandArea.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _25713 {
+            get {
+                object obj = ResourceManager.GetObject("25713", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _35774 {
+            get {
+                object obj = ResourceManager.GetObject("35774", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string CenterTarget {
@@ -122,6 +142,26 @@ namespace OutlandArea.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ScreenTacticalLevel {
+            get {
+                object obj = ResourceManager.GetObject("ScreenTacticalLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap target {
+            get {
+                object obj = ResourceManager.GetObject("target", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TargetGet {
             get {
                 object obj = ResourceManager.GetObject("TargetGet", resourceCulture);
@@ -135,6 +175,16 @@ namespace OutlandArea.Properties {
         internal static System.Drawing.Bitmap TargetRemove {
             get {
                 object obj = ResourceManager.GetObject("TargetRemove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap thorax {
+            get {
+                object obj = ResourceManager.GetObject("thorax", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

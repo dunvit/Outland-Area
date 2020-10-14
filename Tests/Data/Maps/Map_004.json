@@ -50,17 +50,7 @@
                 "id": "GRM5002",
                 "name": "Reactor Mk I"
               }
-            ],
-            "shields": [
-              {
-                "id": "SSM5001",
-                "name": "Shield Mk I"
-              },
-              {
-                "id": "SSM5002",
-                "name": "Shield Mk II"
-              }
-            ] 
+            ]
           }
           
         ] 

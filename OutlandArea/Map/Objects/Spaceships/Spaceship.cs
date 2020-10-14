@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OutlandArea.BL.Equipment;
 
 namespace OutlandArea.Map.Objects
 {
@@ -20,5 +18,7 @@ namespace OutlandArea.Map.Objects
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
         public bool IsScanned { get; set; }
+
+        public List<IModule> Modules { get; set; } = new List<IModule>();
     }
 }
