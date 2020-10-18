@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using log4net;
 
 namespace Engine
 {
     public class Settings
     {
-        //public ILog Logger = LogManager.GetLogger("ConfigurationSettings");
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public string Version => Configuration.Tools.GetConfigFromSectionOptionalStringValue("Current", "Version");
 
-        public Size WindowSize { get; set; }
+        public Size WindowSize { get;}
 
         public string ServerAddress => Configuration.Tools.GetConfigFromSectionOptionalStringValue("ServerAddress", "Settings");
 
@@ -27,18 +21,20 @@ namespace Engine
                 Configuration.Tools.GetConfigOptionalIntValue("ClientWidth", "Settings", 1024),
                 Configuration.Tools.GetConfigOptionalIntValue("ClientHeight", "Settings", 768)
             );
-
-
         }
 
         public void WriteSettingsToLog()
         {
-            Logger.Debug("--------------------------------------------------------------");
-            Logger.Debug("Version:              " + Version);
-            Logger.Debug("WindowSize:           " + WindowSize);
-            Logger.Debug("ServerAddress:        " + ServerAddress);
+            var settings = "";
 
-            Logger.Debug("--------------------------------------------------------------");
+            settings += "\n" + "--------------------------------------------------------------";
+            settings += "\n" + "Version:              " + Version;
+            settings += "\n" + "WindowSize:           " + WindowSize;
+            settings += "\n" + "ServerAddress:        " + ServerAddress;
+            settings += "\n" + "ServerType:           " + ServerType;
+            settings += "\n" + "--------------------------------------------------------------";
+
+            Logger.Error(settings);
         }
     }
 }
