@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\v1\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,12 +33,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Control.Draggable, Version=1.0.5049.269, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Control.Draggable.1.0.5049.269\lib\net35-Client\Control.Draggable.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,13 +60,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Convertor.cs" />
+    <Compile Include="BL\Data\Calculation\CommandExecuteResult.cs" />
+    <Compile Include="BL\Data\Calculation\Coordinates.cs" />
+    <Compile Include="BL\Data\Calculation\Commands.cs" />
+    <Compile Include="BL\Data\Calculation\ObjectLocation.cs" />
+    <Compile Include="BL\Data\LocalGameServer.cs" />
+    <Compile Include="BL\Data\LocalStaticGameServer.cs" />
+    <Compile Include="BL\Data\ScalaGameServer.cs" />
+    <Compile Include="BL\Equipment\Factory.cs" />
+    <Compile Include="BL\Equipment\General\Reactor\IReactor.cs" />
+    <Compile Include="BL\Equipment\General\Reactor\Reactor.cs" />
+    <Compile Include="BL\Equipment\IModule.cs" />
+    <Compile Include="BL\Equipment\Category.cs" />
+    <Compile Include="BL\Equipment\Propulsion\IPropulsionModule.cs" />
+    <Compile Include="BL\Equipment\Propulsion\MicroWarpDrive.cs" />
+    <Compile Include="BL\Equipment\Shield\IShieldModule.cs" />
+    <Compile Include="BL\Equipment\Shield\ShieldModule.cs" />
+    <Compile Include="BL\Equipment\Weapon\IWeaponModule.cs" />
+    <Compile Include="BL\Equipment\Weapon\RailGun.cs" />
+    <Compile Include="BL\GameCommand.cs" />
+    <Compile Include="BL\GameSession.cs" />
+    <Compile Include="BL\Data\IGameServer.cs" />
+    <Compile Include="BL\GameSessionTools.cs" />
+    <Compile Include="BL\TaskScheduler.cs" />
     <Compile Include="Data\Battle\Generator.cs" />
+    <Compile Include="BL\GameManager.cs" />
+    <Compile Include="Map\Objects\Asteroid.cs" />
+    <Compile Include="Map\CelestialMap.cs" />
+    <Compile Include="Map\ICelestialObject.cs" />
+    <Compile Include="Map\MapSettings.cs" />
+    <Compile Include="Map\Objects\Spaceships\Spaceship.cs" />
+    <Compile Include="Map\Objects\Spaceships\ISpaceship.cs" />
+    <Compile Include="Map\Objects\Spaceships\SpaceShipInfo.cs" />
     <Compile Include="TacticalBattleLayer\BaseSpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Battle.cs" />
+    <Compile Include="TacticalBattleLayer\Commands\Handler.cs" />
+    <Compile Include="TacticalBattleLayer\Commands\Navigation.cs" />
+    <Compile Include="TacticalBattleLayer\IBattleManager.cs" />
     <Compile Include="TacticalBattleLayer\ICelestialObject.cs" />
     <Compile Include="TacticalBattleLayer\ICommand.cs" />
     <Compile Include="TacticalBattleLayer\ISpacecraft.cs" />
     <Compile Include="TacticalBattleLayer\Manager.cs" />
+    <Compile Include="TacticalBattleLayer\NavigationChanges.cs" />
     <Compile Include="TacticalBattleLayer\ScreenParameters.cs" />
     <Compile Include="TacticalBattleLayer\Spacecrafts\Dragoon.cs" />
     <Compile Include="TacticalBattleLayer\Spacecrafts\Thorax.cs" />
@@ -81,11 +127,29 @@
     <Compile Include="ScreenStartMenu.Designer.cs">
       <DependentUpon>ScreenStartMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Common.cs" />
+    <Compile Include="Tools\DebugTools.cs" />
+    <Compile Include="Tools\DrawTacticalMap.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
+    <Compile Include="Tools\UI.cs" />
+    <Compile Include="UI\DrawTools\Draw.cs" />
     <Compile Include="UI\Screens\BattleBoard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Screens\BattleBoard.Designer.cs">
       <DependentUpon>BattleBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\Command.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\Command.Designer.cs">
+      <DependentUpon>Command.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\NavigationCommands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\NavigationCommands.Designer.cs">
+      <DependentUpon>NavigationCommands.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMap.cs">
       <SubType>UserControl</SubType>
@@ -99,11 +163,47 @@
     <Compile Include="UI\Screens\BattleBoardControls\TurnInformation.Designer.cs">
       <DependentUpon>TurnInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\WindowShowCommand.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\BattleBoardControls\WindowShowCommand.Designer.cs">
+      <DependentUpon>WindowShowCommand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Controls\PanelObjectView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\Controls\PanelObjectView.Designer.cs">
+      <DependentUpon>PanelObjectView.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Screens\Dialog\DialogScreen.Designer.cs">
       <DependentUpon>DialogScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\ShipInfo\ShipInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\ShipInfo\ShipInformation.Designer.cs">
+      <DependentUpon>ShipInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\TargetingCommands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\TargetingCommands.Designer.cs">
+      <DependentUpon>TargetingCommands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\WindowBattleBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Screens\WindowBattleBoard.Designer.cs">
+      <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TacticalLevel\ScreenTacticalLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TacticalLevel\ScreenTacticalLevel.Designer.cs">
+      <DependentUpon>ScreenTacticalLevel.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowMain.cs">
       <SubType>Form</SubType>
@@ -131,14 +231,38 @@
     <EmbeddedResource Include="UI\Screens\BattleBoard.resx">
       <DependentUpon>BattleBoard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\Command.resx">
+      <DependentUpon>Command.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\NavigationCommands.resx">
+      <DependentUpon>NavigationCommands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\BattleBoardControls\TacticalMap.resx">
       <DependentUpon>TacticalMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\BattleBoardControls\TurnInformation.resx">
       <DependentUpon>TurnInformation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\BattleBoardControls\WindowShowCommand.resx">
+      <DependentUpon>WindowShowCommand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\Controls\PanelObjectView.resx">
+      <DependentUpon>PanelObjectView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Screens\Dialog\DialogScreen.resx">
       <DependentUpon>DialogScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\ShipInfo\ShipInformation.resx">
+      <DependentUpon>ShipInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\TargetingCommands.resx">
+      <DependentUpon>TargetingCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Screens\WindowBattleBoard.resx">
+      <DependentUpon>WindowBattleBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TacticalLevel\ScreenTacticalLevel.resx">
+      <DependentUpon>ScreenTacticalLevel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowMain.resx">
       <DependentUpon>WindowMain.cs</DependentUpon>
@@ -180,6 +304,18 @@
     <None Include="Data\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\Map_001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_004.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_002.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -201,7 +337,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Folder Include="BL\Equipment\Weapon\Railgun\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">
@@ -228,6 +364,51 @@
     <Content Include="Data\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Commands\decreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\IncreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetGet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetRemove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnleft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\Big.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Large\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Small\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Targets\EnemySpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -235,6 +416,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Targets\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\TargetOnMap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\TradeGoods\Antibiotics.png">
@@ -246,6 +430,21 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\25713.png" />
+    <None Include="Resources\35774.png" />
+    <None Include="Resources\target.png" />
+    <None Include="Resources\ScreenTacticalLevel.png" />
+    <None Include="Resources\thorax.jpg" />
+    <None Include="Resources\TargetRemove.png" />
+    <None Include="Resources\TargetGet.png" />
+    <None Include="Resources\Front1.png" />
+    <None Include="Resources\decreseSpeed.png" />
+    <None Include="Resources\IncreseSpeed.png" />
+    <None Include="Resources\turnRight.png" />
+    <None Include="Resources\turnleft.png" />
+    <None Include="Resources\points.png" />
+    <None Include="Resources\Front.png" />
+    <None Include="Resources\ToolBar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

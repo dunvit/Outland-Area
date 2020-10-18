@@ -1,0 +1,55 @@
+{
+  "id": 1027114006,
+  "turn": 0,
+  "celestialMap": {
+    "id": "1076297706",
+    "isEnabled": false,
+    "celestialObjects": [
+      {
+        "positionX": 9304,
+        "positionY": 9675,
+        "id": 1013530242,
+        "name": "sspzG",
+        "direction": 53,
+        "speed": 8,
+        "signature": 9426,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
+        "positionX": 10615,
+        "positionY": 9089,
+        "id": 1089563358,
+        "name": "AJIyw",
+        "direction": 131,
+        "speed": 5,
+        "signature": 1817,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
+        "positionX": 10000,
+        "positionY": 10000,
+        "id": 5005,
+        "name": "Red-White Star",
+        "direction": 45,
+        "speed": 0,
+        "signature": 200,
+        "classification": 2,
+        "isScanned": false
+      }
+    ],
+    "turn": 0
+  },
+  "commands": {
+    "list": [
+      {
+        "typeId": 0,
+        "celestialObjectID": 0,
+        "memberID": 0,
+        "targetCelestialObjectID": 0,
+        "targetCell": 0
+      }
+    ]
+  }
+}

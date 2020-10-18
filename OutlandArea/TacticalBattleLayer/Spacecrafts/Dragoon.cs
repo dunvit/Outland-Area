@@ -15,5 +15,7 @@ namespace OutlandArea.TacticalBattleLayer.Spacecrafts
         public int Velocity { get; set; }
         public Point Location { get; set; }
         public string ImageSmall { get; set; } = "Dragoon.jpg";
+
+        public Point LocationInLastTurn { get; set; }
     }
 }

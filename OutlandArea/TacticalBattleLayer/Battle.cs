@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using OutlandArea.TacticalBattleLayer.Commands;
+using OutlandArea.Tools;
 
 namespace OutlandArea.TacticalBattleLayer
 {
@@ -24,7 +28,7 @@ namespace OutlandArea.TacticalBattleLayer
 
         private void Initialization()
         {
-            Turn = 0;
+            Turn = 1;
             State = State.Preparation;
             CelestialObjects = new List<ICelestialObject>();
         }
@@ -38,23 +42,57 @@ namespace OutlandArea.TacticalBattleLayer
             CelestialObjects.Add(celestialObject);
         }
 
-        internal void EndTurn()
+        private ICelestialObject GetCelestialObject(long id)
         {
+            foreach (var celestialObject in CelestialObjects.Where(celestialObject => celestialObject.Id == id))
+            {
+                return celestialObject;
+            }
+
+            throw new Exception("Celestial object not found.");
+        }
+
+        internal void EndTurn(List<ICommand> commands)
+        {
+            if (Turn > 0)
+            {
+                RecalculateCelestialObjectsPositions(commands);
+
+                Logger?.Invoke($"[Battle] End turn. New turn is {Turn}");
+            }
+            else
+            {
+                Logger?.Invoke("[Battle] Everything is prepared to start the battle.");
+            }
+
             Turn++;
-
-            RecalculateCelestialObjectsPositions();
-
-            Logger?.Invoke($"[Battle] End turn. New turn is {Turn}");
 
             OnChangeInformation?.Invoke();
         }
 
-        private void RecalculateCelestialObjectsPositions()
+        private void RecalculateCelestialObjectsPositions(IEnumerable<ICommand> commands)
         {
-            foreach (var item in CelestialObjects)
+            foreach (var command in commands)
             {
+                if (command is Navigation navigation)
+                {
+                    var celestialObject = GetCelestialObject(command.SpacecraftId);
 
+                    celestialObject.Velocity += navigation.Request.VelocityDelta;
+                    celestialObject.Direction += navigation.Request.DirectionDelta;
+                }
+            }
+
+            foreach (var spacecraft in CelestialObjects.Where(celestialObject => celestialObject is BaseSpacecraft))
+            {
+                spacecraft.LocationInLastTurn = spacecraft.Location;
+
+                spacecraft.Location = Common.MoveCelestialObjects(spacecraft.Location, spacecraft.Velocity / 10, spacecraft.Direction);
+
+                Logger?.Invoke($"[Battle] Spacecraft id='{spacecraft.Id}' moved from ({spacecraft.LocationInLastTurn.X},{spacecraft.LocationInLastTurn.Y}) to ({spacecraft.Location.X},{spacecraft.Location.Y})");
             }
         }
+
+        
     }
 }

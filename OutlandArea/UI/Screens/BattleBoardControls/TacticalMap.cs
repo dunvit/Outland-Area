@@ -2,14 +2,21 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.IO;
 using System.Windows.Forms;
 using OutlandArea.TacticalBattleLayer;
+using OutlandArea.TacticalBattleLayer.Commands;
+using OutlandArea.Tools;
 
 namespace OutlandArea.UI.Screens.BattleBoardControls
 {
-    public partial class TacticalMap : UserControl
+    public partial class TacticalMap : UserControl, IBattleManager
     {
+        public event Action<ICelestialObject> OnMouseMoveCelestialObject;
+        public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
+
+        public Manager Manager { get; set; }
+
+
         private readonly Pen _radarLinePenSecond = new Pen(Color.FromArgb(45, 45, 45), 1);
         private readonly Pen _radarLinePen = new Pen(Color.FromArgb(30, 30, 30), 1);
         private Turn CurrentTurn { get; set; }
@@ -18,12 +25,45 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
         
         private ScreenParameters _screenParameters;
 
+        private ICelestialObject _selectedCelestialObject;
+
+        private Point circlesCenter;
+
         private Point currentMouseCoordinates;
         private Point MouseMapCoordinates { get; set; }
+
+        private bool isCenterOnPlayerShip = false;
+
+        public bool StatusIsStartLockTarget;
 
         public TacticalMap()
         {
             InitializeComponent();
+        }
+
+        public void Activate(Manager manager)
+        {
+            Manager = manager;
+
+            Manager.OnChangeCommandsQueue += Event_ChangeCommandsQueue;
+        }
+
+        private NavigationChanges navigationChanges = new NavigationChanges();
+
+        private void Event_ChangeCommandsQueue()
+        {
+            navigationChanges = new NavigationChanges();
+
+            var commands = Manager.GetCurrentTurnCommands();
+
+            foreach (var command in commands)
+            {
+                if (command is Navigation navigation)
+                {
+                    navigationChanges.VelocityDelta += navigation.Request.VelocityDelta;
+                    navigationChanges.DirectionDelta += navigation.Request.DirectionDelta;
+                }
+            }
         }
 
         private void Event_MapLoad(object sender, EventArgs e)
@@ -37,14 +77,35 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         public void Refresh(Turn turn)
         {
+            navigationChanges = new NavigationChanges();
+
             CurrentTurn = turn;
 
-            
+            if (turn.Number == 1)
+            {
+                circlesCenter = _screenParameters.Center;
+            }
+            else
+            {
+                var coordinates = turn.GetPlayerSpacecraftLocation();
+
+                if (isCenterOnPlayerShip)
+                {
+                    _screenParameters.CenterScreenOnMap = coordinates;
+                }
+                else
+                {
+                    circlesCenter = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, coordinates);
+                }
+
+            }
         }
 
         private void Event_RefreshScreenTimer(object sender, EventArgs e)
         {
             if (CurrentTurn == null) return;
+
+            if (DebugTools.IsInDesignMode()) return;
 
             DrawScreen();
         }
@@ -60,19 +121,94 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            DrawRadarCircle(new Pen(Color.BlanchedAlmond), graphics, 2, _screenParameters.Center);
+            DrawRadarElements(graphics, circlesCenter);
 
-            DrawRadarCircles(graphics);
-
-            DrawRadarCross(graphics);
+            DrawSelectedCelestialObjectConnector(graphics, circlesCenter);
 
             DrawCelestialObjects(graphics);
 
             DrawMouseCoordinates(graphics);
 
-            
+            DrawStatuses(graphics);
 
             pictureBox1.Image = image;
+        }
+
+        private void DrawStatuses(Graphics graphics)
+        {
+            var target = Tools.UI.LoadGenericImage(@"Images\Targets\PlayerSpaceship");
+
+            var mouseLocation = PointToClient(Cursor.Position);
+
+            var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, currentMouseCoordinates);
+
+            if (StatusIsStartLockTarget)
+            {
+                graphics.DrawImage(target, new PointF(_screenParameters.Center.X + currentMouseCoordinates.X - 15, _screenParameters.Center.Y + currentMouseCoordinates.Y - 15));
+
+                graphics.FillEllipse(new SolidBrush(Color.Pink), _screenParameters.Center.X + currentMouseCoordinates.X - 15 - 40, currentMouseCoordinates.Y - 15, 80, 80);
+            }
+            
+        }
+
+        private void DrawRadarElements(Graphics graphics, Point center)
+        {
+            DrawRadarCircle(new Pen(Color.BlanchedAlmond), graphics, 2, circlesCenter);
+
+            DrawRadarCircles(graphics, circlesCenter);
+
+            DrawRadarCross(graphics, circlesCenter);
+        }
+
+        private void DrawSelectedCelestialObjectConnector(Graphics graphics, Point center)
+        {
+            var i = 0;
+
+            foreach (var celestialObject in CurrentTurn.CelestialObjects)
+            {
+                //var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, center, celestialObject.Location);
+                var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
+
+
+                if (celestialObject is BaseSpacecraft)
+                {
+                    i++;
+
+                    var coordinatesMap = " (" + Math.Abs(celestialObject.Location.X).ToString("D5") + ":" + Math.Abs(celestialObject.Location.Y).ToString("D5") + ") " + celestialObject.Name + "";
+
+                    using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
+                    {
+                        graphics.DrawString(coordinatesMap, font, new SolidBrush(Color.DimGray), new PointF(center.X / 2, i * 30 + 90));
+                    }
+
+                    if (celestialObject.Location.X < MouseMapCoordinates.X + 15 &&
+                        celestialObject.Location.X > MouseMapCoordinates.X - 15 &&
+                        celestialObject.Location.Y < MouseMapCoordinates.Y + 15 &&
+                        celestialObject.Location.Y > MouseMapCoordinates.Y - 15)
+                    {
+                        if (_selectedCelestialObject == null || ( _selectedCelestialObject.Id != celestialObject.Id))
+                        {
+                            _selectedCelestialObject = celestialObject;
+
+                            OnMouseMoveCelestialObject?.Invoke(celestialObject);
+                        }
+
+                        graphics.DrawLine(new Pen(Color.Bisque, 1), absoluteCoordinates.X, absoluteCoordinates.Y, center.X, center.Y);
+
+                        graphics.FillEllipse(new SolidBrush(Color.Black), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
+
+                        graphics.DrawEllipse(new Pen(Color.LightGray, 1), absoluteCoordinates.X - 21, absoluteCoordinates.Y - 21, 42, 42);
+                    }
+                    else
+                    {
+                        if (_selectedCelestialObject != null && _selectedCelestialObject.Id == celestialObject.Id)
+                        {
+                            OnMouseLeaveCelestialObject?.Invoke(null);
+                            _selectedCelestialObject = null;
+                        }
+                    }
+                }
+            }
         }
 
         private void DrawCelestialObjects(Graphics graphics)
@@ -94,10 +230,11 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
             //TODO: Add previous spacecraft movement steps
             var spaceCraft = celestialObject as BaseSpacecraft;
 
-            var absoluteCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
+            var absoluteCoordinates = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, celestialObject.Location);
 
             float[] dashValues = { 2, 2, 2, 2 };
             var blackPen = new Pen(Color.Black, 1) {DashPattern = dashValues};
+            var greenPen = new Pen(Color.Green, 1) { DashPattern = dashValues };
 
             var mainColor = Color.DarkRed;
             var mainIcon = "EnemySpaceship";
@@ -108,49 +245,60 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
                 mainIcon = "PlayerSpaceship";
             }
 
-            var directionCoordinates = MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
+            if (spaceCraft.IsPlayerSpacecraft)
+            {
+                if (navigationChanges.VelocityDelta != 0 || navigationChanges.DirectionDelta != 0)
+                {
+                    var directionChangeCoordinates = Common.MoveCelestialObjects(absoluteCoordinates, 50,
+                        celestialObject.Direction + navigationChanges.DirectionDelta);
 
-            graphics.DrawLine(new Pen(mainColor, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+                    graphics.DrawLine(new Pen(Color.DimGray, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionChangeCoordinates.X, directionChangeCoordinates.Y);
+                    graphics.DrawLine(greenPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y), new Point(directionChangeCoordinates.X, directionChangeCoordinates.Y));
+
+                    graphics.FillEllipse(new SolidBrush(Color.DimGray), directionChangeCoordinates.X - 2, directionChangeCoordinates.Y - 2, 4, 4);
+                }
+            }
+
+            var directionCoordinates = Common.MoveCelestialObjects(absoluteCoordinates, 50, celestialObject.Direction);
+
+            graphics.DrawLine(new Pen(Color.DimGray, 1), absoluteCoordinates.X, absoluteCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
             graphics.DrawLine(blackPen, new Point(absoluteCoordinates.X, absoluteCoordinates.Y), new Point(directionCoordinates.X, directionCoordinates.Y));
 
-            graphics.FillEllipse(new SolidBrush(mainColor), directionCoordinates.X - 2, directionCoordinates.Y - 2, 4, 4);
+            graphics.FillEllipse(new SolidBrush(Color.DimGray), directionCoordinates.X - 2, directionCoordinates.Y - 2, 4, 4);
 
-            var target = LoadImage(mainIcon);
+            var target = Tools.UI.LoadImage(mainIcon);
 
-            var bmpSpacecraft = RotateImage(target, celestialObject.Direction);
+            var bmpSpacecraft = Tools.UI.RotateImage(target, celestialObject.Direction);
 
-            graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 12, absoluteCoordinates.Y - 12));
+            graphics.DrawImage(bmpSpacecraft, new PointF(absoluteCoordinates.X - 15, absoluteCoordinates.Y - 15));
 
             graphics.FillEllipse(new SolidBrush(mainColor), new Rectangle(absoluteCoordinates.X - 1, absoluteCoordinates.Y - 1, 2, 2));
 
+            
         }
 
         #region Draw radar parts
 
-        private void DrawRadarCross(Graphics graphics)
+        private void DrawRadarCross(Graphics graphics, Point center)
         {
-            graphics.DrawLine(_radarLinePen, Width / 2, 20, Width / 2, Height - 20);
+            graphics.DrawLine(_radarLinePen, center.X - 450, center.Y, center.X + 450, center.Y);
 
-            graphics.DrawLine(_radarLinePen, 20, Height / 2, Width - 20, Height / 2);
+            graphics.DrawLine(_radarLinePen, center.X , center.Y - 450, center.X, center.Y + 450);
 
-            graphics.FillEllipse(new SolidBrush(Color.Black),
-                _screenParameters.Center.X - 40,
-                _screenParameters.Center.Y - 40,
-                80,
-                80);
+            graphics.FillEllipse(new SolidBrush(Color.Black), center.X - 40, center.Y - 40, 80, 80);
         }
 
-        private void DrawRadarCircles(Graphics graphics)
+        private void DrawRadarCircles(Graphics graphics, Point center)
         {
             for (var i = 0; i < 5; i++)
             {
                 var colorCircle = _radarLinePen;
-                if (IsEven(i))
+                if (Common.IsEven(i))
                 {
                     colorCircle = _radarLinePenSecond;
                 }
 
-                DrawRadarCircle(colorCircle, graphics, 50 + i * 200, _screenParameters.Center);
+                DrawRadarCircle(colorCircle, graphics, 50 + i * 200, center);
             }
         }
 
@@ -163,116 +311,53 @@ namespace OutlandArea.UI.Screens.BattleBoardControls
 
         private void DrawMouseCoordinates(Graphics graphics)
         {
-            var relativeLocation = ToRelativeCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
-
-
-            var coordinatesScreen = " Screen (x,y) (" + currentMouseCoordinates.X.ToString("D3") + ":" + currentMouseCoordinates.Y.ToString("D3") + ")";
+            var coordinatesScreen = "(" + currentMouseCoordinates.X.ToString("D3") + ":" + currentMouseCoordinates.Y.ToString("D3") + ") - Screen";
 
             using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
             {
                 graphics.DrawString(coordinatesScreen, font, new SolidBrush(Color.BlanchedAlmond), new PointF(_screenParameters.Center.X / 2, 10));
             }
 
-            var coordinatesMap = "Map (x,y) (" + Math.Abs(relativeLocation.X).ToString("D5") + ":" + Math.Abs(relativeLocation.Y).ToString("D5") + ")";
+            var coordinatesMap = "(" + Math.Abs(MouseMapCoordinates.X).ToString("D5") + ":" + Math.Abs(MouseMapCoordinates.Y).ToString("D5") + ") - Map";
 
             using (var font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel))
             {
                 graphics.DrawString(coordinatesMap, font, new SolidBrush(Color.BlanchedAlmond), new PointF(_screenParameters.Center.X / 2, 30));
             }
 
-
-
         }
 
         private void Event_MouseMove(object sender, MouseEventArgs e)
         {
-            currentMouseCoordinates = ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            currentMouseCoordinates = Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            MouseMapCoordinates = ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, e.Location);
+            MouseMapCoordinates = Common.ToTacticalMapCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
         }
 
-
-
-        public Point ToAbsoluteCoordinates(Point centerRadarLocation, Point centerPosition, Point celestialObjectPosition)
+        private void Event_Click(object sender, EventArgs e)
         {
-            var relativeX = (celestialObjectPosition.X - centerRadarLocation.X);
-            var relativeY = (celestialObjectPosition.Y - centerRadarLocation.Y);
-
-            return new Point(centerPosition.X + relativeX, centerPosition.Y + relativeY);
-        }
-
-        public Point MoveCelestialObjects(Point currentLocation, int speed, int angleInGraduses)
-        {
-            var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180;
-
-            var x = (int)(currentLocation.X + speed * Math.Cos(angleInRadians));
-            var y = (int)(currentLocation.Y + speed * Math.Sin(angleInRadians));
-
-            return new Point(x, y);
-        }
-
-        public Point ToRelativeCoordinates(Point mouseLocation, Point centerPosition)
-        {
-            var relativeX = (mouseLocation.X - centerPosition.X);
-            var relativeY = (mouseLocation.Y - centerPosition.Y);
-
-            return new Point(relativeX, relativeY);
-        }
-
-        public static Bitmap LoadImage(string file)
-        {
-            var patternsFolder = Path.Combine(Environment.CurrentDirectory, "Images", "Targets");
-
-            var fileFullName = Path.Combine(patternsFolder, file + ".png");
-
-            if (File.Exists(fileFullName))
+            if (e is MouseEventArgs me && me.Button == MouseButtons.Right)
             {
-                var orig = new Bitmap(fileFullName);
-                var clone = new Bitmap(orig.Width, orig.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-                using (var gr = Graphics.FromImage(clone))
-                {
-                    gr.DrawImage(orig, new Rectangle(0, 0, clone.Width, clone.Height));
-                }
-
-                return clone;
+                ResetScreenCenterCoordinates(me);
             }
-
-            return null;
         }
 
-        private bool IsEven(int a)
+        private void ResetScreenCenterCoordinates(MouseEventArgs me)
         {
-            return (a % 2) == 0;
+            currentMouseCoordinates = Common.ToRelativeCoordinates(me.Location, _screenParameters.Center);
+
+            MouseMapCoordinates = Common.ToTacticalMapCoordinates(currentMouseCoordinates, _screenParameters.CenterScreenOnMap);
+
+            _screenParameters.CenterScreenOnMap = MouseMapCoordinates;
+
+            var coordinates = CurrentTurn.GetPlayerSpacecraftLocation();
+
+            circlesCenter = Common.ToAbsoluteCoordinates(_screenParameters.CenterScreenOnMap, _screenParameters.Center, coordinates);
         }
 
-        public Image RotateImage(Image img, float rotationAngle)
+        public void StartLockTarget(ICommand command)
         {
-            //create an empty Bitmap image
-            Bitmap bmp = new Bitmap(img.Width, img.Height);
-
-            //turn the Bitmap into a Graphics object
-            Graphics gfx = Graphics.FromImage(bmp);
-
-            //now we set the rotation point to the center of our image
-            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
-            //now rotate the image
-            gfx.RotateTransform(rotationAngle);
-
-            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            //set the InterpolationMode to HighQualityBicubic so to ensure a high
-            //quality image once it is transformed to the specified size
-            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            //now draw our new image onto the graphics object
-            gfx.DrawImage(img, new Point(0, 0));
-
-            //dispose of our Graphics object
-            gfx.Dispose();
-
-            //return the image
-            return bmp;
+            StatusIsStartLockTarget = true;
         }
     }
 }

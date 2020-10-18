@@ -14,7 +14,7 @@ namespace OutlandArea
 
         private Form DialogScreen { get; set; } = new DialogScreen { Size = Global.ApplicationSettings.WindowSize };
 
-        private Form BattleBoardScreen { get; set; } = new BattleBoard {Size = new Size(1920, 1080)};
+        private Form BattleBoardScreen { get; set; } = new BattleBoard(null) {Size = new Size(1920, 1080)};
 
         private bool IsActivated { get; set; }
 
