@@ -18,7 +18,7 @@ namespace Client
             Global.GameInitialization();
 
 
-            Application.Run(new Form1());
+            Application.Run(new Engine.Gui.WindowMenu());
         }
     }
 }

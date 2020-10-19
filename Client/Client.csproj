@@ -74,6 +74,18 @@
     </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="Configuration\ScreenParameters.cs" />
+    <Compile Include="Gui\Controls\Common\FlatButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
+      <DependentUpon>FlatButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\WindowMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\WindowMenu.Designer.cs">
+      <DependentUpon>WindowMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
     <Compile Include="Layers\Tactical\Session.cs" />
@@ -99,6 +111,12 @@
     <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="Tools\Scheduler.cs" />
+    <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
+      <DependentUpon>FlatButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\WindowMenu.resx">
+      <DependentUpon>WindowMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

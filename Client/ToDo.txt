@@ -2,5 +2,3 @@
 - Show tactical map
 
 
-
-+ Migrate GameManager entity
