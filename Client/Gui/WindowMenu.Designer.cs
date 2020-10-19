@@ -35,7 +35,7 @@
             this.flatButton5 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton4 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton3 = new Engine.Gui.Controls.Common.FlatButton();
-            this.flatButton2 = new Engine.Gui.Controls.Common.FlatButton();
+            this.cmdStartNewGame = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,7 @@
             this.panel1.Controls.Add(this.flatButton5);
             this.panel1.Controls.Add(this.flatButton4);
             this.panel1.Controls.Add(this.flatButton3);
-            this.panel1.Controls.Add(this.flatButton2);
+            this.panel1.Controls.Add(this.cmdStartNewGame);
             this.panel1.Controls.Add(this.flatButton1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -123,19 +123,20 @@
             this.flatButton3.Text = "Single battle";
             this.flatButton3.UseVisualStyleBackColor = false;
             // 
-            // flatButton2
+            // cmdStartNewGame
             // 
-            this.flatButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.flatButton2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.flatButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.flatButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.flatButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.flatButton2.Location = new System.Drawing.Point(99, 160);
-            this.flatButton2.Name = "flatButton2";
-            this.flatButton2.Size = new System.Drawing.Size(117, 23);
-            this.flatButton2.TabIndex = 1;
-            this.flatButton2.Text = "Start new game";
-            this.flatButton2.UseVisualStyleBackColor = false;
+            this.cmdStartNewGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.cmdStartNewGame.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.cmdStartNewGame.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.cmdStartNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmdStartNewGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
+            this.cmdStartNewGame.Location = new System.Drawing.Point(99, 131);
+            this.cmdStartNewGame.Name = "cmdStartNewGame";
+            this.cmdStartNewGame.Size = new System.Drawing.Size(117, 23);
+            this.cmdStartNewGame.TabIndex = 1;
+            this.cmdStartNewGame.Text = "Start new game";
+            this.cmdStartNewGame.UseVisualStyleBackColor = false;
+            this.cmdStartNewGame.Click += new System.EventHandler(this.Event_StartNewGame);
             // 
             // flatButton1
             // 
@@ -144,7 +145,7 @@
             this.flatButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.flatButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.flatButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.flatButton1.Location = new System.Drawing.Point(99, 131);
+            this.flatButton1.Location = new System.Drawing.Point(99, 160);
             this.flatButton1.Name = "flatButton1";
             this.flatButton1.Size = new System.Drawing.Size(117, 23);
             this.flatButton1.TabIndex = 0;
@@ -173,7 +174,7 @@
         private System.Windows.Forms.Panel panel1;
         private Controls.Common.FlatButton flatButton1;
         private Controls.Common.FlatButton flatButton3;
-        private Controls.Common.FlatButton flatButton2;
+        private Controls.Common.FlatButton cmdStartNewGame;
         private Controls.Common.FlatButton flatButton5;
         private Controls.Common.FlatButton flatButton4;
         private System.Windows.Forms.Label txtShipName;

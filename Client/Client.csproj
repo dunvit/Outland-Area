@@ -80,11 +80,19 @@
     <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
       <DependentUpon>FlatButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\IUiManager.cs" />
+    <Compile Include="Gui\UiManager.cs" />
     <Compile Include="Gui\WindowMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Gui\WindowMenu.Designer.cs">
       <DependentUpon>WindowMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\WindowTacticalLayerContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\WindowTacticalLayerContainer.Designer.cs">
+      <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
@@ -116,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowMenu.resx">
       <DependentUpon>WindowMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\WindowTacticalLayerContainer.resx">
+      <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

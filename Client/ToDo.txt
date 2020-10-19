@@ -1,4 +1,11 @@
-﻿- Create login screen
+﻿
 - Show tactical map
 
+- Game UI Manager
+	- Create windows collection
 
+- Create login screen
+	+ Exit
+	- New Game
+	- Settings
+	- Resume

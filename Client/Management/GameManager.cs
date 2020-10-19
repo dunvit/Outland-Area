@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using Engine.Gui;
 using Engine.Layers.Tactical;
 using Engine.Management.Server;
 using Engine.Tools;
+using log4net;
 
 namespace Engine.Management
 {
@@ -18,19 +20,18 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
 
-        private Action<string> _logger;
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        private IUiManager ui;
 
-        public GameManager(Action<string> logger)
+        public GameManager(IUiManager uiManager)
         {
-            _logger = logger;
-
             _applicationSettings = LoadConfiguration();
 
             switch (_applicationSettings.ServerType)
             {
                 case 1:
-                    _gameServer = new ScalaGameServer(_applicationSettings, _logger);
+                    _gameServer = new ScalaGameServer(_applicationSettings, null);
                     break;
                 case 2:
                     _gameServer = new LocalStaticGameServer();
@@ -40,6 +41,15 @@ namespace Engine.Management
                     _gameServer = new LocalGameServer();
                     break;
             }
+
+            ui = uiManager;
+
+            
+        }
+
+        public void OpenTacticalLayer()
+        {
+            ui.StartNewGameSession();
         }
 
         private static Settings LoadConfiguration()
@@ -81,9 +91,9 @@ namespace Engine.Management
         {
             _gameSession = _gameServer.Initialization();
 
-            Logger("Initialization finished successful.");
+            Logger.Info("Initialization finished successful.");
 
-            Scheduler.Instance.ScheduleTask(5000, 100, GetDataFromServer, _logger);
+            Scheduler.Instance.ScheduleTask(5000, 100, GetDataFromServer, null);
 
             return _gameSession;
         }
@@ -102,7 +112,7 @@ namespace Engine.Management
             }
             else
             {
-                _logger("Critical error.");
+                Logger.Error($"Critical error on refresh game.");
                 return;
             }
 
@@ -113,7 +123,7 @@ namespace Engine.Management
                 EndTurn(_gameSession);
             }
 
-            _logger?.Invoke($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
+            Logger.Debug($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {_gameSession.Id}." +
                     $" Turn = {_gameSession.Turn}." +
                     $" Map objects count is {_gameSession.Map.CelestialObjects.Count}.");
@@ -124,11 +134,6 @@ namespace Engine.Management
             turn = gameSession.Turn;
 
             OnEndTurn?.Invoke(gameSession);
-        }
-
-        private void Logger(string message)
-        {
-            _logger?.Invoke(" " + message);
         }
     }
 }

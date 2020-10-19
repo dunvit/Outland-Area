@@ -14,5 +14,10 @@ namespace Engine.Gui
         {
             Application.Exit();
         }
+
+        private void Event_StartNewGame(object sender, EventArgs e)
+        {
+            Global.GenerateGameSession();
+        }
     }
 }

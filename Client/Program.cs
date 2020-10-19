@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Engine;
 
-namespace Client
+namespace Engine
 {
     static class Program
     {
@@ -17,8 +16,7 @@ namespace Client
 
             Global.GameInitialization();
 
-
-            Application.Run(new Engine.Gui.WindowMenu());
+            Application.Run(Global.GameUiManager.GetScreen("WindowMenu"));
         }
     }
 }
