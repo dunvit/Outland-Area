@@ -1,2 +1,6 @@
-﻿Migrate GameManager entity
-Show tactical map
+﻿- Create login screen
+- Show tactical map
+
+
+
++ Migrate GameManager entity

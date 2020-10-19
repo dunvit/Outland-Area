@@ -36,6 +36,9 @@
     <Reference Include="log4net, Version=2.0.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.11\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -70,17 +73,32 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="Configuration\ScreenParameters.cs" />
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
+    <Compile Include="Layers\Tactical\Command.cs" />
+    <Compile Include="Layers\Tactical\Session.cs" />
     <Compile Include="Layers\Tactical\ICelestialObject.cs" />
     <Compile Include="Layers\Tactical\MapSettings.cs" />
     <Compile Include="Layers\Tactical\Objects\Asteroid.cs" />
     <Compile Include="Layers\Tactical\Objects\Spaceships\ISpaceship.cs" />
     <Compile Include="Layers\Tactical\Objects\Spaceships\Spaceship.cs" />
     <Compile Include="Layers\Tactical\Objects\Spaceships\SpaceShipInfo.cs" />
+    <Compile Include="Management\GameManager.cs" />
+    <Compile Include="Management\Server\DataProcessing\CommandExecuteResult.cs" />
+    <Compile Include="Management\Server\DataProcessing\Commands.cs" />
+    <Compile Include="Management\Server\DataProcessing\Convertor.cs" />
+    <Compile Include="Management\Server\DataProcessing\Coordinates.cs" />
+    <Compile Include="Management\Server\DataProcessing\ObjectLocation.cs" />
+    <Compile Include="Management\Server\IGameServer.cs" />
+    <Compile Include="Management\Server\LocalGameServer.cs" />
+    <Compile Include="Management\Server\LocalStaticGameServer.cs" />
+    <Compile Include="Management\Server\ScalaGameServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\ExtensionMethods.cs" />
+    <Compile Include="Tools\Scheduler.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
