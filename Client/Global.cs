@@ -23,7 +23,7 @@ namespace Engine
 
         public static void GenerateGameSession()
         {
-            GameUiManager.StartNewGameSession();
+            Game.StartNewGameSession();
         }
 
         private static Settings ReloadApplicationSettings()

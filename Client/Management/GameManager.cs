@@ -42,7 +42,14 @@ namespace Engine.Management
                     break;
             }
 
+            _gameServer.Initialization();
+
             ui = uiManager;
+        }
+
+        public void StartNewGameSession()
+        {
+            ui.StartNewGameSession();
         }
 
         private static Settings LoadConfiguration()
