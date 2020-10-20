@@ -74,6 +74,9 @@
     </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="Configuration\ScreenParameters.cs" />
+    <Compile Include="Gui\BaseFullScreenWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Gui\Controls\Common\FlatButton.cs">
       <SubType>Component</SubType>
     </Compile>

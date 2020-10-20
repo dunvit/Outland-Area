@@ -43,13 +43,6 @@ namespace Engine.Management
             }
 
             ui = uiManager;
-
-            
-        }
-
-        public void OpenTacticalLayer()
-        {
-            ui.StartNewGameSession();
         }
 
         private static Settings LoadConfiguration()

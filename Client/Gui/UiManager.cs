@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Engine.Gui
@@ -14,6 +15,15 @@ namespace Engine.Gui
                 new WindowMenu(), 
                 new WindowTacticalLayerContainer()
             };
+
+            foreach (var screen in Screens)
+            {
+                if (screen is BaseFullScreenWindow)
+                {
+                    screen.Size = Global.ApplicationSettings.WindowSize;
+                    screen.Location = new Point(0, 0);
+                }
+            }
 
         }
 

@@ -2,10 +2,9 @@
 - Show tactical map
 
 - Game UI Manager
-	- Create windows collection
+	- Start new game session
 
 - Create login screen
-	+ Exit
 	- New Game
 	- Settings
 	- Resume
