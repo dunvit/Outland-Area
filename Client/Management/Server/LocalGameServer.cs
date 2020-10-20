@@ -19,8 +19,6 @@ namespace Engine.Management.Server
             return _gameSession;
         }
 
-        
-
         public GameSession RefreshGameSession(int id)
         {
             return _gameSession;

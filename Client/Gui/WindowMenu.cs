@@ -8,6 +8,8 @@ namespace Engine.Gui
         public WindowMenu()
         {
             InitializeComponent();
+
+            lblVersion.Text = Global.ApplicationSettings.Version;
         }
 
         private void Event_ExitGame(object sender, EventArgs e)
