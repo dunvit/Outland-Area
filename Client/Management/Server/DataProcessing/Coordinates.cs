@@ -226,7 +226,7 @@ namespace Engine.Management.Server.DataProcessing
             return newDirection;
         }
 
-
+        
 
         private static double ToDegrees(double angle) => (angle * 180 / Math.PI);
     }

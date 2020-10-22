@@ -16,9 +16,11 @@ namespace Engine
 
             ApplicationSettings = ReloadApplicationSettings();
 
+            Game = new GameManager();
+
             GameUiManager.Initialization();
 
-            Game = new GameManager(GameUiManager);
+            Game.Initialization(GameUiManager);
         }
 
         public static void GenerateGameSession()

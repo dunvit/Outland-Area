@@ -66,12 +66,6 @@
     <Compile Include="Equipment\Shield\ShieldModule.cs" />
     <Compile Include="Equipment\Weapon\IWeaponModule.cs" />
     <Compile Include="Equipment\Weapon\RailGun.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="Configuration\ScreenParameters.cs" />
     <Compile Include="Gui\BaseFullScreenWindow.cs">
@@ -83,7 +77,15 @@
     <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
       <DependentUpon>FlatButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.Designer.cs">
+      <DependentUpon>CelestialMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
     <Compile Include="Gui\IUiManager.cs" />
+    <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
     <Compile Include="Gui\WindowMenu.cs">
       <SubType>Form</SubType>
@@ -99,6 +101,7 @@
     </Compile>
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
+    <Compile Include="Layers\Tactical\GameSessionTools.cs" />
     <Compile Include="Layers\Tactical\Session.cs" />
     <Compile Include="Layers\Tactical\ICelestialObject.cs" />
     <Compile Include="Layers\Tactical\MapSettings.cs" />
@@ -120,10 +123,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Tools\Common.cs" />
+    <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="Tools\Scheduler.cs" />
     <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
       <DependentUpon>FlatButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CelestialMapControl.resx">
+      <DependentUpon>CelestialMapControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowMenu.resx">
       <DependentUpon>WindowMenu.cs</DependentUpon>
@@ -156,6 +163,7 @@
     <None Include="Data\Maps\Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Documentation\OpenTasks.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -179,7 +187,72 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ToDo.txt" />
+    <Content Include="Images\Commands\decreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\IncreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetGet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetRemove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnleft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\Big.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Large\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Small\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\CenterTarget.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\TargetOnMap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeGoods\Antibiotics.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeGoods\Wheat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

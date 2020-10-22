@@ -22,9 +22,9 @@ namespace Engine.Management
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private IUiManager ui;
+        private IUiManager _ui;
 
-        public GameManager(IUiManager uiManager)
+        public GameManager()
         {
             _applicationSettings = LoadConfiguration();
 
@@ -43,13 +43,20 @@ namespace Engine.Management
             }
 
             _gameServer.Initialization();
+        }
 
-            ui = uiManager;
+        public void Initialization(IUiManager uiManager)
+        {
+            _ui = uiManager;
         }
 
         public void StartNewGameSession()
         {
-            ui.StartNewGameSession();
+            _ui.StartNewGameSession();
+
+            _gameSession = Initialization();
+
+            OnEndTurn?.Invoke(_gameSession.DeepClone());
         }
 
         private static Settings LoadConfiguration()
@@ -84,6 +91,7 @@ namespace Engine.Management
 
         public void SelectCelestialObject(ICelestialObject celestialObject)
         {
+            Logger.Info("Select celestial object.");
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
@@ -93,7 +101,7 @@ namespace Engine.Management
 
             Logger.Info("Initialization finished successful.");
 
-            Scheduler.Instance.ScheduleTask(5000, 100, GetDataFromServer, null);
+            Scheduler.Instance.ScheduleTask(100, 100, GetDataFromServer, null);
 
             return _gameSession;
         }

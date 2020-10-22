@@ -8,11 +8,18 @@ namespace Engine.Gui
         public WindowTacticalLayerContainer()
         {
             InitializeComponent();
+
+            crlCelestialMap.Dock = DockStyle.Fill;
         }
 
         private void Event_Exit(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Event_ResumeGame(object sender, EventArgs e)
+        {
+            Global.Game.ResumeSession();
         }
     }
 }
