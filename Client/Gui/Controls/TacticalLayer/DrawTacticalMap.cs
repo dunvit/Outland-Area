@@ -190,5 +190,24 @@ namespace OutlandArea.Tools
             graphics.FillEllipse(new SolidBrush(Color.Black), screenCoordinates.X - 10, screenCoordinates.Y - 10, 20, 20);
 
         }
+
+        public static void DrawPointInSpace(ICelestialObject celestialObject, ICelestialObject spaceShip, Graphics graphics, ScreenParameters screenParameters)
+        {
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+            var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
+
+            var screenSpaceShipCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(spaceShip.PositionX, spaceShip.PositionY));
+
+
+            graphics.DrawLine(radarLinePen, screenSpaceShipCoordinates.X, screenSpaceShipCoordinates.Y, screenCoordinates.X, screenCoordinates.Y);
+
+
+            graphics.DrawLine(radarLinePen, screenCoordinates.X - 15, screenCoordinates.Y, screenCoordinates.X + 15, screenCoordinates.Y);
+
+            graphics.DrawLine(radarLinePen, screenCoordinates.X, screenCoordinates.Y - 15, screenCoordinates.X, screenCoordinates.Y + 15);
+
+            graphics.FillEllipse(new SolidBrush(Color.Black), screenCoordinates.X - 5, screenCoordinates.Y - 5, 10, 10);
+        }
     }
 }

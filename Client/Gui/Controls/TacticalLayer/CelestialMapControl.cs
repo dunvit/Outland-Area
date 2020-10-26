@@ -25,6 +25,7 @@ namespace Engine.Gui.Controls.TacticalLayer
         private GameSession _gameSession;
 
         private ICelestialObject MouseMoveCelestialObject { get; set; }
+        private Point PointInSpace { get; set; }
 
         // TODO: [T-106] Add event Mouse move to celestial object
         // TODO: [T-107] Add event Mouse click to celestial object
@@ -97,6 +98,8 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             DrawMouseMoveCross(graphics);
 
+            DrawPointInSpaceCross(graphics);
+
             if (mapSettings.IsDrawCelestialObjectDirections)
                 DrawTacticalMap.DrawCelestialObjectDirections(celestialMap, graphics, _screenParameters);
 
@@ -150,6 +153,15 @@ namespace Engine.Gui.Controls.TacticalLayer
 
 
             BackgroundImage = image;
+        }
+
+        private void DrawPointInSpaceCross(Graphics graphics)
+        {
+            if (_gameSession.SelectedObject == null) return;
+
+            var playerShip = SessionTools.GetCelestialObject(5005, _gameSession);
+
+            DrawTacticalMap.DrawPointInSpace(_gameSession.SelectedObject, playerShip, graphics, _screenParameters);
         }
 
         private void DrawMouseMoveCross(Graphics graphics)
@@ -255,6 +267,8 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 
+            PointInSpace = new Point(0, 0);
+
             if (celestialObjectInRange != null)
             {
                 Global.Game.SelectCelestialObject(celestialObjectInRange);
@@ -262,6 +276,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             else
             {
                 Global.Game.SelectPointInSpace(mouseMapCoordinates);
+                PointInSpace = mouseMapCoordinates;
             }
 
         }

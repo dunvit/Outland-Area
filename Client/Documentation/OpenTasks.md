@@ -47,6 +47,7 @@ __2020-10-26__
 
 - [x] Add commands panel control
 - [x] Add event - click in space for approach to pint    
+- [x] Draw `Align To` space point UI
 ---
 
 __2020-10-22__

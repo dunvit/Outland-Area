@@ -16,7 +16,7 @@ namespace Engine.Gui
                 return;
 
             Global.Game.OnSelectCelestialObject += controlCommands.GetTarget;
-            //controlCommands
+            controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
         }
 
         private void Event_Exit(object sender, EventArgs e)

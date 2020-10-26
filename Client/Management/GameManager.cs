@@ -24,6 +24,8 @@ namespace Engine.Management
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        
+
         private IUiManager _ui;
 
         public GameManager()
@@ -94,6 +96,9 @@ namespace Engine.Management
         public void SelectCelestialObject(ICelestialObject celestialObject)
         {
             Logger.Info("A celestial object is selected.");
+
+            _gameSession.SelectedObject = celestialObject.DeepClone();
+
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
@@ -109,6 +114,8 @@ namespace Engine.Management
                 Name = "Point in Space",
                 Classification = -1
             };
+
+            _gameSession.SelectedObject = celestialObject.DeepClone();
 
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
@@ -160,6 +167,11 @@ namespace Engine.Management
             turn = gameSession.Turn;
 
             OnEndTurn?.Invoke(gameSession);
+        }
+
+        public void AddCommandAlignTo(ICelestialObject celestialObject)
+        {
+            var a = "";
         }
     }
 }

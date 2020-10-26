@@ -13,5 +13,7 @@ namespace Engine.Layers.Tactical
         public CelestialMap Map { get; set; }
 
         public List<Command> Commands { get; set; }
+
+        public ICelestialObject SelectedObject { get; set; }
     }
 }
