@@ -70,11 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterSystem\CharacterTests.cs" />
+    <Compile Include="ClientTests\Layers\Tactical\GameSessionTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
-    <Compile Include="Engine\Data\Calculation\CoordinatesTests.cs" />
-    <Compile Include="Engine\GameManagerTests.cs" />
-    <Compile Include="Engine\TaskSchedulerTests.cs" />
     <Compile Include="Examples\ExtensionTests.cs" />
     <Compile Include="Examples\AnonymousTypeTests.cs" />
     <Compile Include="Global.cs" />
@@ -86,7 +84,9 @@
     <None Include="Configuration\Logs.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configuration\OutlandArea.config" />
+    <None Include="Configuration\OutlandArea.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Configuration\Version.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -99,6 +99,9 @@
     <None Include="Data\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\Map_005.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Maps\Tests_Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -108,17 +111,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{29592fa3-7f7e-4ba8-ad8d-bd656bbcc520}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Examples\Examples.csproj">
       <Project>{09a3e9d0-3b4f-4c22-af64-beb112fc13af}</Project>
       <Name>Examples</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
-      <Project>{34984709-AF29-46A5-A39D-EC33B3A6A3FB}</Project>
-      <Name>OutlandAreaLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OutlandArea\OutlandArea.csproj">
-      <Project>{7625BBA0-1C3E-4853-9D50-4541E30F0C13}</Project>
-      <Name>OutlandArea</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

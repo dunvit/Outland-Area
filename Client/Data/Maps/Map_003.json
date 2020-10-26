@@ -2676,7 +2676,7 @@
         "speed": 6,
         "maxSpeed": 12,
         "signature": 200,
-        "classification": 2,
+        "classification": 200,
         "isScanned": false
       }
     ],

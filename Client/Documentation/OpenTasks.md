@@ -36,8 +36,8 @@
 
 ---
 
-
-- [ ] Add new type command - `Approach To Point`
+- [ ] Add GetPlayerSpaceShip method in `GameSessionTools`
+- [ ] Add new type command - `Approach To Point` 
 - [ ] Execute command type `Approach To Point`
 - [ ] Add command to game battle
 - [ ] Remove old command from game battle
@@ -45,6 +45,8 @@
 ---
 __2020-10-26__
 
+- [x] Add new parameter Selected Object to Game Session
+- [x] Refactoring Commands types
 - [x] Add commands panel control
 - [x] Add event - click in space for approach to pint    
 - [x] Draw `Align To` space point UI
@@ -52,16 +54,10 @@ __2020-10-26__
 
 __2020-10-22__
 
-- __CelestialMapControl__
-	- [x] Show tactical map on new turn map calculation
-- __Engine__
-    - [x] Execute turn system
-- __Game Controller__ 
-    - [x] [A-101] Get event Mouse click to celestial object
-- __CelestialMapControl__
-    - [x] [T-107] Add event Mouse click to celestial object
-
-
+- [x] Show tactical map on new turn map calculation
+- [x] Execute turn system
+- [x] [A-101] Get event Mouse click to celestial object
+- [x] [T-107] Add event Mouse click to celestial object
 
 ---
 

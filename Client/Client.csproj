@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
+    <Compile Include="Layers\Tactical\CommandsTypes.cs" />
     <Compile Include="Layers\Tactical\GameSessionTools.cs" />
     <Compile Include="Layers\Tactical\Objects\PointInSpace.cs" />
     <Compile Include="Layers\Tactical\Session.cs" />
@@ -116,9 +117,12 @@
     <Compile Include="Layers\Tactical\Objects\Spaceships\ISpaceship.cs" />
     <Compile Include="Layers\Tactical\Objects\Spaceships\Spaceship.cs" />
     <Compile Include="Layers\Tactical\Objects\Spaceships\SpaceShipInfo.cs" />
+    <Compile Include="Layers\Tactical\SessionExtensions.cs" />
     <Compile Include="Management\GameManager.cs" />
     <Compile Include="Management\Server\DataProcessing\CommandExecuteResult.cs" />
     <Compile Include="Management\Server\DataProcessing\Commands.cs" />
+    <Compile Include="Management\Server\DataProcessing\CommandsExecute\AlignTo.cs" />
+    <Compile Include="Management\Server\DataProcessing\CommandsExecute\Movement.cs" />
     <Compile Include="Management\Server\DataProcessing\Convertor.cs" />
     <Compile Include="Management\Server\DataProcessing\Coordinates.cs" />
     <Compile Include="Management\Server\DataProcessing\ObjectLocation.cs" />

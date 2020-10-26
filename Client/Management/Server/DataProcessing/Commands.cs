@@ -22,9 +22,9 @@ namespace Engine.Management.Server.DataProcessing
 
             foreach (var gameSessionCommand in gameSession.Commands)
             {
-                switch (gameSessionCommand.CommandTypeId)
+                switch (gameSessionCommand.Type)
                 {
-                    case 1:
+                    case CommandsTypes.MoveForward:
                         var executeResult = ExecuteMovementCommand(result.Map.CelestialObjects, gameSessionCommand);
 
                         if (executeResult.IsResume)
@@ -32,6 +32,10 @@ namespace Engine.Management.Server.DataProcessing
                             result.Commands.Add(executeResult.Command);
                         }
 
+                        break;
+
+                    case CommandsTypes.AlignTo:
+                        var a = "";
                         break;
                 }
             }

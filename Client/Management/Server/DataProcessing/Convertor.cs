@@ -67,7 +67,7 @@ namespace Engine.Management.Server.DataProcessing
                         celestialMap.CelestialObjects.Add(asteroid);
                         break;
 
-                    case 2:
+                    case 2: case 200:
                         var spaceship = new Spaceship()
                         {
                             Id = (int)jCelestialObject["id"],

@@ -19,6 +19,19 @@ namespace Engine.Layers.Tactical
             return null;
         }
 
+        public static ICelestialObject GetPlayerSpaceShip(GameSession gameSession)
+        {
+            foreach (var celestialObject in gameSession.Map.CelestialObjects)
+            {
+                if (celestialObject.Classification == 200)
+                {
+                    return celestialObject.DeepClone();
+                }
+            }
+
+            return null;
+        }
+
         public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, Point point)
         {
             foreach (var celestialObjects in gameSession.Map.CelestialObjects)

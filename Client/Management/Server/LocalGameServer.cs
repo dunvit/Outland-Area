@@ -42,7 +42,7 @@ namespace Engine.Management.Server
                 TargetCelestialObjectId = targetObjectId,
                 MemberId = memberId,
                 TargetCellId = targetCell,
-                CommandTypeId = typeId
+                Type = (CommandsTypes) typeId
             });
         }
 

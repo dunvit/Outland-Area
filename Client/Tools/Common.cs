@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Engine.Configuration;
 
 namespace Engine.Tools
 {
