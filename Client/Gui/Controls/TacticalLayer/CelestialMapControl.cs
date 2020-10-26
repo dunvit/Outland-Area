@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -24,8 +23,8 @@ namespace Engine.Gui.Controls.TacticalLayer
         private MapSettings mapSettings = new MapSettings();
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
-        //private ICelestialObject _activeCelestialObject;
-        //private ICelestialObject _selectedCelestialObject;
+
+        private ICelestialObject MouseMoveCelestialObject { get; set; }
 
         // TODO: [T-106] Add event Mouse move to celestial object
         // TODO: [T-107] Add event Mouse click to celestial object
@@ -63,6 +62,8 @@ namespace Engine.Gui.Controls.TacticalLayer
             _gameSession = gameSession;
         }
 
+        private bool refreshInProgress = false;
+
         private void RefreshCelestialMap()
         {
             Logger.Debug("Refresh celestial map event.");
@@ -72,7 +73,13 @@ namespace Engine.Gui.Controls.TacticalLayer
                 Initialization();
             }
 
+            if (refreshInProgress) return;
+
+            refreshInProgress = true;
+
             DrawScreen(_gameSession.Map);
+
+            refreshInProgress = false;
         }
 
         private void DrawScreen(CelestialMap celestialMap)
@@ -87,6 +94,8 @@ namespace Engine.Gui.Controls.TacticalLayer
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             DrawCenterScreenCross(graphics);
+
+            DrawMouseMoveCross(graphics);
 
             if (mapSettings.IsDrawCelestialObjectDirections)
                 DrawTacticalMap.DrawCelestialObjectDirections(celestialMap, graphics, _screenParameters);
@@ -141,6 +150,13 @@ namespace Engine.Gui.Controls.TacticalLayer
 
 
             BackgroundImage = image;
+        }
+
+        private void DrawMouseMoveCross(Graphics graphics)
+        {
+            if (MouseMoveCelestialObject == null) return;
+
+            DrawTacticalMap.DrawPreTarget(MouseMoveCelestialObject, graphics, _screenParameters);
         }
 
         private void DrawCenterScreenCross(Graphics graphics)
@@ -243,7 +259,22 @@ namespace Engine.Gui.Controls.TacticalLayer
             {
                 Global.Game.SelectCelestialObject(celestialObjectInRange);
             }
+            else
+            {
+                Global.Game.SelectPointInSpace(mouseMapCoordinates);
+            }
 
+        }
+
+        private void Event_MapMouseMove(object sender, MouseEventArgs e)
+        {
+            var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = Tools.Common.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+
+            var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
+
+            MouseMoveCelestialObject = celestialObjectInRange?.DeepClone();
         }
     }
 }

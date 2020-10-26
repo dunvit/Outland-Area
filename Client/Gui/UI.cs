@@ -18,7 +18,9 @@ namespace Engine.Gui
 
         public static Bitmap LoadGenericImage(string file)
         {
-            var fileFullName = Path.Combine(Environment.CurrentDirectory, file + ".png");
+            var images = Path.Combine(Environment.CurrentDirectory, "Images");
+
+            var fileFullName = Path.Combine(images, file.Replace("/","\\") + ".png");
 
             if (File.Exists(fileFullName))
             {

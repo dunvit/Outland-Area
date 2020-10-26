@@ -35,6 +35,20 @@
     - [ ] [S-102] Get event Mouse click on empty space (Remove selection)  
 
 ---
+
+
+- [ ] Add new type command - `Approach To Point`
+- [ ] Execute command type `Approach To Point`
+- [ ] Add command to game battle
+- [ ] Remove old command from game battle
+
+---
+__2020-10-26__
+
+- [x] Add commands panel control
+- [x] Add event - click in space for approach to pint    
+---
+
 __2020-10-22__
 
 - __CelestialMapControl__

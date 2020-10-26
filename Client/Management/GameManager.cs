@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using Engine.Gui;
 using Engine.Layers.Tactical;
+using Engine.Layers.Tactical.Objects;
 using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
@@ -91,7 +93,23 @@ namespace Engine.Management
 
         public void SelectCelestialObject(ICelestialObject celestialObject)
         {
-            Logger.Info("Select celestial object.");
+            Logger.Info("A celestial object is selected.");
+            OnSelectCelestialObject?.Invoke(celestialObject);
+        }
+
+        public void SelectPointInSpace(Point pointInSpace)
+        {
+            Logger.Info("A point in space is selected.");
+
+            ICelestialObject celestialObject = new PointInSpace
+            {
+                PositionX = pointInSpace.X, 
+                PositionY = pointInSpace.Y, 
+                Id = -1, 
+                Name = "Point in Space",
+                Classification = -1
+            };
+
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 

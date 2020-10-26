@@ -32,6 +32,7 @@
             this.crlCelestialMap = new Engine.Gui.Controls.TacticalLayer.CelestialMapControl();
             this.cmdRunGame = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.controlCommands = new Engine.Gui.Controls.TacticalLayer.CommandsControl();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,12 +83,21 @@
             this.panel1.Size = new System.Drawing.Size(200, 100);
             this.panel1.TabIndex = 3;
             // 
+            // controlCommands
+            // 
+            this.controlCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.controlCommands.Location = new System.Drawing.Point(479, 12);
+            this.controlCommands.Name = "controlCommands";
+            this.controlCommands.Size = new System.Drawing.Size(334, 74);
+            this.controlCommands.TabIndex = 4;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.controlCommands);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.crlCelestialMap);
             this.DoubleBuffered = true;
@@ -105,5 +115,6 @@
         private Controls.TacticalLayer.CelestialMapControl crlCelestialMap;
         private Controls.Common.FlatButton cmdRunGame;
         private System.Windows.Forms.Panel panel1;
+        private Controls.TacticalLayer.CommandsControl controlCommands;
     }
 }

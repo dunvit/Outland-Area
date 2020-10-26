@@ -163,6 +163,32 @@ namespace OutlandArea.Tools
             }
         }
 
-        
+
+        public static void DrawPreTarget(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        {
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+            var image = UI.LoadGenericImage("Targets/TargetOnMap");
+
+            //graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
+
+            var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
+
+
+            graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 12, screenCoordinates.Y - 12, 24, 24);
+
+            graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 22, screenCoordinates.Y - 22, 44, 44);
+
+            graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 32, screenCoordinates.Y - 32, 64, 64);
+
+            
+
+            graphics.DrawLine(radarLinePen, screenCoordinates.X - 45, screenCoordinates.Y, screenCoordinates.X + 45, screenCoordinates.Y);
+
+            graphics.DrawLine(radarLinePen, screenCoordinates.X, screenCoordinates.Y - 45, screenCoordinates.X, screenCoordinates.Y + 45);
+
+            graphics.FillEllipse(new SolidBrush(Color.Black), screenCoordinates.X - 10, screenCoordinates.Y - 10, 20, 20);
+
+        }
     }
 }

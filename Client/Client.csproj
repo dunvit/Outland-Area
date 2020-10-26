@@ -83,6 +83,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.Designer.cs">
       <DependentUpon>CelestialMapControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.Designer.cs">
+      <DependentUpon>CommandsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\UI.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
     <Compile Include="Layers\Tactical\GameSessionTools.cs" />
+    <Compile Include="Layers\Tactical\Objects\PointInSpace.cs" />
     <Compile Include="Layers\Tactical\Session.cs" />
     <Compile Include="Layers\Tactical\ICelestialObject.cs" />
     <Compile Include="Layers\Tactical\MapSettings.cs" />
@@ -131,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CelestialMapControl.resx">
       <DependentUpon>CelestialMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsControl.resx">
+      <DependentUpon>CommandsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowMenu.resx">
       <DependentUpon>WindowMenu.cs</DependentUpon>

@@ -39,6 +39,7 @@
             this.Name = "CelestialMapControl";
             this.Size = new System.Drawing.Size(739, 637);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MapClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Event_MapMouseMove);
             this.ResumeLayout(false);
 
         }

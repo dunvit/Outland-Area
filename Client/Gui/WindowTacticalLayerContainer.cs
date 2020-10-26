@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Engine.Tools;
 
 namespace Engine.Gui
 {
@@ -10,6 +11,12 @@ namespace Engine.Gui
             InitializeComponent();
 
             crlCelestialMap.Dock = DockStyle.Fill;
+
+            if (DebugTools.IsInDesignMode())
+                return;
+
+            Global.Game.OnSelectCelestialObject += controlCommands.GetTarget;
+            //controlCommands
         }
 
         private void Event_Exit(object sender, EventArgs e)
