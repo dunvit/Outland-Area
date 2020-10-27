@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Engine.Layers.Tactical;
 
 namespace Engine.Tools
 {
@@ -19,6 +18,9 @@ namespace Engine.Tools
             }
         }
 
-        
+        public static int NextInt(this Random random)
+        {
+            return random.Next(1000000000, int.MaxValue);
+        }
     }
 }

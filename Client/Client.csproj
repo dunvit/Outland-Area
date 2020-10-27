@@ -106,8 +106,9 @@
       <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Layers\Tactical\CelestialMap.cs" />
+    <Compile Include="Layers\Tactical\CelestialObjectTypes.cs" />
     <Compile Include="Layers\Tactical\Command.cs" />
-    <Compile Include="Layers\Tactical\CommandsTypes.cs" />
+    <Compile Include="Layers\Tactical\CommandTypes.cs" />
     <Compile Include="Layers\Tactical\GameSessionTools.cs" />
     <Compile Include="Layers\Tactical\Objects\PointInSpace.cs" />
     <Compile Include="Layers\Tactical\Session.cs" />

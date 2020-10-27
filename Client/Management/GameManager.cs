@@ -171,7 +171,18 @@ namespace Engine.Management
 
         public void AddCommandAlignTo(ICelestialObject celestialObject)
         {
-            var a = "";
+            var playerShip = _gameSession.GetPlayerSpaceShip();
+
+            celestialObject.Id = new Random().NextInt();
+
+            AddCelestialObject(celestialObject);
+
+            Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, 200);
+        }
+
+        public void AddCelestialObject(ICelestialObject celestialObject)
+        {
+            _gameServer.AddCelestialObject(_gameSession.Id, celestialObject.Id, celestialObject.PositionX, celestialObject.PositionY, 0, 0 , celestialObject.Classification);
         }
     }
 }

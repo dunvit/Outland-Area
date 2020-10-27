@@ -14,6 +14,7 @@ namespace Engine.Management.Server
 
         void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId);
 
-
+        void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
+            int classification);
     }
 }

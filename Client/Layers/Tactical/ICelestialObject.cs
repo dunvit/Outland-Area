@@ -2,7 +2,7 @@
 {
     public interface ICelestialObject
     {
-        long Id { get; set; }
+        int Id { get; set; }
         string Name { get; set; }
         int Direction { get; set; }
         int Signature { get; set; }

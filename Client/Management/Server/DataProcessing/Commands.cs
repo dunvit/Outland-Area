@@ -24,7 +24,7 @@ namespace Engine.Management.Server.DataProcessing
             {
                 switch (gameSessionCommand.Type)
                 {
-                    case CommandsTypes.MoveForward:
+                    case CommandTypes.MoveForward:
                         var executeResult = ExecuteMovementCommand(result.Map.CelestialObjects, gameSessionCommand);
 
                         if (executeResult.IsResume)
@@ -34,7 +34,7 @@ namespace Engine.Management.Server.DataProcessing
 
                         break;
 
-                    case CommandsTypes.AlignTo:
+                    case CommandTypes.AlignTo:
                         var a = "";
                         break;
                 }

@@ -1,6 +1,6 @@
 ﻿namespace Engine.Layers.Tactical
 {
-    public enum CommandsTypes
+    public enum CommandTypes
     {
         MoveForward = 200,
         AlignTo = 100

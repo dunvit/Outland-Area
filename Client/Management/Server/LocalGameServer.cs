@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Engine.Layers.Tactical;
+using Engine.Layers.Tactical.Objects;
 using Engine.Tools;
 
 namespace Engine.Management.Server
@@ -36,14 +37,33 @@ namespace Engine.Management.Server
 
         public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
         {
-            _gameSession.Commands.Add(new Command
+            var command = new Command
             {
                 CelestialObjectId = objectId,
                 TargetCelestialObjectId = targetObjectId,
                 MemberId = memberId,
                 TargetCellId = targetCell,
-                Type = (CommandsTypes) typeId
-            });
+                Type = (CommandTypes) typeId
+            };
+
+            _gameSession.AddCommand(command);
+        }
+
+        public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
+            int classification)
+        {
+            ICelestialObject celestialObject = new PointInSpace
+            {
+                Id = objectId,
+                PositionX = positionX,
+                PositionY = positionY,
+                Classification = classification,
+                Direction = direction,
+                Speed = speed,
+                Name = "Point In Space"
+            };
+
+            _gameSession.AddCelestialObject(celestialObject);
         }
 
 
