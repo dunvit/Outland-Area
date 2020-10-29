@@ -9,7 +9,7 @@ namespace Engine.Layers.Tactical.Objects.Spaceships
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Direction { get; set; }
+        public double Direction { get; set; }
         public int Signature { get; set; }
         public int Speed { get; set; }
         public int MaxSpeed { get; set; }

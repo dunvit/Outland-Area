@@ -47,6 +47,7 @@ namespace Engine.Management.Server.DataProcessing
 
             foreach (var celestialObject in result.CelestialObjects)
             {
+                // TODO: Replace method to MoveObject from this class.
                 var position = Common.MoveCelestialObjects(
                     new Point(celestialObject.PositionX, celestialObject.PositionY),
                     celestialObject.Speed, 
@@ -59,7 +60,7 @@ namespace Engine.Management.Server.DataProcessing
             return result;
         }
 
-        public static List<ObjectLocation> GetTrajectoryApproach(Point currentLocation, Point targetLocation, int currentDirection, int speed, int iterations)
+        public static List<ObjectLocation> GetTrajectoryApproach(Point currentLocation, Point targetLocation, double currentDirection, int speed, int iterations)
         {
             var result = new List<ObjectLocation>();
 
@@ -67,7 +68,7 @@ namespace Engine.Management.Server.DataProcessing
             {
                 Distance = GetDistance(targetLocation, currentLocation), 
                 Direction = currentDirection,
-                Coordinates = MoveObject(new Point(currentLocation.X, currentLocation.Y), speed, currentDirection)
+                Coordinates = new Point(currentLocation.X, currentLocation.Y)
             };
 
             result.Add(initial);

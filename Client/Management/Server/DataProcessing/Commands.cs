@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using Engine.Layers.Tactical;
 using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Tools;
@@ -20,26 +21,30 @@ namespace Engine.Management.Server.DataProcessing
             // Clear commands pool
             result.Commands = new List<Command>();
 
-            foreach (var gameSessionCommand in gameSession.Commands)
+            foreach (var command in gameSession.Commands)
             {
-                switch (gameSessionCommand.Type)
+                switch (command.Type)
                 {
                     case CommandTypes.MoveForward:
-                        var executeResult = ExecuteMovementCommand(result.Map.CelestialObjects, gameSessionCommand);
+                        var executeMoveForwardResult = ExecuteMovementCommand(result.Map.CelestialObjects, command);
 
-                        if (executeResult.IsResume)
+                        if (executeMoveForwardResult.IsResume)
                         {
-                            result.Commands.Add(executeResult.Command);
+                            result.Commands.Add(executeMoveForwardResult.Command.DeepClone());
                         }
 
                         break;
 
                     case CommandTypes.AlignTo:
-                        var a = "";
+                        var executeAlignToResult = ExecuteAlignTo(result, command);
+
+                        if (executeAlignToResult.IsResume)
+                        {
+                            result.Commands.Add(executeAlignToResult.Command.DeepClone());
+                        }
                         break;
                 }
             }
-
 
             return result;
         }
@@ -66,6 +71,27 @@ namespace Engine.Management.Server.DataProcessing
             return new CommandExecuteResult{Command = command, IsResume = isResume};
         }
 
-        
+        private CommandExecuteResult ExecuteAlignTo(GameSession gameSession, Command command)
+        {
+            var isResume = true;
+
+            var spaceShip = gameSession.GetPlayerSpaceShip();
+            var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+
+            var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
+            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
+
+            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+
+            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            {
+                if (mapCelestialObject.Id == spaceShip.Id)
+                {
+                    mapCelestialObject.Direction = result[1].Direction;
+                }
+            }
+
+            return new CommandExecuteResult { Command = command, IsResume = isResume };
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace OutlandArea.Tools
             // Convert celestial object coordinates to screen coordinates
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
 
-            var bmpSpacecraft = UI.RotateImage(UI.LoadImage(mainIcon), celestialObject.Direction);
+            var bmpSpacecraft = UI.RotateImage(UI.LoadImage(mainIcon), (float) celestialObject.Direction);
 
             graphics.DrawImage(bmpSpacecraft, new PointF(screenCoordinates.X - bmpSpacecraft.Width / 2, screenCoordinates.Y - bmpSpacecraft.Height / 2));
 
@@ -140,7 +140,7 @@ namespace OutlandArea.Tools
 
                 if (celestialObject.Classification == 2)
                 {
-                    additionalLenght = UI.RotateImage(UI.LoadImage("PlayerSpaceship"), celestialObject.Direction).Width / 2;
+                    additionalLenght = UI.RotateImage(UI.LoadImage("PlayerSpaceship"), (float) celestialObject.Direction).Width / 2;
                 }
 
                 var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);

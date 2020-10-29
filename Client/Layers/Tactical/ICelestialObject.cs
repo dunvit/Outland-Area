@@ -4,7 +4,7 @@
     {
         int Id { get; set; }
         string Name { get; set; }
-        int Direction { get; set; }
+        double Direction { get; set; }
         int Signature { get; set; }
         int Speed { get; set; }
         int PositionX { get; set; }

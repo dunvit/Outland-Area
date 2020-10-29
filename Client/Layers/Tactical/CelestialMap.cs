@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Engine.Tools;
 
 namespace Engine.Layers.Tactical
 {
@@ -11,8 +10,5 @@ namespace Engine.Layers.Tactical
         public int Turn { get; set; }
         public bool IsEnabled { get; set; }
         public List<ICelestialObject> CelestialObjects { get; set; } = new List<ICelestialObject>();
-
-        
-
     }
 }

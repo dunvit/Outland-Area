@@ -5,7 +5,7 @@ namespace Engine.Tools
 {
     public class Common
     {
-        public static Point MoveCelestialObjects(Point currentLocation, int speed, int angleInGraduses)
+        public static Point MoveCelestialObjects(Point currentLocation, int speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 
