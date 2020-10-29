@@ -2,11 +2,13 @@
 using Engine.Layers.Tactical;
 using Engine.Layers.Tactical.Objects;
 using Engine.Tools;
+using log4net;
 
 namespace Engine.Management.Server
 {
     public class LocalGameServer : IGameServer
     {
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private GameSession _gameSession;
 
         public GameSession Initialization()
@@ -22,21 +24,25 @@ namespace Engine.Management.Server
 
         public GameSession RefreshGameSession(int id)
         {
+            Logger.Debug($"RefreshGameSession id={id}");
             return _gameSession;
         }
 
         public void ResumeSession(int id)
         {
+            Logger.Debug($"ResumeSession id={id}");
             _gameSession.Map.IsEnabled = true;
         }
 
         public void PauseSession(int id)
         {
+            Logger.Debug($"PauseSession id={id}");
             _gameSession.Map.IsEnabled = false;
         }
 
         public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
         {
+            Logger.Debug($"Add command sessionId={sessionId} objectId={objectId} targetObjectId={targetObjectId} typeId={typeId}");
             var command = new Command
             {
                 CelestialObjectId = objectId,
@@ -52,6 +58,8 @@ namespace Engine.Management.Server
         public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
             int classification)
         {
+            Logger.Debug($"Add celestial object sessionId={sessionId} objectId={objectId} positionX={positionX} positionY={positionY} classification={classification}");
+
             ICelestialObject celestialObject = new PointInSpace
             {
                 Id = objectId,

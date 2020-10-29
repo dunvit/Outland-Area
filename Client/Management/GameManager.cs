@@ -177,7 +177,7 @@ namespace Engine.Management
 
             AddCelestialObject(celestialObject);
 
-            Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, 200);
+            Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int) CommandTypes.AlignTo);
         }
 
         public void AddCelestialObject(ICelestialObject celestialObject)

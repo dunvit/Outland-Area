@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
+using System.Reflection;
 using Engine.Tools;
+using log4net;
 
 namespace Engine.Layers.Tactical
 {
     public static class SessionExtensions
     {
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static ICelestialObject GetPlayerSpaceShip(this GameSession session)
         {
             foreach (var celestialObject in session.Map.CelestialObjects)
@@ -19,8 +22,22 @@ namespace Engine.Layers.Tactical
             return null;
         }
 
+        public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
+        {
+            foreach (var celestialObjects in gameSession.Map.CelestialObjects)
+            {
+                if (id == celestialObjects.Id)
+                {
+                    return celestialObjects.DeepClone();
+                }
+            }
+
+            return null;
+        }
+
         public static void AddCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
+            Logger.Info($"AddCelestialObject Id = {celestialObject.Id} Name = {celestialObject.Name} Classification = {celestialObject.Classification}" );
             session.Map.CelestialObjects.Add(celestialObject);
         }
 
@@ -40,6 +57,8 @@ namespace Engine.Layers.Tactical
             }
 
             commands.Add(command);
+
+            session.Commands = commands.DeepClone();
         }
 
         private static List<Command> RemovePreviousCommand(CommandTypes type, GameSession session)

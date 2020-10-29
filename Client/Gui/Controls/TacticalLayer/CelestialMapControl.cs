@@ -143,13 +143,13 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             //if (_selectedCelestialObject != null)
             //{
-            //    DrawTrajectory(celestialMap.GetPlayerSpaceShip(), _selectedCelestialObject, graphics, _screenParameters);
+                DrawTrajectory(_gameSession, graphics, _screenParameters);
             //}
 
             // TODO: [T-105] Add/Get player active spaceship to game session
-            var playerShip = SessionTools.GetCelestialObject(5005, _gameSession);
+            //var playerShip = _gameSession.GetCelestialObject(5005);
 
-            var a = new SpaceShipInfo((Spaceship)playerShip);
+            //var a = new SpaceShipInfo((Spaceship)playerShip);
 
 
             BackgroundImage = image;
@@ -159,7 +159,7 @@ namespace Engine.Gui.Controls.TacticalLayer
         {
             if (_gameSession.SelectedObject == null) return;
 
-            var playerShip = SessionTools.GetCelestialObject(5005, _gameSession);
+            var playerShip = _gameSession.GetPlayerSpaceShip();
 
             DrawTacticalMap.DrawPointInSpace(_gameSession.SelectedObject, playerShip, graphics, _screenParameters);
         }
@@ -182,80 +182,18 @@ namespace Engine.Gui.Controls.TacticalLayer
             graphics.FillEllipse(new SolidBrush(Color.Black), _screenParameters.Center.X - 10, _screenParameters.Center.Y - 10, 20, 20);
         }
 
-        private void DrawTrajectory(ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
+        private void DrawTrajectory(GameSession gameSession, Graphics graphics, ScreenParameters screenParameters)
         {
+            var spaceShip = gameSession.GetPlayerSpaceShip();
 
-
-            var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
-            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
-            var prevPointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
-
-            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
-
-            int temp = 0;
-            int iteration = 0;
-
-            var screenCurrentObjectLocation = new Point(0, 0);
-            var screenPreviousObjectLocation = new Point(0, 0);
-
-            bool isDrawConnectionLine = true;
-
-            var points = new List<Point>(); ;
-
-            foreach (var objectLocation in result)
+            foreach (var command in gameSession.Commands)
             {
-                screenCurrentObjectLocation = UI.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
-
-                points.Add(new Point(screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y));
-            }
-
-
-            if (points.Count < 2)
-                return;
-            //var screenTargetLocation = UI.ToScreenCoordinates(screenParameters, pointTargetLocation);
-
-            //graphics.DrawLine(new Pen(Color.DimGray, 1), screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y, screenTargetLocation.X, screenTargetLocation.Y);
-
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            // Draw arc to screen.
-            graphics.DrawLines(new Pen(Color.FromArgb(18, 18, 18), 4), points.ToArray());
-            graphics.DrawLines(new Pen(Color.FromArgb(22, 22, 22), 2), points.ToArray());
-            graphics.DrawLines(new Pen(Color.FromArgb(28, 28, 28), 1), points.ToArray());
-
-            foreach (var objectLocation in result)
-            {
-                iteration++;
-
-                var pen = new Pen(Color.Black, 1);// { StartCap = LineCap.ArrowAnchor };
-
-                screenCurrentObjectLocation = UI.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
-                screenPreviousObjectLocation = UI.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
-
-                Point[] linePoints =
+                if (command.CelestialObjectId == spaceShip.Id)
                 {
-                    new Point(screenCurrentObjectLocation.X, screenCurrentObjectLocation.Y),
-                    new Point(screenPreviousObjectLocation.X, screenPreviousObjectLocation.Y)
-                };
+                    var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
 
-                graphics.DrawLines(pen, linePoints);
-
-                prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
-
-                temp++;
-                if (temp == 5)
-                {
-                    temp = 0;
-                    graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+                    DrawTacticalMap.DrawTrajectory(spaceShip, targetObject, graphics, screenParameters);
                 }
-
-                if (objectLocation.IsLinearMotion && isDrawConnectionLine)
-                {
-                    graphics.FillEllipse(new SolidBrush(Color.Yellow), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
-
-                    isDrawConnectionLine = false;
-                }
-
-                //Logger.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
             }
         }
 
