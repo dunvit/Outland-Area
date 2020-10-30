@@ -22,7 +22,7 @@
         "id": 5005,
         "name": "HMS Glowworm",
         "direction": 90,
-        "speed": 5,
+        "speed": 10,
         "maxSpeed": 12,
         "signature": 200,
         "classification": 200,

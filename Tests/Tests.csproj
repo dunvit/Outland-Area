@@ -73,6 +73,7 @@
     <Compile Include="ClientTests\Layers\Tactical\GameSessionTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
+    <Compile Include="Examples\CoordinatesTests.cs" />
     <Compile Include="Examples\ExtensionTests.cs" />
     <Compile Include="Examples\AnonymousTypeTests.cs" />
     <Compile Include="Global.cs" />

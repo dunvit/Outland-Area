@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Timers;
 using Engine.Layers.Tactical;
 using Engine.Layers.Tactical.Objects;
 using Engine.Tools;
@@ -10,16 +12,28 @@ namespace Engine.Management.Server
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private GameSession _gameSession;
+        private Timer aTimer;
 
         public GameSession Initialization()
         {
-            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_003"));
+            Logger.Info("[IGameServer Initialization]");
+            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_004"));
 
             _gameSession.Commands = new List<Command>();
 
-            Scheduler.Instance.ScheduleTask(10, 1000, TurnCalculation);
+            aTimer = new Timer();
+            aTimer.Elapsed += ExecuteTurnCalculation;
+            aTimer.Interval = 1000;
+            aTimer.Enabled = true;
+
+            //Scheduler.Instance.ScheduleTask(10, 1000, TurnCalculation);
 
             return _gameSession;
+        }
+
+        private void ExecuteTurnCalculation(object sender, ElapsedEventArgs e)
+        {
+            TurnCalculation();
         }
 
         public GameSession RefreshGameSession(int id)
@@ -79,13 +93,18 @@ namespace Engine.Management.Server
 
         private void TurnCalculation()
         {
+            Logger.Debug($"[TurnCalculation] Start");
+
+            var stopwatch1 = Stopwatch.StartNew();
+
+            
             if (_gameSession.Map.IsEnabled == false)
                 return;
 
-            if (_isCalculationInProcess)
-                return;
+            //if (_isCalculationInProcess)
+            //    return;
 
-            _isCalculationInProcess = true;
+            //_isCalculationInProcess = true;
 
             var turnGameSession = _gameSession.DeepClone();
 
@@ -97,7 +116,9 @@ namespace Engine.Management.Server
 
             _gameSession = turnGameSession;
 
-            _isCalculationInProcess = false;
+            //_isCalculationInProcess = false;
+
+            Logger.Debug($"[TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
 
         }
     }

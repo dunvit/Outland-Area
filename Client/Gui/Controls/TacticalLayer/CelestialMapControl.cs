@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Timers;
 using System.Windows.Forms;
 using Engine.Configuration;
 using Engine.Layers.Tactical;
-using Engine.Layers.Tactical.Objects.Spaceships;
-using Engine.Management.Server.DataProcessing;
 using Engine.Tools;
 using log4net;
 using OutlandArea.Tools;
+using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
@@ -17,19 +20,16 @@ namespace Engine.Gui.Controls.TacticalLayer
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        // TODO: [T-102] Calculate center screen position on first End Turn Event (Board initialization)
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
-        // TODO: [T-103] Save/Load map settings from configuration file
         private MapSettings mapSettings = new MapSettings();
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
+        private int turn;
+        private Timer crlRefreshMap;
 
         private ICelestialObject MouseMoveCelestialObject { get; set; }
-        private Point PointInSpace { get; set; }
 
-        // TODO: [T-106] Add event Mouse move to celestial object
-        // TODO: [T-107] Add event Mouse click to celestial object
-        // TODO: [T-108] Add event Mouse click on empty space(Remove selection)
+        private Hashtable DrawTurns { get;} = new Hashtable();
 
         public CelestialMapControl()
         {
@@ -50,41 +50,78 @@ namespace Engine.Gui.Controls.TacticalLayer
             if (DebugTools.IsInDesignMode())
                 return;
 
-            Scheduler.Instance.ScheduleTask(100, 100, RefreshCelestialMap, null);
+            crlRefreshMap = new Timer();
+            crlRefreshMap.Elapsed += Event_Refresh;
+            crlRefreshMap.Interval = 100;
+            crlRefreshMap.Enabled = true;
         }
 
-        private void Event_RefreshCelestialMap(GameSession gameSession)
+        private void Event_Refresh(object sender, ElapsedEventArgs e)
         {
-            if (_gameSession == null)
-            {
-                Initialization();
-            }
+            Logger.Debug("Refresh celestial map control.");
 
-            _gameSession = gameSession;
-        }
-
-        private bool refreshInProgress = false;
-
-        private void RefreshCelestialMap()
-        {
-            Logger.Debug("Refresh celestial map event.");
-
-            if (_gameSession == null)
-            {
-                Initialization();
-            }
 
             if (refreshInProgress) return;
 
+            if (DrawTurns.ContainsKey(turn) == false) return;
+
+            var timeDrawScreen = Stopwatch.StartNew();
+
             refreshInProgress = true;
 
-            DrawScreen(_gameSession.Map);
+            DrawScreen();
 
             refreshInProgress = false;
+
+            Logger.Debug($"[DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
-        private void DrawScreen(CelestialMap celestialMap)
+        private GameSession previousGameSession;
+
+        private void Event_RefreshCelestialMap(GameSession gameSession)
         {
+            turn = gameSession.Turn;
+            Logger.Info("[TurnChange]" + turn);
+
+            if (_gameSession == null)
+            {
+                Initialization();
+                previousGameSession = gameSession;
+            }
+            else
+            {
+                previousGameSession = _gameSession;
+            }
+
+            _gameSession = gameSession;
+
+            if (DrawTurns.ContainsKey(_gameSession.Turn) == false)
+            {
+                var turnDrawMapData = new DrawMapData(previousGameSession, _gameSession);
+
+                DrawTurns.Add(_gameSession.Turn, turnDrawMapData);
+            }
+
+            turnCurrentStep = 0;
+        }
+
+        
+
+        private bool refreshInProgress;
+
+
+
+        private int turnAllSteps = 11;
+        private int turnCurrentStep = 0;
+
+        private void DrawScreen()
+        {
+            var drawTurn = turn;
+
+            var currentTurnCelestialMapData = DrawTurns[turn] as DrawMapData;
+
+            var stopwatch1 = Stopwatch.StartNew();
+
             Image image = new Bitmap(Width, Height);
 
             var graphics = Graphics.FromImage(image);
@@ -94,65 +131,91 @@ namespace Engine.Gui.Controls.TacticalLayer
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            if (_gameSession.Map.IsEnabled)
+            {
+                turnCurrentStep++;
+                if (turnCurrentStep > turnAllSteps)
+                    turnCurrentStep = turnAllSteps;
+            }
+
             DrawCenterScreenCross(graphics);
 
             DrawMouseMoveCross(graphics);
 
             DrawPointInSpaceCross(graphics);
 
-            if (mapSettings.IsDrawCelestialObjectDirections)
-                DrawTacticalMap.DrawCelestialObjectDirections(celestialMap, graphics, _screenParameters);
+            
 
-            foreach (var celestialObject in celestialMap.CelestialObjects)
+            
+
+            DrawTrajectory(_gameSession, graphics, _screenParameters);
+
+            foreach (DrawMapDataObject dataObject in currentTurnCelestialMapData.GetData().Values)
             {
-                
+                if (drawTurn != turn) return;
+
+                var currentObject = dataObject.GetCelestialObject(turn, turnCurrentStep);
+
                 /* classification
                     1 - Asteroid
-                    2 - Spacecraft
+                    200 - Spacecraft
                     3 - Drone
                     4 - Missile
                  */
 
-                switch (celestialObject.Classification)
+                switch (currentObject.Classification)
                 {
                     case 1:
                         // Regular asteroid
-                        DrawTacticalMap.DrawAsteroid(celestialObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawAsteroid(currentObject, graphics, _screenParameters);
                         break;
-                    case 2:
+                    case 200:
                         // TODO: [T-104] Draw Spacecrafts
                         // Spaceship
 
-                        //if (mapSettings.IsDrawSpaceshipInformation)
-                        //    DrawTacticalMap.DrawSpaceshipInformation(celestialObject, graphics, _screenParameters);
+                        if (mapSettings.IsDrawSpaceshipInformation)
+                            DrawTacticalMap.DrawSpaceshipInformation(currentObject, graphics, _screenParameters);
 
-                        //DrawTacticalMap.DrawSpaceship(celestialObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawSpaceship(currentObject, graphics, _screenParameters);
 
                         break;
                 }
+
+                if (mapSettings.IsDrawCelestialObjectDirections)
+                {
+                    try
+                    {
+                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, graphics, _screenParameters);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e.Message);
+                    }
+
+                }
+
+                if (mapSettings.IsDrawCelestialObjectCoordinates)
+                {
+                    if(currentObject.Classification > 0)
+                        DrawTacticalMap.DrawCelestialObjectCoordinates(currentObject, graphics, _screenParameters);
+                }
             }
 
-            // TODO: [T-101] Create configuration for show/hide Mouse Coordinates
-            //DrawMouseCoordinates(graphics);
+            stopwatch1.Stop();
 
-            // TODO: [T-100] Draw selected celestial object
-            //DrawTacticalMap.DrawActiveCelestialObject(_activeCelestialObject, graphics, _screenParameters);
+            var workTime = stopwatch1.Elapsed.TotalMilliseconds;
 
-            if (mapSettings.IsDrawCelestialObjectCoordinates)
-                DrawTacticalMap.DrawCelestialObjectCoordinates(celestialMap, graphics, _screenParameters);
+            var logInformation = $"[WeyPoints] Turn = {_gameSession.Turn}.{turnCurrentStep} workTime = {workTime} ms";
+            Logger.Debug(logInformation);
 
-            //if (_selectedCelestialObject != null)
-            //{
-                DrawTrajectory(_gameSession, graphics, _screenParameters);
-            //}
-
-            // TODO: [T-105] Add/Get player active spaceship to game session
-            //var playerShip = _gameSession.GetCelestialObject(5005);
-
-            //var a = new SpaceShipInfo((Spaceship)playerShip);
-
+            using (var font = new Font("Times New Roman", 10, FontStyle.Bold, GraphicsUnit.Pixel))
+            {
+                graphics.DrawString(logInformation, font, new SolidBrush(Color.WhiteSmoke), new PointF(0, 0));
+            }
 
             BackgroundImage = image;
+
+            
         }
 
         private void DrawPointInSpaceCross(Graphics graphics)
@@ -205,7 +268,7 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 
-            PointInSpace = new Point(0, 0);
+            //PointInSpace = new Point(0, 0);
 
             if (celestialObjectInRange != null)
             {
@@ -214,7 +277,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             else
             {
                 Global.Game.SelectPointInSpace(mouseMapCoordinates);
-                PointInSpace = mouseMapCoordinates;
+                //PointInSpace = mouseMapCoordinates;
             }
 
         }

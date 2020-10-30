@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Engine.Layers.Tactical;
@@ -227,7 +228,20 @@ namespace Engine.Management.Server.DataProcessing
             return newDirection;
         }
 
-        
+        public static SortedDictionary<int, PointF> GetWayPoints(Point from, Point to, float steps)
+        {
+            var deltaX = (to.X - from.X) / steps;
+            var deltaY = (to.Y - from.Y) / steps;
+
+            var result = new SortedDictionary<int, PointF>();
+
+            for (var i = 0; i <= steps; i++)
+            {
+                result.Add(i, new PointF(from.X + i * deltaX, from.Y + i * deltaY));
+            }
+
+            return result;
+        }
 
         private static double ToDegrees(double angle) => (angle * 180 / Math.PI);
     }

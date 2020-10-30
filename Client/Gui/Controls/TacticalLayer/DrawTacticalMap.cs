@@ -112,57 +112,52 @@ namespace OutlandArea.Tools
 
         }
 
-        public static void DrawCelestialObjectCoordinates(CelestialMap celestialMap, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawCelestialObjectCoordinates(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
-            foreach (var celestialObject in celestialMap.CelestialObjects)
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters,
+                new Point(celestialObject.PositionX - 25, celestialObject.PositionY + 10));
+
+            using (var font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Pixel))
             {
-                var screenCoordinates = UI.ToScreenCoordinates(screenParameters,
-                    new Point(celestialObject.PositionX - 25, celestialObject.PositionY + 5));
-
-                using (var font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Pixel))
-                {
-                    graphics.DrawString($"({celestialObject.PositionX} : {celestialObject.PositionY})", font, new SolidBrush(Color.DimGray), new PointF(screenCoordinates.X - 15, screenCoordinates.Y));
-                }
-
+                graphics.DrawString($"({celestialObject.PositionX} : {celestialObject.PositionY})", font, new SolidBrush(Color.DimGray), new PointF(screenCoordinates.X - 15, screenCoordinates.Y));
             }
         }
 
-        public static void DrawCelestialObjectDirections(CelestialMap celestialMap, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawCelestialObjectDirection(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
             float[] dashValues = { 2, 2, 2, 2 };
             var blackPen = new Pen(Color.Black, 1) { DashPattern = dashValues };
 
-            foreach (var celestialObject in celestialMap.CelestialObjects)
+            
+            var additionalLenght = 0;
+
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
+
+            if (celestialObject.Classification == 2)
             {
-                var additionalLenght = 0;
-
-                var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
-
-                if (celestialObject.Classification == 2)
-                {
-                    additionalLenght = UI.RotateImage(UI.LoadImage("PlayerSpaceship"), (float) celestialObject.Direction).Width / 2;
-                }
-
-                var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
-
-                var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
-
-                using (var capPath = new GraphicsPath())
-                {
-                    const int triangleSize = 4;
-                    // A triangle
-                    capPath.AddLine(-triangleSize, 0, triangleSize, 0);
-                    capPath.AddLine(-triangleSize, 0, 0, triangleSize);
-                    capPath.AddLine(0, triangleSize, triangleSize, 0);
-
-                    pen.CustomEndCap = new CustomLineCap(null, capPath);
-
-                    graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                    graphics.DrawLine(blackPen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                }
-
-
+                additionalLenght = UI.RotateImage(UI.LoadImage("PlayerSpaceship"), (float)celestialObject.Direction).Width / 2;
             }
+
+            var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
+
+            var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
+
+            using (var capPath = new GraphicsPath())
+            {
+                const int triangleSize = 4;
+                // A triangle
+                capPath.AddLine(-triangleSize, 0, triangleSize, 0);
+                capPath.AddLine(-triangleSize, 0, 0, triangleSize);
+                capPath.AddLine(0, triangleSize, triangleSize, 0);
+
+                pen.CustomEndCap = new CustomLineCap(null, capPath);
+
+                graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+                graphics.DrawLine(blackPen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
+            }
+
+
+            
         }
 
         public static void DrawTrajectory(ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
@@ -220,7 +215,7 @@ namespace OutlandArea.Tools
                 prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
 
                 temp++;
-                if (temp == 5)
+                if (temp == 1)
                 {
                     temp = 0;
                     graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
@@ -228,9 +223,9 @@ namespace OutlandArea.Tools
 
                 if (objectLocation.IsLinearMotion && isDrawConnectionLine)
                 {
-                    graphics.FillEllipse(new SolidBrush(Color.Yellow), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+                    //graphics.FillEllipse(new SolidBrush(Color.Yellow), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
 
-                    isDrawConnectionLine = false;
+                    //isDrawConnectionLine = false;
                 }
 
                 //Logger.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
@@ -273,7 +268,7 @@ namespace OutlandArea.Tools
             var screenSpaceShipCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(spaceShip.PositionX, spaceShip.PositionY));
 
 
-            graphics.DrawLine(radarLinePen, screenSpaceShipCoordinates.X, screenSpaceShipCoordinates.Y, screenCoordinates.X, screenCoordinates.Y);
+            //graphics.DrawLine(radarLinePen, screenSpaceShipCoordinates.X, screenSpaceShipCoordinates.Y, screenCoordinates.X, screenCoordinates.Y);
 
 
             graphics.DrawLine(radarLinePen, screenCoordinates.X - 15, screenCoordinates.Y, screenCoordinates.X + 15, screenCoordinates.Y);

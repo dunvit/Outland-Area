@@ -45,8 +45,6 @@ namespace Engine.Management
                     _gameServer = new LocalGameServer();
                     break;
             }
-
-            _gameServer.Initialization();
         }
 
         public void Initialization(IUiManager uiManager)
@@ -104,7 +102,7 @@ namespace Engine.Management
 
         public void SelectPointInSpace(Point pointInSpace)
         {
-            Logger.Info("A point in space is selected.");
+            Logger.Debug("A point in space is selected.");
 
             ICelestialObject celestialObject = new PointInSpace
             {
@@ -165,6 +163,7 @@ namespace Engine.Management
         private void EndTurn(GameSession gameSession)
         {
             turn = gameSession.Turn;
+            Logger.Debug($"[EndTurn] {turn}");
 
             OnEndTurn?.Invoke(gameSession);
         }

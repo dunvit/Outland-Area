@@ -89,6 +89,8 @@
     <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.Designer.cs">
       <DependentUpon>CommandsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\UI.cs" />
