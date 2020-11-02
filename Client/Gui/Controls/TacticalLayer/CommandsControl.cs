@@ -7,6 +7,7 @@ namespace Engine.Gui.Controls.TacticalLayer
     public partial class CommandsControl : UserControl
     {
         public event Action<ICelestialObject> OnAlignToCelestialObject;
+        public event Action<ICelestialObject> OnOpenFire;
 
         private ICelestialObject SelectedObject { get; set; }
 
@@ -15,7 +16,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             InitializeComponent();
         }
 
-        public void GetTarget(ICelestialObject celestialObject)
+        public void Event_SelectCelestialObject(ICelestialObject celestialObject)
         {
             SelectedObject = celestialObject;
 
@@ -33,6 +34,13 @@ namespace Engine.Gui.Controls.TacticalLayer
             if (SelectedObject == null) return;
 
             OnAlignToCelestialObject?.Invoke(SelectedObject);
+        }
+
+        private void Event_OpenFire(object sender, EventArgs e)
+        {
+            if (SelectedObject == null) return;
+
+            OnOpenFire?.Invoke(SelectedObject);
         }
     }
 }

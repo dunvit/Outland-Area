@@ -6,6 +6,7 @@ namespace Engine.Layers.Tactical.Objects
     public class Asteroid: ICelestialObject
     {
         public int Id { get; set; }
+        public int OwnerId { get; set; }
         public string Name { get; set; }
         public double Direction { get; set; }
         public int Signature { get; set; }

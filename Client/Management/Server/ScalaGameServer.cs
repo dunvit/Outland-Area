@@ -39,7 +39,7 @@ namespace Engine.Management.Server
         }
 
         public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
-            int classification)
+            int classification, string name)
         {
             
         }

@@ -125,6 +125,10 @@ namespace Engine.Management.Server.DataProcessing
 
                         celestialMap.CelestialObjects.Add(spaceship);
                         break;
+
+                    case 300:
+                        var a = "";
+                        break;
                 }
 
                 

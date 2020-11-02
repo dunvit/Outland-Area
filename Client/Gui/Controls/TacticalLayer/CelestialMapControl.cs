@@ -120,6 +120,8 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             var currentTurnCelestialMapData = DrawTurns[turn] as DrawMapData;
 
+            if (currentTurnCelestialMapData == null) return;
+
             var stopwatch1 = Stopwatch.StartNew();
 
             Image image = new Bitmap(Width, Height);

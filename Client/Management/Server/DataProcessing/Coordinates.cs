@@ -2,14 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using Engine.Layers.Tactical;
+using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Tools;
+using log4net;
 
 
 namespace Engine.Management.Server.DataProcessing
 {
     public class Coordinates
     {
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static Point MoveObject(Point currentLocation, int speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
@@ -53,6 +58,8 @@ namespace Engine.Management.Server.DataProcessing
                     new Point(celestialObject.PositionX, celestialObject.PositionY),
                     celestialObject.Speed, 
                     celestialObject.Direction);
+
+                Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
 
                 celestialObject.PositionX = position.X;
                 celestialObject.PositionY = position.Y;

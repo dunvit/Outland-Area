@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.flatButton5 = new Engine.Gui.Controls.Common.FlatButton();
+            this.cmdOpenFire = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton4 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton3 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton2 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.txtSelectedObjectLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -45,7 +45,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.flatButton5);
+            this.panel1.Controls.Add(this.cmdOpenFire);
             this.panel1.Controls.Add(this.flatButton4);
             this.panel1.Controls.Add(this.flatButton3);
             this.panel1.Controls.Add(this.flatButton2);
@@ -57,42 +57,20 @@
             this.panel1.Size = new System.Drawing.Size(334, 74);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
+            // cmdOpenFire
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.txtSelectedObjectLabel);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(332, 21);
-            this.panel2.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Rod", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(7, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 11);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "COMMANDS";
-            // 
-            // flatButton5
-            // 
-            this.flatButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.flatButton5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.flatButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.flatButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.flatButton5.ForeColor = System.Drawing.Color.DimGray;
-            this.flatButton5.Location = new System.Drawing.Point(267, 28);
-            this.flatButton5.Name = "flatButton5";
-            this.flatButton5.Size = new System.Drawing.Size(61, 37);
-            this.flatButton5.TabIndex = 6;
-            this.flatButton5.Text = "Info";
-            this.flatButton5.UseVisualStyleBackColor = false;
+            this.cmdOpenFire.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.cmdOpenFire.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.cmdOpenFire.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.cmdOpenFire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmdOpenFire.ForeColor = System.Drawing.Color.DimGray;
+            this.cmdOpenFire.Location = new System.Drawing.Point(267, 28);
+            this.cmdOpenFire.Name = "cmdOpenFire";
+            this.cmdOpenFire.Size = new System.Drawing.Size(61, 37);
+            this.cmdOpenFire.TabIndex = 6;
+            this.cmdOpenFire.Text = "Fire";
+            this.cmdOpenFire.UseVisualStyleBackColor = false;
+            this.cmdOpenFire.Click += new System.EventHandler(this.Event_OpenFire);
             // 
             // flatButton4
             // 
@@ -151,6 +129,18 @@
             this.flatButton1.UseVisualStyleBackColor = false;
             this.flatButton1.Click += new System.EventHandler(this.Event_AlignTo);
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.txtSelectedObjectLabel);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(332, 21);
+            this.panel2.TabIndex = 2;
+            // 
             // txtSelectedObjectLabel
             // 
             this.txtSelectedObjectLabel.AutoSize = true;
@@ -162,6 +152,17 @@
             this.txtSelectedObjectLabel.TabIndex = 4;
             this.txtSelectedObjectLabel.Text = "COMMANDS";
             this.txtSelectedObjectLabel.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Rod", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Location = new System.Drawing.Point(7, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 11);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "COMMANDS";
             // 
             // CommandsControl
             // 
@@ -185,7 +186,7 @@
         private Common.FlatButton flatButton1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private Common.FlatButton flatButton5;
+        private Common.FlatButton cmdOpenFire;
         private Common.FlatButton flatButton4;
         private Common.FlatButton flatButton3;
         private Common.FlatButton flatButton2;

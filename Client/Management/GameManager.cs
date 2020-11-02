@@ -4,6 +4,7 @@ using System.Drawing;
 using Engine.Gui;
 using Engine.Layers.Tactical;
 using Engine.Layers.Tactical.Objects;
+using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
@@ -173,15 +174,40 @@ namespace Engine.Management
             var playerShip = _gameSession.GetPlayerSpaceShip();
 
             celestialObject.Id = new Random().NextInt();
+            celestialObject.Name = "Point in space";
+            celestialObject.Classification = (int) CelestialObjectTypes.PointInMap;
 
             AddCelestialObject(celestialObject);
 
             Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int) CommandTypes.AlignTo);
         }
 
+        public void AddCommandOpenFire(ICelestialObject celestialObject)
+        {
+            var playerShip = _gameSession.GetPlayerSpaceShip();
+
+            Missile missile = new Missile
+            {
+                OwnerId = playerShip.Id,
+                PositionY = playerShip.PositionY,
+                PositionX = playerShip.PositionX,
+                Speed = 40,
+                Direction = playerShip.Direction,
+                Name = "Missile",
+                Signature = 1,
+                Classification = (int)CelestialObjectTypes.Missile,
+                IsScanned = true
+            };
+            // TODO: Set direction to target ship
+
+            AddCelestialObject(missile);
+
+            Command(_gameSession.Id, missile.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Fire);
+        }
+
         public void AddCelestialObject(ICelestialObject celestialObject)
         {
-            _gameServer.AddCelestialObject(_gameSession.Id, celestialObject.Id, celestialObject.PositionX, celestialObject.PositionY, 0, 0 , celestialObject.Classification);
+            _gameServer.AddCelestialObject(_gameSession.Id, celestialObject.Id, celestialObject.PositionX, celestialObject.PositionY, (int)celestialObject.Direction, celestialObject.Speed, celestialObject.Classification, celestialObject.Name);
         }
     }
 }

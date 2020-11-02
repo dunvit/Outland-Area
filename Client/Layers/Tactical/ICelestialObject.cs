@@ -3,6 +3,7 @@
     public interface ICelestialObject
     {
         int Id { get; set; }
+        int OwnerId { get; set; }
         string Name { get; set; }
         double Direction { get; set; }
         int Signature { get; set; }

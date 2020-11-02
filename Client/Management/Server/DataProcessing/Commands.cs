@@ -43,6 +43,15 @@ namespace Engine.Management.Server.DataProcessing
                             result.Commands.Add(executeAlignToResult.Command.DeepClone());
                         }
                         break;
+
+                    case CommandTypes.Fire:
+                        var executeFireResult = ExecuteFire(result, command);
+
+                        if (executeFireResult.IsResume)
+                        {
+                            result.Commands.Add(executeFireResult.Command.DeepClone());
+                        }
+                        break;
                 }
             }
 
@@ -89,6 +98,36 @@ namespace Engine.Management.Server.DataProcessing
                 {
                     mapCelestialObject.Direction = result[1].Direction;
                 }
+            }
+
+            return new CommandExecuteResult { Command = command, IsResume = isResume };
+        }
+
+        private CommandExecuteResult ExecuteFire(GameSession gameSession, Command command)
+        {
+            var isResume = true;
+
+            var missile = gameSession.GetCelestialObject(command.CelestialObjectId);
+            var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+
+            var pointCurrentLocation = new Point(missile.PositionX, missile.PositionY);
+            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
+
+            var direction = Coordinates.GetRotation(pointTargetLocation, pointCurrentLocation);
+
+            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            {
+                if (mapCelestialObject.Id == missile.Id)
+                {
+                    mapCelestialObject.Direction = direction;
+                }
+            }
+
+            var distance = Coordinates.GetDistance(missile.GetLocation(), targetObject.GetLocation());
+
+            if (distance <= missile.Speed)
+            {
+                var a = "";
             }
 
             return new CommandExecuteResult { Command = command, IsResume = isResume };

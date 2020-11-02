@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using Engine.Equipment;
+using Engine.Tools;
+
 
 namespace Engine.Layers.Tactical.Objects.Spaceships
 {
     [Serializable]
-    public class Spaceship : ICelestialObject
+    public class Missile : ICelestialObject
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }
@@ -13,13 +13,15 @@ namespace Engine.Layers.Tactical.Objects.Spaceships
         public double Direction { get; set; }
         public int Signature { get; set; }
         public int Speed { get; set; }
-        public int MaxSpeed { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
         public bool IsScanned { get; set; }
 
-        public List<IModule> Modules { get; set; } = new List<IModule>();
+        public Missile()
+        {
+            Id = new Random().NextInt();
+        }
     }
 }

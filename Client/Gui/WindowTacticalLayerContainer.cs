@@ -15,8 +15,10 @@ namespace Engine.Gui
             if (DebugTools.IsInDesignMode())
                 return;
 
-            Global.Game.OnSelectCelestialObject += controlCommands.GetTarget;
+            Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
+
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
+            controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
         }
 
         private void Event_Exit(object sender, EventArgs e)

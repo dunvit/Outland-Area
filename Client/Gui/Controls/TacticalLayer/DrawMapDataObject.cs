@@ -56,7 +56,7 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             if (celestialObject.Id == 5005)
             {
-                Logger.Info($"[PlayerShip] WeyPoint=({turn}.{weyPoint}) Position={currentPosition} From={positionFrom} To={positionTo}");
+                Logger.Debug($"[PlayerShip] WeyPoint=({turn}.{weyPoint}) Position={currentPosition} From={positionFrom} To={positionTo}");
             }
 
             return celestialObject;

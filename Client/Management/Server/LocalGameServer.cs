@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Timers;
 using Engine.Layers.Tactical;
 using Engine.Layers.Tactical.Objects;
+using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Tools;
 using log4net;
 
@@ -12,7 +13,7 @@ namespace Engine.Management.Server
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private GameSession _gameSession;
-        private Timer aTimer;
+        private Timer turnCalculation;
 
         public GameSession Initialization()
         {
@@ -21,19 +22,25 @@ namespace Engine.Management.Server
 
             _gameSession.Commands = new List<Command>();
 
-            aTimer = new Timer();
-            aTimer.Elapsed += ExecuteTurnCalculation;
-            aTimer.Interval = 1000;
-            aTimer.Enabled = true;
-
-            //Scheduler.Instance.ScheduleTask(10, 1000, TurnCalculation);
+            turnCalculation = new Timer();
+            turnCalculation.Elapsed += ExecuteTurnCalculation;
+            turnCalculation.Interval = 1000;
+            turnCalculation.Enabled = true;
 
             return _gameSession;
         }
 
+        private bool isDebug;
+
         private void ExecuteTurnCalculation(object sender, ElapsedEventArgs e)
         {
+            if (isDebug) return;
+
+            isDebug = true;
+
             TurnCalculation();
+
+            isDebug = false;
         }
 
         public GameSession RefreshGameSession(int id)
@@ -70,26 +77,44 @@ namespace Engine.Management.Server
         }
 
         public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
-            int classification)
+            int classification, string name)
         {
             Logger.Debug($"Add celestial object sessionId={sessionId} objectId={objectId} positionX={positionX} positionY={positionY} classification={classification}");
 
-            ICelestialObject celestialObject = new PointInSpace
+            ICelestialObject celestialObject;
+
+            switch (classification)
             {
-                Id = objectId,
-                PositionX = positionX,
-                PositionY = positionY,
-                Classification = classification,
-                Direction = direction,
-                Speed = speed,
-                Name = "Point In Space"
-            };
+                case 300:
+                    celestialObject = new Missile
+                    {
+                        Id = objectId,
+                        PositionX = positionX,
+                        PositionY = positionY,
+                        Classification = classification,
+                        Direction = direction,
+                        Speed = speed,
+                        Name = name
+                    };
+                    break;
+
+                default:
+                    celestialObject = new PointInSpace
+                    {
+                        Id = objectId,
+                        PositionX = positionX,
+                        PositionY = positionY,
+                        Classification = classification,
+                        Direction = direction,
+                        Speed = speed,
+                        Name = name
+                    };
+                    break;
+            }
 
             _gameSession.AddCelestialObject(celestialObject);
         }
 
-
-        private bool _isCalculationInProcess;
 
         private void TurnCalculation()
         {
@@ -101,11 +126,6 @@ namespace Engine.Management.Server
             if (_gameSession.Map.IsEnabled == false)
                 return;
 
-            //if (_isCalculationInProcess)
-            //    return;
-
-            //_isCalculationInProcess = true;
-
             var turnGameSession = _gameSession.DeepClone();
 
             turnGameSession.Map = new DataProcessing.Coordinates().Recalculate(turnGameSession.Map);
@@ -115,8 +135,6 @@ namespace Engine.Management.Server
             turnGameSession.Turn++;
 
             _gameSession = turnGameSession;
-
-            //_isCalculationInProcess = false;
 
             Logger.Debug($"[TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
 
