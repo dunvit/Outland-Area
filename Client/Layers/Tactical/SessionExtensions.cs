@@ -41,6 +41,21 @@ namespace Engine.Layers.Tactical
             session.Map.CelestialObjects.Add(celestialObject);
         }
 
+        public static void RemoveCelestialObject(this GameSession session, ICelestialObject celestialObject)
+        {
+            var result = new List<ICelestialObject>();
+
+            foreach (var mapCelestialObject in session.Map.CelestialObjects)
+            {
+                if (mapCelestialObject.Id != celestialObject.Id)
+                {
+                    result.Add(mapCelestialObject);
+                }
+            }
+
+            session.Map.CelestialObjects = result;
+        }
+
         public static void AddCommand(this GameSession session, Command command)
         {
             List<Command> commands;

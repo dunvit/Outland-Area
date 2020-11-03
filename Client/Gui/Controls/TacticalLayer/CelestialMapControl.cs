@@ -165,21 +165,21 @@ namespace Engine.Gui.Controls.TacticalLayer
                     4 - Missile
                  */
 
-                switch (currentObject.Classification)
+                switch ((CelestialObjectTypes)currentObject.Classification)
                 {
-                    case 1:
+                    case CelestialObjectTypes.Asteroid:
                         // Regular asteroid
                         DrawTacticalMap.DrawAsteroid(currentObject, graphics, _screenParameters);
                         break;
-                    case 200:
-                        // TODO: [T-104] Draw Spacecrafts
-                        // Spaceship
-
+                    case CelestialObjectTypes.Spaceship:
                         if (mapSettings.IsDrawSpaceshipInformation)
                             DrawTacticalMap.DrawSpaceshipInformation(currentObject, graphics, _screenParameters);
 
                         DrawTacticalMap.DrawSpaceship(currentObject, graphics, _screenParameters);
 
+                        break;
+                    case CelestialObjectTypes.Missile:
+                        DrawTacticalMap.DrawMissile(currentObject, graphics, _screenParameters);
                         break;
                 }
 

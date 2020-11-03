@@ -13,7 +13,15 @@ namespace OutlandArea.Tools
     {
         private const int drawSpaceshipInformationLenght = 40;
         private const int drawSpaceshipInformationShelfLenght = 90;
+        public static void DrawMissile(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        {
+            // Convert celestial object coordinates to screen coordinates
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new Point(celestialObject.PositionX, celestialObject.PositionY));
 
+            var image = UI.LoadGenericImage("Tactical/tactical_map_missile");
+
+            graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
+        }
 
         public static void DrawSpaceship(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
@@ -125,6 +133,13 @@ namespace OutlandArea.Tools
 
         public static void DrawCelestialObjectDirection(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
+
+            if ((CelestialObjectTypes) celestialObject.Classification == CelestialObjectTypes.Missile)
+            {
+                // No need draw direction for missile
+                return;
+            }
+
             float[] dashValues = { 2, 2, 2, 2 };
             var blackPen = new Pen(Color.Black, 1) { DashPattern = dashValues };
 

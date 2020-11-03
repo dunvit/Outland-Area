@@ -18,7 +18,7 @@ namespace Engine.Management.Server
         public GameSession Initialization()
         {
             Logger.Info("[IGameServer Initialization]");
-            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_004"));
+            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_003"));
 
             _gameSession.Commands = new List<Command>();
 

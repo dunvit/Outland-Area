@@ -260,6 +260,9 @@
     <Content Include="Images\Ships\Small\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Tactical\tactical_map_missile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Targets\CenterTarget.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

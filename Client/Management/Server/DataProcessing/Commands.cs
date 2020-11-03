@@ -110,6 +110,9 @@ namespace Engine.Management.Server.DataProcessing
             var missile = gameSession.GetCelestialObject(command.CelestialObjectId);
             var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
 
+            if (missile == null) return new CommandExecuteResult { Command = command, IsResume = false };
+            if (targetObject == null) return new CommandExecuteResult { Command = command, IsResume = false };
+
             var pointCurrentLocation = new Point(missile.PositionX, missile.PositionY);
             var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
 
@@ -125,9 +128,10 @@ namespace Engine.Management.Server.DataProcessing
 
             var distance = Coordinates.GetDistance(missile.GetLocation(), targetObject.GetLocation());
 
-            if (distance <= missile.Speed)
+            if (distance <= missile.Speed / 2)
             {
-                var a = "";
+                // BOOM!!!
+                gameSession.RemoveCelestialObject(missile);
             }
 
             return new CommandExecuteResult { Command = command, IsResume = isResume };
