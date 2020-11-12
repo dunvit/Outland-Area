@@ -22,6 +22,30 @@ namespace Engine.Layers.Tactical
             return null;
         }
 
+        public static CommandTypes GetMovementType(this GameSession session, long id)
+        {
+            var cObject = session.GetCelestialObject(id);
+
+            foreach (var command in session.Commands)
+            {
+                if (command.CelestialObjectId == cObject.Id)
+                {
+                    switch (command.Type)
+                    {
+                        case CommandTypes.AlignTo:
+                            return CommandTypes.AlignTo;
+                            break;
+
+                        case CommandTypes.Orbit:
+                            return CommandTypes.Orbit;
+                            break;
+                    }
+                }
+            }
+
+            return CommandTypes.MoveForward;
+        }
+
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
         {
             foreach (var celestialObjects in gameSession.Map.CelestialObjects)
@@ -63,7 +87,11 @@ namespace Engine.Layers.Tactical
             switch (command.Type)
             {
                 case CommandTypes.AlignTo:
-                    commands = RemovePreviousCommand(command.Type, session);
+                    commands = RemoveMovementCommands(command, session);
+                    break;
+
+                case CommandTypes.Orbit:
+                    commands = RemoveMovementCommands(command, session);
                     break;
 
                 default:
@@ -86,6 +114,31 @@ namespace Engine.Layers.Tactical
                 {
                     commands.Add(command);
                 }
+            }
+
+            return commands;
+        }
+
+        private static List<Command> RemoveMovementCommands(Command newCommand, GameSession session)
+        {
+            var commands = new List<Command>();
+
+            foreach (var command in session.Commands)
+            {
+                // Remove only commands for current spaceship
+                if (command.CelestialObjectId == newCommand.CelestialObjectId)
+                {
+                    if ((int)command.Type < 99 || (int)command.Type > 200)
+                    {
+                        commands.Add(command);
+                    }
+                }
+                else
+                {
+                    // This is not current spaceship command
+                    commands.Add(command);
+                }
+                
             }
 
             return commands;

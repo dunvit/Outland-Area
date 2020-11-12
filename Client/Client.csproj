@@ -134,9 +134,14 @@
     <Compile Include="Management\Server\DataProcessing\Commands.cs" />
     <Compile Include="Management\Server\DataProcessing\CommandsExecute\AlignTo.cs" />
     <Compile Include="Management\Server\DataProcessing\CommandsExecute\Movement.cs" />
+    <Compile Include="Management\Server\DataProcessing\CommandsExecute\Orbit.cs" />
     <Compile Include="Management\Server\DataProcessing\Convertor.cs" />
     <Compile Include="Management\Server\DataProcessing\Coordinates.cs" />
     <Compile Include="Management\Server\DataProcessing\ObjectLocation.cs" />
+    <Compile Include="Management\Server\DataProcessing\Trajectory\Approach.cs" />
+    <Compile Include="Management\Server\DataProcessing\Trajectory\Line.cs" />
+    <Compile Include="Management\Server\DataProcessing\Trajectory\Orbit.cs" />
+    <Compile Include="Management\Server\DataProcessing\Trajectory\RouteCalculation.cs" />
     <Compile Include="Management\Server\IGameServer.cs" />
     <Compile Include="Management\Server\LocalGameServer.cs" />
     <Compile Include="Management\Server\LocalStaticGameServer.cs" />

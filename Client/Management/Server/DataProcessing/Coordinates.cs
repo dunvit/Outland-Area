@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using Engine.Layers.Tactical;
-using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Tools;
-using log4net;
 
 
 namespace Engine.Management.Server.DataProcessing
 {
     public class Coordinates
     {
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public static Point MoveObject(Point currentLocation, int speed, double angleInGraduses)
         {
@@ -47,6 +43,28 @@ namespace Engine.Management.Server.DataProcessing
             return new Point((int)x, (int)y);
         }
 
+        public static PointF Vector(PointF from, PointF to, int speed)
+        {
+            float startX = from.X;
+            float startY = from.Y;
+            float endX = to.X;
+            float endY = to.Y;
+
+            float internalSpeed = speed;
+            var elapsed = 0.01f;
+
+            // On starting movement
+            var distance = Math.Sqrt(Math.Pow(endX - startX, 2) + Math.Pow(endY - startY, 2));
+            var directionX = (endX - startX) / distance;
+            var directionY = (endY - startY) / distance;
+
+            var x = (float) (startX + directionX * speed);// * elapsed;
+            var y = (float) (startY + directionY * speed);// * elapsed;
+
+
+            return new PointF(x, y);
+        }
+
         public CelestialMap Recalculate(CelestialMap spaceMap)
         {
             var result = spaceMap.DeepClone();
@@ -59,11 +77,24 @@ namespace Engine.Management.Server.DataProcessing
                     celestialObject.Speed, 
                     celestialObject.Direction);
 
-                Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
+                //Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
 
                 celestialObject.PositionX = position.X;
                 celestialObject.PositionY = position.Y;
             }
+
+            return result;
+        }
+
+        public static List<ObjectLocation> GetTrajectoryOrbit(Point currentLocation, Point targetLocation, double currentDirection, int speed, int iterations)
+        {
+            var result = GetTrajectoryApproach(currentLocation, targetLocation, currentDirection, speed, iterations);
+
+            var previousIteration = result[result.Count - 1];
+
+            ObjectLocation linearMotionStartPoint = null;
+
+            // TODO: Orbit steps
 
             return result;
         }
@@ -85,10 +116,10 @@ namespace Engine.Management.Server.DataProcessing
 
             ObjectLocation linearMotionStartPoint = null;
 
+            var direction = currentDirection;
+
             for (var iteration = 0; iteration < iterations; iteration++)
             {
-                if (!(previousIteration.Distance > 10)) continue;
-
                 var iterationResult = new ObjectLocation
                 {
                     IsLinearMotion = previousIteration.IsLinearMotion,
@@ -100,27 +131,37 @@ namespace Engine.Management.Server.DataProcessing
 
                 if (IsLinearMotion(iterationResult, targetLocation))
                 {
-                    if (linearMotionStartPoint == null)
-                        linearMotionStartPoint = iterationResult;
+                    var resultLinearMotion = new Trajectory.Line().Calculate(iterationResult.Coordinates, targetLocation, iterationResult.Direction, speed);
 
+                    foreach (var objectLocation in resultLinearMotion)
+                    {
+                        result.Add(objectLocation);
+                    }
 
-                    iterationResult.Coordinates = MoveObject(linearMotionStartPoint.Coordinates, targetLocation,
-                        (iteration - linearMotionStartPoint.Iteration) * speed);
+                    return result;
+                }
 
-                    iterationResult.IsLinearMotion = true;
+                
+                iterationResult.Direction = GetRotationAngle(iterationResult.Coordinates, targetLocation, previousIteration.Direction, 5);
+                iterationResult.IsLinearMotion = false;
+                iterationResult.Distance = GetDistance(targetLocation, iterationResult.Coordinates);
+
+                direction = iterationResult.Direction;
+
+                if (iterationResult.Distance >= speed)
+                {
+                    result.Add(iterationResult);
                 }
                 else
                 {
-                    iterationResult.Direction = GetRotationAngle(iterationResult.Coordinates, targetLocation, previousIteration.Direction, 5);
-                    iterationResult.IsLinearMotion = false;
+                    result.Add(iterationResult);
+                    break;
                 }
-
-                iterationResult.Distance = GetDistance(targetLocation, iterationResult.Coordinates);
-
-                result.Add(iterationResult);
      
                 previousIteration = iterationResult;
             }
+
+            result.Add(new ObjectLocation { Distance  = 0, Direction = direction, IsLinearMotion = true, Iteration = result.Count, Coordinates = targetLocation});
 
             return result;
         }
@@ -166,7 +207,17 @@ namespace Engine.Management.Server.DataProcessing
             return temp;
         }
 
-        
+        public static Point RotatePoint(Point centerPoint, int radius, double angleInDegrees)
+        {
+            var angleInRadians = (angleInDegrees - 90) * (Math.PI) / 180;
+
+            var xOnCircle = centerPoint.X + radius * Math.Cos(angleInRadians);
+            var yOnCircle = centerPoint.Y + radius * Math.Sin(angleInRadians);
+
+            return new Point((int)xOnCircle, (int)yOnCircle);
+
+        }
+
 
         public static double GetRotationAngle(Point currentLocation, Point destination, double direction, int directionDelta)
         {
@@ -250,6 +301,65 @@ namespace Engine.Management.Server.DataProcessing
             return result;
         }
 
+        public static Orbit GetRadiusPoint(Point from, Point to, int radius, double direction, int speed)
+        {
+            var rotation = GetRotation(to, from);
+
+            var firstPointDirection = rotation + 90;
+            var secondPointDirection = rotation - 90;
+
+            if (firstPointDirection > 360) firstPointDirection = firstPointDirection - 360;
+            if (secondPointDirection < 0) secondPointDirection = 360 + secondPointDirection;
+
+            var firstPointCoordinates = MoveObject(to, radius, firstPointDirection);
+            var secondPointCoordinates = MoveObject(to, radius, secondPointDirection);
+
+            var firstMovement = GetTrajectoryApproach(from, firstPointCoordinates, direction, speed, 200).Count;
+            var secondMovement = GetTrajectoryApproach(from, secondPointCoordinates, direction, speed, 200).Count;
+
+            if (firstMovement > secondMovement)
+            {
+                return new Orbit{StartPoint = new PointF(secondPointCoordinates.X, secondPointCoordinates.Y) , Direction = 1};
+            }
+
+            return new Orbit { StartPoint = new PointF(firstPointCoordinates.X, firstPointCoordinates.Y), Direction = -1 };
+        }
+
+        public static PointF GetRadiusPoint(Point from, Point to, int radius)
+        {
+            var rotation = GetRotation(to, from);
+
+            var firstPointDirection = rotation + 90;
+            var secondPointDirection = rotation - 90;
+
+            if (firstPointDirection > 360) firstPointDirection = firstPointDirection - 360;
+            if (secondPointDirection < 0) secondPointDirection = 360 + secondPointDirection;
+
+            var firstPointCoordinates = MoveObject(to, radius, firstPointDirection);
+            var secondPointCoordinates = MoveObject(to, radius, secondPointDirection);
+
+            var rotationLeft = GetRotation(from, firstPointCoordinates);
+            var rotationRight = GetRotation(from, secondPointCoordinates);
+
+            var distanceToFirstPoint = GetDistance(from, firstPointCoordinates);
+            var distanceToSecondPoint = GetDistance(from, secondPointCoordinates);
+
+            if (rotationLeft < rotationRight)
+            {
+                return new PointF(secondPointCoordinates.X, secondPointCoordinates.Y);
+            }
+
+            return new PointF(firstPointCoordinates.X, firstPointCoordinates.Y);
+        }
+
+
         private static double ToDegrees(double angle) => (angle * 180 / Math.PI);
+
+
+
+        
+
+
+
     }
 }

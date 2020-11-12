@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Engine.Configuration;
@@ -150,7 +151,7 @@ namespace OutlandArea.Tools
 
             if (celestialObject.Classification == 2)
             {
-                additionalLenght = UI.RotateImage(UI.LoadImage("PlayerSpaceship"), (float)celestialObject.Direction).Width / 2;
+                additionalLenght = UI.RotateImage(UI.LoadGenericImage("PlayerSpaceship"), (float)celestialObject.Direction).Width / 2;
             }
 
             var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
@@ -175,13 +176,32 @@ namespace OutlandArea.Tools
             
         }
 
-        public static void DrawTrajectory(ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawTrajectory(GameSession gameSession, ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
         {
+
             var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
             var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
+            var pointCenterTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
             var prevPointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
 
-            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+            List<ObjectLocation> result = null;
+
+            var movementType = gameSession.GetMovementType(spaceShip.Id);
+
+            if (movementType == CommandTypes.Orbit)
+            {
+                var trajectoryOrbit = Coordinates.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
+
+                pointTargetLocation = new Point((int) trajectoryOrbit.StartPoint.X, (int) trajectoryOrbit.StartPoint.Y);
+                
+                result = Coordinates.GetTrajectoryOrbit(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+            }
+
+            if (movementType == CommandTypes.AlignTo)
+            {
+                result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+            }
+
 
             int temp = 0;
             int iteration = 0;
@@ -210,11 +230,11 @@ namespace OutlandArea.Tools
             graphics.DrawLines(new Pen(Color.FromArgb(22, 22, 22), 2), points.ToArray());
             graphics.DrawLines(new Pen(Color.FromArgb(28, 28, 28), 1), points.ToArray());
 
+            var pen = new Pen(Color.Red, 1);// { StartCap = LineCap.ArrowAnchor };
+
             foreach (var objectLocation in result)
             {
                 iteration++;
-
-                var pen = new Pen(Color.Black, 1);// { StartCap = LineCap.ArrowAnchor };
 
                 screenCurrentObjectLocation = UI.ToScreenCoordinates(screenParameters, objectLocation.Coordinates);
                 screenPreviousObjectLocation = UI.ToScreenCoordinates(screenParameters, prevPointCurrentLocation);
@@ -229,12 +249,12 @@ namespace OutlandArea.Tools
 
                 prevPointCurrentLocation = new Point(objectLocation.Coordinates.X, objectLocation.Coordinates.Y);
 
-                temp++;
-                if (temp == 1)
-                {
-                    temp = 0;
-                    graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
-                }
+                //temp++;
+                //if (temp == 1)
+                //{
+                //    temp = 0;
+                //    graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCurrentObjectLocation.X - 1, screenCurrentObjectLocation.Y - 1, 3, 3);
+                //}
 
                 if (objectLocation.IsLinearMotion && isDrawConnectionLine)
                 {
@@ -245,7 +265,57 @@ namespace OutlandArea.Tools
 
                 //Logger.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
             }
+
+
+
+            if (movementType == CommandTypes.Orbit)
+            {
+                var trajectoryOrbit = Coordinates.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
+
+                var orbitRadius = 50;
+
+                var lastPoint = points[points.Count - 1];
+
+                var pointTargetCenter = UI.ToScreenCoordinates(screenParameters, pointCenterTargetLocation);
+
+                //graphics.DrawLine(pen, lastWeyPointLocation.X, lastWeyPointLocation.Y, pointTargetCenter.X, pointTargetCenter.Y);
+                graphics.DrawEllipse(pen, pointTargetCenter.X - orbitRadius, pointTargetCenter.Y - orbitRadius, orbitRadius * 2, orbitRadius * 2);
+
+                var pointOrbitPoint = UI.ToScreenCoordinates(screenParameters, pointCenterTargetLocation);
+
+                graphics.DrawEllipse(new Pen(new SolidBrush(Color.Coral), 1), pointOrbitPoint.X - 1, pointOrbitPoint.Y - 1, 5, 5);
+                graphics.DrawEllipse(new Pen(new SolidBrush(Color.Goldenrod), 1), lastPoint.X - 1, lastPoint.Y - 1, 5, 5);
+
+                var lastPointCoordinates = UI.ToMapCoordinates(screenParameters, lastPoint);
+
+                var angleFirstOrbitPoint = Coordinates.GetRotation(lastPointCoordinates, pointCenterTargetLocation);
+
+                for(int i = 0; i < 15; i++)
+                {
+                    var secondOrbitPoint = Coordinates.RotatePoint(pointCenterTargetLocation, orbitRadius, angleFirstOrbitPoint + trajectoryOrbit.Direction * i * 10);
+                    
+                    var secondOrbitPointCoordinates = UI.ToScreenCoordinates(screenParameters, secondOrbitPoint);
+
+                    graphics.DrawEllipse(new Pen(new SolidBrush(Color.GreenYellow), 1), secondOrbitPointCoordinates.X - 1, secondOrbitPointCoordinates.Y - 1, 5, 5);
+
+                }
+
+
+                //var thirdOrbitPointCoordinates = UI.ToScreenCoordinates(screenParameters, thirdOrbitPoint);
+
+
+
+                ////double theta = Math.Tan(Math.atan2(y - cy, x - cx));
+                //var X = thirdOrbitPointCoordinates.X + 100 * Math.Cos(angleFirstOrbitPoint);
+                //var Y = thirdOrbitPointCoordinates.Y + 100 * Math.Sin(angleFirstOrbitPoint);
+
+                //graphics.DrawEllipse(new Pen(new SolidBrush(Color.BlueViolet), 1), (int)(X - 1), (int)(Y - 1), 5, 5);
+            }
+
+
         }
+
+
 
         public static void DrawPreTarget(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {

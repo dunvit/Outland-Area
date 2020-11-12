@@ -15,5 +15,7 @@ namespace Engine.Management.Server.DataProcessing
         public bool IsLinearMotion { get; set; }
 
         public int Iteration { get; set; }
+
+        public PointF Point { get; set; }
     }
 }

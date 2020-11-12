@@ -113,6 +113,7 @@
             this.flatButton2.TabIndex = 3;
             this.flatButton2.Text = "Orbit";
             this.flatButton2.UseVisualStyleBackColor = false;
+            this.flatButton2.Click += new System.EventHandler(this.Event_Orbit);
             // 
             // flatButton1
             // 

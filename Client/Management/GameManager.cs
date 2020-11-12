@@ -173,13 +173,23 @@ namespace Engine.Management
         {
             var playerShip = _gameSession.GetPlayerSpaceShip();
 
-            celestialObject.Id = new Random().NextInt();
-            celestialObject.Name = "Point in space";
-            celestialObject.Classification = (int) CelestialObjectTypes.PointInMap;
+            if ((CelestialObjectTypes) celestialObject.Classification == CelestialObjectTypes.PointInMap)
+            {
+                celestialObject.Id = new Random().NextInt();
+                celestialObject.Name = "Point in space";
+                celestialObject.Classification = (int) CelestialObjectTypes.PointInMap;
 
-            AddCelestialObject(celestialObject);
+                AddCelestialObject(celestialObject);
+            }
 
             Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int) CommandTypes.AlignTo);
+        }
+
+        public void AddCommandOrbit(ICelestialObject celestialObject)
+        {
+            var playerShip = _gameSession.GetPlayerSpaceShip();
+
+            Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Orbit);
         }
 
         public void AddCommandOpenFire(ICelestialObject celestialObject)

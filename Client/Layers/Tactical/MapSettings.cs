@@ -4,7 +4,7 @@
     {
         public bool IsDrawCelestialObjectCoordinates { get; set; } = false;
 
-        public bool IsDrawCelestialObjectDirections { get; set; } = true;
+        public bool IsDrawCelestialObjectDirections { get; set; } = false;
 
         public bool IsDrawSpaceshipInformation { get; set; } = true;
     }

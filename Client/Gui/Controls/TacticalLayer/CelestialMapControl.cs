@@ -146,10 +146,6 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             DrawPointInSpaceCross(graphics);
 
-            
-
-            
-
             DrawTrajectory(_gameSession, graphics, _screenParameters);
 
             foreach (DrawMapDataObject dataObject in currentTurnCelestialMapData.GetData().Values)
@@ -257,7 +253,7 @@ namespace Engine.Gui.Controls.TacticalLayer
                 {
                     var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
 
-                    DrawTacticalMap.DrawTrajectory(spaceShip, targetObject, graphics, screenParameters);
+                    DrawTacticalMap.DrawTrajectory(gameSession, spaceShip, targetObject, graphics, screenParameters);
                 }
             }
         }

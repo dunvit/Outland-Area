@@ -16,6 +16,14 @@ namespace Engine.Gui
             return new Point(relativeX, relativeY);
         }
 
+        public static Point ToMapCoordinates(ScreenParameters screenParameters, Point celestialObjectPosition)
+        {
+            var relativeX = screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 + celestialObjectPosition.X;
+            var relativeY = screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 + celestialObjectPosition.Y;
+
+            return new Point(relativeX, relativeY);
+        }
+
         public static Bitmap LoadGenericImage(string file)
         {
             var images = Path.Combine(Environment.CurrentDirectory, "Images");

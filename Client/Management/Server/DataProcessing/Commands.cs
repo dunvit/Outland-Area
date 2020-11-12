@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using Engine.Layers.Tactical;
-using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Tools;
 
 namespace Engine.Management.Server.DataProcessing
@@ -26,7 +25,7 @@ namespace Engine.Management.Server.DataProcessing
                 switch (command.Type)
                 {
                     case CommandTypes.MoveForward:
-                        var executeMoveForwardResult = ExecuteMovementCommand(result.Map.CelestialObjects, command);
+                        var executeMoveForwardResult = new CommandsExecute.Movement().Execute(result.Map.CelestialObjects, command);
 
                         if (executeMoveForwardResult.IsResume)
                         {
@@ -36,7 +35,7 @@ namespace Engine.Management.Server.DataProcessing
                         break;
 
                     case CommandTypes.AlignTo:
-                        var executeAlignToResult = ExecuteAlignTo(result, command);
+                        var executeAlignToResult = new CommandsExecute.AlignTo().Execute(result, command);
 
                         if (executeAlignToResult.IsResume)
                         {
@@ -52,56 +51,21 @@ namespace Engine.Management.Server.DataProcessing
                             result.Commands.Add(executeFireResult.Command.DeepClone());
                         }
                         break;
+
+                    case CommandTypes.Orbit:
+
+                        var a = new CommandsExecute.Orbit().Execute(result, command);
+
+                        break;
                 }
             }
 
             return result;
         }
 
-        private CommandExecuteResult ExecuteMovementCommand(IEnumerable<ICelestialObject> objects, Command command)
-        {
-            var isResume = true;
 
-            foreach (var celestialObject in objects)
-            {
-                if (celestialObject.Id == command.CelestialObjectId && celestialObject is Spaceship)
-                {
-                    if ((celestialObject as Spaceship).Speed < (celestialObject as Spaceship).MaxSpeed)
-                    {
-                        celestialObject.Speed += 1;
-                    }
-                    else
-                    {
-                        isResume = false;
-                    }
-                }
-            }
 
-            return new CommandExecuteResult{Command = command, IsResume = isResume};
-        }
 
-        private CommandExecuteResult ExecuteAlignTo(GameSession gameSession, Command command)
-        {
-            var isResume = true;
-
-            var spaceShip = gameSession.GetPlayerSpaceShip();
-            var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
-
-            var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
-            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
-
-            var result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
-
-            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
-            {
-                if (mapCelestialObject.Id == spaceShip.Id)
-                {
-                    mapCelestialObject.Direction = result[1].Direction;
-                }
-            }
-
-            return new CommandExecuteResult { Command = command, IsResume = isResume };
-        }
 
         private CommandExecuteResult ExecuteFire(GameSession gameSession, Command command)
         {
