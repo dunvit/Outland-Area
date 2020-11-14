@@ -10,7 +10,7 @@ namespace Engine.Gui
         {
             InitializeComponent();
 
-            crlCelestialMap.Dock = DockStyle.Fill;
+            crlTacticalMap.Dock = DockStyle.Fill;
 
             if (DebugTools.IsInDesignMode())
                 return;

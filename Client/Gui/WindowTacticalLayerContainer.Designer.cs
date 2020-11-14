@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
-            this.crlCelestialMap = new Engine.Gui.Controls.TacticalLayer.CelestialMapControl();
             this.cmdRunGame = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.controlCommands = new Engine.Gui.Controls.TacticalLayer.CommandsControl();
+            this.crlTacticalMap = new Engine.Gui.Controls.TacticalMap();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,14 +50,6 @@
             this.flatButton1.Text = "Exit";
             this.flatButton1.UseVisualStyleBackColor = false;
             this.flatButton1.Click += new System.EventHandler(this.Event_Exit);
-            // 
-            // crlCelestialMap
-            // 
-            this.crlCelestialMap.BackColor = System.Drawing.Color.Black;
-            this.crlCelestialMap.Location = new System.Drawing.Point(562, 208);
-            this.crlCelestialMap.Name = "crlCelestialMap";
-            this.crlCelestialMap.Size = new System.Drawing.Size(336, 288);
-            this.crlCelestialMap.TabIndex = 1;
             // 
             // cmdRunGame
             // 
@@ -91,15 +83,24 @@
             this.controlCommands.Size = new System.Drawing.Size(334, 74);
             this.controlCommands.TabIndex = 4;
             // 
+            // crlTacticalMap
+            // 
+            this.crlTacticalMap.BackColor = System.Drawing.Color.Black;
+            this.crlTacticalMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crlTacticalMap.Location = new System.Drawing.Point(149, 187);
+            this.crlTacticalMap.Name = "crlTacticalMap";
+            this.crlTacticalMap.Size = new System.Drawing.Size(353, 309);
+            this.crlTacticalMap.TabIndex = 5;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.crlTacticalMap);
             this.Controls.Add(this.controlCommands);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.crlCelestialMap);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowTacticalLayerContainer";
@@ -112,9 +113,9 @@
         #endregion
 
         private Controls.Common.FlatButton flatButton1;
-        private Controls.TacticalLayer.CelestialMapControl crlCelestialMap;
         private Controls.Common.FlatButton cmdRunGame;
         private System.Windows.Forms.Panel panel1;
         private Controls.TacticalLayer.CommandsControl controlCommands;
+        private Controls.TacticalMap crlTacticalMap;
     }
 }

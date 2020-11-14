@@ -98,6 +98,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.Designer.cs">
       <DependentUpon>SelectedObjectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalMap.Designer.cs">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedObjectControl.resx">
       <DependentUpon>SelectedObjectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalMap.resx">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowMenu.resx">
       <DependentUpon>WindowMenu.cs</DependentUpon>
