@@ -1,6 +1,8 @@
 ﻿using Engine.Layers.Tactical;
-using Engine.Layers.Tactical.Objects.Spaceships;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
+using OutlandAreaLocalServer;
 
 namespace Tests.ClientTests.Layers.Tactical
 {
@@ -13,8 +15,8 @@ namespace Tests.ClientTests.Layers.Tactical
         [TestMethod]
         public void MapCelestialObjectsCountTest()
         {
-            var _gameSession = Engine.Management.Server.DataProcessing.Convertor.ToGameSession(
-                Engine.Management.Server.DataProcessing.Convertor.GetSavedMap("Map_005"));
+            var _gameSession = Convertor.ToGameSession(
+                Convertor.GetSavedMap("Map_005"));
 
             Assert.AreEqual(2, _gameSession.Map.CelestialObjects.Count);
         }
@@ -22,8 +24,8 @@ namespace Tests.ClientTests.Layers.Tactical
         [TestMethod]
         public void GetPlayerSpaceShipTest()
         {
-            var _gameSession = Engine.Management.Server.DataProcessing.Convertor.ToGameSession(
-                Engine.Management.Server.DataProcessing.Convertor.GetSavedMap("Map_005"));
+            var _gameSession = Convertor.ToGameSession(
+                Convertor.GetSavedMap("Map_005"));
 
             Assert.AreEqual("HMS Glowworm", _gameSession.GetPlayerSpaceShip().Name);
             Assert.AreEqual(90, _gameSession.GetPlayerSpaceShip().Direction);

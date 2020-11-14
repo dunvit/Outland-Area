@@ -2,6 +2,8 @@
 using System.Drawing;
 using Engine.Layers.Tactical;
 using Engine.Tools;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Tactical;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {

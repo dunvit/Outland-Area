@@ -3,6 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using Engine.Layers.Tactical;
+using OutlandAreaCommon.Server;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaLocalServer;
 
 namespace Engine.Management.Server
 {
@@ -84,7 +87,7 @@ namespace Engine.Management.Server
 
             var stopwatchParsing = Stopwatch.StartNew();
 
-            var gameSession = DataProcessing.Convertor.ToGameSession(mapContent);
+            var gameSession = Convertor.ToGameSession(mapContent);
 
             stopwatchParsing.Stop();
 

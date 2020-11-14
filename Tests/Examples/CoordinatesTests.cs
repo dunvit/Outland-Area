@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using Engine.Management.Server.DataProcessing;
-using Engine.Management.Server.DataProcessing.Trajectory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OutlandAreaCommon.Server.DataProcessing;
+using OutlandAreaCommon.Server.DataProcessing.Trajectory;
 
 namespace Tests.Examples
 {
@@ -11,7 +11,7 @@ namespace Tests.Examples
         [TestMethod]
         public void GeneralTest()
         {
-            var points = Engine.Management.Server.DataProcessing.Coordinates.GetWayPoints(new Point(1, 1), new Point(4, 5), 4);
+            var points = Coordinates.GetWayPoints(new Point(1, 1), new Point(4, 5), 4);
 
             //Assert.AreEqual(new PointF(1, 1), points[0]);
             //Assert.AreEqual(new PointF(1.75f, 2f), points[1]);

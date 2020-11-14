@@ -12,6 +12,9 @@ using Engine.Layers.Tactical;
 using Engine.Tools;
 using log4net;
 using OutlandArea.Tools;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls.TacticalLayer
@@ -260,9 +263,9 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         private void MapClick(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = Tools.Common.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 
@@ -282,9 +285,9 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         private void Event_MapMouseMove(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = Tools.Common.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 

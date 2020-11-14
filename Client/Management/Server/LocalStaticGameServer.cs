@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Engine.Layers.Tactical;
+using OutlandAreaCommon.Server;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaLocalServer;
 
 namespace Engine.Management.Server
 {
@@ -9,14 +12,14 @@ namespace Engine.Management.Server
 
         public GameSession Initialization()
         {
-            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_003"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_003"));
 
             return _gameSession;
         }
 
         public GameSession Initialization(string map = "Map_004")
         {
-            _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap(map));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap(map));
 
             _gameSession.Commands = new List<Command>();
 

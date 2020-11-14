@@ -5,6 +5,9 @@ using System.Drawing;
 using Engine.Layers.Tactical;
 using Engine.Tools;
 using log4net;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Server.DataProcessing;
+using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
@@ -31,7 +34,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             positionFrom = new PointF(previous.PositionX, previous.PositionY);
             positionTo = new PointF(current.PositionX, current.PositionY);
 
-            WayPoints = Management.Server.DataProcessing.Coordinates.GetWayPoints(
+            WayPoints = Coordinates.GetWayPoints(
                 new Point(previous.PositionX, previous.PositionY), 
                 new Point(current.PositionX, current.PositionY), 10);
 

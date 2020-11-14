@@ -1,11 +1,18 @@
-﻿using Engine.Configuration;
+﻿using System;
+using Engine.Configuration;
 using Engine.Layers.Tactical;
 using Engine.Tools;
 using log4net;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Timers;
 using System.Windows.Forms;
+using OutlandArea.Tools;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls
@@ -17,6 +24,7 @@ namespace Engine.Gui.Controls
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
+        private MapSettings mapSettings = new MapSettings();
         private int turn;
         private Timer crlRefreshMap;
         private bool refreshInProgress;
@@ -69,15 +77,66 @@ namespace Engine.Gui.Controls
         private void DrawScreen()
         {
             Logger.Debug($"[{GetType().Name}]\t [DrawScreen]");
+
+            Image image = new Bitmap(Width, Height);
+
+            var graphics = Graphics.FromImage(image);
+
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.Bicubic;
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+            foreach (var currentObject in _gameSession.Map.CelestialObjects)
+            {
+                switch ((CelestialObjectTypes)currentObject.Classification)
+                {
+                    case CelestialObjectTypes.Asteroid:
+                        // Regular asteroid
+                        DrawTacticalMap.DrawAsteroid(currentObject, graphics, _screenParameters);
+                        break;
+                    case CelestialObjectTypes.Spaceship:
+                        if (mapSettings.IsDrawSpaceshipInformation)
+                            DrawTacticalMap.DrawSpaceshipInformation(currentObject, graphics, _screenParameters);
+
+                        DrawTacticalMap.DrawSpaceship(currentObject, graphics, _screenParameters);
+
+                        break;
+                    case CelestialObjectTypes.Missile:
+                        DrawTacticalMap.DrawMissile(currentObject, graphics, _screenParameters);
+                        break;
+                }
+
+                if (mapSettings.IsDrawCelestialObjectDirections)
+                {
+                    try
+                    {
+                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, graphics, _screenParameters);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e.Message);
+                    }
+
+                }
+
+                if (mapSettings.IsDrawCelestialObjectCoordinates)
+                {
+                    if (currentObject.Classification > 0)
+                        DrawTacticalMap.DrawCelestialObjectCoordinates(currentObject, graphics, _screenParameters);
+                }
+            }
+
+            BackgroundImage = image;
         }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
             Logger.Info($"[{GetType().Name}]\t [MapClick]");
 
-            var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = Tools.Common.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 
@@ -95,9 +154,9 @@ namespace Engine.Gui.Controls
         {
             Logger.Debug($"[{GetType().Name}]\t [MapMouseMove]");
 
-            var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = Tools.Common.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new Point(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 

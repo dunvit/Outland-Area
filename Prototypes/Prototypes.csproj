@@ -305,12 +305,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
-      <Project>{34984709-af29-46a5-a39d-ec33b3a6a3fb}</Project>
-      <Name>OutlandAreaLogic</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Data\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

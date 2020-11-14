@@ -5,8 +5,13 @@ using System.Drawing.Drawing2D;
 using Engine.Configuration;
 using Engine.Gui;
 using Engine.Layers.Tactical;
-using Engine.Management.Server.DataProcessing;
+using Engine.Management.Server;
 using Engine.Tools;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Server.DataProcessing;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandArea.Tools
 {
@@ -75,13 +80,13 @@ namespace OutlandArea.Tools
                 drawSpaceshipInformationShelf = 90;
             }
 
-            var footCoordinates = Common.MoveCelestialObjects(screenCoordinates, drawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
+            var footCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, drawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
 
 
             graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, footCoordinates.X, footCoordinates.Y);
 
             
-            var shelfCoordinates = Common.MoveCelestialObjects(footCoordinates, drawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
+            var shelfCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(footCoordinates, drawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
 
             graphics.DrawLine(pen, footCoordinates.X, footCoordinates.Y, shelfCoordinates.X, shelfCoordinates.Y);
 
@@ -154,7 +159,7 @@ namespace OutlandArea.Tools
                 additionalLenght = UI.RotateImage(UI.LoadGenericImage("PlayerSpaceship"), (float)celestialObject.Direction).Width / 2;
             }
 
-            var directionCoordinates = Common.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
+            var directionCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
 
             var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
 
@@ -190,16 +195,16 @@ namespace OutlandArea.Tools
 
             if (movementType == CommandTypes.Orbit)
             {
-                var trajectoryOrbit = Coordinates.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
+                var trajectoryOrbit = AllIn.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
 
                 pointTargetLocation = new Point((int) trajectoryOrbit.StartPoint.X, (int) trajectoryOrbit.StartPoint.Y);
                 
-                result = Coordinates.GetTrajectoryOrbit(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+                result = AllIn.GetTrajectoryOrbit(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
             }
 
             if (movementType == CommandTypes.AlignTo)
             {
-                result = Coordinates.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
+                result = AllIn.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
             }
 
 
@@ -270,7 +275,7 @@ namespace OutlandArea.Tools
 
             if (movementType == CommandTypes.Orbit)
             {
-                var trajectoryOrbit = Coordinates.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
+                var trajectoryOrbit = AllIn.GetRadiusPoint(spaceShip.GetLocation(), pointTargetLocation, 50, spaceShip.Direction, spaceShip.Speed);
 
                 var orbitRadius = 50;
 

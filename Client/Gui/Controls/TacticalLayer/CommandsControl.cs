@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Engine.Layers.Tactical;
+using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {

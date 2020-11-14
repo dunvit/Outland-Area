@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.11\lib\net45\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -55,17 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationTools.cs" />
-    <Compile Include="Equipment\Category.cs" />
-    <Compile Include="Equipment\Factory.cs" />
-    <Compile Include="Equipment\General\Reactor\IReactor.cs" />
-    <Compile Include="Equipment\General\Reactor\Reactor.cs" />
-    <Compile Include="Equipment\IModule.cs" />
-    <Compile Include="Equipment\Propulsion\IPropulsionModule.cs" />
-    <Compile Include="Equipment\Propulsion\MicroWarpDrive.cs" />
-    <Compile Include="Equipment\Shield\IShieldModule.cs" />
-    <Compile Include="Equipment\Shield\ShieldModule.cs" />
-    <Compile Include="Equipment\Weapon\IWeaponModule.cs" />
-    <Compile Include="Equipment\Weapon\RailGun.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Configuration\ScreenParameters.cs" />
     <Compile Include="Gui\BaseFullScreenWindow.cs">
@@ -119,45 +108,15 @@
     <Compile Include="Gui\WindowTacticalLayerContainer.Designer.cs">
       <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Layers\Tactical\CelestialMap.cs" />
-    <Compile Include="Layers\Tactical\CelestialObjectExtensions.cs" />
-    <Compile Include="Layers\Tactical\CelestialObjectTypes.cs" />
-    <Compile Include="Layers\Tactical\Command.cs" />
-    <Compile Include="Layers\Tactical\CommandTypes.cs" />
-    <Compile Include="Layers\Tactical\GameSessionTools.cs" />
-    <Compile Include="Layers\Tactical\Objects\PointInSpace.cs" />
-    <Compile Include="Layers\Tactical\Objects\Spaceships\Missile.cs" />
-    <Compile Include="Layers\Tactical\Session.cs" />
-    <Compile Include="Layers\Tactical\ICelestialObject.cs" />
     <Compile Include="Layers\Tactical\MapSettings.cs" />
-    <Compile Include="Layers\Tactical\Objects\Asteroid.cs" />
-    <Compile Include="Layers\Tactical\Objects\Spaceships\ISpaceship.cs" />
-    <Compile Include="Layers\Tactical\Objects\Spaceships\Spaceship.cs" />
-    <Compile Include="Layers\Tactical\Objects\Spaceships\SpaceShipInfo.cs" />
-    <Compile Include="Layers\Tactical\SessionExtensions.cs" />
     <Compile Include="Management\GameManager.cs" />
-    <Compile Include="Management\Server\DataProcessing\CommandExecuteResult.cs" />
-    <Compile Include="Management\Server\DataProcessing\Commands.cs" />
-    <Compile Include="Management\Server\DataProcessing\CommandsExecute\AlignTo.cs" />
-    <Compile Include="Management\Server\DataProcessing\CommandsExecute\Movement.cs" />
-    <Compile Include="Management\Server\DataProcessing\CommandsExecute\Orbit.cs" />
-    <Compile Include="Management\Server\DataProcessing\Convertor.cs" />
-    <Compile Include="Management\Server\DataProcessing\Coordinates.cs" />
-    <Compile Include="Management\Server\DataProcessing\ObjectLocation.cs" />
-    <Compile Include="Management\Server\DataProcessing\Trajectory\Approach.cs" />
-    <Compile Include="Management\Server\DataProcessing\Trajectory\Line.cs" />
-    <Compile Include="Management\Server\DataProcessing\Trajectory\Orbit.cs" />
-    <Compile Include="Management\Server\DataProcessing\Trajectory\RouteCalculation.cs" />
-    <Compile Include="Management\Server\IGameServer.cs" />
-    <Compile Include="Management\Server\LocalGameServer.cs" />
+    <Compile Include="Management\Server\AllIn.cs" />
     <Compile Include="Management\Server\LocalStaticGameServer.cs" />
     <Compile Include="Management\Server\ScalaGameServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Tools\Common.cs" />
     <Compile Include="Tools\DebugTools.cs" />
-    <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="Tools\Scheduler.cs" />
     <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
       <DependentUpon>FlatButton.cs</DependentUpon>
@@ -220,9 +179,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Equipment\Weapon\Railgun\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Logs\Plug.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -298,6 +255,16 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OutlandAreaCommon\OutlandAreaCommon.csproj">
+      <Project>{ec750c9b-68c5-40d6-8b98-5058ef786da5}</Project>
+      <Name>OutlandAreaCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OutlandAreaLocalServer\OutlandAreaLocalServer.csproj">
+      <Project>{277b4d7e-a2f1-4df9-a615-fb411c59dbf9}</Project>
+      <Name>OutlandAreaLocalServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,11 +3,16 @@ using System.Diagnostics;
 using System.Drawing;
 using Engine.Gui;
 using Engine.Layers.Tactical;
-using Engine.Layers.Tactical.Objects;
-using Engine.Layers.Tactical.Objects.Spaceships;
 using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
+using OutlandAreaCommon;
+using OutlandAreaCommon.Server;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
+using OutlandAreaLocalServer;
 
 namespace Engine.Management
 {
