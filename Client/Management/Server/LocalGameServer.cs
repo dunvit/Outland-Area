@@ -17,7 +17,7 @@ namespace Engine.Management.Server
 
         public GameSession Initialization()
         {
-            Logger.Info("[IGameServer Initialization]");
+            Logger.Info($"[{GetType().Name}]\t[Initialization]");
             _gameSession = DataProcessing.Convertor.ToGameSession(DataProcessing.Convertor.GetSavedMap("Map_003"));
 
             _gameSession.Commands = new List<Command>();
@@ -45,25 +45,25 @@ namespace Engine.Management.Server
 
         public GameSession RefreshGameSession(int id)
         {
-            Logger.Debug($"RefreshGameSession id={id}");
+            Logger.Debug($"[{GetType().Name}]\t RefreshGameSession id={id}");
             return _gameSession;
         }
 
         public void ResumeSession(int id)
         {
-            Logger.Debug($"ResumeSession id={id}");
+            Logger.Debug($"[{GetType().Name}]\t ResumeSession id={id}");
             _gameSession.Map.IsEnabled = true;
         }
 
         public void PauseSession(int id)
         {
-            Logger.Debug($"PauseSession id={id}");
+            Logger.Debug($"[{GetType().Name}]\t PauseSession id={id}");
             _gameSession.Map.IsEnabled = false;
         }
 
         public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
         {
-            Logger.Debug($"Add command sessionId={sessionId} objectId={objectId} targetObjectId={targetObjectId} typeId={typeId}");
+            Logger.Debug($"[{GetType().Name}]\t Add command sessionId={sessionId} objectId={objectId} targetObjectId={targetObjectId} typeId={typeId}");
             var command = new Command
             {
                 CelestialObjectId = objectId,
@@ -79,7 +79,7 @@ namespace Engine.Management.Server
         public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
             int classification, string name)
         {
-            Logger.Debug($"Add celestial object sessionId={sessionId} objectId={objectId} positionX={positionX} positionY={positionY} classification={classification}");
+            Logger.Debug($"[{GetType().Name}]\t Add celestial object sessionId={sessionId} objectId={objectId} positionX={positionX} positionY={positionY} classification={classification}");
 
             ICelestialObject celestialObject;
 
@@ -118,7 +118,7 @@ namespace Engine.Management.Server
 
         private void TurnCalculation()
         {
-            Logger.Debug($"[TurnCalculation] Start");
+            Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Start");
 
             var stopwatch1 = Stopwatch.StartNew();
 
@@ -136,7 +136,7 @@ namespace Engine.Management.Server
 
             _gameSession = turnGameSession;
 
-            Logger.Debug($"[TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
+            Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
 
         }
     }

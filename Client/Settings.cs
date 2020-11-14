@@ -34,7 +34,7 @@ namespace Engine
             settings += "\n" + "ServerType:           " + ServerType;
             settings += "\n" + "--------------------------------------------------------------";
 
-            Logger.Error(settings);
+            Logger.Info(settings);
         }
     }
 }

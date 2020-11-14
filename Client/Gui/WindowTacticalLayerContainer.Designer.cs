@@ -98,9 +98,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
-            this.Controls.Add(this.crlTacticalMap);
             this.Controls.Add(this.controlCommands);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.crlTacticalMap);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowTacticalLayerContainer";

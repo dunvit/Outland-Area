@@ -123,7 +123,7 @@ namespace Engine.Management
         {
             _gameSession = _gameServer.Initialization();
 
-            Logger.Info("Initialization finished successful.");
+            Logger.Info($"[{GetType().Name}]\t Initialization finished successful.");
 
             Scheduler.Instance.ScheduleTask(100, 100, GetDataFromServer, null);
 

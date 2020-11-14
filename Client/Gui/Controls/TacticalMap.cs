@@ -36,7 +36,7 @@ namespace Engine.Gui.Controls
 
         private void Initialization()
         {
-            Logger.Info($"[{GetType().Name}] Celestial map control - Initialization.");
+            Logger.Info($"[{GetType().Name}]\t Celestial map control - Initialization.");
 
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
 
@@ -51,7 +51,7 @@ namespace Engine.Gui.Controls
 
         private void Event_Refresh(object sender, ElapsedEventArgs e)
         {
-            Logger.Debug($"[{GetType().Name}] Refresh celestial map control.");
+            Logger.Debug($"[{GetType().Name}]\t Refresh celestial map control.");
 
             if (refreshInProgress) return;
 
@@ -63,17 +63,17 @@ namespace Engine.Gui.Controls
 
             refreshInProgress = false;
 
-            Logger.Debug($"[{GetType().Name}][DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
         private void DrawScreen()
         {
-            Logger.Debug($"[{GetType().Name}][DrawScreen]");
+            Logger.Debug($"[{GetType().Name}]\t [DrawScreen]");
         }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
-            Logger.Info($"[{GetType().Name}][MapClick]");
+            Logger.Info($"[{GetType().Name}]\t [MapClick]");
 
             var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
@@ -93,7 +93,7 @@ namespace Engine.Gui.Controls
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
-            Logger.Info($"[{GetType().Name}][MapMouseMove]");
+            Logger.Debug($"[{GetType().Name}]\t [MapMouseMove]");
 
             var mouseScreenCoordinates = Tools.Common.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
@@ -108,12 +108,12 @@ namespace Engine.Gui.Controls
         {
             turn = gameSession.Turn;
 
-            if (crlRefreshMap.Enabled == false)
+            if (crlRefreshMap == null)
             {
                 Initialization();
             }
 
-            Logger.Info($"[{GetType().Name}][RefreshCelestialMap]" + turn);
+            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {turn}.");
 
             _gameSession = gameSession;
         }
