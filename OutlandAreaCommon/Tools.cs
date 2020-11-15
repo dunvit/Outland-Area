@@ -5,42 +5,42 @@ namespace OutlandAreaCommon
 {
     public class Tools
     {
-        public static Point MoveCelestialObjects(Point currentLocation, int speed, double angleInGraduses)
+        public static PointF MoveCelestialObjects(PointF currentLocation, int speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 
             var x = (int)(currentLocation.X + speed * Math.Cos(angleInRadians));
             var y = (int)(currentLocation.Y + speed * Math.Sin(angleInRadians));
 
-            return new Point(x, y);
+            return new PointF(x, y);
         }
 
         public static bool IsEven(int a)
         {
             return (a % 2) == 0;
         }
-        public static Point ToRelativeCoordinates(Point mouseLocation, Point centerPosition)
+        public static PointF ToRelativeCoordinates(PointF mouseLocation, PointF centerPosition)
         {
             var relativeX = (mouseLocation.X - centerPosition.X);
             var relativeY = (mouseLocation.Y - centerPosition.Y);
 
-            return new Point(relativeX, relativeY);
+            return new PointF(relativeX, relativeY);
         }
 
-        public static Point ToTacticalMapCoordinates(Point currentMouseCoordinates, Point centerPosition)
+        public static PointF ToTacticalMapCoordinates(PointF currentMouseCoordinates, PointF centerPosition)
         {
             var relativeX = (centerPosition.X + currentMouseCoordinates.X);
             var relativeY = (centerPosition.Y + currentMouseCoordinates.Y);
 
-            return new Point(relativeX, relativeY);
+            return new PointF(relativeX, relativeY);
         }
 
-        public static Point ToAbsoluteCoordinates(Point centerRadarLocation, Point centerPosition, Point celestialObjectPosition)
+        public static PointF ToAbsoluteCoordinates(PointF centerRadarLocation, PointF centerPosition, PointF celestialObjectPosition)
         {
             var relativeX = (celestialObjectPosition.X - centerRadarLocation.X);
             var relativeY = (celestialObjectPosition.Y - centerRadarLocation.Y);
 
-            return new Point(centerPosition.X + relativeX, centerPosition.Y + relativeY);
+            return new PointF(centerPosition.X + relativeX, centerPosition.Y + relativeY);
         }
 
         

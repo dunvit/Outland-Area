@@ -35,8 +35,8 @@ namespace Engine.Gui.Controls.TacticalLayer
             positionTo = new PointF(current.PositionX, current.PositionY);
 
             WayPoints = Coordinates.GetWayPoints(
-                new Point(previous.PositionX, previous.PositionY), 
-                new Point(current.PositionX, current.PositionY), 10);
+                new PointF(previous.PositionX, previous.PositionY), 
+                new PointF(current.PositionX, current.PositionY), 10);
 
             if (current.Id == 5005)
             {

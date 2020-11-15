@@ -8,20 +8,20 @@ namespace Engine.Gui
 {
     public class UI
     {
-        public static Point ToScreenCoordinates(ScreenParameters screenParameters, Point celestialObjectPosition)
+        public static PointF ToScreenCoordinates(ScreenParameters screenParameters, PointF celestialObjectPosition)
         {
             var relativeX = (celestialObjectPosition.X - screenParameters.CenterScreenOnMap.X) + screenParameters.Width / 2;
             var relativeY = (celestialObjectPosition.Y - screenParameters.CenterScreenOnMap.Y) + screenParameters.Height / 2;
 
-            return new Point(relativeX, relativeY);
+            return new PointF(relativeX, relativeY);
         }
 
-        public static Point ToMapCoordinates(ScreenParameters screenParameters, Point celestialObjectPosition)
+        public static PointF ToMapCoordinates(ScreenParameters screenParameters, PointF celestialObjectPosition)
         {
             var relativeX = screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 + celestialObjectPosition.X;
             var relativeY = screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 + celestialObjectPosition.Y;
 
-            return new Point(relativeX, relativeY);
+            return new PointF(relativeX, relativeY);
         }
 
         public static Bitmap LoadGenericImage(string file)

@@ -5,7 +5,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
 {
     public class Line
     {
-        public List<ObjectLocation> Calculate(Point from, Point to, double direction, int speed, int maxIterations = 200)
+        public List<ObjectLocation> Calculate(PointF from, PointF to, double direction, int speed, int maxIterations = 200)
         {
             var result = new List<ObjectLocation>();
 

@@ -11,8 +11,8 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
         public double Direction { get; set; }
         public int Signature { get; set; }
         public int Speed { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
         public bool IsScanned { get; set; }

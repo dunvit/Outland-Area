@@ -11,7 +11,7 @@ namespace Engine.Management.Server
 {
     public class AllIn
     {
-        public static List<ObjectLocation> GetTrajectoryApproach(Point currentLocation, Point targetLocation, double currentDirection, int speed, int iterations)
+        public static List<ObjectLocation> GetTrajectoryApproach(PointF currentLocation, PointF targetLocation, double currentDirection, int speed, int iterations)
         {
             var result = new List<ObjectLocation>();
 
@@ -19,7 +19,7 @@ namespace Engine.Management.Server
             {
                 Distance = Coordinates.GetDistance(targetLocation, currentLocation),
                 Direction = currentDirection,
-                Coordinates = new Point(currentLocation.X, currentLocation.Y)
+                Coordinates = new PointF(currentLocation.X, currentLocation.Y)
             };
 
             result.Add(initial);
@@ -78,7 +78,7 @@ namespace Engine.Management.Server
             return result;
         }
 
-        public static List<ObjectLocation> GetTrajectoryOrbit(Point currentLocation, Point targetLocation, double currentDirection, int speed, int iterations)
+        public static List<ObjectLocation> GetTrajectoryOrbit(PointF currentLocation, PointF targetLocation, double currentDirection, int speed, int iterations)
         {
             var result = GetTrajectoryApproach(currentLocation, targetLocation, currentDirection, speed, iterations);
 
@@ -91,7 +91,7 @@ namespace Engine.Management.Server
             return result;
         }
 
-        public static Orbit GetRadiusPoint(Point from, Point to, int radius, double direction, int speed)
+        public static Orbit GetRadiusPoint(PointF from, PointF to, int radius, double direction, int speed)
         {
             var rotation = Coordinates.GetRotation(to, from);
 

@@ -4,7 +4,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
 {
     public class ObjectLocation
     {
-        public Point Coordinates { get; set; }
+        public PointF Coordinates { get; set; }
 
         public double VectorToTarget { get; set; }
 

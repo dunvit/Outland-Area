@@ -21,7 +21,7 @@ namespace OutlandAreaLocalServer
         public GameSession Initialization()
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_003"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_004"));
 
             _gameSession.Commands = new List<Command>();
 
@@ -79,7 +79,7 @@ namespace OutlandAreaLocalServer
             _gameSession.AddCommand(command);
         }
 
-        public void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
+        public void AddCelestialObject(int sessionId, int objectId, float positionX, float positionY, int direction, int speed,
             int classification, string name)
         {
             Logger.Debug($"[{GetType().Name}]\t Add celestial object sessionId={sessionId} objectId={objectId} positionX={positionX} positionY={positionY} classification={classification}");
@@ -124,7 +124,6 @@ namespace OutlandAreaLocalServer
             Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Start");
 
             var stopwatch1 = Stopwatch.StartNew();
-
             
             if (_gameSession.Map.IsEnabled == false)
                 return;
@@ -139,7 +138,7 @@ namespace OutlandAreaLocalServer
 
             _gameSession = turnGameSession;
 
-            Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
+            Logger.Info($"[{GetType().Name}]\t [TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
 
         }
     }

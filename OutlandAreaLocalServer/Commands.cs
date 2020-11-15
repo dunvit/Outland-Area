@@ -80,8 +80,8 @@ namespace OutlandAreaLocalServer
             if (missile == null) return new CommandExecuteResult { Command = command, IsResume = false };
             if (targetObject == null) return new CommandExecuteResult { Command = command, IsResume = false };
 
-            var pointCurrentLocation = new Point(missile.PositionX, missile.PositionY);
-            var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);
+            var pointCurrentLocation = new PointF(missile.PositionX, missile.PositionY);
+            var pointTargetLocation = new PointF(targetObject.PositionX, targetObject.PositionY);
 
             var direction = Coordinates.GetRotation(pointTargetLocation, pointCurrentLocation);
 

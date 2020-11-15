@@ -8,8 +8,8 @@
         double Direction { get; set; }
         int Signature { get; set; }
         int Speed { get; set; }
-        int PositionX { get; set; }
-        int PositionY { get; set; }
+        float PositionX { get; set; }
+        float PositionY { get; set; }
         int Classification { get; set; }
         string ImageSmall { get; set; }
         bool IsScanned { get; set; }

@@ -106,7 +106,7 @@ namespace Engine.Management
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
-        public void SelectPointInSpace(Point pointInSpace)
+        public void SelectPointInSpace(PointF pointInSpace)
         {
             Logger.Debug("A point in space is selected.");
 

@@ -14,7 +14,7 @@ namespace OutlandAreaCommon.Server
 
         void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId);
 
-        void AddCelestialObject(int sessionId, int objectId, int positionX, int positionY, int direction, int speed,
+        void AddCelestialObject(int sessionId, int objectId, float positionX, float positionY, int direction, int speed,
             int classification, string name);
     }
 }

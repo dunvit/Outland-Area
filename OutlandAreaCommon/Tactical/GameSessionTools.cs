@@ -7,7 +7,7 @@ namespace OutlandAreaCommon.Tactical
     public class SessionTools
     {
 
-        public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, Point point)
+        public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, PointF point)
         {
             foreach (var celestialObjects in gameSession.Map.CelestialObjects)
             {
@@ -20,7 +20,7 @@ namespace OutlandAreaCommon.Tactical
             return null;
         }
 
-        public static bool IsObjectInRange(ICelestialObject celestialObject, int distance, Point point)
+        public static bool IsObjectInRange(ICelestialObject celestialObject, int distance, PointF point)
         {
             var w = Math.Abs(celestialObject.PositionX - point.X);
             var h = Math.Abs(celestialObject.PositionY - point.Y);

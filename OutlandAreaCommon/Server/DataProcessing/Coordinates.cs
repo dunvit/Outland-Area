@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
+using log4net;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaCommon.Server.DataProcessing
 {
     public class Coordinates
     {
-        //private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static Point MoveObject(Point currentLocation, int speed, double angleInGraduses)
+        public static PointF MoveObject(PointF currentLocation, int speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 
             var x = (int)(currentLocation.X + speed * Math.Cos(angleInRadians));
             var y = (int)(currentLocation.Y + speed * Math.Sin(angleInRadians));
 
-            return new Point(x, y);
+            return new PointF(x, y);
         }
 
-        public static Point MoveObject(Point currentLocation, Point targetLocation, int speed)
+        public static PointF MoveObject(PointF currentLocation, PointF targetLocation, int speed)
         {
             float startX = currentLocation.X;
             float startY = currentLocation.Y;
@@ -38,7 +41,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
             var y = startY + directionY * speed;// * elapsed;
 
 
-            return new Point((int)x, (int)y);
+            return new PointF((int)x, (int)y);
         }
 
         public static PointF Vector(PointF from, PointF to, int speed)
@@ -70,12 +73,12 @@ namespace OutlandAreaCommon.Server.DataProcessing
             foreach (var celestialObject in result.CelestialObjects)
             {
                 // TODO: Replace method to MoveObject from this class.
-                var position = OutlandAreaCommon.Tools.MoveCelestialObjects(
-                    new Point(celestialObject.PositionX, celestialObject.PositionY),
+                var position = Tools.MoveCelestialObjects(
+                    new PointF(celestialObject.PositionX, celestialObject.PositionY),
                     celestialObject.Speed, 
                     celestialObject.Direction);
 
-                //Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
+                Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
 
                 celestialObject.PositionX = position.X;
                 celestialObject.PositionY = position.Y;
@@ -88,7 +91,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
         
 
-        public static bool IsLinearMotion(ObjectLocation currentLocation, Point targetLocation)
+        public static bool IsLinearMotion(ObjectLocation currentLocation, PointF targetLocation)
         {
             if (currentLocation.IsLinearMotion)
                 return true;
@@ -100,7 +103,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
         
 
-        public static double GetDistance(Point p1, Point p2)
+        public static double GetDistance(PointF p1, PointF p2)
         {
             double xDelta = p1.X - p2.X;
             double yDelta = p1.Y - p2.Y;
@@ -108,9 +111,9 @@ namespace OutlandAreaCommon.Server.DataProcessing
             return Math.Sqrt(Math.Pow(xDelta, 2) + Math.Pow(yDelta, 2));
         }
 
-        public static double GetRotation(Point destination, Point center)
+        public static double GetRotation(PointF destination, PointF center)
         {
-            var relativeDestination = new Point(destination.X - center.X, destination.Y - center.Y);
+            var relativeDestination = new PointF(destination.X - center.X, destination.Y - center.Y);
 
             var cos = relativeDestination.Y / Math.Sqrt(relativeDestination.X * relativeDestination.X + relativeDestination.Y * relativeDestination.Y);
 
@@ -129,19 +132,19 @@ namespace OutlandAreaCommon.Server.DataProcessing
             return temp;
         }
 
-        public static Point RotatePoint(Point centerPoint, int radius, double angleInDegrees)
+        public static PointF RotatePoint(PointF centerPoint, int radius, double angleInDegrees)
         {
             var angleInRadians = (angleInDegrees - 90) * (Math.PI) / 180;
 
             var xOnCircle = centerPoint.X + radius * Math.Cos(angleInRadians);
             var yOnCircle = centerPoint.Y + radius * Math.Sin(angleInRadians);
 
-            return new Point((int)xOnCircle, (int)yOnCircle);
+            return new PointF((int)xOnCircle, (int)yOnCircle);
 
         }
 
 
-        public static double GetRotationAngle(Point currentLocation, Point destination, double direction, int directionDelta)
+        public static double GetRotationAngle(PointF currentLocation, PointF destination, double direction, int directionDelta)
         {
             double newDirection;
             var isPositive = false;
@@ -208,7 +211,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
             return newDirection;
         }
 
-        public static SortedDictionary<int, PointF> GetWayPoints(Point from, Point to, float steps)
+        public static SortedDictionary<int, PointF> GetWayPoints(PointF from, PointF to, float steps)
         {
             var deltaX = (to.X - from.X) / steps;
             var deltaY = (to.Y - from.Y) / steps;
@@ -225,7 +228,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
         
 
-        public static PointF GetRadiusPoint(Point from, Point to, int radius)
+        public static PointF GetRadiusPoint(PointF from, PointF to, int radius)
         {
             var rotation = GetRotation(to, from);
 
