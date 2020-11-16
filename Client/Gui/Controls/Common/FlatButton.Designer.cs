@@ -1,13 +1,13 @@
-﻿namespace Client
+﻿namespace Engine.Gui.Controls.Common
 {
-    partial class Form1
+    partial class FlatButton
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,21 +20,25 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.SuspendLayout();
+            // 
+            // FlatButton
+            // 
+            this.Size = new System.Drawing.Size(211, 69);
+            this.MouseLeave += new System.EventHandler(this.OaButton_MouseLeave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OaButton_MouseMove);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-

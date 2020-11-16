@@ -42,8 +42,8 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
@@ -67,14 +67,14 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterSystem\CharacterTests.cs" />
+    <Compile Include="ClientTests\Layers\Tactical\GameSessionTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
-    <Compile Include="Engine\Data\Calculation\CoordinatesTests.cs" />
-    <Compile Include="Engine\GameManagerTests.cs" />
-    <Compile Include="Engine\TaskSchedulerTests.cs" />
+    <Compile Include="Examples\CoordinatesTests.cs" />
     <Compile Include="Examples\ExtensionTests.cs" />
     <Compile Include="Examples\AnonymousTypeTests.cs" />
     <Compile Include="Global.cs" />
@@ -86,7 +86,9 @@
     <None Include="Configuration\Logs.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Configuration\OutlandArea.config" />
+    <None Include="Configuration\OutlandArea.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Configuration\Version.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -99,6 +101,9 @@
     <None Include="Data\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\Map_005.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Maps\Tests_Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -108,17 +113,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Examples\Examples.csproj">
-      <Project>{09a3e9d0-3b4f-4c22-af64-beb112fc13af}</Project>
-      <Name>Examples</Name>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{29592fa3-7f7e-4ba8-ad8d-bd656bbcc520}</Project>
+      <Name>Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
-      <Project>{34984709-AF29-46A5-A39D-EC33B3A6A3FB}</Project>
-      <Name>OutlandAreaLogic</Name>
+    <ProjectReference Include="..\OutlandAreaCommon\OutlandAreaCommon.csproj">
+      <Project>{EC750C9B-68C5-40D6-8B98-5058EF786DA5}</Project>
+      <Name>OutlandAreaCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OutlandArea\OutlandArea.csproj">
-      <Project>{7625BBA0-1C3E-4853-9D50-4541E30F0C13}</Project>
-      <Name>OutlandArea</Name>
+    <ProjectReference Include="..\OutlandAreaLocalServer\OutlandAreaLocalServer.csproj">
+      <Project>{277b4d7e-a2f1-4df9-a615-fb411c59dbf9}</Project>
+      <Name>OutlandAreaLocalServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

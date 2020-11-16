@@ -93,16 +93,6 @@
       <DependentUpon>ScreenSchedulerExample.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OutlandAreaLogic\OutlandAreaLogic.csproj">
-      <Project>{34984709-af29-46a5-a39d-ec33b3a6a3fb}</Project>
-      <Name>OutlandAreaLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OutlandArea\OutlandArea.csproj">
-      <Project>{7625bba0-1c3e-4853-9d50-4541e30f0c13}</Project>
-      <Name>OutlandArea</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

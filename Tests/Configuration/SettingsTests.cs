@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OutlandAreaLogic.Configuration;
 using System.Drawing;
+using Engine;
 
 namespace Tests.Configuration
 {
@@ -12,7 +12,7 @@ namespace Tests.Configuration
         {
             EnvironmentGlobal.Initialization();
 
-            var settings = new Settings();
+            var settings = new Engine.Settings();
 
             var version = settings.Version;
 

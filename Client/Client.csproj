@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Client</RootNamespace>
+    <RootNamespace>Engine</RootNamespace>
     <AssemblyName>Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Version1.0.0\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,8 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +54,93 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Configuration\ConfigurationTools.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Configuration\ScreenParameters.cs" />
+    <Compile Include="Gui\BaseFullScreenWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Gui\Controls\Common\FlatButton.cs">
+      <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
+      <DependentUpon>FlatButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.Designer.cs">
+      <DependentUpon>CelestialMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.Designer.cs">
+      <DependentUpon>CommandsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\GranularObjectInformation.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.Designer.cs">
+      <DependentUpon>SelectedObjectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalMap.Designer.cs">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\IUiManager.cs" />
+    <Compile Include="Gui\UI.cs" />
+    <Compile Include="Gui\UiManager.cs" />
+    <Compile Include="Gui\WindowMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\WindowMenu.Designer.cs">
+      <DependentUpon>WindowMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\WindowTacticalLayerContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\WindowTacticalLayerContainer.Designer.cs">
+      <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layers\Tactical\MapSettings.cs" />
+    <Compile Include="Management\GameManager.cs" />
+    <Compile Include="Management\Server\AllIn.cs" />
+    <Compile Include="Management\Server\LocalStaticGameServer.cs" />
+    <Compile Include="Management\Server\ScalaGameServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Tools\DebugTools.cs" />
+    <Compile Include="Tools\MicroLibrary.cs" />
+    <Compile Include="Tools\Scheduler.cs" />
+    <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
+      <DependentUpon>FlatButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CelestialMapControl.resx">
+      <DependentUpon>CelestialMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsControl.resx">
+      <DependentUpon>CommandsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedObjectControl.resx">
+      <DependentUpon>SelectedObjectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalMap.resx">
+      <DependentUpon>TacticalMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\WindowMenu.resx">
+      <DependentUpon>WindowMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\WindowTacticalLayerContainer.resx">
+      <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +149,25 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Configuration\Logs.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\OutlandArea.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\Version.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_004.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documentation\OpenTasks.md" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +180,93 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Logs\Plug.log">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Commands\decreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\IncreseSpeed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetGet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\TargetRemove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnleft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Commands\turnRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ore\Big.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Large\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ships\Small\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Tactical\tactical_map_missile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\CenterTarget.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\EnemySpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\NeutralSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\PlayerSpaceship.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Targets\TargetOnMap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeGoods\Antibiotics.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TradeGoods\Wheat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OutlandAreaCommon\OutlandAreaCommon.csproj">
+      <Project>{ec750c9b-68c5-40d6-8b98-5058ef786da5}</Project>
+      <Name>OutlandAreaCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OutlandAreaLocalServer\OutlandAreaLocalServer.csproj">
+      <Project>{277b4d7e-a2f1-4df9-a615-fb411c59dbf9}</Project>
+      <Name>OutlandAreaLocalServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
