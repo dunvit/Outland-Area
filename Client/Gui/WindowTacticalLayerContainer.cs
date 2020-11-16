@@ -31,5 +31,10 @@ namespace Engine.Gui
         {
             Global.Game.ResumeSession();
         }
+
+        private void WindowTacticalLayerContainer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            crlTacticalMap.CloseTacticalMap();
+        }
     }
 }

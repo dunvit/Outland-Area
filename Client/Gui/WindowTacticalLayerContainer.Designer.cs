@@ -105,6 +105,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowTacticalLayerContainer";
             this.Text = "WindowTacticalLeyerContainer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowTacticalLayerContainer_FormClosing);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

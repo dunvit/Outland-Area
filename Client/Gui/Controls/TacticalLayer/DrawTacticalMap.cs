@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -29,7 +30,7 @@ namespace OutlandArea.Tools
             graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
         }
 
-        public static void DrawSpaceship(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawSpaceship(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
             var mainColor = Color.DarkRed;
             var mainIcon = "EnemySpaceship";
@@ -39,7 +40,7 @@ namespace OutlandArea.Tools
             mainIcon = "PlayerSpaceship";
             //}
             // Convert celestial object coordinates to screen coordinates
-            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
             var bmpSpacecraft = UI.RotateImage(UI.LoadImage(mainIcon), (float) celestialObject.Direction);
 

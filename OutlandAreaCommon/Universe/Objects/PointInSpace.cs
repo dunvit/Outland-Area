@@ -3,7 +3,7 @@
 namespace OutlandAreaCommon.Universe.Objects
 {
     [Serializable]
-    public class PointInSpace : ICelestialObject
+    public class PointInSpace : BaseCelestialObject, ICelestialObject
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }

@@ -5,7 +5,7 @@ using OutlandAreaCommon.Equipment;
 namespace OutlandAreaCommon.Universe.Objects.Spaceships
 {
     [Serializable]
-    public class Spaceship : ICelestialObject
+    public class Spaceship : BaseCelestialObject, ICelestialObject
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }

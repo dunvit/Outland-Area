@@ -3,7 +3,7 @@
 namespace OutlandAreaCommon.Universe.Objects.Spaceships
 {
     [Serializable]
-    public class Missile : ICelestialObject
+    public class Missile : BaseCelestialObject, ICelestialObject
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }

@@ -149,7 +149,7 @@ namespace Engine.Management
             }
             else
             {
-                Logger.Error($"Critical error on refresh game.");
+                Logger.Error($"Critical error on refresh game id={_gameSession.Id}.");
                 return;
             }
 

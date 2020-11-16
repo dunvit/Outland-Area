@@ -80,6 +80,9 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
                 Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
 
+                celestialObject.PreviousPositionX = celestialObject.PositionX;
+                celestialObject.PreviousPositionY = celestialObject.PositionY;
+
                 celestialObject.PositionX = position.X;
                 celestialObject.PositionY = position.Y;
             }
@@ -218,7 +221,7 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
             var result = new SortedDictionary<int, PointF>();
 
-            for (var i = 0; i <= steps; i++)
+            for (var i = 0; i < steps; i++)
             {
                 result.Add(i, new PointF(from.X + i * deltaX, from.Y + i * deltaY));
             }

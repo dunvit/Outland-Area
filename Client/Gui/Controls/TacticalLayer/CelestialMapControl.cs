@@ -174,7 +174,7 @@ namespace Engine.Gui.Controls.TacticalLayer
                         if (mapSettings.IsDrawSpaceshipInformation)
                             DrawTacticalMap.DrawSpaceshipInformation(currentObject, graphics, _screenParameters);
 
-                        DrawTacticalMap.DrawSpaceship(currentObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawSpaceship(currentObject, new PointF(currentObject.PositionX, currentObject.PositionY),  graphics, _screenParameters);
 
                         break;
                     case CelestialObjectTypes.Missile:

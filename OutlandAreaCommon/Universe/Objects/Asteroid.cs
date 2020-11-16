@@ -3,7 +3,7 @@
 namespace OutlandAreaCommon.Universe.Objects
 {
     [Serializable]
-    public class Asteroid: ICelestialObject
+    public class Asteroid: BaseCelestialObject, ICelestialObject
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }

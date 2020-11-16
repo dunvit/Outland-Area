@@ -82,6 +82,7 @@
     <Compile Include="Universe\CommandTypes.cs" />
     <Compile Include="Universe\ICelestialObject.cs" />
     <Compile Include="Universe\Objects\Asteroid.cs" />
+    <Compile Include="Universe\Objects\BaseCelestialObject.cs" />
     <Compile Include="Universe\Objects\CelestialObjectExtensions.cs" />
     <Compile Include="Universe\Objects\PointInSpace.cs" />
     <Compile Include="Universe\Objects\Spaceships\ISpaceship.cs" />

@@ -10,6 +10,8 @@
         int Speed { get; set; }
         float PositionX { get; set; }
         float PositionY { get; set; }
+        float PreviousPositionX { get; set; }
+        float PreviousPositionY { get; set; }
         int Classification { get; set; }
         string ImageSmall { get; set; }
         bool IsScanned { get; set; }
