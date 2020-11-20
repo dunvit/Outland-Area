@@ -8,5 +8,7 @@ namespace OutlandAreaCommon.Universe.Objects
     {
         public float PreviousPositionX { get; set; }
         public float PreviousPositionY { get; set; }
+
+        public bool IsScanned { get; set; }
     }
 }

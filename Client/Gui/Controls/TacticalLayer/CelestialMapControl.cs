@@ -15,6 +15,7 @@ using OutlandArea.Tools;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls.TacticalLayer
@@ -168,9 +169,9 @@ namespace Engine.Gui.Controls.TacticalLayer
                 {
                     case CelestialObjectTypes.Asteroid:
                         // Regular asteroid
-                        DrawTacticalMap.DrawAsteroid(currentObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawAsteroid(currentObject, currentObject.GetLocation(), graphics, _screenParameters);
                         break;
-                    case CelestialObjectTypes.Spaceship:
+                    case CelestialObjectTypes.SpaceshipPlayer:
                         if (mapSettings.IsDrawSpaceshipInformation)
                             DrawTacticalMap.DrawSpaceshipInformation(currentObject, graphics, _screenParameters);
 
@@ -186,7 +187,7 @@ namespace Engine.Gui.Controls.TacticalLayer
                 {
                     try
                     {
-                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, currentObject.GetLocation(), graphics, _screenParameters);
                     }
                     catch (Exception e)
                     {

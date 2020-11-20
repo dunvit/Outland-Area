@@ -18,7 +18,7 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
         public float PositionY { get; set; }
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
-        public bool IsScanned { get; set; }
+        
 
         public List<IModule> Modules { get; set; } = new List<IModule>();
     }

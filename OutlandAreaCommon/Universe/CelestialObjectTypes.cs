@@ -5,7 +5,10 @@ namespace OutlandAreaCommon.Universe
     {
         PointInMap = -1,
         Missile = 300,
-        Spaceship = 200,
+        SpaceshipPlayer = 200,
+        SpaceshipNpcNeutral = 201,
+        SpaceshipNpcEnemy = 202,
+        SpaceshipNpcFriend = 203,
         Asteroid = 1
     }
 }

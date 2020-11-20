@@ -41,6 +41,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +63,18 @@
     <Compile Include="Equipment\Weapon\IWeaponModule.cs" />
     <Compile Include="Equipment\Weapon\RailGun.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Geometry\Extensions.cs" />
+    <Compile Include="Geometry\MovementType.cs" />
+    <Compile Include="Geometry\ObjectLocation.cs" />
+    <Compile Include="Geometry\SpaceMapTools.cs" />
+    <Compile Include="Geometry\SpaceMapVector.cs" />
+    <Compile Include="Geometry\TrajectoryType.cs" />
+    <Compile Include="Geometry\Trajectory\Approach.cs" />
+    <Compile Include="Geometry\Trajectory\ApproachOrbit.cs" />
+    <Compile Include="Geometry\Trajectory\Orbit.cs" />
+    <Compile Include="Geometry\Trajectory\OrbitInformation.cs" />
+    <Compile Include="Geometry\Trajectory\OrbitRotation.cs" />
+    <Compile Include="Geometry\Trajectory\Prototypes\OrbitPrototype.cs" />
     <Compile Include="Server\DataProcessing\CommandExecuteResult.cs" />
     <Compile Include="Server\DataProcessing\CommandsExecute\Movement.cs" />
     <Compile Include="Server\DataProcessing\Coordinates.cs" />
@@ -90,9 +103,7 @@
     <Compile Include="Universe\Objects\Spaceships\Spaceship.cs" />
     <Compile Include="Universe\Objects\Spaceships\SpaceShipInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Geometry\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

@@ -11,12 +11,17 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Timers;
 using System.Windows.Forms;
+using Engine.Common.Geometry;
+using Engine.Common.Geometry.Trajectory;
 using Engine.Gui.Controls.TacticalLayer;
+using Engine.ScreenDrawing;
 using MicroLibrary;
 using OutlandArea.Tools;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Geometry;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls
@@ -33,6 +38,7 @@ namespace Engine.Gui.Controls
         private MicroTimer crlRefreshMap;
         private bool refreshInProgress;
         private int drawInterval = 0;
+        private PointF pointInSpace = PointF.Empty;
         private ICelestialObject MouseMoveCelestialObject { get; set; }
 
         private int turnStep;
@@ -80,9 +86,9 @@ namespace Engine.Gui.Controls
 
             refreshInProgress = true;
 
-            DrawScreen();
+            DrawTacticalMapScreen();
 
-            if(_gameSession.Map.IsEnabled) turnStep++;
+            if (_gameSession.Map.IsEnabled) turnStep++;
 
             //Logger.Info($"[{GetType().Name}]\t [DrawScreen] Turn {turn}.{turnStep}");
 
@@ -91,9 +97,9 @@ namespace Engine.Gui.Controls
             Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
-        private void DrawScreen()
+        private void DrawTacticalMapScreen()
         {
-            Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Turn {turn}.{turnStep}");
+            Logger.Debug($"[{GetType().Name}]\t [DrawTacticalMapScreen] Turn {turn}.{turnStep}");
 
             Image image = new Bitmap(Width, Height);
 
@@ -104,6 +110,49 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            DrawTrajectories(graphics); 
+
+            DrawScreen(graphics);
+
+            BackgroundImage = image;
+        }
+
+        private void DrawTrajectories(Graphics graphics)
+        {
+            if (pointInSpace != PointF.Empty)
+            {
+                var playerSpaceship = _gameSession.GetPlayerSpaceShip();
+
+                var results = Approach.Calculate(playerSpaceship.GetLocation(), pointInSpace, playerSpaceship.Direction);
+
+                var points = new List<PointF>();
+
+                foreach (var position in results)
+                {
+                    var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
+
+                    points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
+
+                }
+
+                var lastPoint = results[results.Count - 1];
+
+                var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(pointInSpace.X, pointInSpace.Y));
+
+                var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
+
+                graphics.DrawCurve(new Pen(Color.FromArgb(44, 44, 44)), points.ToArray());
+
+                graphics.DrawLine(new Pen(Color.FromArgb(44, 44, 44)), step.PointFrom, step.PointTo);
+
+                var move = SpaceMapTools.Move(pointInSpaceCoordinates, 0, 0, lastPoint.Direction);
+                SpaceMapGraphics.DrawArrow(graphics, move, Color.FromArgb(44, 44, 44), 12);
+            }
+
+        }
+
+        private void DrawScreen(Graphics graphics)
+        {
             
 
             foreach (GranularObjectInformation turnInformation in granularTurnInformation.Values)
@@ -128,13 +177,18 @@ namespace Engine.Gui.Controls
                     }
                 }
 
-                switch ((CelestialObjectTypes)currentObject.Classification)
+                var celestialObjectType = (CelestialObjectTypes) currentObject.Classification;
+
+                switch (celestialObjectType)
                 {
                     case CelestialObjectTypes.Asteroid:
                         // Regular asteroid
-                        //DrawTacticalMap.DrawAsteroid(currentObject, location, graphics, _screenParameters);
+                        DrawTacticalMap.DrawAsteroid(currentObject, location, graphics, _screenParameters);
                         break;
-                    case CelestialObjectTypes.Spaceship:
+                    case CelestialObjectTypes.SpaceshipPlayer:
+                    case CelestialObjectTypes.SpaceshipNpcEnemy:
+                    case CelestialObjectTypes.SpaceshipNpcFriend:
+                    case CelestialObjectTypes.SpaceshipNpcNeutral:
                         //if (mapSettings.IsDrawSpaceshipInformation)
                         //    DrawTacticalMap.DrawSpaceshipInformation(currentObject, location, graphics, _screenParameters);
 
@@ -150,7 +204,7 @@ namespace Engine.Gui.Controls
                 {
                     try
                     {
-                        //DrawTacticalMap.DrawCelestialObjectDirection(currentObject, location, graphics, _screenParameters);
+                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, location, graphics, _screenParameters);
                     }
                     catch (Exception e)
                     {
@@ -165,8 +219,6 @@ namespace Engine.Gui.Controls
                         DrawTacticalMap.DrawCelestialObjectCoordinates(currentObject, graphics, _screenParameters);
                 }
             }
-
-            BackgroundImage = image;
         }
 
         private void MapClick(object sender, MouseEventArgs e)
@@ -187,6 +239,8 @@ namespace Engine.Gui.Controls
             {
                 Global.Game.SelectPointInSpace(mouseMapCoordinates);
             }
+
+            pointInSpace = mouseMapCoordinates;
         }
 
         private void MapMouseMove(object sender, MouseEventArgs e)
