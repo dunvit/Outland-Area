@@ -39,9 +39,29 @@ namespace OutlandArea.Tools
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
             var ship = (Spaceship) spaceShip;
+            var color = Color.Black;
 
-            graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-            graphics.DrawEllipse(new Pen(Color.WhiteSmoke), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
+            switch (ship.Classification)
+            {
+                case 200:
+                    color = Color.DarkOliveGreen;
+                    break;
+
+                case 201:
+                    color = Color.DarkGray;
+                    break;
+
+                case 202:
+                    color = Color.DarkRed;
+                    break;
+
+                case 203:
+                    color = Color.SeaGreen;
+                    break;
+            }
+
+            graphics.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            graphics.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         public static void DrawSpaceshipInformation(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
@@ -107,8 +127,7 @@ namespace OutlandArea.Tools
         {
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
-            graphics.FillEllipse(new SolidBrush(Color.Gray), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-            graphics.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
+            graphics.FillEllipse(new SolidBrush(Color.Gray), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         public static void DrawActiveCelestialObject(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)

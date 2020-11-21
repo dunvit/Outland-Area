@@ -123,7 +123,25 @@ namespace Engine.Gui.Controls
             {
                 var playerSpaceship = _gameSession.GetPlayerSpaceShip();
 
-                var results = Approach.Calculate(playerSpaceship.GetLocation(), pointInSpace, playerSpaceship.Direction);
+                PointF location;
+
+                try
+                {
+                    location = granularTurnInformation[playerSpaceship.Id].WayPoints[turnStep];
+                }
+                catch
+                {
+                    try
+                    {
+                        location = granularTurnInformation[playerSpaceship.Id].WayPoints[drawInterval - 1];
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+                var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction);
 
                 var points = new List<PointF>();
 
@@ -153,8 +171,6 @@ namespace Engine.Gui.Controls
 
         private void DrawScreen(Graphics graphics)
         {
-            
-
             foreach (GranularObjectInformation turnInformation in granularTurnInformation.Values)
             {
                 var currentObject = turnInformation.CelestialObject;
