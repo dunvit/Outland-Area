@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Server.DataProcessing;
@@ -6,6 +7,7 @@ using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
+    [Serializable]
     public class GranularObjectInformation
     {
         public int Id { get; set; }

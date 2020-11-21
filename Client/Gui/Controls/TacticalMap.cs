@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Engine.Configuration;
 using Engine.Layers.Tactical;
@@ -9,7 +8,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Timers;
 using System.Windows.Forms;
 using Engine.Common.Geometry;
 using Engine.Common.Geometry.Trajectory;
@@ -18,11 +16,10 @@ using Engine.ScreenDrawing;
 using MicroLibrary;
 using OutlandArea.Tools;
 using OutlandAreaCommon;
-using OutlandAreaCommon.Geometry;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using Timer = System.Timers.Timer;
 
 namespace Engine.Gui.Controls
 {
@@ -40,12 +37,16 @@ namespace Engine.Gui.Controls
         private int drawInterval = 0;
         private PointF pointInSpace = PointF.Empty;
         private ICelestialObject MouseMoveCelestialObject { get; set; }
+        private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
+        private FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>> History;
 
         private int turnStep;
 
         public TacticalMap()
         {
             InitializeComponent();
+
+            History = new FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>>(4);
 
             if (DebugTools.IsInDesignMode())
                 return;
@@ -110,36 +111,73 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            DrawTrajectories(graphics); 
+            DrawChangeMovementDestination(graphics);
+
+            DrawSpaceShipTrajectories(graphics, granularTurnInformation, _screenParameters);
 
             DrawScreen(graphics);
 
             BackgroundImage = image;
         }
 
-        private void DrawTrajectories(Graphics graphics)
+        private void DrawSpaceShipTrajectories(Graphics graphics, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
+        {
+            #region Direction forward
+            foreach (var turnInformation in turnMapInformation.Values)
+            {
+                var currentObject = turnInformation.CelestialObject;
+
+                var location = DrawMapTools.GetCurrentLocation(turnMapInformation, currentObject, turnStep, drawInterval).ToScreen(_screenParameters);
+
+                var step = SpaceMapTools.Move(location, 4000, 0, currentObject.Direction);
+
+                graphics.DrawLine(new Pen(Color.FromArgb(24, 24, 24)), step.PointFrom, step.PointTo);
+
+            }
+            #endregion
+
+            #region Direction back
+            foreach (var turnInformation in turnMapInformation.Values)
+            {
+                if(turnInformation.CelestialObject.IsSpaceship() == false) continue;
+
+                var currentObject = turnInformation.CelestialObject;
+
+                var points = new List<PointF>();
+
+                var data = History.GetData();
+                var turnId = 0;
+
+                foreach (var turnData in data)
+                {
+                    var stepId = 0;
+
+                    foreach (var wayPoint in turnData[currentObject.Id].WayPoints.Values)
+                    {
+                        if(turnId > 0 || stepId > turnStep)
+                            points.Add(wayPoint.ToScreen(screenParameters));
+
+                        stepId++;
+                    }
+
+                    turnId++;
+                }
+
+                if (points.Count > 2)
+                {
+                    graphics.DrawCurve(new Pen(Color.FromArgb(200, 44, 44)) { DashStyle = DashStyle.Dash }, points.ToArray());
+                }
+            }
+            #endregion
+        }
+
+        private void DrawChangeMovementDestination(Graphics graphics)
         {
             if (pointInSpace != PointF.Empty)
             {
                 var playerSpaceship = _gameSession.GetPlayerSpaceShip();
 
-                PointF location;
-
-                try
-                {
-                    location = granularTurnInformation[playerSpaceship.Id].WayPoints[turnStep];
-                }
-                catch
-                {
-                    try
-                    {
-                        location = granularTurnInformation[playerSpaceship.Id].WayPoints[drawInterval - 1];
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                }
+                var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, playerSpaceship, turnStep, drawInterval);
 
                 var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction);
 
@@ -175,23 +213,7 @@ namespace Engine.Gui.Controls
             {
                 var currentObject = turnInformation.CelestialObject;
 
-                PointF location;
-
-                try
-                {
-                    location = granularTurnInformation[currentObject.Id].WayPoints[turnStep];
-                }
-                catch 
-                {
-                    try
-                    {
-                        location = granularTurnInformation[currentObject.Id].WayPoints[drawInterval - 1];
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
+                var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, currentObject, turnStep, drawInterval);
 
                 var celestialObjectType = (CelestialObjectTypes) currentObject.Classification;
 
@@ -272,7 +294,7 @@ namespace Engine.Gui.Controls
             MouseMoveCelestialObject = celestialObjectInRange?.DeepClone();
         }
 
-        private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
+        
 
         private void Event_RefreshCelestialMap(GameSession gameSession)
         {
@@ -290,6 +312,12 @@ namespace Engine.Gui.Controls
             turnStep = 0;
 
             granularTurnInformation = CalculateGranularTurnInformation(_gameSession);
+
+            var timeDrawScreen = Stopwatch.StartNew();
+
+            History.Enqueue(granularTurnInformation.DeepClone());
+
+            Logger.Debug($"[{GetType().Name}]\t [History.Enqueue] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
         private SortedDictionary<int, GranularObjectInformation> CalculateGranularTurnInformation(GameSession gameSession)

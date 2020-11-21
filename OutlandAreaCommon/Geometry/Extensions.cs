@@ -26,6 +26,8 @@ namespace OutlandAreaCommon.Geometry
             return new PointF(point.X, point.Y);
         }
 
+
+
         public static PointF ToPointF(this Point point)
         {
             return new PointF(point.X, point.Y);

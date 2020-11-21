@@ -9,5 +9,9 @@ namespace OutlandAreaCommon.Universe.Objects
             return new PointF(celestialObject.PositionX, celestialObject.PositionY);
         }
 
+        public static bool IsSpaceship(this ICelestialObject celestialObject)
+        {
+            return celestialObject.Classification >= 200 && celestialObject.Classification < 299;
+        }
     }
 }

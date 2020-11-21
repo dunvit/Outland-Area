@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Drawing;
-using Engine.Layers.Tactical;
-using Engine.Tools;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Tactical;
 
@@ -20,11 +18,6 @@ namespace Engine.Gui.Controls.TacticalLayer
             var previousGameSession = previous.DeepClone();
             var currentGameSession = current.DeepClone();
 
-            if (previous.Turn != current.Turn)
-            {
-                var a = "";
-            }
-
             gameSession = current;
 
             celestialObjects = new Hashtable();
@@ -35,17 +28,6 @@ namespace Engine.Gui.Controls.TacticalLayer
                 {
                     if (preCelestialObject.Id == curCelestialObject.Id)
                     {
-                        //var weyPoints = new Hashtable();
-
-                        //for (int i = 0; i < 10; i++)
-                        //{
-                        //    var weyPointCelestialObject = new DrawMapDataObject(preCelestialObject, curCelestialObject, current.Turn, i).CelestialObject;
-
-                        //    weyPoints.Add(i, weyPointCelestialObject);
-                        //}
-
-                        //celestialObjects.Add(current.Turn, weyPoints);
-
                         var celestialObject = new DrawMapDataObject(preCelestialObject, curCelestialObject, current.Turn);
 
                         celestialObjects.Add(celestialObject.Id, celestialObject.DeepClone());
@@ -54,11 +36,6 @@ namespace Engine.Gui.Controls.TacticalLayer
                         {
                             PositionFrom = new PointF(preCelestialObject.PositionX, preCelestialObject.PositionY);
                             PositionTo = new PointF(curCelestialObject.PositionX, curCelestialObject.PositionY);
-
-                            if (currentGameSession.Turn == 2)
-                            {
-                                var a = "";
-                            }
                         }
                     }
                 }
@@ -74,5 +51,7 @@ namespace Engine.Gui.Controls.TacticalLayer
         {
             return celestialObjects.DeepClone();
         }
+
+
     }
 }

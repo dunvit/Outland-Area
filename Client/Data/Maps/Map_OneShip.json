@@ -6,41 +6,6 @@
     "isEnabled": false,
     "celestialObjects": [
       {
-        "positionX": 10400,
-        "positionY": 10400,
-        "id": 1000348944,
-        "name": "t5ADX",
-        "direction": 164,
-        "speed": 3,
-        "signature": 5771,
-        "classification": 1,
-        "isScanned": false
-      },
-      {
-        "positionX": 9700,
-        "positionY": 10110,
-        "id": 1000348945,
-        "name": "Maroder",
-        "direction": 90,
-        "speed": 6,
-        "maxSpeed": 12,
-        "signature": 75,
-        "classification": 202,
-        "isScanned": false
-      },
-      {
-        "positionX": 10100,
-        "positionY": 10100,
-        "id": 1000348946,
-        "name": "Prison ship 'Rodor'",
-        "direction": 90,
-        "speed": 6,
-        "maxSpeed": 12,
-        "signature": 75,
-        "classification": 203,
-        "isScanned": false
-      },
-      {
         "positionX": 10000,
         "positionY": 10000,
         "id": 5005,

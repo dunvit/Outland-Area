@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\FixedSizedQueue.cs" />
     <Compile Include="Equipment\Category.cs" />
     <Compile Include="Equipment\Factory.cs" />
     <Compile Include="Equipment\General\Reactor\IReactor.cs" />

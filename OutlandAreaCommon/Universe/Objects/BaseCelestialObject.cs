@@ -10,5 +10,7 @@ namespace OutlandAreaCommon.Universe.Objects
         public float PreviousPositionY { get; set; }
 
         public bool IsScanned { get; set; }
+
+        
     }
 }

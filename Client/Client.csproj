@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\DrawMapTools.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\GranularObjectInformation.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.cs">
@@ -95,6 +96,7 @@
     <Compile Include="Gui\Controls\TacticalMap.Designer.cs">
       <DependentUpon>TacticalMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Extensions.cs" />
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
@@ -163,6 +165,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_003.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\Map_OneShip.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_004.json">
