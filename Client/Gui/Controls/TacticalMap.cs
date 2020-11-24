@@ -36,6 +36,7 @@ namespace Engine.Gui.Controls
         private bool refreshInProgress;
         private int drawInterval = 0;
         private PointF pointInSpace = PointF.Empty;
+        private ICelestialObject destinationPoint = null;
         private ICelestialObject MouseMoveCelestialObject { get; set; }
         private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
         private FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>> History;
@@ -51,7 +52,7 @@ namespace Engine.Gui.Controls
             if (DebugTools.IsInDesignMode())
                 return;
 
-            Global.Game.OnEndTurn += Event_RefreshCelestialMap;
+            Global.Game.OnEndTurn += CalculateTurnInformation;
 
             
         }
@@ -111,23 +112,66 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
+
             DrawChangeMovementDestination(graphics);
 
-            DrawSpaceShipTrajectories(graphics, granularTurnInformation, _screenParameters);
+            DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, _screenParameters);
+
+            DrawSpaceShipTrajectories(graphics, _gameSession, granularTurnInformation, _screenParameters);
 
             DrawScreen(graphics);
 
             BackgroundImage = image;
         }
 
-        private void DrawSpaceShipTrajectories(Graphics graphics, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
+        private void DrawSpaceShipTrajectories(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
+        {
+            var playerSpaceship = gameSession.GetPlayerSpaceShip();
+
+            var commands = gameSession.GetSpaceShipCommands(playerSpaceship.Id);
+
+            foreach (var command in commands)
+            {
+                switch (command.Type)
+                {
+                    case CommandTypes.MoveForward:
+                        break;
+                    case CommandTypes.Fire:
+                        break;
+                    case CommandTypes.AlignTo:
+                        var target = gameSession.GetCelestialObject(command.TargetCelestialObjectId).GetLocation();
+                        var results = Approach.Calculate(playerSpaceship.GetLocation(), target, playerSpaceship.Direction);
+
+                        DrawCurveTrajectory(graphics, results, Color.FromArgb(45, 100, 145));
+
+                        break;
+                    case CommandTypes.Orbit:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+        }
+
+        private void DrawDestinationPoint(Graphics graphics, GameSession gameSession, ICelestialObject point, ScreenParameters screenParameters)
+        {
+            if (destinationPoint == null) return;
+
+            var playerSpaceship = gameSession.GetPlayerSpaceShip();
+
+            DrawTacticalMap.DrawPointInSpace(point, playerSpaceship, graphics, screenParameters);
+        }
+
+        private void DrawSpaceShipMovement(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
         {
             #region Direction forward
             foreach (var turnInformation in turnMapInformation.Values)
             {
                 var currentObject = turnInformation.CelestialObject;
 
-                var location = DrawMapTools.GetCurrentLocation(turnMapInformation, currentObject, turnStep, drawInterval).ToScreen(_screenParameters);
+                var location = DrawMapTools.GetCurrentLocation(turnMapInformation, currentObject, turnStep, drawInterval).ToScreen(screenParameters);
 
                 var step = SpaceMapTools.Move(location, 4000, 0, currentObject.Direction);
 
@@ -181,29 +225,7 @@ namespace Engine.Gui.Controls
 
                 var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction);
 
-                var points = new List<PointF>();
-
-                foreach (var position in results)
-                {
-                    var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
-
-                    points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
-
-                }
-
-                var lastPoint = results[results.Count - 1];
-
-                var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(pointInSpace.X, pointInSpace.Y));
-
-                var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
-
-                if(points.Count > 2 )
-                    graphics.DrawCurve(new Pen(Color.FromArgb(44, 44, 44)), points.ToArray());
-
-                graphics.DrawLine(new Pen(Color.FromArgb(44, 44, 44)), step.PointFrom, step.PointTo);
-
-                var move = SpaceMapTools.Move(pointInSpaceCoordinates, 0, 0, lastPoint.Direction);
-                SpaceMapGraphics.DrawArrow(graphics, move, Color.FromArgb(44, 44, 44), 12);
+                DrawCurveTrajectory(graphics, results, Color.FromArgb(44, 44, 44), true);
             }
 
         }
@@ -260,6 +282,33 @@ namespace Engine.Gui.Controls
             }
         }
 
+        private void DrawCurveTrajectory(Graphics graphics, List<ObjectLocation> results, Color color, bool isDrawArrow = false)
+        {
+            var points = new List<PointF>();
+
+            foreach (var position in results)
+            {
+                var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
+
+                points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
+
+            }
+
+            var lastPoint = results[results.Count - 1];
+
+            var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(pointInSpace.X, pointInSpace.Y));
+
+            var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
+
+            if (points.Count > 2)
+                graphics.DrawCurve(new Pen(color), points.ToArray());
+
+            graphics.DrawLine(new Pen(color), step.PointFrom, step.PointTo);
+
+            var move = SpaceMapTools.Move(pointInSpaceCoordinates, 0, 0, lastPoint.Direction);
+            SpaceMapGraphics.DrawArrow(graphics, move, color, 12);
+        }
+
         private void MapClick(object sender, MouseEventArgs e)
         {
             Logger.Info($"[{GetType().Name}]\t [MapClick]");
@@ -295,9 +344,7 @@ namespace Engine.Gui.Controls
             MouseMoveCelestialObject = celestialObjectInRange?.DeepClone();
         }
 
-        
-
-        private void Event_RefreshCelestialMap(GameSession gameSession)
+        private void CalculateTurnInformation(GameSession gameSession)
         {
             turn = gameSession.Turn;
 
@@ -327,6 +374,8 @@ namespace Engine.Gui.Controls
 
             foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
             {
+                if(mapCelestialObject.Classification < 1) continue;
+
                 result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, drawInterval));
             }
 
@@ -346,6 +395,8 @@ namespace Engine.Gui.Controls
         public void CommandAlignTo(ICelestialObject celestialObject)
         {
             pointInSpace = PointF.Empty;
+
+            destinationPoint = celestialObject.DeepClone();
         }
     }
 }

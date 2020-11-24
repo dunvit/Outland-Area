@@ -22,6 +22,21 @@ namespace OutlandAreaCommon.Tactical
             return null;
         }
 
+        public static List<Command> GetSpaceShipCommands(this GameSession session, long id)
+        {
+            var result = new List<Command>();
+
+            foreach (var sessionCommand in session.Commands)
+            {
+                if (sessionCommand.CelestialObjectId == id)
+                {
+                    result.Add(sessionCommand.DeepClone());
+                }
+            }
+
+            return result;
+        }
+
         public static CommandTypes GetMovementType(this GameSession session, long id)
         {
             var cObject = session.GetCelestialObject(id);
