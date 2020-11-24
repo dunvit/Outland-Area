@@ -18,6 +18,7 @@ namespace Engine.Gui
             Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
 
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
+            controlCommands.OnAlignToCelestialObject += crlTacticalMap.CommandAlignTo;
             controlCommands.OnOrbitCelestialObject += Global.Game.AddCommandOrbit;
             controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
         }

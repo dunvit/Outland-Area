@@ -21,8 +21,8 @@ namespace OutlandAreaLocalServer
         public GameSession Initialization()
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
-            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_OneShip"));
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_004"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_OneShip"));
+            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_004"));
 
             _gameSession.Commands = new List<Command>();
 

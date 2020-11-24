@@ -38,12 +38,12 @@ namespace OutlandAreaLocalServer
                         break;
 
                     case CommandTypes.AlignTo:
-                        //var executeAlignToResult = new CommandsExecute.AlignTo().Execute(result, command);
+                        var executeAlignToResult = new CommandsExecute.AlignTo().Execute(result, command);
 
-                        //if (executeAlignToResult.IsResume)
-                        //{
-                        //    result.Commands.Add(executeAlignToResult.Command.DeepClone());
-                        //}
+                        if (executeAlignToResult.IsResume)
+                        {
+                            result.Commands.Add(executeAlignToResult.Command.DeepClone());
+                        }
                         break;
 
                     case CommandTypes.Fire:

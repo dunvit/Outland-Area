@@ -1,28 +1,43 @@
-﻿using OutlandAreaCommon.Server.DataProcessing;
+﻿using Engine.Common.Geometry.Trajectory;
+using log4net;
+using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaLocalServer.CommandsExecute
 {
     public class AlignTo
     {
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public CommandExecuteResult Execute(GameSession gameSession, Command command)
         {
-            const bool isResume = true;
+            bool isResume = true;
 
-            //var spaceShip = gameSession.GetPlayerSpaceShip();
-            //var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
-            //var result = new Trajectory.GetTrajectory().Approach(gameSession, spaceShip, targetObject);
+            Logger.Info($"[{GetType().Name}]\t CommandsExecute AlignTo - Execute.");
 
-            //foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
-            //{
-            //    if (mapCelestialObject.Id == spaceShip.Id)
-            //    {
-            //        if (result.Count > 1)
-            //        {
-            //            mapCelestialObject.Direction = result[1].Direction;
-            //        }
-            //    }
-            //}
+            var spaceShip = gameSession.GetPlayerSpaceShip();
+            var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+            
+            var result = Approach.Calculate(spaceShip.GetLocation(), targetObject.GetLocation(), spaceShip.Direction, 100);
+
+            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            {
+                if (mapCelestialObject.Id == spaceShip.Id)
+                {
+                    if (result.Count > spaceShip.Speed)
+                    {
+                        mapCelestialObject.Direction = result[spaceShip.Speed].Direction;
+                        Logger.Debug($"[{GetType().Name}]\t CommandsExecute AlignTo - {mapCelestialObject.Name} Direction before is {mapCelestialObject.Direction} Direction after {mapCelestialObject.Direction}");
+
+                        if (result[spaceShip.Speed].Distance < spaceShip.Speed * 2)
+                        {
+                            isResume = false;
+                            Logger.Info($"[{GetType().Name}]\t CommandsExecute AlignTo - {mapCelestialObject.Name} finished. Target location is {targetObject.GetLocation()} current location is {spaceShip.GetLocation()}");
+                        }
+                    }
+                }
+            }
 
             return new CommandExecuteResult { Command = command, IsResume = isResume };
         }

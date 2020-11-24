@@ -197,7 +197,8 @@ namespace Engine.Gui.Controls
 
                 var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
 
-                graphics.DrawCurve(new Pen(Color.FromArgb(44, 44, 44)), points.ToArray());
+                if(points.Count > 2 )
+                    graphics.DrawCurve(new Pen(Color.FromArgb(44, 44, 44)), points.ToArray());
 
                 graphics.DrawLine(new Pen(Color.FromArgb(44, 44, 44)), step.PointFrom, step.PointTo);
 
@@ -340,6 +341,11 @@ namespace Engine.Gui.Controls
             {
                 crlRefreshMap.Abort();
             }
+        }
+
+        public void CommandAlignTo(ICelestialObject celestialObject)
+        {
+            pointInSpace = PointF.Empty;
         }
     }
 }
