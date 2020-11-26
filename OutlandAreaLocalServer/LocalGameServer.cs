@@ -131,9 +131,9 @@ namespace OutlandAreaLocalServer
 
             var turnGameSession = _gameSession.DeepClone();
 
-            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
-
             turnGameSession = new Commands().Execute(turnGameSession);
+
+            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
 
             turnGameSession.Turn++;
 

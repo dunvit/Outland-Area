@@ -43,6 +43,8 @@ namespace Engine.Gui.Controls
 
         private int turnStep;
 
+        public event Action<ICelestialObject> OnAlignToCelestialObject;
+
         public TacticalMap()
         {
             InitializeComponent();
@@ -141,7 +143,7 @@ namespace Engine.Gui.Controls
                         break;
                     case CommandTypes.AlignTo:
                         var target = gameSession.GetCelestialObject(command.TargetCelestialObjectId).GetLocation();
-                        var results = Approach.Calculate(playerSpaceship.GetLocation(), target, playerSpaceship.Direction);
+                        var results = Approach.Calculate(playerSpaceship.GetLocation(), target, playerSpaceship.Direction, playerSpaceship.Speed);
 
                         DrawCurveTrajectory(graphics, results, Color.FromArgb(45, 100, 145));
 
@@ -223,7 +225,7 @@ namespace Engine.Gui.Controls
 
                 var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, playerSpaceship, turnStep, drawInterval);
 
-                var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction);
+                var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction, playerSpaceship.Speed);
 
                 DrawCurveTrajectory(graphics, results, Color.FromArgb(44, 44, 44), true);
             }
@@ -397,6 +399,17 @@ namespace Engine.Gui.Controls
             pointInSpace = PointF.Empty;
 
             destinationPoint = celestialObject.DeepClone();
+        }
+
+        private void AlignToCommand(object sender, MouseEventArgs e)
+        {
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+
+            Global.Game.SelectPointInSpace(mouseMapCoordinates);
+
+            OnAlignToCelestialObject?.Invoke(Global.Game.GetSelectedObject());
         }
     }
 }

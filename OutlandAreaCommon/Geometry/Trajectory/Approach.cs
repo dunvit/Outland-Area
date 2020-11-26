@@ -6,9 +6,9 @@ namespace Engine.Common.Geometry.Trajectory
 {
     public class Approach
     {
-        public static List<ObjectLocation> Calculate(PointF currentLocation, PointF targetLocation, double direction, int maxIterations = 2000)
+        public static List<ObjectLocation> Calculate(PointF currentLocation, PointF targetLocation, double direction, double speed, int maxIterations = 2000)
         {
-            const int agility = 1;
+            const int agility = 5;
 
             var result = new List<ObjectLocation>();
 
@@ -20,6 +20,8 @@ namespace Engine.Common.Geometry.Trajectory
                 Status = MovementType.Default,
                 Coordinates = new PointF(currentLocation.X, currentLocation.Y)
             };
+
+            var currentStepInTurn = speed;
 
             for (var iteration = 0; iteration < maxIterations; iteration++)
             {
@@ -38,17 +40,28 @@ namespace Engine.Common.Geometry.Trajectory
                 // Turn angle
                 var attackAngle = (int)SpaceMapTools.GetRotateDirection(iterationResult.Direction, attackAzimuth);
 
+                var currentAgility = 0;
+
+                if (speed == currentStepInTurn)
+                {
+                    currentAgility = agility;
+                }
+
+                currentStepInTurn++;
+
+                if (currentStepInTurn > speed) currentStepInTurn = 0;
+
                 switch (attackAngle)
                 {
                     case var _ when attackAngle > 0:
                         // > 0 left turn
-                        iterationResult.Direction -= agility;
+                        iterationResult.Direction -= currentAgility;
                         iterationResult.Status = MovementType.Turn;
                         break;
 
                     case var _ when attackAngle < 0:
                         // < 0 right turn
-                        iterationResult.Direction += agility;
+                        iterationResult.Direction += currentAgility;
                         iterationResult.Status = MovementType.Turn;
                         break;
 

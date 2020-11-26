@@ -21,7 +21,7 @@ namespace Engine.Common.Geometry.Trajectory
 
             if (distance > radius + 2)
             {
-                var resultApproachMovement = Approach.Calculate(location, orbitPoint, direction);
+                var resultApproachMovement = Approach.Calculate(location, orbitPoint, direction, 10);
 
                 foreach (var objectLocation in resultApproachMovement)
                 {

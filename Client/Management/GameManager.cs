@@ -124,6 +124,11 @@ namespace Engine.Management
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
+        public ICelestialObject GetSelectedObject()
+        {
+            return _gameSession.SelectedObject;
+        }
+
         public GameSession Initialization()
         {
             _gameSession = _gameServer.Initialization();
