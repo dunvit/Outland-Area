@@ -76,6 +76,7 @@
     <Compile Include="Geometry\Trajectory\OrbitInformation.cs" />
     <Compile Include="Geometry\Trajectory\OrbitRotation.cs" />
     <Compile Include="Geometry\Trajectory\Prototypes\OrbitPrototype.cs" />
+    <Compile Include="Geometry\Trajectory\Result.cs" />
     <Compile Include="Server\DataProcessing\CommandExecuteResult.cs" />
     <Compile Include="Server\DataProcessing\CommandsExecute\Movement.cs" />
     <Compile Include="Server\DataProcessing\Coordinates.cs" />

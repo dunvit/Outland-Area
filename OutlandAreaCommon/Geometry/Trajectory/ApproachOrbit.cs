@@ -23,7 +23,7 @@ namespace Engine.Common.Geometry.Trajectory
             {
                 var resultApproachMovement = Approach.Calculate(location, orbitPoint, direction, 10);
 
-                foreach (var objectLocation in resultApproachMovement)
+                foreach (var objectLocation in resultApproachMovement.Trajectory)
                 {
                     result.Add(objectLocation);
                 }

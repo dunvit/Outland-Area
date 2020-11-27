@@ -12,10 +12,6 @@ namespace Tests.Server
     [TestClass]
     public class CommandCalculationTests  
     {
-        public void Command(LocalStaticGameServer server, int gameSessionId, int celestialObjectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId)
-        {
-            server.Command(gameSessionId, celestialObjectId, targetCelestialObjectId, memberId, targetCell, typeId);
-        }
 
         private static ICelestialObject AddCelestialObjectAlignTo(PointF location)
         {
@@ -99,7 +95,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10018, 10000), position);
+            Assert.AreEqual(new PointF(10018, 10001), position);
 
             server.TurnCalculation();
             server.TurnCalculation();

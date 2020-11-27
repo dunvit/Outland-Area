@@ -40,7 +40,6 @@
             this.Name = "TacticalMap";
             this.Size = new System.Drawing.Size(148, 148);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MapClick);
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.AlignToCommand);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapMouseMove);
             this.ResumeLayout(false);
 

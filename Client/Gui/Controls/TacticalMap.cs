@@ -145,7 +145,7 @@ namespace Engine.Gui.Controls
                         var target = gameSession.GetCelestialObject(command.TargetCelestialObjectId).GetLocation();
                         var results = Approach.Calculate(playerSpaceship.GetLocation(), target, playerSpaceship.Direction, playerSpaceship.Speed);
 
-                        DrawCurveTrajectory(graphics, results, Color.FromArgb(45, 100, 145));
+                        DrawCurveTrajectory(graphics, results.Trajectory, Color.FromArgb(45, 100, 145));
 
                         break;
                     case CommandTypes.Orbit:
@@ -168,9 +168,13 @@ namespace Engine.Gui.Controls
 
         private void DrawSpaceShipMovement(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
         {
+            var playerSpaceship = gameSession.GetPlayerSpaceShip();
+
             #region Direction forward
             foreach (var turnInformation in turnMapInformation.Values)
             {
+                if(playerSpaceship.Id == turnInformation.CelestialObject.Id) continue;
+
                 var currentObject = turnInformation.CelestialObject;
 
                 var location = DrawMapTools.GetCurrentLocation(turnMapInformation, currentObject, turnStep, drawInterval).ToScreen(screenParameters);
@@ -227,7 +231,8 @@ namespace Engine.Gui.Controls
 
                 var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction, playerSpaceship.Speed);
 
-                DrawCurveTrajectory(graphics, results, Color.FromArgb(44, 44, 44), true);
+                if(results.IsCorrect)
+                    DrawCurveTrajectory(graphics, results.Trajectory, Color.FromArgb(44, 44, 44), true);
             }
 
         }
@@ -298,7 +303,7 @@ namespace Engine.Gui.Controls
 
             var lastPoint = results[results.Count - 1];
 
-            var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(pointInSpace.X, pointInSpace.Y));
+            var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(lastPoint.Coordinates.X, lastPoint.Coordinates.Y));
 
             var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
 
@@ -309,11 +314,29 @@ namespace Engine.Gui.Controls
 
             var move = SpaceMapTools.Move(pointInSpaceCoordinates, 0, 0, lastPoint.Direction);
             SpaceMapGraphics.DrawArrow(graphics, move, color, 12);
+
+            #region Show linear movement 
+            //foreach (var position in results)
+            //{
+            //    var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
+
+            //    if (position.Status == MovementType.Linear)
+            //    {
+            //        graphics.DrawEllipse(new Pen(Color.Brown, 1), screenCoordinates.X, screenCoordinates.Y, 2, 2 );
+            //    }
+            //}
+            #endregion
         }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
             Logger.Info($"[{GetType().Name}]\t [MapClick]");
+
+            if (e.Button == MouseButtons.Right)
+            {
+                AlignToCommand(null, e);
+                return;
+            }
 
             var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
@@ -403,6 +426,8 @@ namespace Engine.Gui.Controls
 
         private void AlignToCommand(object sender, MouseEventArgs e)
         {
+            pointInSpace = PointF.Empty;
+
             var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
             var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);

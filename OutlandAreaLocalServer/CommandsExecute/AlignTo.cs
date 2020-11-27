@@ -25,12 +25,12 @@ namespace OutlandAreaLocalServer.CommandsExecute
             {
                 if (mapCelestialObject.Id == spaceShip.Id)
                 {
-                    if (result.Count > spaceShip.Speed)
+                    if (result.Trajectory.Count > spaceShip.Speed)
                     {
-                        mapCelestialObject.Direction = result[spaceShip.Speed].Direction;
+                        mapCelestialObject.Direction = result.Trajectory[spaceShip.Speed].Direction;
                         Logger.Debug($"[{GetType().Name}]\t CommandsExecute AlignTo - {mapCelestialObject.Name} Direction before is {mapCelestialObject.Direction} Direction after {mapCelestialObject.Direction}");
 
-                        if (result[spaceShip.Speed].Distance < spaceShip.Speed * 2)
+                        if (result.Trajectory[spaceShip.Speed].Distance < spaceShip.Speed * 2)
                         {
                             isResume = false;
                             Logger.Info($"[{GetType().Name}]\t CommandsExecute AlignTo - {mapCelestialObject.Name} finished. Target location is {targetObject.GetLocation()} current location is {spaceShip.GetLocation()}");
