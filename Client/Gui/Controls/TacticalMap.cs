@@ -9,17 +9,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using Engine.Common.Geometry;
-using Engine.Common.Geometry.Trajectory;
 using Engine.Gui.Controls.TacticalLayer;
-using Engine.ScreenDrawing;
 using MicroLibrary;
-using OutlandArea.Tools;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui.Controls
 {
@@ -30,11 +25,11 @@ namespace Engine.Gui.Controls
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
-        private MapSettings mapSettings = new MapSettings();
-        private int turn;
+        //private MapSettings mapSettings = new MapSettings();
+        
         private MicroTimer crlRefreshMap;
         private bool refreshInProgress;
-        private int drawInterval = 0;
+
         private PointF pointInSpace = PointF.Empty;
         private ICelestialObject destinationPoint = null;
         private ICelestialObject MouseMoveCelestialObject { get; set; }
@@ -77,7 +72,7 @@ namespace Engine.Gui.Controls
 
             crlRefreshMap.Enabled = true;
 
-            drawInterval = 1000 / intervalMilliseconds;
+            _screenParameters.DrawInterval = 1000 / intervalMilliseconds;
         }
 
         private void Event_Refresh(object sender, MicroTimerEventArgs timereventargs)
@@ -94,8 +89,6 @@ namespace Engine.Gui.Controls
 
             if (_gameSession.Map.IsEnabled) turnStep++;
 
-            //Logger.Info($"[{GetType().Name}]\t [DrawScreen] Turn {turn}.{turnStep}");
-
             refreshInProgress = false;
 
             Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
@@ -103,7 +96,7 @@ namespace Engine.Gui.Controls
 
         private void DrawTacticalMapScreen()
         {
-            Logger.Debug($"[{GetType().Name}]\t [DrawTacticalMapScreen] Turn {turn}.{turnStep}");
+            Logger.Debug($"[{GetType().Name}]\t [DrawTacticalMapScreen] Turn {_gameSession.Turn}.{turnStep}");
 
             Image image = new Bitmap(Width, Height);
 
@@ -114,219 +107,19 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
+            DrawMapTools.DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
 
-            DrawChangeMovementDestination(graphics);
+            DrawMapTools.DrawChangeMovementDestination(graphics, _gameSession, pointInSpace, granularTurnInformation, turnStep, _screenParameters);
 
-            DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, _screenParameters);
+            DrawMapTools.DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, turnStep, History, _screenParameters);
 
-            DrawSpaceShipTrajectories(graphics, _gameSession, granularTurnInformation, _screenParameters);
+            DrawMapTools.DrawSpaceShipTrajectories(graphics, _gameSession, granularTurnInformation, _screenParameters);
 
-            DrawScreen(graphics);
+            DrawMapTools.DrawScreen(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
             BackgroundImage = image;
         }
 
-        private void DrawSpaceShipTrajectories(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
-        {
-            var playerSpaceship = gameSession.GetPlayerSpaceShip();
-
-            var commands = gameSession.GetSpaceShipCommands(playerSpaceship.Id);
-
-            foreach (var command in commands)
-            {
-                switch (command.Type)
-                {
-                    case CommandTypes.MoveForward:
-                        break;
-                    case CommandTypes.Fire:
-                        break;
-                    case CommandTypes.AlignTo:
-                        var target = gameSession.GetCelestialObject(command.TargetCelestialObjectId).GetLocation();
-                        var results = Approach.Calculate(playerSpaceship.GetLocation(), target, playerSpaceship.Direction, playerSpaceship.Speed);
-
-                        DrawCurveTrajectory(graphics, results.Trajectory, Color.FromArgb(45, 100, 145));
-
-                        break;
-                    case CommandTypes.Orbit:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-        }
-
-        private void DrawDestinationPoint(Graphics graphics, GameSession gameSession, ICelestialObject point, ScreenParameters screenParameters)
-        {
-            if (destinationPoint == null) return;
-
-            var playerSpaceship = gameSession.GetPlayerSpaceShip();
-
-            DrawTacticalMap.DrawPointInSpace(point, playerSpaceship, graphics, screenParameters);
-        }
-
-        private void DrawSpaceShipMovement(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, ScreenParameters screenParameters)
-        {
-            var playerSpaceship = gameSession.GetPlayerSpaceShip();
-
-            #region Direction forward
-            foreach (var turnInformation in turnMapInformation.Values)
-            {
-                if(playerSpaceship.Id == turnInformation.CelestialObject.Id) continue;
-
-                var currentObject = turnInformation.CelestialObject;
-
-                var location = DrawMapTools.GetCurrentLocation(turnMapInformation, currentObject, turnStep, drawInterval).ToScreen(screenParameters);
-
-                var step = SpaceMapTools.Move(location, 4000, 0, currentObject.Direction);
-
-                graphics.DrawLine(new Pen(Color.FromArgb(24, 24, 24)), step.PointFrom, step.PointTo);
-
-            }
-            #endregion
-
-            #region Direction back
-            foreach (var turnInformation in turnMapInformation.Values)
-            {
-                if(turnInformation.CelestialObject.IsSpaceship() == false) continue;
-
-                var currentObject = turnInformation.CelestialObject;
-
-                var points = new List<PointF>();
-
-                var data = History.GetData();
-                var turnId = 0;
-
-                foreach (var turnData in data)
-                {
-                    var stepId = 0;
-
-                    foreach (var wayPoint in turnData[currentObject.Id].WayPoints.Values)
-                    {
-                        if(turnId > 0 || stepId > turnStep)
-                            points.Add(wayPoint.ToScreen(screenParameters));
-
-                        stepId++;
-                    }
-
-                    turnId++;
-                }
-
-                if (points.Count > 2)
-                {
-                    graphics.DrawCurve(new Pen(Color.FromArgb(200, 44, 44)) { DashStyle = DashStyle.Dash }, points.ToArray());
-                }
-            }
-            #endregion
-        }
-
-        private void DrawChangeMovementDestination(Graphics graphics)
-        {
-            if (pointInSpace != PointF.Empty)
-            {
-                var playerSpaceship = _gameSession.GetPlayerSpaceShip();
-
-                var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, playerSpaceship, turnStep, drawInterval);
-
-                var results = Approach.Calculate(location, pointInSpace, playerSpaceship.Direction, playerSpaceship.Speed);
-
-                if(results.IsCorrect)
-                    DrawCurveTrajectory(graphics, results.Trajectory, Color.FromArgb(44, 44, 44), true);
-            }
-
-        }
-
-        private void DrawScreen(Graphics graphics)
-        {
-            foreach (GranularObjectInformation turnInformation in granularTurnInformation.Values)
-            {
-                var currentObject = turnInformation.CelestialObject;
-
-                var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, currentObject, turnStep, drawInterval);
-
-                var celestialObjectType = (CelestialObjectTypes) currentObject.Classification;
-
-                switch (celestialObjectType)
-                {
-                    case CelestialObjectTypes.Asteroid:
-                        // Regular asteroid
-                        DrawTacticalMap.DrawAsteroid(currentObject, location, graphics, _screenParameters);
-                        break;
-                    case CelestialObjectTypes.SpaceshipPlayer:
-                    case CelestialObjectTypes.SpaceshipNpcEnemy:
-                    case CelestialObjectTypes.SpaceshipNpcFriend:
-                    case CelestialObjectTypes.SpaceshipNpcNeutral:
-                        //if (mapSettings.IsDrawSpaceshipInformation)
-                        //    DrawTacticalMap.DrawSpaceshipInformation(currentObject, location, graphics, _screenParameters);
-
-                        DrawTacticalMap.DrawSpaceship(currentObject, location, graphics, _screenParameters);
-
-                        break;
-                    case CelestialObjectTypes.Missile:
-                        //DrawTacticalMap.DrawMissile(currentObject, location, graphics, _screenParameters);
-                        break;
-                }
-
-                if (mapSettings.IsDrawCelestialObjectDirections)
-                {
-                    try
-                    {
-                        DrawTacticalMap.DrawCelestialObjectDirection(currentObject, location, graphics, _screenParameters);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error(e.Message);
-                    }
-
-                }
-
-                if (mapSettings.IsDrawCelestialObjectCoordinates)
-                {
-                    if (currentObject.Classification > 0)
-                        DrawTacticalMap.DrawCelestialObjectCoordinates(currentObject, graphics, _screenParameters);
-                }
-            }
-        }
-
-        private void DrawCurveTrajectory(Graphics graphics, List<ObjectLocation> results, Color color, bool isDrawArrow = false)
-        {
-            var points = new List<PointF>();
-
-            foreach (var position in results)
-            {
-                var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
-
-                points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
-
-            }
-
-            var lastPoint = results[results.Count - 1];
-
-            var pointInSpaceCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(lastPoint.Coordinates.X, lastPoint.Coordinates.Y));
-
-            var step = SpaceMapTools.Move(pointInSpaceCoordinates, 4000, 0, lastPoint.Direction);
-
-            if (points.Count > 2)
-                graphics.DrawCurve(new Pen(color), points.ToArray());
-
-            graphics.DrawLine(new Pen(color), step.PointFrom, step.PointTo);
-
-            var move = SpaceMapTools.Move(pointInSpaceCoordinates, 0, 0, lastPoint.Direction);
-            SpaceMapGraphics.DrawArrow(graphics, move, color, 12);
-
-            #region Show linear movement 
-            //foreach (var position in results)
-            //{
-            //    var screenCoordinates = UI.ToScreenCoordinates(_screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
-
-            //    if (position.Status == MovementType.Linear)
-            //    {
-            //        graphics.DrawEllipse(new Pen(Color.Brown, 1), screenCoordinates.X, screenCoordinates.Y, 2, 2 );
-            //    }
-            //}
-            #endregion
-        }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
@@ -371,14 +164,12 @@ namespace Engine.Gui.Controls
 
         private void CalculateTurnInformation(GameSession gameSession)
         {
-            turn = gameSession.Turn;
-
             if (crlRefreshMap == null)
             {
                 Initialization();
             }
 
-            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {turn}.");
+            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {gameSession.Turn}.");
 
             _gameSession = gameSession;
 
@@ -401,7 +192,7 @@ namespace Engine.Gui.Controls
             {
                 if(mapCelestialObject.Classification < 1) continue;
 
-                result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, drawInterval));
+                result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, _screenParameters.DrawInterval));
             }
 
             return result;
