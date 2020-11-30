@@ -19,9 +19,12 @@ namespace Engine.Gui
 
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
+            crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
             controlCommands.OnAlignToCelestialObject += crlTacticalMap.CommandAlignTo;
             controlCommands.OnOrbitCelestialObject += Global.Game.AddCommandOrbit;
             controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
+
+            crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
         }
 
         private void Event_Exit(object sender, EventArgs e)

@@ -179,7 +179,7 @@ namespace Engine.Gui.Controls.TacticalLayer
 
                         break;
                     case CelestialObjectTypes.Missile:
-                        DrawTacticalMap.DrawMissile(currentObject, graphics, _screenParameters);
+                        DrawTacticalMap.DrawMissile(currentObject, PointF.Empty, graphics, _screenParameters);
                         break;
                 }
 

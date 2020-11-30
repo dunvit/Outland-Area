@@ -202,27 +202,31 @@ namespace Engine.Management
             Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Orbit);
         }
 
-        public void AddCommandOpenFire(ICelestialObject celestialObject)
+        public void AddCommandOpenFire(ICelestialObject missile)
         {
             var playerShip = _gameSession.GetPlayerSpaceShip();
 
-            Missile missile = new Missile
+            var targetPointInSpace = new PointInSpace
             {
-                OwnerId = playerShip.Id,
-                PositionY = playerShip.PositionY,
-                PositionX = playerShip.PositionX,
-                Speed = 40,
-                Direction = playerShip.Direction,
-                Name = "Missile",
+                Id = new Random().NextInt(),
+                PositionY = missile.PositionY,
+                PositionX = missile.PositionX,
+                Speed = 0,
+                Direction = 0,
+                Name = "Missile Target",
                 Signature = 1,
-                Classification = (int)CelestialObjectTypes.Missile,
+                Classification = (int)CelestialObjectTypes.PointInMap,
                 IsScanned = true
             };
-            // TODO: Set direction to target ship
 
+            missile.PositionX = playerShip.PositionX;
+            missile.PositionY = playerShip.PositionY;
+            missile.OwnerId = playerShip.Id;
+
+            AddCelestialObject(targetPointInSpace);
             AddCelestialObject(missile);
 
-            Command(_gameSession.Id, missile.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Fire);
+            Command(_gameSession.Id, missile.Id, targetPointInSpace.Id, 0, 0, (int)CommandTypes.Fire);
         }
 
         public void AddCelestialObject(ICelestialObject celestialObject)

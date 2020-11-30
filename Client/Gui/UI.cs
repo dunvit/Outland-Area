@@ -45,7 +45,28 @@ namespace Engine.Gui
             return null;
         }
 
-        
+        public static Bitmap LoadCharacterImage(string file, string image = "Front")
+        {
+            var images = Path.Combine(Environment.CurrentDirectory, @"Data\Characters\" + file);
+
+            var fileFullName = Path.Combine(images, image.Replace("/", "\\") + ".png");
+
+            if (File.Exists(fileFullName))
+            {
+                var orig = new Bitmap(fileFullName);
+                var clone = new Bitmap(orig.Width, orig.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (var gr = Graphics.FromImage(clone))
+                {
+                    gr.DrawImage(orig, new Rectangle(0, 0, clone.Width, clone.Height));
+                }
+
+                return clone;
+            }
+
+            return null;
+        }
+
+
 
         public static Bitmap LoadImage(string file)
         {

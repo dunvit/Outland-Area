@@ -12,6 +12,7 @@ using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
@@ -82,6 +83,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             foreach (var turnInformation in turnMapInformation.Values)
             {
                 if (playerSpaceship.Id == turnInformation.CelestialObject.Id) continue;
+                if (gameSession.GetCelestialObject(turnInformation.CelestialObject.Id).IsSpaceship() == false) return;
 
                 var currentObject = turnInformation.CelestialObject;
 
@@ -129,6 +131,21 @@ namespace Engine.Gui.Controls.TacticalLayer
             #endregion
         }
 
+        public static void DrawMissiles(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            foreach (GranularObjectInformation turnInformation in turnMapInformation.Values)
+            {
+                var currentObject = turnInformation.CelestialObject;
+
+                var location = GetCurrentLocation(turnMapInformation, currentObject, turnStep, screenParameters.DrawInterval);
+
+                if((CelestialObjectTypes)currentObject.Classification != CelestialObjectTypes.Missile) return;
+
+                var a = "Missile";
+
+            }
+        }
+
         public static void DrawScreen(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep, ScreenParameters screenParameters)
         {
             foreach (GranularObjectInformation turnInformation in turnMapInformation.Values)
@@ -156,7 +173,7 @@ namespace Engine.Gui.Controls.TacticalLayer
 
                         break;
                     case CelestialObjectTypes.Missile:
-                        //DrawTacticalMap.DrawMissile(currentObject, location, graphics, _screenParameters);
+                        DrawTacticalMap.DrawMissile(currentObject, location, graphics, screenParameters);
                         break;
                 }
 
@@ -254,5 +271,53 @@ namespace Engine.Gui.Controls.TacticalLayer
                 }
             }
         }
+
+        public static void DrawActiveModule(Graphics graphics, CelestialObjectTypes activeModule, PointF mousePosition, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            var playerSpaceship = gameSession.GetPlayerSpaceShip();
+
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(playerSpaceship.PositionX, playerSpaceship.PositionY));
+
+            var mouseCoordinatesInternal = OutlandAreaCommon.Tools.ToRelativeCoordinates(mousePosition, screenParameters.Center);
+
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseCoordinatesInternal, screenParameters.CenterScreenOnMap);
+
+            
+
+            switch (activeModule)
+            {
+                case CelestialObjectTypes.PointInMap:
+                    break;
+                case CelestialObjectTypes.Missile:
+                    var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
+                    graphics.DrawLine(radarLinePen, screenCoordinates.X, screenCoordinates.Y, mousePosition.X, mousePosition.Y);
+                    
+                    var missile = new Missile
+                    {
+                        PositionY = mouseMapCoordinates.Y,
+                        PositionX = mouseMapCoordinates.X
+                    };
+                    DrawTacticalMap.DrawPreTarget(missile, graphics, screenParameters);
+
+
+                    break;
+                case CelestialObjectTypes.SpaceshipPlayer:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcNeutral:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcEnemy:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcFriend:
+                    break;
+                case CelestialObjectTypes.Asteroid:
+                    break;
+                case CelestialObjectTypes.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        
     }
 }

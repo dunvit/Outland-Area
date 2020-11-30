@@ -79,6 +79,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.Designer.cs">
       <DependentUpon>CommandsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.Designer.cs">
+      <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapTools.cs" />
@@ -133,6 +139,9 @@
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsControl.resx">
       <DependentUpon>CommandsControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.resx">
+      <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedObjectControl.resx">
       <DependentUpon>SelectedObjectControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +171,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Configuration\Version.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Characters\637066561468099897\Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Characters\637066561468099898\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\Map_003.json">
@@ -195,6 +210,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Characters\637066561468099897\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099897\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099897\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099897\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099898\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099898\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099898\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Characters\637066561468099898\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ammunition\Missiles\Inferno_Light_Missile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Commands\decreseSpeed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -238,6 +280,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Ships\Small\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Ship_Equipment\Missile_Launchers\Light_Missile_Launcher_I.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Tactical\tactical_map_missile.png">

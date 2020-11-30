@@ -47,12 +47,12 @@ namespace OutlandAreaLocalServer
                         break;
 
                     case CommandTypes.Fire:
-                        //var executeFireResult = ExecuteFire(result, command);
+                        var executeFireResult = ExecuteFire(result, command);
 
-                        //if (executeFireResult.IsResume)
-                        //{
-                        //    result.Commands.Add(executeFireResult.Command.DeepClone());
-                        //}
+                        if (executeFireResult.IsResume)
+                        {
+                            result.Commands.Add(executeFireResult.Command.DeepClone());
+                        }
                         break;
 
                     case CommandTypes.Orbit:
