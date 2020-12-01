@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Engine.Common.Geometry;
 using Engine.Configuration;
 using Engine.Gui;
-using Engine.Layers.Tactical;
 using Engine.Management.Server;
 using Engine.ScreenDrawing;
-using Engine.Tools;
-using OutlandAreaCommon;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
@@ -22,8 +17,8 @@ namespace OutlandArea.Tools
 {
     public class DrawTacticalMap
     {
-        private const int drawSpaceshipInformationLenght = 40;
-        private const int drawSpaceshipInformationShelfLenght = 90;
+        private const int DrawSpaceshipInformationLenght = 40;
+        private const int DrawSpaceshipInformationShelfLenght = 90;
         public static void DrawMissile(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
             // Convert celestial object coordinates to screen coordinates
@@ -95,13 +90,13 @@ namespace OutlandArea.Tools
                 drawSpaceshipInformationShelf = 90;
             }
 
-            var footCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, drawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
+            var footCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, DrawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
 
 
             graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, footCoordinates.X, footCoordinates.Y);
 
             
-            var shelfCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(footCoordinates, drawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
+            var shelfCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(footCoordinates, DrawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
 
             graphics.DrawLine(pen, footCoordinates.X, footCoordinates.Y, shelfCoordinates.X, shelfCoordinates.Y);
 
@@ -154,6 +149,8 @@ namespace OutlandArea.Tools
         public static void DrawCelestialObjectDirection(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
+
+            if ((CelestialObjectTypes)celestialObject.Classification == CelestialObjectTypes.Explosion) return;
 
             var move = SpaceMapTools.Move(screenCoordinates, 8, 6, celestialObject.Direction);
             SpaceMapGraphics.DrawArrow(graphics, move, Color.DimGray);
@@ -298,25 +295,17 @@ namespace OutlandArea.Tools
 
         }
 
-
-
         public static void DrawPreTarget(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
 
-            var image = UI.LoadGenericImage("Targets/TargetOnMap");
-
-            //graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
-
             var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
-
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 12, screenCoordinates.Y - 12, 24, 24);
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 22, screenCoordinates.Y - 22, 44, 44);
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 32, screenCoordinates.Y - 32, 64, 64);
-
             
 
             graphics.DrawLine(radarLinePen, screenCoordinates.X - 45, screenCoordinates.Y, screenCoordinates.X + 45, screenCoordinates.Y);
@@ -332,12 +321,6 @@ namespace OutlandArea.Tools
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
 
             var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
-
-            var screenSpaceShipCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(spaceShip.PositionX, spaceShip.PositionY));
-
-
-            //graphics.DrawLine(radarLinePen, screenSpaceShipCoordinates.X, screenSpaceShipCoordinates.Y, screenCoordinates.X, screenCoordinates.Y);
-
 
             graphics.DrawLine(radarLinePen, screenCoordinates.X - 15, screenCoordinates.Y, screenCoordinates.X + 15, screenCoordinates.Y);
 

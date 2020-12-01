@@ -3,12 +3,12 @@
 namespace OutlandAreaCommon.Universe.Objects.Spaceships
 {
     [Serializable]
-    public class Missile : BaseCelestialObject, ICelestialObject
+    public class Explosion : BaseCelestialObject, ICelestialObject
     {
         public float Damage { get; set; }
         public float Radius { get; set; }
 
-        public Missile()
+        public Explosion()
         {
             Id = new Random().NextInt();
         }

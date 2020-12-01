@@ -83,6 +83,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             foreach (var turnInformation in turnMapInformation.Values)
             {
                 if (playerSpaceship.Id == turnInformation.CelestialObject.Id) continue;
+
                 if (gameSession.GetCelestialObject(turnInformation.CelestialObject.Id).IsSpaceship() == false) return;
 
                 var currentObject = turnInformation.CelestialObject;
@@ -139,9 +140,58 @@ namespace Engine.Gui.Controls.TacticalLayer
 
                 var location = GetCurrentLocation(turnMapInformation, currentObject, turnStep, screenParameters.DrawInterval);
 
-                if((CelestialObjectTypes)currentObject.Classification != CelestialObjectTypes.Missile) return;
+                if((CelestialObjectTypes)currentObject.Classification != CelestialObjectTypes.Missile) continue;
 
                 var a = "Missile";
+
+                var b = gameSession.GetSpaceShipCommands(currentObject.Id);
+
+                foreach (var command in b)
+                {
+                    if (command.Type == CommandTypes.Fire)
+                    {
+                        var targetPoint = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+                    }
+                }
+
+            }
+        }
+
+        public static void DrawExplosions(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            foreach (GranularObjectInformation turnInformation in turnMapInformation.Values)
+            {
+                var currentObject = turnInformation.CelestialObject;
+
+                
+
+                if ((CelestialObjectTypes)currentObject.Classification != CelestialObjectTypes.Explosion) continue;
+
+                var explosion = (Explosion) currentObject;
+
+                var screenCoordinates = UI.ToScreenCoordinates(screenParameters, explosion.GetLocation());
+
+                graphics.FillEllipse(new SolidBrush(Color.IndianRed),
+                    screenCoordinates.X - explosion.Radius,
+                    screenCoordinates.Y - explosion.Radius,
+                    explosion.Radius * 2,
+                    explosion.Radius * 2
+                    );
+
+                graphics.DrawEllipse(new Pen(Color.Red, 1),
+                    screenCoordinates.X - explosion.Radius,
+                    screenCoordinates.Y - explosion.Radius,
+                    explosion.Radius * 2,
+                    explosion.Radius * 2
+                );
+
+                // Explosive epicenter
+                graphics.FillEllipse(new SolidBrush(Color.Red),
+                    screenCoordinates.X - 2,
+                    screenCoordinates.Y - 2,
+                    4,
+                    4
+                );
 
             }
         }

@@ -120,7 +120,9 @@ namespace Engine.Gui.Controls
             DrawMapTools.DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, turnStep, History, _screenParameters);
 
             DrawMapTools.DrawMissiles(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
-            
+
+            DrawMapTools.DrawExplosions(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
+
             DrawMapTools.DrawSpaceShipTrajectories(graphics, _gameSession, granularTurnInformation, _screenParameters);
 
             DrawMapTools.DrawScreen(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
@@ -249,7 +251,14 @@ namespace Engine.Gui.Controls
             {
                 if(mapCelestialObject.Classification < 1) continue;
 
-                result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, _screenParameters.DrawInterval));
+                try
+                {
+                    result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, _screenParameters.DrawInterval));
+                }
+                catch
+                {
+                    // ignored
+                }
             }
 
             return result;

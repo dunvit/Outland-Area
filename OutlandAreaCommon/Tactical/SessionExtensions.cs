@@ -82,6 +82,8 @@ namespace OutlandAreaCommon.Tactical
 
         public static void RemoveCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
+            if (celestialObject == null) return;
+
             var result = new List<ICelestialObject>();
 
             foreach (var mapCelestialObject in session.Map.CelestialObjects)

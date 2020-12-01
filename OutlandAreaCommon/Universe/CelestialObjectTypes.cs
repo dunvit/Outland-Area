@@ -10,6 +10,7 @@ namespace OutlandAreaCommon.Universe
         SpaceshipNpcNeutral = 201,
         SpaceshipNpcEnemy = 202,
         SpaceshipNpcFriend = 203,
-        Asteroid = 1
+        Asteroid = 1,
+        Explosion = 800
     }
 }

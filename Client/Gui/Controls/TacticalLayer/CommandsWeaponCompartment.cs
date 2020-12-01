@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Engine.Tools;
-using OutlandAreaCommon;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 
@@ -19,7 +18,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             InitializeComponent();
         }
 
-        private void CommandsWeaponCompartment_Load(object sender, System.EventArgs e)
+        private void CommandsWeaponCompartment_Load(object sender, EventArgs e)
         {
             if (DebugTools.IsInDesignMode())
                 return;
@@ -55,7 +54,9 @@ namespace Engine.Gui.Controls.TacticalLayer
                 Name = "Light missile",
                 Speed = 30,
                 Classification = (int) CelestialObjectTypes.Missile,
-                Signature = 10
+                Signature = 10,
+                Damage = 30,
+                Radius = 50
             };
 
             OnActivateModule?.Invoke(missile);

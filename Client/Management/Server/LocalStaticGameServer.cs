@@ -108,6 +108,12 @@ namespace Engine.Management.Server
             _gameSession.AddCelestialObject(celestialObject);
         }
 
+        public void AddCelestialObject(int sessionId, int objectId, float positionX, float positionY, int direction, int speed,
+            int classification, string name, float radius, float damage)
+        {
+            
+        }
+
         public void TurnCalculation()
         {
             Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Start");

@@ -5,6 +5,7 @@
         MoveForward = 200,
         Fire = 300,
         AlignTo = 100,
-        Orbit = 110
+        Orbit = 110,
+        Explosion = 800
     }
 }

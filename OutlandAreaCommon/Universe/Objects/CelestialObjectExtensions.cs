@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaCommon.Universe.Objects
 {
@@ -11,7 +12,14 @@ namespace OutlandAreaCommon.Universe.Objects
 
         public static bool IsSpaceship(this ICelestialObject celestialObject)
         {
+            if (celestialObject == null) return false;
+
             return celestialObject.Classification >= 200 && celestialObject.Classification < 299;
+        }
+
+        public static Missile ToMissile(this ICelestialObject celestialObject)
+        {
+            return (Missile)celestialObject;
         }
     }
 }
