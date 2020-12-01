@@ -21,5 +21,15 @@ namespace OutlandAreaCommon.Universe.Objects
         {
             return (Missile)celestialObject;
         }
+
+        public static Explosion ToExplosion(this ICelestialObject celestialObject)
+        {
+            return (Explosion)celestialObject;
+        }
+
+        public static Spaceship ToSpaceship(this ICelestialObject celestialObject)
+        {
+            return (Spaceship)celestialObject;
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace OutlandAreaCommon.Tactical
 
         public static List<Command> GetSpaceShipCommands(this GameSession session, long id)
         {
+            // TODO: Big memory crash on collection modification
             var result = new List<Command>();
 
             foreach (var sessionCommand in session.Commands)

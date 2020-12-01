@@ -129,7 +129,7 @@ namespace OutlandAreaLocalServer
                             }
                         }
 
-                        
+                        spaceship.Initialization();
 
                         celestialMap.CelestialObjects.Add(spaceship);
                         break;

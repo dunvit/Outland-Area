@@ -12,6 +12,9 @@ namespace OutlandAreaLocalServer
         {
             var result = gameSession.DeepClone();
 
+            // Clear history log for each turn
+            result.History = new List<string>();
+
             if (gameSession.Commands == null)
             {
                 // Commands pool is empty. No need execute action.
@@ -70,6 +73,7 @@ namespace OutlandAreaLocalServer
                             {
                                 Classification = 800,
                                 Damage = missile.Damage,
+                                Name = missile.Name,
                                 PositionX = missileTarget.PositionX,
                                 PositionY = missileTarget.PositionY,
                                 Radius = missile.Radius,
