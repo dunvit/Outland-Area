@@ -39,6 +39,7 @@
             this.crlWeaponLauncher = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.commandsWeaponCompartment5 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.battleInformation1 = new Engine.Gui.Controls.TacticalLayer.BattleInformation();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -152,12 +153,21 @@
             this.panel2.Size = new System.Drawing.Size(401, 1056);
             this.panel2.TabIndex = 11;
             // 
+            // battleInformation1
+            // 
+            this.battleInformation1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
+            this.battleInformation1.Location = new System.Drawing.Point(12, 118);
+            this.battleInformation1.Name = "battleInformation1";
+            this.battleInformation1.Size = new System.Drawing.Size(200, 244);
+            this.battleInformation1.TabIndex = 12;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.battleInformation1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.commandsWeaponCompartment5);
             this.Controls.Add(this.crlWeaponLauncher);
@@ -190,5 +200,6 @@
         private Controls.TacticalLayer.CommandsWeaponCompartment crlWeaponLauncher;
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment5;
         private System.Windows.Forms.Panel panel2;
+        private Controls.TacticalLayer.BattleInformation battleInformation1;
     }
 }

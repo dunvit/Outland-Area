@@ -67,6 +67,12 @@
     <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
       <DependentUpon>FlatButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\BattleInformation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\BattleInformation.Designer.cs">
+      <DependentUpon>BattleInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\CelestialMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -132,6 +138,9 @@
     <Compile Include="Tools\Scheduler.cs" />
     <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
       <DependentUpon>FlatButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\BattleInformation.resx">
+      <DependentUpon>BattleInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CelestialMapControl.resx">
       <DependentUpon>CelestialMapControl.cs</DependentUpon>
