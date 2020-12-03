@@ -52,12 +52,6 @@ __2020-10-26__
 - [x] Draw `Align To` space point UI
 ---
 
-__2020-10-22__
-
-- [x] Show tactical map on new turn map calculation
-- [x] Execute turn system
-- [x] [A-101] Get event Mouse click to celestial object
-- [x] [T-107] Add event Mouse click to celestial object
 
 ---
 
