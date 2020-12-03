@@ -70,6 +70,9 @@ namespace OutlandAreaLocalServer
                         celestialMap.CelestialObjects.Add(asteroid);
                         break;
 
+                    case 201:
+                    case 202:
+                    case 203:
                     case 2: case 200:
                         var spaceship = new Spaceship()
                         {
@@ -126,7 +129,7 @@ namespace OutlandAreaLocalServer
                             }
                         }
 
-                        
+                        spaceship.Initialization();
 
                         celestialMap.CelestialObjects.Add(spaceship);
                         break;

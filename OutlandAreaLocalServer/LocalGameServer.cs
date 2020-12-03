@@ -21,7 +21,8 @@ namespace OutlandAreaLocalServer
         public GameSession Initialization()
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_004"));
+            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_OneShip"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_FirstBattle"));
 
             _gameSession.Commands = new List<Command>();
 
@@ -118,6 +119,25 @@ namespace OutlandAreaLocalServer
             _gameSession.AddCelestialObject(celestialObject);
         }
 
+        public void AddCelestialObject(int sessionId, int objectId, float positionX, float positionY, int direction, int speed,
+            int classification, string name, float radius, float damage)
+        {
+            ICelestialObject celestialObject = new Missile
+            {
+                Id = objectId,
+                PositionX = positionX,
+                PositionY = positionY,
+                Classification = classification,
+                Direction = direction,
+                Speed = speed,
+                Name = name,
+                Radius = radius,
+                Damage = damage
+            };
+
+            _gameSession.AddCelestialObject(celestialObject);
+        }
+
 
         private void TurnCalculation()
         {
@@ -130,9 +150,9 @@ namespace OutlandAreaLocalServer
 
             var turnGameSession = _gameSession.DeepClone();
 
-            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
-
             turnGameSession = new Commands().Execute(turnGameSession);
+
+            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
 
             turnGameSession.Turn++;
 

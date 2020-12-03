@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Engine.Configuration;
-using Engine.Layers.Tactical;
 using Engine.Tools;
 using log4net;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Timers;
 using System.Windows.Forms;
 using Engine.Gui.Controls.TacticalLayer;
 using MicroLibrary;
-using OutlandArea.Tools;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
-using Timer = System.Timers.Timer;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace Engine.Gui.Controls
 {
@@ -28,23 +25,37 @@ namespace Engine.Gui.Controls
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
-        private MapSettings mapSettings = new MapSettings();
-        private int turn;
+        //private MapSettings mapSettings = new MapSettings();
+        
         private MicroTimer crlRefreshMap;
         private bool refreshInProgress;
-        private int drawInterval = 0;
+
+        private PointF pointInSpace = PointF.Empty;
+        private ICelestialObject destinationPoint = null;
         private ICelestialObject MouseMoveCelestialObject { get; set; }
+        private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
+        private FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>> History;
+
+        private CelestialObjectTypes _activeModule = CelestialObjectTypes.None;
+        private ICelestialObject _activeCelestialObject;
 
         private int turnStep;
+
+        public event Action<ICelestialObject> OnAlignToCelestialObject;
+        public event Action<ICelestialObject> OnLaunchMissile;
+
+        private PointF mouseCoordinates = PointF.Empty;
 
         public TacticalMap()
         {
             InitializeComponent();
 
+            History = new FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>>(4);
+
             if (DebugTools.IsInDesignMode())
                 return;
 
-            Global.Game.OnEndTurn += Event_RefreshCelestialMap;
+            Global.Game.OnEndTurn += CalculateTurnInformation;
 
             
         }
@@ -67,7 +78,7 @@ namespace Engine.Gui.Controls
 
             crlRefreshMap.Enabled = true;
 
-            drawInterval = 1000 / intervalMilliseconds;
+            _screenParameters.DrawInterval = 1000 / intervalMilliseconds;
         }
 
         private void Event_Refresh(object sender, MicroTimerEventArgs timereventargs)
@@ -80,20 +91,18 @@ namespace Engine.Gui.Controls
 
             refreshInProgress = true;
 
-            DrawScreen();
+            DrawTacticalMapScreen();
 
-            if(_gameSession.Map.IsEnabled) turnStep++;
-
-            //Logger.Info($"[{GetType().Name}]\t [DrawScreen] Turn {turn}.{turnStep}");
+            if (_gameSession.Map.IsEnabled) turnStep++;
 
             refreshInProgress = false;
 
             Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
-        private void DrawScreen()
+        private void DrawTacticalMapScreen()
         {
-            Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Turn {turn}.{turnStep}");
+            Logger.Debug($"[{GetType().Name}]\t [DrawTacticalMapScreen] Turn {_gameSession.Turn}.{turnStep}");
 
             Image image = new Bitmap(Width, Height);
 
@@ -104,80 +113,84 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            
+            DrawMapTools.DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
 
-            foreach (GranularObjectInformation turnInformation in granularTurnInformation.Values)
-            {
-                var currentObject = turnInformation.CelestialObject;
+            DrawMapTools.DrawChangeMovementDestination(graphics, _gameSession, pointInSpace, granularTurnInformation, turnStep, _screenParameters);
 
-                PointF location;
+            DrawMapTools.DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, turnStep, History, _screenParameters);
 
-                try
-                {
-                    location = granularTurnInformation[currentObject.Id].WayPoints[turnStep];
-                }
-                catch 
-                {
-                    try
-                    {
-                        location = granularTurnInformation[currentObject.Id].WayPoints[drawInterval - 1];
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
+            DrawMapTools.DrawMissiles(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
-                switch ((CelestialObjectTypes)currentObject.Classification)
-                {
-                    case CelestialObjectTypes.Asteroid:
-                        // Regular asteroid
-                        //DrawTacticalMap.DrawAsteroid(currentObject, location, graphics, _screenParameters);
-                        break;
-                    case CelestialObjectTypes.Spaceship:
-                        //if (mapSettings.IsDrawSpaceshipInformation)
-                        //    DrawTacticalMap.DrawSpaceshipInformation(currentObject, location, graphics, _screenParameters);
+            DrawMapTools.DrawExplosions(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
-                        DrawTacticalMap.DrawSpaceship(currentObject, location, graphics, _screenParameters);
+            DrawMapTools.DrawSpaceShipTrajectories(graphics, _gameSession, granularTurnInformation, _screenParameters);
 
-                        break;
-                    case CelestialObjectTypes.Missile:
-                        //DrawTacticalMap.DrawMissile(currentObject, location, graphics, _screenParameters);
-                        break;
-                }
+            DrawMapTools.DrawScreen(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
-                if (mapSettings.IsDrawCelestialObjectDirections)
-                {
-                    try
-                    {
-                        //DrawTacticalMap.DrawCelestialObjectDirection(currentObject, location, graphics, _screenParameters);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error(e.Message);
-                    }
+            DrawMapTools.DrawActiveModule(graphics, _activeModule, mouseCoordinates, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
-                }
 
-                if (mapSettings.IsDrawCelestialObjectCoordinates)
-                {
-                    if (currentObject.Classification > 0)
-                        DrawTacticalMap.DrawCelestialObjectCoordinates(currentObject, graphics, _screenParameters);
-                }
-            }
 
             BackgroundImage = image;
         }
 
+
         private void MapClick(object sender, MouseEventArgs e)
         {
-            Logger.Info($"[{GetType().Name}]\t [MapClick]");
-
             var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
             var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new PointF(mouseMapCoordinates.X, mouseMapCoordinates.Y));
+
+
+            switch (_activeModule)
+            {
+                case CelestialObjectTypes.PointInMap:
+                    break;
+                case CelestialObjectTypes.Missile:
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        _activeModule = CelestialObjectTypes.None;
+                        return;
+                    }
+
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        _activeCelestialObject.PositionX = mouseMapCoordinates.X;
+                        _activeCelestialObject.PositionY = mouseMapCoordinates.Y;
+
+                        _activeModule = CelestialObjectTypes.None;
+
+                        OnLaunchMissile?.Invoke(_activeCelestialObject);
+                        return;
+                    }
+
+                    break;
+                case CelestialObjectTypes.SpaceshipPlayer:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcNeutral:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcEnemy:
+                    break;
+                case CelestialObjectTypes.SpaceshipNpcFriend:
+                    break;
+                case CelestialObjectTypes.Asteroid:
+                    break;
+                case CelestialObjectTypes.None:
+                    break;
+            }
+
+
+
+            Logger.Info($"[{GetType().Name}]\t [MapClick]");
+
+            if (e.Button == MouseButtons.Right)
+            {
+                AlignToCommand(null, e);
+                return;
+            }
+
 
             if (celestialObjectInRange != null)
             {
@@ -187,39 +200,47 @@ namespace Engine.Gui.Controls
             {
                 Global.Game.SelectPointInSpace(mouseMapCoordinates);
             }
+
+            pointInSpace = mouseMapCoordinates;
         }
+
+        
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
             Logger.Debug($"[{GetType().Name}]\t [MapMouseMove]");
 
-            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            mouseCoordinates = e.Location;
 
-            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseCoordinatesInternal = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseCoordinatesInternal, _screenParameters.CenterScreenOnMap);
 
             var celestialObjectInRange = SessionTools.GetObjectInRange(_gameSession, 15, new PointF(mouseMapCoordinates.X, mouseMapCoordinates.Y));
 
             MouseMoveCelestialObject = celestialObjectInRange?.DeepClone();
         }
 
-        private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
-
-        private void Event_RefreshCelestialMap(GameSession gameSession)
+        private void CalculateTurnInformation(GameSession gameSession)
         {
-            turn = gameSession.Turn;
-
             if (crlRefreshMap == null)
             {
                 Initialization();
             }
 
-            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {turn}.");
+            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {gameSession.Turn}.");
 
             _gameSession = gameSession;
 
             turnStep = 0;
 
             granularTurnInformation = CalculateGranularTurnInformation(_gameSession);
+
+            var timeDrawScreen = Stopwatch.StartNew();
+
+            History.Enqueue(granularTurnInformation.DeepClone());
+
+            Logger.Debug($"[{GetType().Name}]\t [History.Enqueue] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
         private SortedDictionary<int, GranularObjectInformation> CalculateGranularTurnInformation(GameSession gameSession)
@@ -228,7 +249,16 @@ namespace Engine.Gui.Controls
 
             foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
             {
-                result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, drawInterval));
+                if(mapCelestialObject.Classification < 1) continue;
+
+                try
+                {
+                    result.Add(mapCelestialObject.Id, new GranularObjectInformation(mapCelestialObject, _screenParameters.DrawInterval));
+                }
+                catch
+                {
+                    // ignored
+                }
             }
 
             return result;
@@ -242,6 +272,32 @@ namespace Engine.Gui.Controls
             {
                 crlRefreshMap.Abort();
             }
+        }
+
+        public void CommandAlignTo(ICelestialObject celestialObject)
+        {
+            pointInSpace = PointF.Empty;
+
+            destinationPoint = celestialObject.DeepClone();
+        }
+
+        private void AlignToCommand(object sender, MouseEventArgs e)
+        {
+            pointInSpace = PointF.Empty;
+
+            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+
+            Global.Game.SelectPointInSpace(mouseMapCoordinates);
+
+            OnAlignToCelestialObject?.Invoke(Global.Game.GetSelectedObject());
+        }
+
+        public void ActivateModule(ICelestialObject celestialObject)
+        {
+            _activeCelestialObject = celestialObject;
+            _activeModule = (CelestialObjectTypes) celestialObject.Classification;
         }
     }
 }

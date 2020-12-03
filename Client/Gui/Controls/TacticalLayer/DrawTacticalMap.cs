@@ -1,51 +1,60 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using Engine.Common.Geometry;
 using Engine.Configuration;
 using Engine.Gui;
-using Engine.Layers.Tactical;
 using Engine.Management.Server;
-using Engine.Tools;
-using OutlandAreaCommon;
+using Engine.ScreenDrawing;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
+using ObjectLocation = OutlandAreaCommon.Server.DataProcessing.ObjectLocation;
 
 namespace OutlandArea.Tools
 {
     public class DrawTacticalMap
     {
-        private const int drawSpaceshipInformationLenght = 40;
-        private const int drawSpaceshipInformationShelfLenght = 90;
-        public static void DrawMissile(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        private const int DrawSpaceshipInformationLenght = 40;
+        private const int DrawSpaceshipInformationShelfLenght = 90;
+        public static void DrawMissile(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
             // Convert celestial object coordinates to screen coordinates
-            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, location);
 
-            var image = UI.LoadGenericImage("Tactical/tactical_map_missile");
-
-            graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
+            graphics.FillEllipse(new SolidBrush(Color.DarkOliveGreen), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
         }
 
-        public static void DrawSpaceship(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawSpaceship(ICelestialObject spaceShip, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
-            var mainColor = Color.DarkRed;
-            var mainIcon = "EnemySpaceship";
-
-            //if (isPlayerSpacecraft)
-            //{
-            mainIcon = "PlayerSpaceship";
-            //}
-            // Convert celestial object coordinates to screen coordinates
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
-            var bmpSpacecraft = UI.RotateImage(UI.LoadImage(mainIcon), (float) celestialObject.Direction);
+            var ship = (Spaceship) spaceShip;
+            var color = Color.Black;
 
-            graphics.DrawImage(bmpSpacecraft, new PointF(screenCoordinates.X - bmpSpacecraft.Width / 2, screenCoordinates.Y - bmpSpacecraft.Height / 2));
+            switch (ship.Classification)
+            {
+                case 200:
+                    color = Color.DarkOliveGreen;
+                    break;
 
+                case 201:
+                    color = Color.DarkGray;
+                    break;
+
+                case 202:
+                    color = Color.DarkRed;
+                    break;
+
+                case 203:
+                    color = Color.SeaGreen;
+                    break;
+            }
+
+            graphics.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            graphics.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         public static void DrawSpaceshipInformation(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
@@ -81,13 +90,13 @@ namespace OutlandArea.Tools
                 drawSpaceshipInformationShelf = 90;
             }
 
-            var footCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, drawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
+            var footCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, DrawSpaceshipInformationLenght, drawSpaceshipInformationAngle);
 
 
             graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, footCoordinates.X, footCoordinates.Y);
 
             
-            var shelfCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(footCoordinates, drawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
+            var shelfCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(footCoordinates, DrawSpaceshipInformationShelfLenght, drawSpaceshipInformationShelf);
 
             graphics.DrawLine(pen, footCoordinates.X, footCoordinates.Y, shelfCoordinates.X, shelfCoordinates.Y);
 
@@ -107,12 +116,11 @@ namespace OutlandArea.Tools
             #endregion
         }
 
-        public static void DrawAsteroid(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawAsteroid(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
-            // Convert celestial object coordinates to screen coordinates
-            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
-            graphics.FillEllipse(new SolidBrush(Color.WhiteSmoke), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            graphics.FillEllipse(new SolidBrush(Color.Gray), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         public static void DrawActiveCelestialObject(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
@@ -138,48 +146,14 @@ namespace OutlandArea.Tools
             }
         }
 
-        public static void DrawCelestialObjectDirection(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
+        public static void DrawCelestialObjectDirection(ICelestialObject celestialObject, PointF location, Graphics graphics, ScreenParameters screenParameters)
         {
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
 
-            if ((CelestialObjectTypes) celestialObject.Classification == CelestialObjectTypes.Missile)
-            {
-                // No need draw direction for missile
-                return;
-            }
+            if ((CelestialObjectTypes)celestialObject.Classification == CelestialObjectTypes.Explosion) return;
 
-            float[] dashValues = { 2, 2, 2, 2 };
-            var blackPen = new Pen(Color.Black, 1) { DashPattern = dashValues };
-
-            
-            var additionalLenght = 0;
-
-            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
-
-            if (celestialObject.Classification == 2)
-            {
-                additionalLenght = UI.RotateImage(UI.LoadGenericImage("PlayerSpaceship"), (float)celestialObject.Direction).Width / 2;
-            }
-
-            var directionCoordinates = OutlandAreaCommon.Tools.MoveCelestialObjects(screenCoordinates, celestialObject.Speed + additionalLenght, celestialObject.Direction);
-
-            var pen = new Pen(Color.DimGray, 1) { StartCap = LineCap.ArrowAnchor };
-
-            using (var capPath = new GraphicsPath())
-            {
-                const int triangleSize = 4;
-                // A triangle
-                capPath.AddLine(-triangleSize, 0, triangleSize, 0);
-                capPath.AddLine(-triangleSize, 0, 0, triangleSize);
-                capPath.AddLine(0, triangleSize, triangleSize, 0);
-
-                pen.CustomEndCap = new CustomLineCap(null, capPath);
-
-                graphics.DrawLine(pen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-                graphics.DrawLine(blackPen, screenCoordinates.X, screenCoordinates.Y, directionCoordinates.X, directionCoordinates.Y);
-            }
-
-
-            
+            var move = SpaceMapTools.Move(screenCoordinates, 8, 6, celestialObject.Direction);
+            SpaceMapGraphics.DrawArrow(graphics, move, Color.DimGray);
         }
 
         public static void DrawTrajectory(GameSession gameSession, ICelestialObject spaceShip, ICelestialObject targetObject, Graphics graphics, ScreenParameters screenParameters)
@@ -321,25 +295,17 @@ namespace OutlandArea.Tools
 
         }
 
-
-
         public static void DrawPreTarget(ICelestialObject celestialObject, Graphics graphics, ScreenParameters screenParameters)
         {
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
 
-            var image = UI.LoadGenericImage("Targets/TargetOnMap");
-
-            //graphics.DrawImage(image, new PointF(screenCoordinates.X - image.Width / 2, screenCoordinates.Y - image.Height / 2));
-
             var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
-
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 12, screenCoordinates.Y - 12, 24, 24);
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 22, screenCoordinates.Y - 22, 44, 44);
 
             graphics.DrawEllipse(radarLinePen, screenCoordinates.X - 32, screenCoordinates.Y - 32, 64, 64);
-
             
 
             graphics.DrawLine(radarLinePen, screenCoordinates.X - 45, screenCoordinates.Y, screenCoordinates.X + 45, screenCoordinates.Y);
@@ -355,12 +321,6 @@ namespace OutlandArea.Tools
             var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(celestialObject.PositionX, celestialObject.PositionY));
 
             var radarLinePen = new Pen(Color.FromArgb(60, 60, 60), 1);
-
-            var screenSpaceShipCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(spaceShip.PositionX, spaceShip.PositionY));
-
-
-            //graphics.DrawLine(radarLinePen, screenSpaceShipCoordinates.X, screenSpaceShipCoordinates.Y, screenCoordinates.X, screenCoordinates.Y);
-
 
             graphics.DrawLine(radarLinePen, screenCoordinates.X - 15, screenCoordinates.Y, screenCoordinates.X + 15, screenCoordinates.Y);
 

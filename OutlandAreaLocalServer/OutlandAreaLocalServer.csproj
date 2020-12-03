@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="CommandsExecute\AlignTo.cs" />
+    <Compile Include="CommandsExecute\ExecuteFire.cs" />
+    <Compile Include="CommandsExecute\Explosion.cs" />
     <Compile Include="Convertor.cs" />
     <Compile Include="LocalGameServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

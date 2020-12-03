@@ -22,6 +22,22 @@ namespace OutlandAreaCommon.Tactical
             return null;
         }
 
+        public static List<Command> GetSpaceShipCommands(this GameSession session, long id)
+        {
+            // TODO: Big memory crash on collection modification
+            var result = new List<Command>();
+
+            foreach (var sessionCommand in session.Commands)
+            {
+                if (sessionCommand.CelestialObjectId == id)
+                {
+                    result.Add(sessionCommand.DeepClone());
+                }
+            }
+
+            return result;
+        }
+
         public static CommandTypes GetMovementType(this GameSession session, long id)
         {
             var cObject = session.GetCelestialObject(id);
@@ -67,6 +83,8 @@ namespace OutlandAreaCommon.Tactical
 
         public static void RemoveCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
+            if (celestialObject == null) return;
+
             var result = new List<ICelestialObject>();
 
             foreach (var mapCelestialObject in session.Map.CelestialObjects)

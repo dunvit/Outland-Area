@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using OutlandAreaCommon;
-using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaLocalServer
 {
@@ -13,6 +11,9 @@ namespace OutlandAreaLocalServer
         public GameSession Execute(GameSession gameSession)
         {
             var result = gameSession.DeepClone();
+
+            // Clear history log for each turn
+            result.History = new List<string>();
 
             if (gameSession.Commands == null)
             {
@@ -27,32 +28,69 @@ namespace OutlandAreaLocalServer
             {
                 switch (command.Type)
                 {
-                    case CommandTypes.MoveForward:
-                        //var executeMoveForwardResult = new Movement().Execute(result.Map.CelestialObjects, command);
+                    case CommandTypes.Explosion:
 
-                        //if (executeMoveForwardResult.IsResume)
-                        //{
-                        //    result.Commands.Add(executeMoveForwardResult.Command.DeepClone());
-                        //}
+                        var executeExplosion = new CommandsExecute.Explosion().Execute(result, command);
+
+                        if (executeExplosion.IsResume)
+                        {
+                            result.Commands.Add(executeExplosion.Command.DeepClone());
+                        }
+                        else
+                        {
+                            var explosion = (Explosion)gameSession.GetCelestialObject(command.CelestialObjectId);
+
+                            result.RemoveCelestialObject(explosion);
+                        }
 
                         break;
 
                     case CommandTypes.AlignTo:
-                        //var executeAlignToResult = new CommandsExecute.AlignTo().Execute(result, command);
+                        var executeAlignToResult = new CommandsExecute.AlignTo().Execute(result, command);
 
-                        //if (executeAlignToResult.IsResume)
-                        //{
-                        //    result.Commands.Add(executeAlignToResult.Command.DeepClone());
-                        //}
+                        if (executeAlignToResult.IsResume)
+                        {
+                            result.Commands.Add(executeAlignToResult.Command.DeepClone());
+                        }
                         break;
 
                     case CommandTypes.Fire:
-                        //var executeFireResult = ExecuteFire(result, command);
+                        var executeFireResult = new CommandsExecute.ExecuteFire().Execute(result, command);
 
-                        //if (executeFireResult.IsResume)
-                        //{
-                        //    result.Commands.Add(executeFireResult.Command.DeepClone());
-                        //}
+                        if (executeFireResult.IsResume)
+                        {
+                            result.Commands.Add(executeFireResult.Command.DeepClone());
+                        }
+                        else
+                        {
+                            // Replace missile align to operation to explosive object
+                            var missile = (Missile)gameSession.GetCelestialObject(command.CelestialObjectId);
+                            var missileTarget = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+
+                            result.RemoveCelestialObject(missileTarget);
+
+                            var explosionObject = new Explosion
+                            {
+                                Classification = 800,
+                                Damage = missile.Damage,
+                                Name = missile.Name,
+                                PositionX = missileTarget.PositionX,
+                                PositionY = missileTarget.PositionY,
+                                Radius = missile.Radius,
+                                Speed = 0,
+                                Direction = 0
+                            };
+
+                            result.AddCelestialObject(explosionObject);
+
+                            var explosionCommand = new Command
+                            {
+                                TargetCelestialObjectId = explosionObject.Id,
+                                Type = CommandTypes.Explosion,
+                                CelestialObjectId = explosionObject.Id
+                            };
+                            result.Commands.Add(explosionCommand);
+                        }
                         break;
 
                     case CommandTypes.Orbit:
@@ -70,38 +108,6 @@ namespace OutlandAreaLocalServer
 
 
 
-        private CommandExecuteResult ExecuteFire(GameSession gameSession, Command command)
-        {
-            var isResume = true;
-
-            var missile = gameSession.GetCelestialObject(command.CelestialObjectId);
-            var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
-
-            if (missile == null) return new CommandExecuteResult { Command = command, IsResume = false };
-            if (targetObject == null) return new CommandExecuteResult { Command = command, IsResume = false };
-
-            var pointCurrentLocation = new PointF(missile.PositionX, missile.PositionY);
-            var pointTargetLocation = new PointF(targetObject.PositionX, targetObject.PositionY);
-
-            var direction = Coordinates.GetRotation(pointTargetLocation, pointCurrentLocation);
-
-            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
-            {
-                if (mapCelestialObject.Id == missile.Id)
-                {
-                    mapCelestialObject.Direction = direction;
-                }
-            }
-
-            var distance = Coordinates.GetDistance(missile.GetLocation(), targetObject.GetLocation());
-
-            if (distance <= missile.Speed / 2)
-            {
-                // BOOM!!!
-                gameSession.RemoveCelestialObject(missile);
-            }
-
-            return new CommandExecuteResult { Command = command, IsResume = isResume };
-        }
+        
     }
 }

@@ -124,6 +124,11 @@ namespace Engine.Management
             OnSelectCelestialObject?.Invoke(celestialObject);
         }
 
+        public ICelestialObject GetSelectedObject()
+        {
+            return _gameSession.SelectedObject;
+        }
+
         public GameSession Initialization()
         {
             _gameSession = _gameServer.Initialization();
@@ -197,32 +202,51 @@ namespace Engine.Management
             Command(_gameSession.Id, playerShip.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Orbit);
         }
 
-        public void AddCommandOpenFire(ICelestialObject celestialObject)
+        public void AddCommandOpenFire(ICelestialObject missile)
         {
             var playerShip = _gameSession.GetPlayerSpaceShip();
 
-            Missile missile = new Missile
+            var targetPointInSpace = new PointInSpace
             {
-                OwnerId = playerShip.Id,
-                PositionY = playerShip.PositionY,
-                PositionX = playerShip.PositionX,
-                Speed = 40,
-                Direction = playerShip.Direction,
-                Name = "Missile",
+                Id = new Random().NextInt(),
+                PositionY = missile.PositionY,
+                PositionX = missile.PositionX,
+                Speed = 0,
+                Direction = 0,
+                Name = "Missile Target",
                 Signature = 1,
-                Classification = (int)CelestialObjectTypes.Missile,
+                Classification = (int)CelestialObjectTypes.PointInMap,
                 IsScanned = true
             };
-            // TODO: Set direction to target ship
 
-            AddCelestialObject(missile);
+            missile.PositionX = playerShip.PositionX;
+            missile.PositionY = playerShip.PositionY;
+            missile.OwnerId = playerShip.Id;
 
-            Command(_gameSession.Id, missile.Id, celestialObject.Id, 0, 0, (int)CommandTypes.Fire);
+            AddCelestialObject(targetPointInSpace);
+            AddMissile(missile.ToMissile());
+
+            Command(_gameSession.Id, missile.Id, targetPointInSpace.Id, 0, 0, (int)CommandTypes.Fire);
         }
 
         public void AddCelestialObject(ICelestialObject celestialObject)
         {
             _gameServer.AddCelestialObject(_gameSession.Id, celestialObject.Id, celestialObject.PositionX, celestialObject.PositionY, (int)celestialObject.Direction, celestialObject.Speed, celestialObject.Classification, celestialObject.Name);
+        }
+
+        public void AddMissile(Missile celestialObject)
+        {
+            _gameServer.AddCelestialObject(
+                _gameSession.Id, 
+                celestialObject.Id, 
+                celestialObject.PositionX, 
+                celestialObject.PositionY, 
+                (int)celestialObject.Direction, 
+                celestialObject.Speed, 
+                celestialObject.Classification, 
+                celestialObject.Name,
+                celestialObject.Radius, 
+                celestialObject.Damage);
         }
     }
 }

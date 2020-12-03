@@ -1,0 +1,127 @@
+{
+  "id": 1005302115,
+  "turn": 0,
+  "celestialMap": {
+    "id": "1047625112",
+    "isEnabled": false,
+    "celestialObjects": [
+      {
+        "positionX": 10400,
+        "positionY": 10400,
+        "id": 1000348944,
+        "name": "t5ADX",
+        "direction": 164,
+        "speed": 3,
+        "signature": 5771,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
+        "positionX": 9700,
+        "positionY": 10110,
+        "id": 1000348945,
+        "name": "Maroder",
+        "direction": 90,
+        "speed": 6,
+        "maxSpeed": 12,
+        "signature": 75,
+        "classification": 202,
+        "isScanned": false,
+        "systems": [
+          {
+            "propulsion": [
+              {
+                "id": "PMV5002",
+                "name": "VVVV"
+              }
+            ],
+            "weapon": [
+              {
+                "id": "WRS5002",
+                "name": "125mm Railgun I"
+              }
+            ],
+            "general": [
+              {
+                "id": "GRM5002",
+                "name": "Reactor Mk I"
+              },
+              {
+                "id": "GRM5002",
+                "name": "Reactor Mk I"
+              }
+            ],
+            "shields": [
+              {
+                "id": "SSM5001",
+                "name": "Shield Mk I"
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "positionX": 10000,
+        "positionY": 10000,
+        "id": 5005,
+        "name": "HMS Glowworm",
+        "direction": 90,
+        "speed": 10,
+        "maxSpeed": 12,
+        "signature": 200,
+        "classification": 200,
+        "isScanned": false,
+        "systems": [
+          {
+            "propulsion": [
+              {
+                "id": "PMV5002",
+                "name": "VVVV"
+              }
+            ],
+            "weapon": [
+              {
+                "id": "WRS5002",
+                "name": "125mm Railgun I"
+              }
+            ],
+            "general": [
+              {
+                "id": "GRM5002",
+                "name": "Reactor Mk I"
+              },
+              {
+                "id": "GRM5002",
+                "name": "Reactor Mk I"
+              }
+            ],
+            "shields": [
+              {
+                "id": "SSM5001",
+                "name": "Shield Mk I"
+              },
+              {
+                "id": "SSM5002",
+                "name": "Shield Mk II"
+              }
+            ]
+          }
+
+        ]
+      }
+    ],
+    "turn": 0
+  },
+  "commands": {
+    "list": [
+      {
+        "typeId": 0,
+        "celestialObjectID": 0,
+        "memberID": 0,
+        "targetCelestialObjectID": 0,
+        "targetCell": 0
+      }
+    ]
+  }
+}
