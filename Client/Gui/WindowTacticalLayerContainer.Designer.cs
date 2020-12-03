@@ -35,11 +35,11 @@
             this.crlTacticalMap = new Engine.Gui.Controls.TacticalMap();
             this.commandsWeaponCompartment1 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.commandsWeaponCompartment2 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
-            this.commandsWeaponCompartment3 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.crlWeaponLauncher = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.commandsWeaponCompartment5 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.panel2 = new System.Windows.Forms.Panel();
             this.battleInformation1 = new Engine.Gui.Controls.TacticalLayer.BattleInformation();
+            this.genericCompartment1 = new Engine.Gui.Controls.TacticalLayer.GenericCompartment();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,15 +117,6 @@
             this.commandsWeaponCompartment2.Size = new System.Drawing.Size(293, 207);
             this.commandsWeaponCompartment2.TabIndex = 7;
             // 
-            // commandsWeaponCompartment3
-            // 
-            this.commandsWeaponCompartment3.BackColor = System.Drawing.Color.Black;
-            this.commandsWeaponCompartment3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.commandsWeaponCompartment3.Location = new System.Drawing.Point(311, 861);
-            this.commandsWeaponCompartment3.Name = "commandsWeaponCompartment3";
-            this.commandsWeaponCompartment3.Size = new System.Drawing.Size(293, 207);
-            this.commandsWeaponCompartment3.TabIndex = 8;
-            // 
             // crlWeaponLauncher
             // 
             this.crlWeaponLauncher.BackColor = System.Drawing.Color.Black;
@@ -161,17 +152,26 @@
             this.battleInformation1.Size = new System.Drawing.Size(200, 244);
             this.battleInformation1.TabIndex = 12;
             // 
+            // genericCompartment1
+            // 
+            this.genericCompartment1.BackColor = System.Drawing.Color.Black;
+            this.genericCompartment1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.genericCompartment1.Location = new System.Drawing.Point(311, 861);
+            this.genericCompartment1.Name = "genericCompartment1";
+            this.genericCompartment1.Size = new System.Drawing.Size(293, 207);
+            this.genericCompartment1.TabIndex = 13;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.genericCompartment1);
             this.Controls.Add(this.battleInformation1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.commandsWeaponCompartment5);
             this.Controls.Add(this.crlWeaponLauncher);
-            this.Controls.Add(this.commandsWeaponCompartment3);
             this.Controls.Add(this.commandsWeaponCompartment2);
             this.Controls.Add(this.commandsWeaponCompartment1);
             this.Controls.Add(this.controlCommands);
@@ -196,10 +196,10 @@
         private Controls.TacticalMap crlTacticalMap;
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment1;
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment2;
-        private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment3;
         private Controls.TacticalLayer.CommandsWeaponCompartment crlWeaponLauncher;
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment5;
         private System.Windows.Forms.Panel panel2;
         private Controls.TacticalLayer.BattleInformation battleInformation1;
+        private Controls.TacticalLayer.GenericCompartment genericCompartment1;
     }
 }

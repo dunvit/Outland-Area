@@ -95,6 +95,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapTools.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawTacticalMap.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\GenericCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\GenericCompartment.Designer.cs">
+      <DependentUpon>GenericCompartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\GranularObjectInformation.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.cs">
       <SubType>UserControl</SubType>
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.resx">
       <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
+      <DependentUpon>GenericCompartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedObjectControl.resx">
       <DependentUpon>SelectedObjectControl.cs</DependentUpon>
