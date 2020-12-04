@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaLocalServer
@@ -64,8 +66,10 @@ namespace OutlandAreaLocalServer
                         else
                         {
                             // Replace missile align to operation to explosive object
-                            var missile = (Missile)gameSession.GetCelestialObject(command.CelestialObjectId);
+                            var celestialObject = gameSession.GetCelestialObject(command.CelestialObjectId);
                             var missileTarget = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
+
+                            var missile = gameSession.GetCelestialObject(command.CelestialObjectId).ToMissile();
 
                             result.RemoveCelestialObject(missileTarget);
 
@@ -73,10 +77,10 @@ namespace OutlandAreaLocalServer
                             {
                                 Classification = 800,
                                 Damage = missile.Damage,
-                                Name = missile.Name,
+                                Name = celestialObject.Name,
                                 PositionX = missileTarget.PositionX,
                                 PositionY = missileTarget.PositionY,
-                                Radius = missile.Radius,
+                                Radius = missile.ExplosionRadius,
                                 Speed = 0,
                                 Direction = 0
                             };
@@ -93,9 +97,27 @@ namespace OutlandAreaLocalServer
                         }
                         break;
 
-                    case CommandTypes.Orbit:
+                    case CommandTypes.ReloadWeapon:
 
-                        //var a = new CommandsExecute.Orbit().Execute(result, command);
+                        foreach (var celestialObjects in result.Map.CelestialObjects)
+                        {
+                            if (celestialObjects.Id ==command.CelestialObjectId)
+                            {
+                                var spaceship = celestialObjects.ToSpaceship();
+
+                                foreach (var module in spaceship.Modules)
+                                {
+                                    if (module.Id == command.TargetCelestialObjectId)
+                                    {
+                                        var moduleWeapon = (IWeaponModule)module;
+
+                                        ((IWeaponModule)module).Reloading = 0;
+
+                                        moduleWeapon.Reloading = 0;
+                                    }
+                                }
+                            }
+                        }
 
                         break;
                 }

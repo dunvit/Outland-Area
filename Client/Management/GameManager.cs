@@ -2,16 +2,15 @@
 using System.Diagnostics;
 using System.Drawing;
 using Engine.Gui;
-using Engine.Layers.Tactical;
 using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
 using OutlandAreaLocalServer;
 
 namespace Engine.Management
@@ -22,8 +21,9 @@ namespace Engine.Management
 
         private readonly Settings _applicationSettings;
         private GameSession _gameSession;
-
+        
         public event Action<GameSession> OnEndTurn;
+        public event Action<GameSession> OnBattleInitialization;
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
@@ -64,6 +64,7 @@ namespace Engine.Management
 
             _gameSession = Initialization();
 
+            OnBattleInitialization?.Invoke(_gameSession.DeepClone());
             OnEndTurn?.Invoke(_gameSession.DeepClone());
         }
 
@@ -221,10 +222,10 @@ namespace Engine.Management
 
             missile.PositionX = playerShip.PositionX;
             missile.PositionY = playerShip.PositionY;
-            missile.OwnerId = playerShip.Id;
+            //missile.OwnerId = playerShip.Id;
 
             AddCelestialObject(targetPointInSpace);
-            AddMissile(missile.ToMissile());
+            AddMissile(playerShip, missile);
 
             Command(_gameSession.Id, missile.Id, targetPointInSpace.Id, 0, 0, (int)CommandTypes.Fire);
         }
@@ -234,8 +235,10 @@ namespace Engine.Management
             _gameServer.AddCelestialObject(_gameSession.Id, celestialObject.Id, celestialObject.PositionX, celestialObject.PositionY, (int)celestialObject.Direction, celestialObject.Speed, celestialObject.Classification, celestialObject.Name);
         }
 
-        public void AddMissile(Missile celestialObject)
+        public void AddMissile(ICelestialObject playerShip, ICelestialObject celestialObject)
         {
+            var missile = (IMissile) celestialObject;
+
             _gameServer.AddCelestialObject(
                 _gameSession.Id, 
                 celestialObject.Id, 
@@ -245,8 +248,9 @@ namespace Engine.Management
                 celestialObject.Speed, 
                 celestialObject.Classification, 
                 celestialObject.Name,
-                celestialObject.Radius, 
-                celestialObject.Damage);
+                missile.AmmoId,
+                celestialObject.OwnerId,
+                playerShip.Id);
         }
     }
 }

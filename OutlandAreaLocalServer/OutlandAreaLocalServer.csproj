@@ -57,6 +57,7 @@
     <Compile Include="Convertor.cs" />
     <Compile Include="LocalGameServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reloading.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OutlandAreaCommon\OutlandAreaCommon.csproj">
@@ -67,6 +68,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Actions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

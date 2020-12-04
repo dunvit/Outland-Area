@@ -1,9 +1,10 @@
 ﻿using System;
+using OutlandAreaCommon.Equipment.Weapon;
 
 namespace OutlandAreaCommon.Equipment.General.Reactor
 {
     [Serializable]
-    public class Reactor :  IModule, IReactor
+    public class Reactor : BaseModule, IModule, IReactor
     {
         public long Id { get; set; }
         public string Name { get; set; }

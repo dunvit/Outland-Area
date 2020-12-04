@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Timers;
 using log4net;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
@@ -120,22 +122,22 @@ namespace OutlandAreaLocalServer
         }
 
         public void AddCelestialObject(int sessionId, int objectId, float positionX, float positionY, int direction, int speed,
-            int classification, string name, float radius, float damage)
+            int classification, string name, int ammoId, int moduleId, int shipOwnerId)
         {
-            ICelestialObject celestialObject = new Missile
-            {
-                Id = objectId,
-                PositionX = positionX,
-                PositionY = positionY,
-                Classification = classification,
-                Direction = direction,
-                Speed = speed,
-                Name = name,
-                Radius = radius,
-                Damage = damage
-            };
 
-            _gameSession.AddCelestialObject(celestialObject);
+            var missile = MissilesFactory.GetMissile(ammoId).ToCelestialObject();
+
+            missile.Id = objectId;
+            missile.PositionX = positionX;
+            missile.PositionY = positionY;
+            missile.Direction = direction;
+            missile.Speed = speed;
+            missile.Name = name;
+            missile.OwnerId = moduleId;
+
+            _gameSession.AddCelestialObject(missile);
+
+            Command(sessionId, shipOwnerId, moduleId, 0, 0, CommandTypes.ReloadWeapon.ToInt());
         }
 
 
@@ -153,6 +155,8 @@ namespace OutlandAreaLocalServer
             turnGameSession = new Commands().Execute(turnGameSession);
 
             turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
+
+            turnGameSession.Map = new Reloading().Recalculate(turnGameSession);
 
             turnGameSession.Turn++;
 

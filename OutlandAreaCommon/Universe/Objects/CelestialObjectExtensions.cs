@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaCommon.Universe.Objects
@@ -17,9 +18,9 @@ namespace OutlandAreaCommon.Universe.Objects
             return celestialObject.Classification >= 200 && celestialObject.Classification < 299;
         }
 
-        public static Missile ToMissile(this ICelestialObject celestialObject)
+        public static IMissile ToMissile(this ICelestialObject celestialObject)
         {
-            return (Missile)celestialObject;
+            return (IMissile)celestialObject;
         }
 
         public static Explosion ToExplosion(this ICelestialObject celestialObject)

@@ -2,15 +2,17 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Engine.Tools;
+using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Equipment.Ammunition.Missiles;
+using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
     public partial class CommandsWeaponCompartment : UserControl
     {
         public event Action<ICelestialObject> OnActivateModule;
-
+        private IModule _module;
         private Point _location;
 
         public CommandsWeaponCompartment()
@@ -49,17 +51,22 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         private void Event_ActivateModule(object sender, EventArgs e)
         {
-            var missile = new Missile
-            {
-                Name = "Light missile",
-                Speed = 30,
-                Classification = (int) CelestialObjectTypes.Missile,
-                Signature = 10,
-                Damage = 30,
-                Radius = 50
-            };
+            //if(_module.Reloading < _module.ReloadTime)
+            //{
+            //    // TODO: Add log information
+            //    return;
+            //}
+
+            var missile = MissilesFactory.GetMissile(_module.ToWeapon().AmmoId).ToCelestialObject();
+
+            missile.OwnerId = (int)_module.Id;
 
             OnActivateModule?.Invoke(missile);
+        }
+
+        public void Initialization(IModule module)
+        {
+            _module = module;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 namespace OutlandAreaCommon
 {
@@ -20,6 +21,7 @@ namespace OutlandAreaCommon
 
         public static int NextInt(this Random random)
         {
+            Thread.Sleep(50);
             return random.Next(1000000000, int.MaxValue);
         }
     }

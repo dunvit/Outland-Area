@@ -2,9 +2,9 @@
 {
     public interface IWeaponModule
     {
+        CategoryAmmo UsedWith { get; set; }
+        int AmmoId { get; set; }
         double ReloadTime { get; set; }
-        double ShieldDamage { get; set; }
-
-        double CriticalHit { get; set; }
+        double Reloading { get; set; }
     }
 }

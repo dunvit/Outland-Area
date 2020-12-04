@@ -1,4 +1,5 @@
-﻿using OutlandAreaCommon.Equipment.General.Reactor;
+﻿using System;
+using OutlandAreaCommon.Equipment.General.Reactor;
 using OutlandAreaCommon.Equipment.Propulsion;
 using OutlandAreaCommon.Equipment.Shield;
 using OutlandAreaCommon.Equipment.Weapon;
@@ -7,7 +8,7 @@ namespace OutlandAreaCommon.Equipment
 {
     public class Factory
     {
-        public static IModule CreateMicroWarpDrive(string id)
+        public static IModule CreateMicroWarpDrive(int ownerId, string id)
         {
             IModule resultModule = null;
 
@@ -15,31 +16,34 @@ namespace OutlandAreaCommon.Equipment
             {
                 case "PMV5002":
                     resultModule = new MicroWarpDrive {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
                         ActivationCost = 100, 
                         Power = 2000, 
                         Category = Category.Propulsion, 
                         Name = "Civilian Prototype Mk I"};
                     break;
             }
-
             return resultModule;
         }
 
-        public static IModule CreateWeaponModule(string id)
+        public static IModule CreateWeaponModule(int ownerId, string id)
         {
             IModule resultModule = null;
 
             switch (id)
             {
                 case "WRS5002":
-                    resultModule = new RailGun
+                    resultModule = new LightMissileLauncher
                     {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
                         ActivationCost = 100,
-                        CriticalHit = 10,
                         Category = Category.Weapon,
-                        ReloadTime = 5,
-                        ShieldDamage = 200,
-                        Name = "125mm Railgun I"
+                        ReloadTime = 12,
+                        Reloading = 12,
+                        AmmoId = 101,
+                        Name = "Light Missile Launcher I"
                     };
                     break;
             }
@@ -47,7 +51,7 @@ namespace OutlandAreaCommon.Equipment
             return resultModule;
         }
 
-        public static IModule CreateGeneralModule(string id)
+        public static IModule CreateGeneralModule(int ownerId, string id)
         {
             IModule resultModule = null;
 
@@ -56,6 +60,8 @@ namespace OutlandAreaCommon.Equipment
                 case "GRM5002":
                     resultModule = new Reactor
                     {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 2000,
                         Category = Category.Reactor,
@@ -67,7 +73,7 @@ namespace OutlandAreaCommon.Equipment
             return resultModule;
         }
 
-        public static IModule CreateShieldModule(string id)
+        public static IModule CreateShieldModule(int ownerId, string id)
         {
             IModule resultModule = null;
 
@@ -76,6 +82,8 @@ namespace OutlandAreaCommon.Equipment
                 case "SSM5001":
                     resultModule = new ShieldModule
                     {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 200,
                         Category = Category.Shield,
@@ -86,6 +94,8 @@ namespace OutlandAreaCommon.Equipment
                 case "SSM5002":
                     resultModule = new ShieldModule
                     {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
                         ActivationCost = 110,
                         Power = 250,
                         Category = Category.Shield,

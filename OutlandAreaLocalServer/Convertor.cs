@@ -98,7 +98,7 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var propulsionModule in allModulesSystems["propulsion"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateMicroWarpDrive((string)propulsionModule["id"]));
+                                        spaceship.Modules.Add(Factory.CreateMicroWarpDrive(spaceship.Id, (string)propulsionModule["id"]));
                                     }
                                 }
 
@@ -106,7 +106,7 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var weaponModule in allModulesSystems["weapon"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateWeaponModule((string)weaponModule["id"]));
+                                        spaceship.Modules.Add(Factory.CreateWeaponModule(spaceship.Id, (string)weaponModule["id"]));
                                     }
                                 }
 
@@ -114,7 +114,7 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var generalModule in allModulesSystems["general"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateGeneralModule((string)generalModule["id"]));
+                                        spaceship.Modules.Add(Factory.CreateGeneralModule(spaceship.Id, (string)generalModule["id"]));
                                     }
                                 }
 
@@ -122,7 +122,7 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var generalModule in allModulesSystems["shields"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateShieldModule((string)generalModule["id"]));
+                                        spaceship.Modules.Add(Factory.CreateShieldModule(spaceship.Id, (string)generalModule["id"]));
                                     }
                                 }
 

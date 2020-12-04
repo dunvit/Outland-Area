@@ -43,8 +43,7 @@ namespace Engine.Gui.Controls.TacticalLayer
                         break;
                     case CommandTypes.Orbit:
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+
                 }
             }
 

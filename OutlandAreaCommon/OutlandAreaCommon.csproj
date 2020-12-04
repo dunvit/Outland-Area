@@ -52,16 +52,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\FixedSizedQueue.cs" />
+    <Compile Include="Equipment\Ammunition\Missiles\MissilesFactory.cs" />
+    <Compile Include="Equipment\Ammunition\Missiles\IMissile.cs" />
+    <Compile Include="Equipment\Ammunition\Missiles\LightMissiles\InfernoLightMissile.cs" />
     <Compile Include="Equipment\Category.cs" />
+    <Compile Include="Equipment\CategoryAmmo.cs" />
+    <Compile Include="Equipment\CategoryAmmoExtentions.cs" />
     <Compile Include="Equipment\Factory.cs" />
     <Compile Include="Equipment\General\Reactor\IReactor.cs" />
     <Compile Include="Equipment\General\Reactor\Reactor.cs" />
     <Compile Include="Equipment\IModule.cs" />
+    <Compile Include="Equipment\ModuleExtensions.cs" />
     <Compile Include="Equipment\Propulsion\IPropulsionModule.cs" />
     <Compile Include="Equipment\Propulsion\MicroWarpDrive.cs" />
     <Compile Include="Equipment\Shield\IShieldModule.cs" />
     <Compile Include="Equipment\Shield\ShieldModule.cs" />
+    <Compile Include="Equipment\BaseModule.cs" />
     <Compile Include="Equipment\Weapon\IWeaponModule.cs" />
+    <Compile Include="Equipment\Weapon\LightMissileLauncher.cs" />
     <Compile Include="Equipment\Weapon\RailGun.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Geometry\Extensions.cs" />

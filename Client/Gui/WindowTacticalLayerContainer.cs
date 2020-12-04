@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using Engine.Tools;
+using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui
 {
@@ -16,6 +20,7 @@ namespace Engine.Gui
                 return;
 
             Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
+            Global.Game.OnBattleInitialization += Event_BattleInitialization;
 
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
@@ -25,6 +30,18 @@ namespace Engine.Gui
             controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
 
             crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
+            
+        }
+
+        private void Event_BattleInitialization(GameSession gameSession)
+        {
+            var playerSpaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
+            
+            foreach (var module in playerSpaceship.Modules.Where(m => m.Category == Category.Weapon))
+            {
+                crlWeaponLauncher.Initialization(module);
+            }
+
         }
 
         private void Event_Exit(object sender, EventArgs e)

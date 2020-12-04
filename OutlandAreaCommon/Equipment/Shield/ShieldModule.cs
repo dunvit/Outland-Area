@@ -1,9 +1,10 @@
 ﻿using System;
+using OutlandAreaCommon.Equipment.Weapon;
 
 namespace OutlandAreaCommon.Equipment.Shield
 {
     [Serializable]
-    public class ShieldModule : IModule, IShieldModule
+    public class ShieldModule : BaseModule, IModule, IShieldModule
     {
         public long Id { get; set; }
         public string Name { get; set; }
