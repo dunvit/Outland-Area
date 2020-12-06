@@ -9,7 +9,7 @@
 
         //    var result = AllIn.GetTrajectoryApproach(pointCurrentLocation, pointTargetLocation, spaceShip.Direction, spaceShip.Speed, 200);
 
-        //    foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+        //    foreach (var mapCelestialObject in gameSession.SpaceMap.CelestialObjects)
         //    {
         //        if (mapCelestialObject.Id == spaceShip.Id)
         //        {

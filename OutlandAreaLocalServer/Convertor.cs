@@ -142,7 +142,7 @@ namespace OutlandAreaLocalServer
                 
             }
 
-            gameSession.Map = celestialMap;
+            gameSession.SpaceMap = celestialMap;
 
             return gameSession;
         }

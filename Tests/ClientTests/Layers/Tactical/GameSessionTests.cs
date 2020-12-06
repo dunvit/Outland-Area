@@ -18,7 +18,7 @@ namespace Tests.ClientTests.Layers.Tactical
             var _gameSession = Convertor.ToGameSession(
                 Convertor.GetSavedMap("Map_005"));
 
-            Assert.AreEqual(2, _gameSession.Map.CelestialObjects.Count);
+            Assert.AreEqual(2, _gameSession.SpaceMap.CelestialObjects.Count);
         }
 
         [TestMethod]

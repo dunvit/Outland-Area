@@ -20,7 +20,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             var destroyedSpaceships = new List<ICelestialObject>();
 
-            foreach (var celestialObject in gameSession.Map.CelestialObjects)
+            foreach (var celestialObject in gameSession.SpaceMap.CelestialObjects)
             {
                 if (celestialObject.IsSpaceship() == false) continue;
 

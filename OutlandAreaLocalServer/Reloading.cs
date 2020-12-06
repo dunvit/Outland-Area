@@ -15,7 +15,7 @@ namespace OutlandAreaLocalServer
 
         public CelestialMap Recalculate(GameSession gameSession)
         {
-            var result = gameSession.Map.DeepClone();
+            var result = gameSession.SpaceMap.DeepClone();
 
             foreach (var celestialObject in result.CelestialObjects)
             {

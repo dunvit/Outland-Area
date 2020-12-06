@@ -169,7 +169,7 @@ namespace Engine.Management
             Logger.Debug($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {_gameSession.Id}." +
                     $" Turn = {_gameSession.Turn}." +
-                    $" Map objects count is {_gameSession.Map.CelestialObjects.Count}.");
+                    $" SpaceMap objects count is {_gameSession.SpaceMap.CelestialObjects.Count}.");
         }
 
         private void EndTurn(GameSession gameSession)

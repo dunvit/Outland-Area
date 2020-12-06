@@ -27,7 +27,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             var direction = Coordinates.GetRotation(pointTargetLocation, pointCurrentLocation);
 
-            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            foreach (var mapCelestialObject in gameSession.SpaceMap.CelestialObjects)
             {
                 if (mapCelestialObject.Id == missile.Id)
                 {

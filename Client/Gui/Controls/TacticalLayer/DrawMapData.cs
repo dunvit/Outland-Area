@@ -22,9 +22,9 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             celestialObjects = new Hashtable();
 
-            foreach (var preCelestialObject in previousGameSession.Map.CelestialObjects)
+            foreach (var preCelestialObject in previousGameSession.SpaceMap.CelestialObjects)
             {
-                foreach (var curCelestialObject in currentGameSession.Map.CelestialObjects)
+                foreach (var curCelestialObject in currentGameSession.SpaceMap.CelestialObjects)
                 {
                     if (preCelestialObject.Id == curCelestialObject.Id)
                     {
@@ -44,7 +44,7 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         public CelestialMap GetCelestialMap()
         {
-            return gameSession.Map;
+            return gameSession.SpaceMap;
         }
 
         public Hashtable GetData()

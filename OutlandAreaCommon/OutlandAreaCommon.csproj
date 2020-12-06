@@ -113,6 +113,8 @@
     <Compile Include="Server\DataProcessing\Trajectory\RouteCalculation.cs" />
     <Compile Include="Server\IGameServer.cs" />
     <Compile Include="Tactical\CelestialMap.cs" />
+    <Compile Include="Tactical\CelestialMapExtensions.cs" />
+    <Compile Include="Tactical\CelestialObjectExtensions.cs" />
     <Compile Include="Tactical\Command.cs" />
     <Compile Include="Tactical\GameSessionTools.cs" />
     <Compile Include="Tactical\Session.cs" />

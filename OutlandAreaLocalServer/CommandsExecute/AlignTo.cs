@@ -21,7 +21,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
             
             var result = Approach.Calculate(spaceShip.GetLocation(), targetObject.GetLocation(), spaceShip.Direction, spaceShip.Speed, 100);
 
-            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            foreach (var mapCelestialObject in gameSession.SpaceMap.CelestialObjects)
             {
                 if (mapCelestialObject.Id == spaceShip.Id)
                 {

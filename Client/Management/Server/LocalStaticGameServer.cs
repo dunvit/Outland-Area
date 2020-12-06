@@ -47,12 +47,12 @@ namespace Engine.Management.Server
 
         public void ResumeSession(int id)
         {
-            _gameSession.Map.IsEnabled = true;
+            _gameSession.SpaceMap.IsEnabled = true;
         }
 
         public void PauseSession(int id)
         {
-            _gameSession.Map.IsEnabled = false;
+            _gameSession.SpaceMap.IsEnabled = false;
         }
 
         public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
@@ -124,7 +124,7 @@ namespace Engine.Management.Server
 
             turnGameSession = new Commands().Execute(turnGameSession);
 
-            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
+            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap);
 
             turnGameSession.Turn++;
 

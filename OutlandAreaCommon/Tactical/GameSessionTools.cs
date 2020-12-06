@@ -9,7 +9,7 @@ namespace OutlandAreaCommon.Tactical
 
         public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, PointF point)
         {
-            foreach (var celestialObjects in gameSession.Map.CelestialObjects)
+            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
             {
                 if (IsObjectInRange(celestialObjects, distance, point))
                 {

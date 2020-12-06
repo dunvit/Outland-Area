@@ -100,7 +100,7 @@ namespace Engine.Management.Server
             _logger($"Get game session parsing finished for {stopwatchParsing.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {gameSession.Id}. " +
                     $" Turn = {gameSession.Turn}. " +
-                    $" Map objects count is {gameSession.Map.CelestialObjects.Count}.");
+                    $" SpaceMap objects count is {gameSession.SpaceMap.CelestialObjects.Count}.");
 
             return gameSession;
         }

@@ -11,7 +11,7 @@ namespace OutlandAreaCommon.Tactical
 
         public int Turn { get; set; }
 
-        public CelestialMap Map { get; set; }
+        public CelestialMap SpaceMap { get; set; }
 
         public List<Command> Commands { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using LanguageExt;
+using LanguageExt.SomeHelp;
 using log4net;
 using OutlandAreaCommon.Universe;
 
@@ -12,7 +13,7 @@ namespace OutlandAreaCommon.Tactical
 
         public static ICelestialObject GetPlayerSpaceShip(this GameSession session)
         {
-            foreach (var celestialObject in session.Map.CelestialObjects)
+            foreach (var celestialObject in session.SpaceMap.CelestialObjects)
             {
                 if (celestialObject.Classification == 200)
                 {
@@ -53,11 +54,9 @@ namespace OutlandAreaCommon.Tactical
                     {
                         case CommandTypes.AlignTo:
                             return CommandTypes.AlignTo;
-                            break;
 
                         case CommandTypes.Orbit:
                             return CommandTypes.Orbit;
-                            break;
                     }
                 }
             }
@@ -65,9 +64,19 @@ namespace OutlandAreaCommon.Tactical
             return CommandTypes.MoveForward;
         }
 
-        public static Option<ICelestialObject> GetOptionCelestialObject(this GameSession gameSession, long id)
+        public static Option<CelestialMap> GetSpaceMapOption(this GameSession gameSession)
         {
-            foreach (var celestialObjects in gameSession.Map.CelestialObjects)
+            if(gameSession.SpaceMap == null)
+            {
+                return Option<CelestialMap>.None;
+            }
+
+            return gameSession.SpaceMap.ToSome();
+        }
+
+        public static Option<ICelestialObject> GetCelestialObjectOption(this GameSession gameSession, long id)
+        {
+            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
             {
                 if (id == celestialObjects.Id)
                 {
@@ -80,7 +89,7 @@ namespace OutlandAreaCommon.Tactical
 
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
         {
-            foreach (var celestialObjects in gameSession.Map.CelestialObjects)
+            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
             {
                 if (id == celestialObjects.Id)
                 {
@@ -94,7 +103,7 @@ namespace OutlandAreaCommon.Tactical
         public static void AddCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
             Logger.Info($"AddCelestialObject Id = {celestialObject.Id} Name = {celestialObject.Name} Classification = {celestialObject.Classification}" );
-            session.Map.CelestialObjects.Add(celestialObject);
+            session.SpaceMap.CelestialObjects.Add(celestialObject);
         }
 
         public static void RemoveCelestialObject(this GameSession session, ICelestialObject celestialObject)
@@ -103,7 +112,7 @@ namespace OutlandAreaCommon.Tactical
 
             var result = new List<ICelestialObject>();
 
-            foreach (var mapCelestialObject in session.Map.CelestialObjects)
+            foreach (var mapCelestialObject in session.SpaceMap.CelestialObjects)
             {
                 if (mapCelestialObject.Id != celestialObject.Id)
                 {
@@ -111,7 +120,7 @@ namespace OutlandAreaCommon.Tactical
                 }
             }
 
-            session.Map.CelestialObjects = result;
+            session.SpaceMap.CelestialObjects = result;
         }
 
         public static void AddCommand(this GameSession session, Command command)

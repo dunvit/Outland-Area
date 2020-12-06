@@ -58,13 +58,13 @@ namespace OutlandAreaLocalServer
         public void ResumeSession(int id)
         {
             Logger.Debug($"[{GetType().Name}]\t ResumeSession id={id}");
-            _gameSession.Map.IsEnabled = true;
+            _gameSession.SpaceMap.IsEnabled = true;
         }
 
         public void PauseSession(int id)
         {
             Logger.Debug($"[{GetType().Name}]\t PauseSession id={id}");
-            _gameSession.Map.IsEnabled = false;
+            _gameSession.SpaceMap.IsEnabled = false;
         }
 
         public void Command(int sessionId, int objectId, int targetObjectId, int memberId, int targetCell, int typeId)
@@ -147,16 +147,16 @@ namespace OutlandAreaLocalServer
 
             var stopwatch1 = Stopwatch.StartNew();
             
-            if (_gameSession.Map.IsEnabled == false)
+            if (_gameSession.SpaceMap.IsEnabled == false)
                 return;
 
             var turnGameSession = _gameSession.DeepClone();
 
             turnGameSession = new Commands().Execute(turnGameSession);
 
-            turnGameSession.Map = new Coordinates().Recalculate(turnGameSession.Map);
+            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap);
 
-            turnGameSession.Map = new Reloading().Recalculate(turnGameSession);
+            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession);
 
             turnGameSession.Turn++;
 

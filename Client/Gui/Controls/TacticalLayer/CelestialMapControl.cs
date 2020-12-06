@@ -137,7 +137,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            if (_gameSession.Map.IsEnabled)
+            if (_gameSession.SpaceMap.IsEnabled)
             {
                 turnCurrentStep++;
                 if (turnCurrentStep > turnAllSteps)

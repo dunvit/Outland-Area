@@ -99,7 +99,7 @@ namespace OutlandAreaLocalServer
 
                     case CommandTypes.ReloadWeapon:
 
-                        foreach (var celestialObjects in result.Map.CelestialObjects)
+                        foreach (var celestialObjects in result.SpaceMap.CelestialObjects)
                         {
                             if (celestialObjects.Id ==command.CelestialObjectId)
                             {

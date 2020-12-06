@@ -92,7 +92,7 @@ namespace Engine.Gui.Controls
 
             DrawTacticalMapScreen();
 
-            if (_gameSession.Map.IsEnabled) turnStep++;
+            if (_gameSession.SpaceMap.IsEnabled) turnStep++;
 
             refreshInProgress = false;
 
@@ -246,7 +246,7 @@ namespace Engine.Gui.Controls
         {
             var result = new SortedDictionary<int, GranularObjectInformation>();
 
-            foreach (var mapCelestialObject in gameSession.Map.CelestialObjects)
+            foreach (var mapCelestialObject in gameSession.SpaceMap.CelestialObjects)
             {
                 if(mapCelestialObject.Classification < 1) continue;
 

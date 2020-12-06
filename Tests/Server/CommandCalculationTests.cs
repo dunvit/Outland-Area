@@ -4,12 +4,15 @@ using System.Drawing;
 using System.Linq;
 using Castle.DynamicProxy;
 using Engine.Management.Server;
+using LanguageExt;
+using LanguageExt.SomeHelp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace Tests.Server
 {
@@ -46,17 +49,17 @@ namespace Tests.Server
 
             var gameSession = server.RefreshGameSession(0);
 
-            var spaceShip = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id);
+            var spaceShip = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id);
 
             var position = spaceShip.GetLocation();
 
-            Assert.AreEqual(1, gameSession.Map.CelestialObjects.Count);
+            Assert.AreEqual(1, gameSession.SpaceMap.CelestialObjects.Count);
             Assert.AreEqual(new PointF(10000, 10000), position);
 
             server.TurnCalculation();
             gameSession = server.RefreshGameSession(0);
 
-            position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF(10010, 10000), position);
         }
@@ -64,29 +67,55 @@ namespace Tests.Server
         [TestMethod]
         public void OptionCelestialObjectTest()
         {
+
             var server = CreateServer();
+
+            var testGameSession = new GameSession();
+
+            var spaceMapOption = testGameSession.GetSpaceMapOption();
+
+            
 
             var gameSession = server.RefreshGameSession(0);
 
-            var celestialObjectOption = gameSession.GetOptionCelestialObject(gameSession.Map.CelestialObjects[0].Id);
+            spaceMapOption = gameSession.GetSpaceMapOption();
+
+            var vModulesShields = gameSession.GetSpaceMapOption().
+                Map(_ => _.GetCelestialObjectOption(5005)).
+                Match(_ => _, Option<ICelestialObject>.None).
+                Map(_=> _.ToSpaceship().Modules.Where(module => module.Category == Category.Shield)).
+                Match(modules => modules, new List<IModule>());
+
+
+            foreach (var vModulesShield in vModulesShields)
+            {
+                var a1 = vModulesShield.Name;
+            }
+
+            var name = ("Paul", "Louth");
+            var res = name.Map((first, last) => $"{first} {last}");
+
+
+            var celestialObjectOption = gameSession.GetCelestialObjectOption(gameSession.SpaceMap.CelestialObjects[0].Id);
 
             var a = celestialObjectOption.Match<ICelestialObject>(celestialObject => celestialObject, (Func<ICelestialObject>) null);
 
-            var weaponModules = celestialObjectOption.Map(spaceship => spaceship.ToSpaceship().
-                    Modules.Where(module => module.Category == Category.Weapon)).Match(modules => modules, new List<IModule>());
+            var weaponModules = celestialObjectOption
+                .Map(spaceship => spaceship.ToSpaceship().Modules.Where(module => module.Category == Category.Shield))
+                .Match(modules => modules, new List<IModule>()).Map(m => (m.Id, m.Name));
 
-            foreach (var module in weaponModules)
-            {
-                var moduleName = module.Name;
-            }
+
+            //foreach (var module in weaponModules)
+            //{
+            //    var moduleName = module.Name;
+            //}
 
             var rrr = weaponModules.FirstOrDefault();
 
-            var noneOption = gameSession.GetOptionCelestialObject(125);
+            var noneOption = gameSession.GetCelestialObjectOption(125);
 
-            //var c = parseInt(500).;
-
-            var b = noneOption.Match(celestialObject => celestialObject, (Func<ICelestialObject>)null);
+            var shieldModules = noneOption.Map(spaceship => spaceship.ToSpaceship().
+                Modules.Where(module => module.Category == Category.Shield)).Match(modules => modules, new List<IModule>());
         }
 
         private ICelestialObject Ok(ICelestialObject arg)
@@ -101,11 +130,11 @@ namespace Tests.Server
 
             var gameSession = server.RefreshGameSession(0);
 
-            var spaceShip = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id);
+            var spaceShip = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id);
 
             var position = spaceShip.GetLocation();
 
-            Assert.AreEqual(1, gameSession.Map.CelestialObjects.Count);
+            Assert.AreEqual(1, gameSession.SpaceMap.CelestialObjects.Count);
             Assert.AreEqual(new PointF(10000, 10000), position);
 
             var pointInSpace = AddCelestialObjectAlignTo(new PointF(10500, 10500));
@@ -117,11 +146,11 @@ namespace Tests.Server
             server.TurnCalculation();
             gameSession = server.RefreshGameSession(0);
 
-            position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF(10009, 10000), position);
 
-            Assert.AreEqual(2, gameSession.Map.CelestialObjects.Count);
+            Assert.AreEqual(2, gameSession.SpaceMap.CelestialObjects.Count);
 
             position = gameSession.GetCelestialObject(pointInSpace.Id).GetLocation();
 
@@ -130,7 +159,7 @@ namespace Tests.Server
             server.TurnCalculation();
             gameSession = server.RefreshGameSession(0);
 
-            position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF(10018, 10001), position);
 
@@ -142,7 +171,7 @@ namespace Tests.Server
 
             gameSession = server.RefreshGameSession(0);
 
-            position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF(10063, 10002), position);
         }
