@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using Castle.DynamicProxy;
 using Engine.Management.Server;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
@@ -55,6 +59,39 @@ namespace Tests.Server
             position = gameSession.GetCelestialObject(gameSession.Map.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF(10010, 10000), position);
+        }
+
+        [TestMethod]
+        public void OptionCelestialObjectTest()
+        {
+            var server = CreateServer();
+
+            var gameSession = server.RefreshGameSession(0);
+
+            var celestialObjectOption = gameSession.GetOptionCelestialObject(gameSession.Map.CelestialObjects[0].Id);
+
+            var a = celestialObjectOption.Match<ICelestialObject>(celestialObject => celestialObject, (Func<ICelestialObject>) null);
+
+            var weaponModules = celestialObjectOption.Map(spaceship => spaceship.ToSpaceship().
+                    Modules.Where(module => module.Category == Category.Weapon)).Match(modules => modules, new List<IModule>());
+
+            foreach (var module in weaponModules)
+            {
+                var moduleName = module.Name;
+            }
+
+            var rrr = weaponModules.FirstOrDefault();
+
+            var noneOption = gameSession.GetOptionCelestialObject(125);
+
+            //var c = parseInt(500).;
+
+            var b = noneOption.Match(celestialObject => celestialObject, (Func<ICelestialObject>)null);
+        }
+
+        private ICelestialObject Ok(ICelestialObject arg)
+        {
+            return arg;
         }
 
         [TestMethod]

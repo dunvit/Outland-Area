@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using LanguageExt;
 using log4net;
 using OutlandAreaCommon.Universe;
 
@@ -38,6 +39,8 @@ namespace OutlandAreaCommon.Tactical
             return result;
         }
 
+        
+
         public static CommandTypes GetMovementType(this GameSession session, long id)
         {
             var cObject = session.GetCelestialObject(id);
@@ -60,6 +63,19 @@ namespace OutlandAreaCommon.Tactical
             }
 
             return CommandTypes.MoveForward;
+        }
+
+        public static Option<ICelestialObject> GetOptionCelestialObject(this GameSession gameSession, long id)
+        {
+            foreach (var celestialObjects in gameSession.Map.CelestialObjects)
+            {
+                if (id == celestialObjects.Id)
+                {
+                    return Option<ICelestialObject>.Some(celestialObjects.DeepClone());
+                }
+            }
+
+            return Option<ICelestialObject>.None;
         }
 
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
