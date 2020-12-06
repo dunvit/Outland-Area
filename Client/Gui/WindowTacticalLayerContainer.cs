@@ -8,8 +8,10 @@ using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui
 {
-    public partial class WindowTacticalLayerContainer : BaseFullScreenWindow 
+    public partial class WindowTacticalLayerContainer : BaseFullScreenWindow
     {
+        private long weaponCompartmentId = 0;
+
         public WindowTacticalLayerContainer()
         {
             InitializeComponent();
@@ -21,6 +23,7 @@ namespace Engine.Gui
 
             Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
+            Global.Game.OnEndTurn += Event_EndTurn;
 
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
@@ -31,6 +34,14 @@ namespace Engine.Gui
 
             crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
             
+        }
+
+        private void Event_EndTurn(GameSession gameSession)
+        {
+            foreach (var module in gameSession.GetPlayerSpaceShip().ToSpaceship().GetWeaponModules())
+            {
+                crlWeaponLauncher.ResetData(gameSession, module);
+            }
         }
 
         private void Event_BattleInitialization(GameSession gameSession)

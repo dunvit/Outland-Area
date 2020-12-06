@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Shield;
+using OutlandAreaCommon.Equipment.Weapon;
 
 namespace OutlandAreaCommon.Universe.Objects.Spaceships
 {
@@ -48,6 +49,18 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
 
                 return result;
             }
+        }
+
+        public List<IWeaponModule> GetWeaponModules()
+        {
+            var result = new List<IWeaponModule>();
+
+            foreach (var weapon in Modules.Where(module => module.Category == Category.Weapon).Cast<IWeaponModule>())
+            {
+                result.Add(weapon);
+            }
+
+            return result;
         }
 
 

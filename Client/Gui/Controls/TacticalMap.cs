@@ -14,7 +14,6 @@ using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace Engine.Gui.Controls
 {
