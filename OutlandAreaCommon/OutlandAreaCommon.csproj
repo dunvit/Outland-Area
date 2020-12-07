@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Common\FixedSizedQueue.cs" />
     <Compile Include="Common\ProtobufTools.cs" />
+    <Compile Include="Common\TraceMessage.cs" />
     <Compile Include="Equipment\Ammunition\Missiles\MissilesFactory.cs" />
     <Compile Include="Equipment\Ammunition\Missiles\IMissile.cs" />
     <Compile Include="Equipment\Ammunition\Missiles\LightMissiles\InfernoLightMissile.cs" />

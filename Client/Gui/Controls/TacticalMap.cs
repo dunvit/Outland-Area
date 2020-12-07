@@ -59,9 +59,11 @@ namespace Engine.Gui.Controls
             
         }
 
+        
+
         private void Initialization()
         {
-            Logger.Info($"[{GetType().Name}]\t Celestial map control - Initialization.");
+            Logger.Info(TraceMessage.Execute(this, "Celestial map control - Initialization"));
 
             _screenParameters = new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y);
 
@@ -82,7 +84,7 @@ namespace Engine.Gui.Controls
 
         private void Event_Refresh(object sender, MicroTimerEventArgs timereventargs)
         {
-            Logger.Debug($"[{GetType().Name}]\t Refresh celestial map control.");
+            Logger.Debug(TraceMessage.Execute(this, "Refresh celestial map control."));
 
             if (refreshInProgress) return;
 
@@ -96,12 +98,12 @@ namespace Engine.Gui.Controls
 
             refreshInProgress = false;
 
-            Logger.Debug($"[{GetType().Name}]\t [DrawScreen] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug(TraceMessage.Execute(this, $"Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms."));
         }
 
         private void DrawTacticalMapScreen()
         {
-            Logger.Debug($"[{GetType().Name}]\t [DrawTacticalMapScreen] Turn {_gameSession.Turn}.{turnStep}");
+            Logger.Debug(TraceMessage.Execute(this, $"Turn { _gameSession.Turn}.{turnStep}"));
 
             Image image = new Bitmap(Width, Height);
 
@@ -182,7 +184,7 @@ namespace Engine.Gui.Controls
 
 
 
-            Logger.Info($"[{GetType().Name}]\t [MapClick]");
+            Logger.Info(TraceMessage.Execute(this, $"MapClick"));
 
             if (e.Button == MouseButtons.Right)
             {
@@ -207,7 +209,7 @@ namespace Engine.Gui.Controls
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
-            Logger.Debug($"[{GetType().Name}]\t [MapMouseMove]");
+            Logger.Debug(TraceMessage.Execute(this, $"MapMouseMove]"));
 
             mouseCoordinates = e.Location;
 
@@ -227,7 +229,7 @@ namespace Engine.Gui.Controls
                 Initialization();
             }
 
-            Logger.Debug($"[{GetType().Name}]\t [Refresh] Turn: {gameSession.Turn}.");
+            Logger.Debug(TraceMessage.Execute(this, $"Turn: {gameSession.Turn}."));
 
             _gameSession = gameSession;
 
@@ -239,7 +241,7 @@ namespace Engine.Gui.Controls
 
             History.Enqueue(granularTurnInformation.DeepClone());
 
-            Logger.Debug($"[{GetType().Name}]\t [History.Enqueue] Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug(TraceMessage.Execute(this, $"Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms."));
         }
 
         private SortedDictionary<int, GranularObjectInformation> CalculateGranularTurnInformation(GameSession gameSession)
