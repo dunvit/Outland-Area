@@ -44,7 +44,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
                 {
                     gameSession.RemoveCelestialObject(destroyedSpaceship);
 
-                    gameSession.History.Add($"Spaceship {destroyedSpaceship.Name} destroyed.");
+                    gameSession.History.Add($"Spaceship {destroyedSpaceship.Name} was destroyed.");
                 }
             }
 
