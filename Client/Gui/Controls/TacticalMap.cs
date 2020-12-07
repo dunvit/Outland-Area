@@ -129,8 +129,8 @@ namespace Engine.Gui.Controls
             DrawMapTools.DrawScreen(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
             DrawMapTools.DrawActiveModule(graphics, _activeModule, mouseCoordinates, _gameSession, granularTurnInformation, turnStep, _screenParameters);
-
-
+            
+            DrawMapTools.DrawMouseMoveObject(graphics, _gameSession, MouseMoveCelestialObject, granularTurnInformation, turnStep, _screenParameters);
 
             BackgroundImage = image;
         }
