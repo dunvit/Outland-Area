@@ -72,16 +72,18 @@ namespace Tests.Server
 
             var testGameSession = new GameSession();
 
-            var spaceMapOption = testGameSession.GetSpaceMapOption();
+            testGameSession.GetSpaceMapOption();
 
             
 
             var gameSession = server.RefreshGameSession(0);
 
-            spaceMapOption = gameSession.GetSpaceMapOption();
+            gameSession.GetSpaceMapOption();
+
+            var id = 5005;
 
             var vModulesShields = gameSession.GetSpaceMapOption().
-                Map(_ => _.GetCelestialObjectOption(5005)).
+                Map(_ => _.GetCelestialObjectOption(id)).
                 Match(_ => _, Option<ICelestialObject>.None).
                 Map(_=> _.ToSpaceship().Modules.Where(module => module.Category == Category.Shield)).
                 Match(modules => modules, new List<IModule>());
