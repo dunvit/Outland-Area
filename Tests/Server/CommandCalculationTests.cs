@@ -74,6 +74,7 @@ namespace Tests.Server
 
             testGameSession.GetSpaceMapOption();
 
+
             
 
             var gameSession = server.RefreshGameSession(0);

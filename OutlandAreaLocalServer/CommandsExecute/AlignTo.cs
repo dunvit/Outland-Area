@@ -18,7 +18,9 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             var spaceShip = gameSession.GetPlayerSpaceShip();
             var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);
-            
+
+            if (spaceShip == null) return new CommandExecuteResult { Command = command, IsResume = false }; 
+
             var result = Approach.Calculate(spaceShip.GetLocation(), targetObject.GetLocation(), spaceShip.Direction, spaceShip.Speed, 100);
 
             foreach (var mapCelestialObject in gameSession.SpaceMap.CelestialObjects)

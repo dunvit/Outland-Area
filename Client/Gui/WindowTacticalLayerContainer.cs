@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Engine.Tools;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui
@@ -22,12 +23,15 @@ namespace Engine.Gui
                 return;
 
             Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
+           
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
             Global.Game.OnEndTurn += Event_EndTurn;
+            
 
             controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
+            crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
             controlCommands.OnAlignToCelestialObject += crlTacticalMap.CommandAlignTo;
             controlCommands.OnOrbitCelestialObject += Global.Game.AddCommandOrbit;
             controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
@@ -35,6 +39,7 @@ namespace Engine.Gui
             crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
             
         }
+
 
         private void Event_EndTurn(GameSession gameSession)
         {

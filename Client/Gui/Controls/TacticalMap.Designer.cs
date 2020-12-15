@@ -28,17 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlObjectInfo = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // pnlObjectInfo
-            // 
-            this.pnlObjectInfo.BackColor = System.Drawing.Color.Maroon;
-            this.pnlObjectInfo.Location = new System.Drawing.Point(23, 29);
-            this.pnlObjectInfo.Name = "pnlObjectInfo";
-            this.pnlObjectInfo.Size = new System.Drawing.Size(105, 38);
-            this.pnlObjectInfo.TabIndex = 0;
-            this.pnlObjectInfo.Visible = false;
             // 
             // TacticalMap
             // 
@@ -46,7 +36,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.pnlObjectInfo);
             this.DoubleBuffered = true;
             this.Name = "TacticalMap";
             this.Size = new System.Drawing.Size(148, 148);
@@ -57,7 +46,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlObjectInfo;
     }
 }

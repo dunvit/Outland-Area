@@ -126,6 +126,12 @@
       <DependentUpon>GenericCompartment.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\GranularObjectInformation.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.Designer.cs">
+      <DependentUpon>SelectedBaseCelestialObject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\SelectedObjectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
       <DependentUpon>GenericCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.resx">
+      <DependentUpon>SelectedBaseCelestialObject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedObjectControl.resx">
       <DependentUpon>SelectedObjectControl.cs</DependentUpon>

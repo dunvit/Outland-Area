@@ -40,6 +40,7 @@ namespace Engine.Gui.Controls
 
         private int turnStep;
 
+        public event Action<ICelestialObject, ICelestialObject> OnRefreshSelectedCelestialObject;
         public event Action<ICelestialObject> OnAlignToCelestialObject;
         public event Action<ICelestialObject> OnLaunchMissile;
 
@@ -96,6 +97,8 @@ namespace Engine.Gui.Controls
 
             if (_gameSession.SpaceMap.IsEnabled) turnStep++;
 
+            RefreshSelectedInfoControl(MouseMoveCelestialObject, granularTurnInformation, turnStep);
+
             refreshInProgress = false;
 
             Logger.Debug(TraceMessage.Execute(this, $"Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms."));
@@ -132,7 +135,28 @@ namespace Engine.Gui.Controls
             
             DrawMapTools.DrawMouseMoveObject(graphics, _gameSession, MouseMoveCelestialObject, granularTurnInformation, turnStep, _screenParameters);
 
+            
+
             BackgroundImage = image;
+        }
+
+        private void RefreshSelectedInfoControl(ICelestialObject celestialObject, SortedDictionary<int, GranularObjectInformation> granularObjectInformations, int i)
+        {
+            if (celestialObject == null)
+            {
+                OnRefreshSelectedCelestialObject?.Invoke(null, null);
+
+                return;
+            }
+
+            var location = DrawMapTools.GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, _screenParameters.DrawInterval);
+
+            var selectedCelestialObject = celestialObject.DeepClone();
+
+            selectedCelestialObject.PositionX = location.X;
+            selectedCelestialObject.PositionY = location.Y;
+
+            OnRefreshSelectedCelestialObject?.Invoke(selectedCelestialObject, _gameSession.GetPlayerSpaceShip());
         }
 
 

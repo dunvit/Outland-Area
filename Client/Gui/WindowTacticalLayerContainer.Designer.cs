@@ -37,9 +37,9 @@
             this.commandsWeaponCompartment2 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.crlWeaponLauncher = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.commandsWeaponCompartment5 = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.battleInformation1 = new Engine.Gui.Controls.TacticalLayer.BattleInformation();
             this.genericCompartment1 = new Engine.Gui.Controls.TacticalLayer.GenericCompartment();
+            this.crlSelectedObject = new Engine.Gui.Controls.TacticalLayer.SelectedBaseCelestialObject();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -135,15 +135,6 @@
             this.commandsWeaponCompartment5.Size = new System.Drawing.Size(293, 207);
             this.commandsWeaponCompartment5.TabIndex = 10;
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(1507, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(401, 1056);
-            this.panel2.TabIndex = 11;
-            // 
             // battleInformation1
             // 
             this.battleInformation1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
@@ -156,10 +147,18 @@
             // 
             this.genericCompartment1.BackColor = System.Drawing.Color.Black;
             this.genericCompartment1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.genericCompartment1.Location = new System.Drawing.Point(311, 861);
+            this.genericCompartment1.Location = new System.Drawing.Point(311, 1010);
             this.genericCompartment1.Name = "genericCompartment1";
-            this.genericCompartment1.Size = new System.Drawing.Size(293, 207);
+            this.genericCompartment1.Size = new System.Drawing.Size(293, 56);
             this.genericCompartment1.TabIndex = 13;
+            // 
+            // crlSelectedObject
+            // 
+            this.crlSelectedObject.BackColor = System.Drawing.Color.Black;
+            this.crlSelectedObject.Location = new System.Drawing.Point(1588, 12);
+            this.crlSelectedObject.Name = "crlSelectedObject";
+            this.crlSelectedObject.Size = new System.Drawing.Size(320, 184);
+            this.crlSelectedObject.TabIndex = 14;
             // 
             // WindowTacticalLayerContainer
             // 
@@ -167,9 +166,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.crlSelectedObject);
             this.Controls.Add(this.genericCompartment1);
             this.Controls.Add(this.battleInformation1);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.commandsWeaponCompartment5);
             this.Controls.Add(this.crlWeaponLauncher);
             this.Controls.Add(this.commandsWeaponCompartment2);
@@ -198,8 +197,8 @@
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment2;
         private Controls.TacticalLayer.CommandsWeaponCompartment crlWeaponLauncher;
         private Controls.TacticalLayer.CommandsWeaponCompartment commandsWeaponCompartment5;
-        private System.Windows.Forms.Panel panel2;
         private Controls.TacticalLayer.BattleInformation battleInformation1;
         private Controls.TacticalLayer.GenericCompartment genericCompartment1;
+        private Controls.TacticalLayer.SelectedBaseCelestialObject crlSelectedObject;
     }
 }

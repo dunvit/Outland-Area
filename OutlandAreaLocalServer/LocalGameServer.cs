@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Timers;
 using log4net;
@@ -11,6 +12,7 @@ using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
+using OutlandAreaLocalServer.ArtificialIntelligence;
 
 namespace OutlandAreaLocalServer
 {
@@ -157,6 +159,8 @@ namespace OutlandAreaLocalServer
             turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap);
 
             turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession);
+
+            turnGameSession.SpaceMap = new AI().Execute(turnGameSession);
 
             turnGameSession.Turn++;
 

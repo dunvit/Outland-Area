@@ -87,6 +87,11 @@ namespace OutlandAreaCommon.Tactical
             return Option<ICelestialObject>.None;
         }
 
+        public static Option<List<ICelestialObject>> GetCelestialObjectsOption(this GameSession gameSession)
+        {
+            return Option<List<ICelestialObject>>.Some(gameSession.SpaceMap.CelestialObjects);
+        }
+
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
         {
             foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
