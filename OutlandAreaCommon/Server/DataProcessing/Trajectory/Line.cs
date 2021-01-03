@@ -26,9 +26,9 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
             //        Point = Coordinates.Vector(previousIteration.Point, to, speed)
             //    };
 
-            //    iterationResult.Distance = Coordinates.GetDistance(to, iterationResult.Coordinates);
+            //    iterationResult.ScanRange = Coordinates.GetDistance(to, iterationResult.Coordinates);
 
-            //    if (iterationResult.Distance >= speed)
+            //    if (iterationResult.ScanRange >= speed)
             //    {
             //        result.Add(iterationResult);
             //    }

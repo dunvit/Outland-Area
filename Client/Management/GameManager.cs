@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Engine.Gui;
 using Engine.Management.Server;
 using Engine.Tools;
@@ -29,8 +30,6 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnSelectCelestialObject;
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        
 
         private IUiManager _ui;
 
@@ -63,6 +62,16 @@ namespace Engine.Management
             _ui.StartNewGameSession();
 
             _gameSession = Initialization();
+
+
+            var scanner = _gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules().FirstOrDefault();
+            
+            _gameSession.AddCommand(new Command
+            {
+                Type = CommandTypes.Scanning, 
+                CelestialObjectId = scanner.OwnerId,
+                TargetCellId = (int)scanner.Id
+            });
 
             OnBattleInitialization?.Invoke(_gameSession.DeepClone());
             OnEndTurn?.Invoke(_gameSession.DeepClone());

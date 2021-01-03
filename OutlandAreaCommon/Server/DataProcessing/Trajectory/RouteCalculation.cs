@@ -11,7 +11,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
 
             //var initial = new ObjectLocation
             //{
-            //    Distance = Coordinates.GetDistance(targetLocation, currentLocation),
+            //    ScanRange = Coordinates.GetDistance(targetLocation, currentLocation),
             //    Direction = currentDirection,
             //    Coordinates = new Point(currentLocation.X, currentLocation.Y)
             //};
@@ -50,11 +50,11 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
 
             //    iterationResult.Direction = Coordinates.GetRotationAngle(iterationResult.Coordinates, targetLocation, previousIteration.Direction, 5);
             //    iterationResult.IsLinearMotion = false;
-            //    iterationResult.Distance = Coordinates.GetDistance(targetLocation, iterationResult.Coordinates);
+            //    iterationResult.ScanRange = Coordinates.GetDistance(targetLocation, iterationResult.Coordinates);
 
             //    direction = iterationResult.Direction;
 
-            //    if (iterationResult.Distance >= speed)
+            //    if (iterationResult.ScanRange >= speed)
             //    {
             //        result.Add(iterationResult);
             //    }
@@ -67,7 +67,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
             //    previousIteration = iterationResult;
             //}
 
-            //result.Add(new ObjectLocation { Distance = 0, Direction = direction, IsLinearMotion = true, Iteration = result.Count, Coordinates = targetLocation });
+            //result.Add(new ObjectLocation { ScanRange = 0, Direction = direction, IsLinearMotion = true, Iteration = result.Count, Coordinates = targetLocation });
 
             return result;
         }

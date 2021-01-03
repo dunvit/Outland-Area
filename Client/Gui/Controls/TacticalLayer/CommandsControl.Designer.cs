@@ -97,7 +97,7 @@
             this.flatButton3.Name = "flatButton3";
             this.flatButton3.Size = new System.Drawing.Size(61, 37);
             this.flatButton3.TabIndex = 4;
-            this.flatButton3.Text = "Distance";
+            this.flatButton3.Text = "ScanRange";
             this.flatButton3.UseVisualStyleBackColor = false;
             // 
             // flatButton2

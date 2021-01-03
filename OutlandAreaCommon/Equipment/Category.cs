@@ -5,6 +5,7 @@
         Weapon,
         Shield,
         Propulsion,
-        Reactor
+        Reactor,
+        Scanner
     }
 }

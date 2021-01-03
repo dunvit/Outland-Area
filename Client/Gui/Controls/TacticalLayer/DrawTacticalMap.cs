@@ -243,7 +243,7 @@ namespace OutlandArea.Tools
                     //isDrawConnectionLine = false;
                 }
 
-                //Logger.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} Distance = {objectLocation.Distance}");
+                //Logger.Debug($"iteration = {iteration} Coordinates = {objectLocation.Coordinates} IsLinearMotion = {objectLocation.IsLinearMotion} VectorToTarget = {objectLocation.VectorToTarget} Direction = {objectLocation.Direction} ScanRange = {objectLocation.ScanRange}");
             }
 
 

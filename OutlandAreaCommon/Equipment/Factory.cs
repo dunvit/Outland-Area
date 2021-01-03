@@ -1,5 +1,6 @@
 ﻿using System;
 using OutlandAreaCommon.Equipment.General.Reactor;
+using OutlandAreaCommon.Equipment.General.Scanner;
 using OutlandAreaCommon.Equipment.Propulsion;
 using OutlandAreaCommon.Equipment.Shield;
 using OutlandAreaCommon.Equipment.Weapon;
@@ -57,6 +58,18 @@ namespace OutlandAreaCommon.Equipment
 
             switch (id)
             {
+                case "SCR5001":
+                    resultModule = new Scanner
+                    {
+                        Id = new Random().NextInt(),
+                        OwnerId = ownerId,
+                        Category = Category.Scanner,
+                        ScanRange = 2000,
+                        Power = 55,
+                        ActivationCost = 10,
+                        Name = "Scanner Mk I"
+                    };
+                    break;
                 case "GRM5002":
                     resultModule = new Reactor
                     {

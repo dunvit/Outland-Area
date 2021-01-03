@@ -7,7 +7,8 @@
         AlignTo = 100,
         Orbit = 110,
         Explosion = 800,
-        ReloadWeapon = 900
+        ReloadWeapon = 900,
+        Scanning = 1600
     }
 
     public static class CommandTypesExtensions

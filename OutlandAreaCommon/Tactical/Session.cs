@@ -15,6 +15,8 @@ namespace OutlandAreaCommon.Tactical
 
         public List<Command> Commands { get; set; }
 
+        public List<Message> Messages { get; set; } = new List<Message>();
+
         public List<string> History { get; set; } = new List<string>();
 
         public ICelestialObject SelectedObject { get; set; }

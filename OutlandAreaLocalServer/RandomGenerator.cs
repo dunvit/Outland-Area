@@ -11,5 +11,10 @@ namespace OutlandAreaLocalServer
 
             return random.Next(min, max);
         }
+
+        public static int GetModuleId()
+        {
+            return random.Next(100000);
+        }
     }
 }

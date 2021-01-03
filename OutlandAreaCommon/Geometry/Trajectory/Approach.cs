@@ -222,7 +222,7 @@ namespace Engine.Common.Geometry.Trajectory
                 previousIteration = iterationResult;
             }
 
-            //result.Add(new ObjectLocation { Distance = 0, Direction = direction, Iteration = result.Count, Coordinates = targetLocation });
+            //result.Add(new ObjectLocation { ScanRange = 0, Direction = direction, Iteration = result.Count, Coordinates = targetLocation });
 
             return result;
         }

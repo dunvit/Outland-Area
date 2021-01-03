@@ -30,6 +30,10 @@ namespace OutlandAreaLocalServer
             {
                 switch (command.Type)
                 {
+                    case CommandTypes.Scanning:
+                        var a = "";
+                        break;
+
                     case CommandTypes.Explosion:
 
                         var executeExplosion = new CommandsExecute.Explosion().Execute(result, command);

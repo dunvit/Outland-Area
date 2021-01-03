@@ -92,6 +92,8 @@
     <Compile Include="Equipment\Factory.cs" />
     <Compile Include="Equipment\General\Reactor\IReactor.cs" />
     <Compile Include="Equipment\General\Reactor\Reactor.cs" />
+    <Compile Include="Equipment\General\Scanner\Scanner.cs" />
+    <Compile Include="Equipment\General\Scanner\IScanner.cs" />
     <Compile Include="Equipment\IModule.cs" />
     <Compile Include="Equipment\ModuleExtensions.cs" />
     <Compile Include="Equipment\Propulsion\IPropulsionModule.cs" />
@@ -129,6 +131,8 @@
     <Compile Include="Tactical\CelestialMapExtensions.cs" />
     <Compile Include="Tactical\Command.cs" />
     <Compile Include="Tactical\GameSessionTools.cs" />
+    <Compile Include="Tactical\Message.cs" />
+    <Compile Include="Tactical\MessageTypes.cs" />
     <Compile Include="Tactical\Session.cs" />
     <Compile Include="Tactical\SessionExtensions.cs" />
     <Compile Include="Tools.cs" />

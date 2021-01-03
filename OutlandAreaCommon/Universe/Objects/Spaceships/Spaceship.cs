@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Equipment.General.Scanner;
 using OutlandAreaCommon.Equipment.Shield;
 using OutlandAreaCommon.Equipment.Weapon;
 
@@ -53,6 +54,11 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
             }
 
             return result;
+        }
+
+        public List<Scanner> GetScanningModules()
+        {
+            return Modules.Where(module => module.Category == Category.Scanner).Cast<Scanner>().ToList();
         }
 
 
