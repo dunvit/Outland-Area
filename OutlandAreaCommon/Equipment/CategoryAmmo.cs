@@ -3,6 +3,7 @@
     public enum CategoryAmmo
     {
         LightMissile = 100,
-        SmallHybridCharge = 300
+        SmallHybridCharge = 300,
+        None = 0
     }
 }

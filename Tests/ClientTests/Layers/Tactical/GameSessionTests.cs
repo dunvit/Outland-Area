@@ -39,23 +39,7 @@ namespace Tests.ClientTests.Layers.Tactical
             Assert.AreEqual(6, spaceShip.Modules.Count);
         }
 
-        [TestMethod]
-        public void ScanningModuleTest()
-        {
-            var gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_005"));
-
-            var scanners = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules();
-            
-            Assert.AreEqual(1, scanners.Count);
-
-            var scannerModule = scanners[0];
-
-            Assert.AreEqual(2000, scannerModule.ScanRange);
-            Assert.AreEqual(55, scannerModule.Power);
-            Assert.AreEqual(5005, scannerModule.OwnerId);
-            Assert.AreEqual("Scanner Mk I", scannerModule.Name);
-            Assert.AreEqual(true, scannerModule.IsEnabled);
-        }
+        
 
     }
 }

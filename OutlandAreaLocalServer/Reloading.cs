@@ -23,7 +23,7 @@ namespace OutlandAreaLocalServer
 
                 foreach (var module in celestialObject.ToSpaceship().Modules.Where(m => m is IWeaponModule))
                 {
-                    if (!(module.ToWeapon().Reloading < module.ToWeapon().ReloadTime)) continue;
+                    if (!(module.ToWeapon().Reloading <= module.ToWeapon().ReloadTime)) continue;
 
                     Logger.Debug($"Object {celestialObject.Name} reload module {module.Name} from {module.ToWeapon().Reloading} to +1 second.");
                     module.ToWeapon().Reloading++;

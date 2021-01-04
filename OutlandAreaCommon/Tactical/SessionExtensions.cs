@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using LanguageExt;
 using LanguageExt.SomeHelp;
 using log4net;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaCommon.Tactical
 {
@@ -40,6 +43,17 @@ namespace OutlandAreaCommon.Tactical
             return result;
         }
 
+        public static List<Spaceship> GetSpaceShips(this GameSession session)
+        {
+            var npcSpaceships = session.SpaceMap.CelestialObjects.
+                Where(_ => _.IsSpaceship()).
+                Where(_ => _.Classification == CelestialObjectTypes.SpaceshipPlayer.ToInt() || 
+                           _.Classification == CelestialObjectTypes.SpaceshipNpcFriend.ToInt()).
+                Map(_ => _.ToSpaceship()).
+                ToList();
+
+            return npcSpaceships;
+        }
         
 
         public static CommandTypes GetMovementType(this GameSession session, long id)

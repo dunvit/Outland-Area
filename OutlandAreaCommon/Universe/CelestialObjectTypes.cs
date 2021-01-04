@@ -13,4 +13,12 @@ namespace OutlandAreaCommon.Universe
         Asteroid = 1,
         Explosion = 800
     }
+
+    public static class CelestialObjectTypesExtensions
+    {
+        public static int ToInt(this CelestialObjectTypes command)
+        {
+            return (int)command;
+        }
+    }
 }

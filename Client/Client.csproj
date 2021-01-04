@@ -236,6 +236,9 @@
     <None Include="Data\Maps\Map_003.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\Map_005.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Maps\Map_FirstBattle.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

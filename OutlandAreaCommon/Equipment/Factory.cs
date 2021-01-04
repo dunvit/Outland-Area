@@ -67,6 +67,8 @@ namespace OutlandAreaCommon.Equipment
                         ScanRange = 2000,
                         Power = 55,
                         ActivationCost = 10,
+                        ReloadTime = 5,
+                        Reloading = 5,
                         Name = "Scanner Mk I"
                     };
                     break;

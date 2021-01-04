@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\AutomaticLaunchModules.cs" />
     <Compile Include="ArtificialIntelligence\AI.cs" />
     <Compile Include="ArtificialIntelligence\Attack.cs" />
     <Compile Include="ArtificialIntelligence\Navigation.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="CommandsExecute\AlignTo.cs" />
     <Compile Include="CommandsExecute\ExecuteFire.cs" />
     <Compile Include="CommandsExecute\Explosion.cs" />
+    <Compile Include="CommandsExecute\Scanning.cs" />
     <Compile Include="Convertor.cs" />
     <Compile Include="LocalGameServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,8 +103,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Actions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

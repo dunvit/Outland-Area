@@ -63,16 +63,6 @@ namespace Engine.Management
 
             _gameSession = Initialization();
 
-
-            var scanner = _gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules().FirstOrDefault();
-            
-            _gameSession.AddCommand(new Command
-            {
-                Type = CommandTypes.Scanning, 
-                CelestialObjectId = scanner.OwnerId,
-                TargetCellId = (int)scanner.Id
-            });
-
             OnBattleInitialization?.Invoke(_gameSession.DeepClone());
             OnEndTurn?.Invoke(_gameSession.DeepClone());
         }

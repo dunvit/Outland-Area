@@ -31,7 +31,8 @@ namespace OutlandAreaLocalServer
                 switch (command.Type)
                 {
                     case CommandTypes.Scanning:
-                        var a = "";
+                        new CommandsExecute.Scanning().Execute(result, command);
+
                         break;
 
                     case CommandTypes.Explosion:

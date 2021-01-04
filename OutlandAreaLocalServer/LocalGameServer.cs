@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Timers;
 using log4net;
@@ -12,6 +11,7 @@ using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
+using OutlandAreaLocalServer.Actions;
 using OutlandAreaLocalServer.ArtificialIntelligence;
 
 namespace OutlandAreaLocalServer
@@ -26,7 +26,8 @@ namespace OutlandAreaLocalServer
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
             //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_OneShip"));
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_FirstBattle"));
+            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_FirstBattle"));
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_005"));
 
             _gameSession.Commands = new List<Command>();
 
@@ -34,6 +35,17 @@ namespace OutlandAreaLocalServer
             turnCalculation.Elapsed += ExecuteTurnCalculation;
             turnCalculation.Interval = 1000;
             turnCalculation.Enabled = true;
+
+            return _gameSession;
+        }
+
+        public GameSession Initialization(string sessionName)
+        {
+            Logger.Info($"[{GetType().Name}]\t [Initialization]");
+
+            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap(sessionName));
+
+            _gameSession.Commands = new List<Command>();
 
             return _gameSession;
         }
@@ -143,7 +155,7 @@ namespace OutlandAreaLocalServer
         }
 
 
-        private void TurnCalculation()
+        public void TurnCalculation()
         {
             Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Start");
 
@@ -153,6 +165,8 @@ namespace OutlandAreaLocalServer
                 return;
 
             var turnGameSession = _gameSession.DeepClone();
+
+            turnGameSession = new AutomaticLaunchModules().Execute(turnGameSession);
 
             turnGameSession = new Commands().Execute(turnGameSession);
 
