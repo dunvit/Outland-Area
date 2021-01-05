@@ -131,6 +131,7 @@
     <Compile Include="Tactical\CelestialMapExtensions.cs" />
     <Compile Include="Tactical\Command.cs" />
     <Compile Include="Tactical\GameSessionTools.cs" />
+    <Compile Include="Tactical\HistoryMessage.cs" />
     <Compile Include="Tactical\Message.cs" />
     <Compile Include="Tactical\MessageTypes.cs" />
     <Compile Include="Tactical\Session.cs" />

@@ -14,7 +14,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
         {
             bool isResume = true;
 
-            Logger.Info($"[{GetType().Name}]\t CommandsExecute AlignTo - Execute.");
+            gameSession.AddHistoryMessage($"started.", GetType().Name, true);
 
             var spaceShip = gameSession.GetPlayerSpaceShip();
             var targetObject = gameSession.GetCelestialObject(command.TargetCelestialObjectId);

@@ -12,10 +12,12 @@ namespace OutlandAreaLocalServer
     {
         public GameSession Execute(GameSession gameSession)
         {
+            gameSession.AddHistoryMessage($"Commands started.", GetType().Name, true);
+
             var result = gameSession.DeepClone();
 
             // Clear history log for each turn
-            result.History = new List<string>();
+            result.TurnHistory = new List<HistoryMessage>();
 
             if (gameSession.Commands == null)
             {
@@ -103,7 +105,7 @@ namespace OutlandAreaLocalServer
                         break;
 
                     case CommandTypes.ReloadWeapon:
-
+                        gameSession.AddHistoryMessage($"ReloadWeapon started.", GetType().Name, true);
                         foreach (var celestialObjects in result.SpaceMap.CelestialObjects)
                         {
                             if (celestialObjects.Id ==command.CelestialObjectId)

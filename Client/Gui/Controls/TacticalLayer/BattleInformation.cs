@@ -19,10 +19,12 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         private void CalculateTurnInformation(GameSession gameSession)
         {
-            foreach (var eventInBattle in gameSession.History)
+            foreach (var eventInBattle in gameSession.TurnHistory)
             {
+                if(eventInBattle.IsTechnicalLog) continue;
+
                 Invoke(new MethodInvoker(delegate () {
-                    txtLog.Text += $"Turn {gameSession.Turn} \t {eventInBattle}" + Environment.NewLine;
+                    txtLog.Text += $"Turn {eventInBattle.Turn} \t {eventInBattle.Message}" + Environment.NewLine;
                 }));
             }
         }

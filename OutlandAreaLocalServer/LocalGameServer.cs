@@ -157,14 +157,14 @@ namespace OutlandAreaLocalServer
 
         public void TurnCalculation()
         {
-            Logger.Debug($"[{GetType().Name}]\t [TurnCalculation] Start");
-
             var stopwatch1 = Stopwatch.StartNew();
             
             if (_gameSession.SpaceMap.IsEnabled == false)
                 return;
 
             var turnGameSession = _gameSession.DeepClone();
+
+            turnGameSession.AddHistoryMessage($"Calculation start", GetType().Name, true);
 
             turnGameSession = new AutomaticLaunchModules().Execute(turnGameSession);
 
@@ -176,12 +176,13 @@ namespace OutlandAreaLocalServer
 
             turnGameSession.SpaceMap = new AI().Execute(turnGameSession);
 
+            turnGameSession.AddHistoryMessage($"Calculation finished {stopwatch1.Elapsed.TotalMilliseconds} ms.", GetType().Name, true);
+
+            turnGameSession.History.Add(turnGameSession.Turn, turnGameSession.TurnHistory);
+
             turnGameSession.Turn++;
 
             _gameSession = turnGameSession;
-
-            Logger.Info($"[{GetType().Name}]\t [TurnCalculation] Finish {stopwatch1.Elapsed.TotalMilliseconds} ms");
-
         }
     }
 }

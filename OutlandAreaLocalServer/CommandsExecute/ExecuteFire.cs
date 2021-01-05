@@ -14,6 +14,8 @@ namespace OutlandAreaLocalServer.CommandsExecute
         {
             var isResume = true;
 
+            gameSession.AddHistoryMessage($"started.", GetType().Name, true);
+
             Logger.Info($"[{GetType().Name}]\t CommandsExecute ExecuteFire - Execute.");
 
             var missile = gameSession.GetCelestialObject(command.CelestialObjectId);

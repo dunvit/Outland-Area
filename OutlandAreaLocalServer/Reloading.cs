@@ -28,10 +28,15 @@ namespace OutlandAreaLocalServer
                     Logger.Debug($"Object {celestialObject.Name} reload module {module.Name} from {module.ToWeapon().Reloading} to +1 second.");
                     module.ToWeapon().Reloading++;
 
-                    if (module.ToWeapon().Reloading >= module.ToWeapon().ReloadTime)
+                    if (module.ToWeapon().Reloading == module.ToWeapon().ReloadTime)
                     {
                         module.ToWeapon().Reloading = module.ToWeapon().ReloadTime;
-                        gameSession.History.Add($"'{celestialObject.Name}' finished reload module '{module.Name}'");
+                        gameSession.AddHistoryMessage($"'{celestialObject.Name}' finished reload module '{module.Name}'", GetType().Name);
+                    }
+
+                    if (module.ToWeapon().Reloading > module.ToWeapon().ReloadTime)
+                    {
+                        module.ToWeapon().Reloading = module.ToWeapon().ReloadTime;
                     }
                 }
             }

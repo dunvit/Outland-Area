@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using OutlandAreaCommon.Universe;
 
@@ -17,7 +18,9 @@ namespace OutlandAreaCommon.Tactical
 
         public List<Message> Messages { get; set; } = new List<Message>();
 
-        public List<string> History { get; set; } = new List<string>();
+        public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
+
+        public Hashtable History { get; set; } = new Hashtable();
 
         public ICelestialObject SelectedObject { get; set; }
     }

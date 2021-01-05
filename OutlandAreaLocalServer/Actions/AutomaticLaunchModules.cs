@@ -4,6 +4,7 @@ using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaLocalServer.Actions
 {
@@ -11,6 +12,8 @@ namespace OutlandAreaLocalServer.Actions
     {
         public GameSession Execute(GameSession gameSession)
         {
+            gameSession.AddHistoryMessage($"AutomaticLaunchModules started.", GetType().Name, true);
+
             var result = gameSession.DeepClone();
 
             result.GetSpaceShips()
@@ -26,7 +29,7 @@ namespace OutlandAreaLocalServer.Actions
             return result;
         }
 
-        private static bool Flow(GameSession gameSession, IModule module)
+        private bool Flow(GameSession gameSession, IModule module)
         {
             module.ToWeapon().Reloading = 0;
 
@@ -43,6 +46,10 @@ namespace OutlandAreaLocalServer.Actions
                 CelestialObjectId = module.OwnerId,
                 TargetCellId = (int)module.Id
             });
+
+            var spaceship = gameSession.GetCelestialObject(module.OwnerId).ToSpaceship();
+
+            gameSession.AddHistoryMessage($"Spaceship '{spaceship.Name}' automatic launch module '{module.Name}'", GetType().Name);
 
             return true;
         }

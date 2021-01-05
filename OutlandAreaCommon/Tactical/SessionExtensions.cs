@@ -205,5 +205,18 @@ namespace OutlandAreaCommon.Tactical
 
             return commands;
         }
+
+        public static void AddHistoryMessage(this GameSession session, string message, string className, bool isTechnicalLog = false)
+        {
+            Logger.Debug($"[HistoryMessage]\t [{className}]\t {message} ");
+
+            session.TurnHistory.Add(new HistoryMessage
+            {
+                Turn = session.Turn,
+                Class = className,
+                Message = message,
+                IsTechnicalLog = isTechnicalLog
+            });
+        }
     }
 }

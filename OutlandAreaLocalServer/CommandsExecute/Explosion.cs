@@ -14,7 +14,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
         public CommandExecuteResult Execute(GameSession gameSession, Command command)
         {
-            Logger.Info($"[{GetType().Name}]\t Execute.");
+            gameSession.AddHistoryMessage($"started.", GetType().Name, true);
 
             var explosion = gameSession.GetCelestialObject(command.CelestialObjectId).ToExplosion();
 
@@ -32,7 +32,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
                 {
                     spaceShip.Damage(explosion.Damage);
 
-                    gameSession.History.Add($"Spaceship {spaceShip.Name} get damage '{explosion.Damage}' from '{explosion.Name}'");
+                    gameSession.AddHistoryMessage($"Spaceship {spaceShip.Name} get damage '{explosion.Damage}' from '{explosion.Name}'", GetType().Name);
 
                     if (spaceShip.IsDestroyed)
                     {
@@ -44,7 +44,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
                 {
                     gameSession.RemoveCelestialObject(destroyedSpaceship);
 
-                    gameSession.History.Add($"Spaceship {destroyedSpaceship.Name} was destroyed.");
+                    gameSession.AddHistoryMessage($"Spaceship {destroyedSpaceship.Name} was destroyed.", GetType().Name);
                 }
             }
 
