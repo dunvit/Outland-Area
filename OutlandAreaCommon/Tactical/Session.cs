@@ -16,12 +16,18 @@ namespace OutlandAreaCommon.Tactical
 
         public List<Command> Commands { get; set; }
 
-        public List<Message> Messages { get; set; } = new List<Message>();
+        private List<Message> Messages { get; set; } = new List<Message>();
 
         public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
 
         public Hashtable History { get; set; } = new Hashtable();
 
         public ICelestialObject SelectedObject { get; set; }
+
+        public void AddMessage(Message message)
+        {
+            message.Turn = Turn;
+            Messages.Add(message);
+        }
     }
 }

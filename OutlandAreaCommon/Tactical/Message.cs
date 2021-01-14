@@ -8,6 +8,8 @@ namespace OutlandAreaCommon.Tactical
     {
         public MessageTypes Type { get; set; }
 
+        public int Turn { get; set; }
+
         public long CelestialObjectId { get; set; }
     }
 }

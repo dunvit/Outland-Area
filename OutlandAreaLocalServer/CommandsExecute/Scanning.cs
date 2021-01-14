@@ -20,8 +20,10 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             AddBuiltInEvents(gameSession);
 
-            if(Tools.RandomizeDice100() > RandomGenerator.BaseAsteroidChance)
+            if (Tools.RandomizeDice100() > RandomGenerator.BaseAsteroidChance)
+            {
                 gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
+            }
 
             return new CommandExecuteResult { Command = command, IsResume = false };
         }
@@ -45,7 +47,15 @@ namespace OutlandAreaLocalServer.CommandsExecute
                     Signature = 210
                 };
 
+                var message = new Message
+                {
+                    Type = MessageTypes.AnomalyFound,
+                    CelestialObjectId = newCelestialObject.Id
+                };
+
                 gameSession.AddCelestialObject(newCelestialObject);
+
+                gameSession.AddMessage(message);
             }
         }
 

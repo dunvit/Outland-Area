@@ -125,6 +125,8 @@ namespace OutlandAreaCommon.Tactical
             session.SpaceMap.CelestialObjects.Add(celestialObject);
         }
 
+        
+
         public static void RemoveCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
             if (celestialObject == null) return;
