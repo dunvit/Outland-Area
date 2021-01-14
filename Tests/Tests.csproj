@@ -111,6 +111,7 @@
     <Compile Include="TacticalLevel\Session\Modules\Scanner\ScanningTests.cs" />
     <Compile Include="TacticalLevel\TurnCalculation\Reloading_Tests.cs" />
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMapTests.cs" />
+    <Compile Include="Universe\Objects\CelestialObjectsFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -130,6 +131,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Dialogs\1001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\CelestialObjectsFactoryTests.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\ScanningModuleTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\PlayerSpaceShipTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\WeaponModuleReloading_Test.json">

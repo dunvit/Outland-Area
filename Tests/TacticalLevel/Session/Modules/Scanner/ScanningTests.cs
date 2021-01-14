@@ -42,7 +42,7 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
         [TestMethod]
         public void AutomaticExecuteScanningModule_Test()
         {
-            var localServer = CreateGameServer("Map_005");
+            var localServer = CreateGameServer("ScanningModuleTest");
 
             var gameSession = localServer.RefreshGameSession(sessionID);
 
@@ -56,6 +56,8 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
 
             localServer.ResumeSession(sessionID);
 
+            Assert.AreEqual(2, gameSession.SpaceMap.CelestialObjects.Count);
+
             localServer.TurnCalculation();
 
             gameSession = localServer.RefreshGameSession(sessionID);
@@ -65,6 +67,8 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
             Assert.AreEqual(1, gameSession.Turn);
 
             Assert.AreEqual(1, scannerModule.Reloading);
+
+            Assert.AreEqual(3, gameSession.SpaceMap.CelestialObjects.Count);
         }
 
     }

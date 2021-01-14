@@ -27,7 +27,7 @@ namespace Tests.ClientTests.Layers.Tactical
         public void GetPlayerSpaceShipTest()
         {
             var gameSession = Convertor.ToGameSession(
-                Convertor.GetSavedMap("Map_005"));
+                Convertor.GetSavedMap("PlayerSpaceShipTest"));
 
             Assert.AreEqual("HMS Glowworm", gameSession.GetPlayerSpaceShip().Name);
             Assert.AreEqual(90, gameSession.GetPlayerSpaceShip().Direction);
@@ -36,7 +36,7 @@ namespace Tests.ClientTests.Layers.Tactical
 
             var spaceShip = (Spaceship) gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(6, spaceShip.Modules.Count);
+            Assert.AreEqual(7, spaceShip.Modules.Count);
         }
 
         
