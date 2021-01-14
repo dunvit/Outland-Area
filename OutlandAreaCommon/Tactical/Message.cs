@@ -10,6 +10,10 @@ namespace OutlandAreaCommon.Tactical
 
         public int Turn { get; set; }
 
+        public bool IsPause { get; set; }
+
+        public bool IsOpenWindow { get; set; }
+
         public long CelestialObjectId { get; set; }
     }
 }

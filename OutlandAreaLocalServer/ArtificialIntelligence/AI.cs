@@ -12,7 +12,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
         public CelestialMap Execute(GameSession gameSession)
         {
-            Logger.Info(TraceMessage.Execute(this, "Start execute artificial intelligence logic."));
+            Logger.Debug(TraceMessage.Execute(this, "Start execute artificial intelligence logic."));
 
             var result = gameSession.SpaceMap.DeepClone();
 

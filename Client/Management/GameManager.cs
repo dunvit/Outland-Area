@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using Engine.Gui;
 using Engine.Management.Server;
 using Engine.Tools;
@@ -28,6 +27,7 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
+        public event Action<Message> OnAnomalyFound;
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -162,7 +162,7 @@ namespace Engine.Management
 
             if (_gameSession.Turn > turn)
             {
-                EndTurn(_gameSession);
+                StartNewOneSecondTurn(_gameSession);
             }
 
             Logger.Debug($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
@@ -171,10 +171,20 @@ namespace Engine.Management
                     $" SpaceMap objects count is {_gameSession.SpaceMap.CelestialObjects.Count}.");
         }
 
-        private void EndTurn(GameSession gameSession)
+        private void StartNewOneSecondTurn(GameSession gameSession)
         {
             turn = gameSession.Turn;
-            Logger.Debug($"[EndTurn] {turn}");
+            Logger.Debug($"[StartNewOneSecondTurn] {turn}");
+
+            foreach (var message in gameSession.GetCurrentTurnMessage())
+            {
+                if (message.IsPause) PauseSession();
+
+                if (message.Type == MessageTypes.AnomalyFound)
+                {
+                    OnAnomalyFound?.Invoke(message);
+                }
+            }
 
             OnEndTurn?.Invoke(gameSession);
         }

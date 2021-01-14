@@ -17,7 +17,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
         public CelestialMap Execute(CelestialMap spaceMap)
         {
-            Logger.Info(TraceMessage.Execute(this, "Start NPC targeting logic."));
+            Logger.Debug(TraceMessage.Execute(this, "Start NPC targeting logic."));
 
             var npcSpaceships = spaceMap.CelestialObjects.
                 Where(_ => _.IsSpaceship()).

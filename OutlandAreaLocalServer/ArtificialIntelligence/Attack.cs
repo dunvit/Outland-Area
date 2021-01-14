@@ -24,7 +24,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
         public CelestialMap Execute(CelestialMap spaceMap, GameSession session)
         {
-            Logger.Info(TraceMessage.Execute(this, "Start NPC attack logic."));
+            Logger.Debug(TraceMessage.Execute(this, "Start NPC attack logic."));
 
             var npcSpaceships = spaceMap.CelestialObjects.
                 Where(_ => _.IsSpaceship()).
@@ -47,7 +47,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
         private void ImplementAttack(Spaceship npcShip, Spaceship targetSpaceship, GameSession session, List<Command> sessionCommands)
         {
-            Logger.Info(TraceMessage.Execute(this, $"Set attack npc-commend for {npcShip.Id} to {targetSpaceship.Id}."));
+            Logger.Debug(TraceMessage.Execute(this, $"Set attack npc-commend for {npcShip.Id} to {targetSpaceship.Id}."));
 
             var modulesWeapon = npcShip.Modules.
                 Where(module => module.Category == Category.Weapon).

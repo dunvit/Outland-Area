@@ -8,7 +8,7 @@ namespace OutlandAreaCommon.Common
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            return $"[Class: {classObject.GetType().Name}][Method: {memberName}][Line: {sourceLineNumber}]\t {message}";
+            return $"[Class: {classObject.GetType().Name}] [Method: {memberName}] [Line: {sourceLineNumber}]\r\t\t\t\t\t[Message] {message} \n";
         }
     }
 }

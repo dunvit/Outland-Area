@@ -4,6 +4,7 @@ using System.Reflection;
 using LanguageExt;
 using LanguageExt.SomeHelp;
 using log4net;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
@@ -121,7 +122,7 @@ namespace OutlandAreaCommon.Tactical
 
         public static void AddCelestialObject(this GameSession session, ICelestialObject celestialObject)
         {
-            Logger.Info($"AddCelestialObject Id = {celestialObject.Id} Name = {celestialObject.Name} Classification = {celestialObject.Classification}" );
+            Logger.Info(TraceMessage.Execute(session, $"[AddCelestialObject] Turn = {session.Turn} AddCelestialObject Id = {celestialObject.Id} Name = {celestialObject.Name} Classification = {celestialObject.Classification}"));
             session.SpaceMap.CelestialObjects.Add(celestialObject);
         }
 

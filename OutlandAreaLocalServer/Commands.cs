@@ -4,7 +4,7 @@ using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
+using Explosion = OutlandAreaCommon.Universe.Objects.Spaceships.Explosion;
 
 namespace OutlandAreaLocalServer
 {
@@ -27,6 +27,8 @@ namespace OutlandAreaLocalServer
 
             // Clear commands pool
             result.Commands = new List<Command>();
+
+            CommandsExecute.SessionEvents.Execute(result);
 
             foreach (var command in gameSession.Commands)
             {

@@ -6,12 +6,14 @@ using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using Message = OutlandAreaCommon.Tactical.Message;
 
 namespace Engine.Gui
 {
     public partial class WindowTacticalLayerContainer : BaseFullScreenWindow
     {
         private long weaponCompartmentId = 0;
+        //private readonly WindowAnomalyFound _windowAnomalyFound = new WindowAnomalyFound();
 
         public WindowTacticalLayerContainer()
         {
@@ -25,6 +27,7 @@ namespace Engine.Gui
             Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
            
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
+            Global.Game.OnAnomalyFound += Event_AnomalyFound;
             Global.Game.OnEndTurn += Event_EndTurn;
             
 
@@ -39,6 +42,18 @@ namespace Engine.Gui
             crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
             
         }
+
+        delegate void AnomalyFoundCallback(Message message);
+        private void Event_AnomalyFound(Message message)
+        {
+            var windowAnomalyFound = new WindowAnomalyFound
+            {
+                ShowInTaskbar = false, ShowIcon = false, Message = message
+            };
+            
+            windowAnomalyFound.ShowDialog();
+        }
+
 
 
         private void Event_EndTurn(GameSession gameSession)

@@ -110,6 +110,7 @@
     <Compile Include="TacticalLevel\Session\MessagesTests.cs" />
     <Compile Include="TacticalLevel\Session\Modules\Scanner\ScanningTests.cs" />
     <Compile Include="TacticalLevel\TurnCalculation\Reloading_Tests.cs" />
+    <Compile Include="Tactical\GameSessionTests.cs" />
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMapTests.cs" />
     <Compile Include="Universe\Objects\CelestialObjectsFactoryTests.cs" />
   </ItemGroup>
@@ -131,6 +132,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Dialogs\1001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\MessageTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\CelestialObjectsFactoryTests.json">

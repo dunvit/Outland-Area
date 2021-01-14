@@ -148,6 +148,12 @@
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
+    <Compile Include="Gui\WindowAnomalyFound.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\WindowAnomalyFound.Designer.cs">
+      <DependentUpon>WindowAnomalyFound.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\WindowMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalMap.resx">
       <DependentUpon>TacticalMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\WindowAnomalyFound.resx">
+      <DependentUpon>WindowAnomalyFound.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowMenu.resx">
       <DependentUpon>WindowMenu.cs</DependentUpon>
