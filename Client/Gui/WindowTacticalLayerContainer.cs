@@ -43,17 +43,33 @@ namespace Engine.Gui
             
         }
 
-        delegate void AnomalyFoundCallback(Message message);
         private void Event_AnomalyFound(Message message)
         {
-            var windowAnomalyFound = new WindowAnomalyFound
-            {
-                ShowInTaskbar = false, ShowIcon = false, Message = message
-            };
-            
-            windowAnomalyFound.ShowDialog();
+            var a = CallModalForm(message);
         }
 
+        private delegate DialogResult RefreshCallback(Message message);
+
+        private DialogResult CallModalForm(Message message)
+        {
+            Form mainForm = null;
+            if (Application.OpenForms.Count > 0)
+                mainForm = Application.OpenForms[0];
+
+            if (mainForm != null && mainForm.InvokeRequired)
+            {
+                RefreshCallback d = CallModalForm;
+                return (DialogResult)mainForm.Invoke(d, message);
+            }
+
+            var windowAnomalyFound = new WindowAnomalyFound
+            {
+                ShowInTaskbar = false,
+                ShowIcon = false
+            };
+
+            return windowAnomalyFound.ShowDialog();
+        }
 
 
         private void Event_EndTurn(GameSession gameSession)

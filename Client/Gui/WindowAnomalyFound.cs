@@ -16,5 +16,10 @@ namespace Engine.Gui
         {
             var a = "";
         }
+
+        private void Event_Exit(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

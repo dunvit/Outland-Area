@@ -47,6 +47,7 @@ namespace Engine.Gui
             this.flatButton1.TabIndex = 0;
             this.flatButton1.Text = "Close";
             this.flatButton1.UseVisualStyleBackColor = false;
+            this.flatButton1.Click += new System.EventHandler(this.Event_Exit);
             // 
             // panel1
             // 
