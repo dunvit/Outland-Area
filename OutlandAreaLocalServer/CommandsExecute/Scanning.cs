@@ -1,12 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using log4net;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaLocalServer.CommandsExecute
 {
@@ -16,10 +13,14 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
         public CommandExecuteResult Execute(GameSession gameSession, Command command)
         {
+            Logger.Debug(TraceMessage.Execute(this, "Execute command scanning is started."));
+
             gameSession.AddHistoryMessage("started.", GetType().Name, true);
 
             if (Tools.RandomizeDice100() > RandomGenerator.BaseAsteroidChance)
             {
+                Logger.Debug(TraceMessage.Execute(this,"Add new asteroid."));
+
                 gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
             }
 

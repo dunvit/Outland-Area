@@ -65,7 +65,8 @@ namespace Engine.Gui
             var windowAnomalyFound = new WindowAnomalyFound
             {
                 ShowInTaskbar = false,
-                ShowIcon = false
+                ShowIcon = false,
+                Message = message
             };
 
             return windowAnomalyFound.ShowDialog();

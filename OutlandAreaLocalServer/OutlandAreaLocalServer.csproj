@@ -101,6 +101,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Documentation\Shortcuts.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

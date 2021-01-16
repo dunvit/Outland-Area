@@ -56,8 +56,8 @@ namespace OutlandAreaCommon.Tactical.Tests
 
             gameSession = localServer.RefreshGameSession(sessionID);
 
+            Assert.AreEqual(2, gameSession.GetTurnMessage(3).Count);
             Assert.AreEqual(2, gameSession.GetTurnMessage(2).Count);
-            Assert.AreEqual(1, gameSession.GetTurnMessage(1).Count);
         }
     }
 }
