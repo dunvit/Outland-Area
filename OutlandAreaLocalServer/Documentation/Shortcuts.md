@@ -1,4 +1,10 @@
-﻿__Logs__:
+﻿__Git__:
+
+```yaml
+Message: [Main Task ID][Main Name] - [Internal Task ID]Internal name
+```
+
+__Logs__:
 
 ```csharp
 private static readonly ILog 
