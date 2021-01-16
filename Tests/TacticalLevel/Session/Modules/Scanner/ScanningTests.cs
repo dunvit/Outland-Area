@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaLocalServer;
@@ -60,15 +61,17 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
 
             localServer.TurnCalculation();
 
-            gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSessionTurn1 = localServer.RefreshGameSession(sessionID);
 
-            scannerModule = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules()[0];
+            scannerModule = gameSessionTurn1.GetPlayerSpaceShip().ToSpaceship().GetScanningModules()[0];
 
-            Assert.AreEqual(1, gameSession.Turn);
+            Assert.AreEqual(1, gameSessionTurn1.Turn);
 
             Assert.AreEqual(1, scannerModule.Reloading);
 
-            Assert.AreEqual(3, gameSession.SpaceMap.CelestialObjects.Count);
+            Thread.Sleep(200);
+
+            Assert.AreEqual(3, gameSessionTurn1.SpaceMap.CelestialObjects.Count);
         }
 
     }

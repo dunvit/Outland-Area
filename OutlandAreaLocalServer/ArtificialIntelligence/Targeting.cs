@@ -48,7 +48,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
             }
             catch (Exception e)
             {
-                Logger.Error(TraceMessage.Execute(this, $"Add target critical error. Message is {e.Message}"));
+                Logger.Error(TraceMessage.Execute(this, $"Add target critical error. GameEvent is {e.Message}"));
             }
             
 

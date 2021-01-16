@@ -22,7 +22,7 @@ namespace OutlandAreaCommon.Tactical
 
         public List<Command> Commands { get; set; }
 
-        private List<Message> Messages { get; set; } = new List<Message>();
+        private List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
         public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
 
@@ -30,23 +30,23 @@ namespace OutlandAreaCommon.Tactical
 
         public ICelestialObject SelectedObject { get; set; }
 
-        public void AddMessage(Message message)
+        public void AddEvent(GameEvent gameEvent)
         {
-            message.Turn = Turn + 1;
+            gameEvent.Turn = Turn + 1;
 
-            Logger.Info(TraceMessage.Execute(this, $"[AddMessage] message.Turn = {message.Turn} Turn = {Turn}"));
+            Logger.Info(TraceMessage.Execute(this, $"Add event.Turn = {gameEvent.Turn} Turn = {Turn}"));
 
-            Messages.Add(message);
+            GameEvents.Add(gameEvent);
         }
 
-        public List<Message> GetTurnMessage(int turn)
+        public List<GameEvent> GetTurnEvents(int turn)
         {
-            return Messages.Where(_ => _.Turn == turn).Map(message => message).ToList();
+            return GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
         }
 
-        public List<Message> GetCurrentTurnMessage()
+        public List<GameEvent> GetCurrentTurnEvents()
         {
-            return Messages.Where(_ => _.Turn == Turn).Map(message => message).ToList();
+            return GameEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
         }
     }
 }

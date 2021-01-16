@@ -31,7 +31,7 @@ namespace OutlandAreaCommon.Common
             }
             catch (Exception e)
             {
-                Logger.Error($"[ProtobufTools.Serialize] Critical error. Message is {e.Message}");
+                Logger.Error($"[ProtobufTools.Serialize] Critical error. GameEvent is {e.Message}");
                 throw;
             }
 
@@ -50,7 +50,7 @@ namespace OutlandAreaCommon.Common
             }
             catch (Exception e)
             {
-                Logger.Error($"[ProtobufTools.Deserialize] Critical error. Message is {e.Message}");
+                Logger.Error($"[ProtobufTools.Deserialize] Critical error. GameEvent is {e.Message}");
                 throw;
             }
         }

@@ -133,8 +133,8 @@
     <Compile Include="Tactical\Command.cs" />
     <Compile Include="Tactical\GameSessionTools.cs" />
     <Compile Include="Tactical\HistoryMessage.cs" />
-    <Compile Include="Tactical\Message.cs" />
-    <Compile Include="Tactical\MessageTypes.cs" />
+    <Compile Include="Tactical\GameEvent.cs" />
+    <Compile Include="Tactical\GameEventTypes.cs" />
     <Compile Include="Tactical\Session.cs" />
     <Compile Include="Tactical\SessionExtensions.cs" />
     <Compile Include="Tools.cs" />

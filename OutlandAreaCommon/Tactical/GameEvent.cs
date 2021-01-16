@@ -4,9 +4,9 @@ using System;
 namespace OutlandAreaCommon.Tactical
 {
     [Serializable]
-    public class Message
+    public class GameEvent
     {
-        public MessageTypes Type { get; set; }
+        public GameEventTypes Type { get; set; }
 
         public int Turn { get; set; }
 

@@ -14,7 +14,7 @@ namespace OutlandAreaCommon
 
         public static int RandomizeInt(int minimum, int maximum)
         {
-            return RandomBase.Next(maximum - minimum);
+            return RandomBase.Next(minimum, maximum);
         }
 
         public static double RandomizeDice100()

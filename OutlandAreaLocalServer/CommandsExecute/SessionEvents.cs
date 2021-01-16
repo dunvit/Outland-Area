@@ -40,9 +40,9 @@ namespace OutlandAreaLocalServer.CommandsExecute
                 Signature = 210
             };
 
-            var message = new Message
+            var message = new GameEvent
             {
-                Type = MessageTypes.AnomalyFound,
+                Type = GameEventTypes.AnomalyFound,
                 CelestialObjectId = newCelestialObject.Id,
                 IsOpenWindow = true,
                 IsPause = true
@@ -50,7 +50,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             gameSession.AddCelestialObject(newCelestialObject);
 
-            gameSession.AddMessage(message);
+            gameSession.AddEvent(message);
         }
     }
 }

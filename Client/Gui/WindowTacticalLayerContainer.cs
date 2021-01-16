@@ -4,17 +4,12 @@ using System.Windows.Forms;
 using Engine.Tools;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using Message = OutlandAreaCommon.Tactical.Message;
 
 namespace Engine.Gui
 {
     public partial class WindowTacticalLayerContainer : BaseFullScreenWindow
     {
-        private long weaponCompartmentId = 0;
-        //private readonly WindowAnomalyFound _windowAnomalyFound = new WindowAnomalyFound();
-
         public WindowTacticalLayerContainer()
         {
             InitializeComponent();
@@ -43,14 +38,14 @@ namespace Engine.Gui
             
         }
 
-        private void Event_AnomalyFound(Message message)
+        private void Event_AnomalyFound(GameEvent gameEvent)
         {
-            var a = CallModalForm(message);
+            var a = CallModalForm(gameEvent);
         }
 
-        private delegate DialogResult RefreshCallback(Message message);
+        private delegate DialogResult RefreshCallback(GameEvent gameEvent);
 
-        private DialogResult CallModalForm(Message message)
+        private static DialogResult CallModalForm(GameEvent gameEvent)
         {
             Form mainForm = null;
             if (Application.OpenForms.Count > 0)
@@ -59,14 +54,14 @@ namespace Engine.Gui
             if (mainForm != null && mainForm.InvokeRequired)
             {
                 RefreshCallback d = CallModalForm;
-                return (DialogResult)mainForm.Invoke(d, message);
+                return (DialogResult)mainForm.Invoke(d, gameEvent);
             }
 
             var windowAnomalyFound = new WindowAnomalyFound
             {
                 ShowInTaskbar = false,
                 ShowIcon = false,
-                Message = message
+                GameEvent = gameEvent
             };
 
             return windowAnomalyFound.ShowDialog();

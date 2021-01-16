@@ -30,34 +30,34 @@ namespace OutlandAreaCommon.Tactical.Tests
 
             var gameSession = localServer.RefreshGameSession(sessionID);
 
-            Assert.AreEqual(0, gameSession.GetCurrentTurnMessage().Count);
+            Assert.AreEqual(0, gameSession.GetCurrentTurnEvents().Count);
 
             localServer.ResumeSession(sessionID);
 
             localServer.TurnCalculation();
 
-            Assert.AreEqual(0, gameSession.GetCurrentTurnMessage().Count);
+            Assert.AreEqual(0, gameSession.GetCurrentTurnEvents().Count);
 
             gameSession = localServer.RefreshGameSession(sessionID);
 
-            gameSession.AddMessage(new Message{CelestialObjectId = 1, IsOpenWindow = true, Type = MessageTypes.AnomalyFound});
+            gameSession.AddEvent(new GameEvent{CelestialObjectId = 1, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound});
 
             localServer.TurnCalculation();
 
             gameSession = localServer.RefreshGameSession(sessionID);
 
-            gameSession.AddMessage(new Message { CelestialObjectId = 2, IsOpenWindow = true, Type = MessageTypes.AnomalyFound });
+            gameSession.AddEvent(new GameEvent { CelestialObjectId = 2, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound });
 
-            gameSession.AddMessage(new Message { CelestialObjectId = 3, IsOpenWindow = true, Type = MessageTypes.AnomalyFound });
+            gameSession.AddEvent(new GameEvent { CelestialObjectId = 3, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound });
 
-            Assert.AreEqual(2, gameSession.GetCurrentTurnMessage().Count);
+            Assert.AreEqual(2, gameSession.GetCurrentTurnEvents().Count);
 
             localServer.TurnCalculation();
 
             gameSession = localServer.RefreshGameSession(sessionID);
 
-            Assert.AreEqual(2, gameSession.GetTurnMessage(3).Count);
-            Assert.AreEqual(2, gameSession.GetTurnMessage(2).Count);
+            Assert.AreEqual(2, gameSession.GetTurnEvents(3).Count);
+            Assert.AreEqual(2, gameSession.GetTurnEvents(2).Count);
         }
     }
 }

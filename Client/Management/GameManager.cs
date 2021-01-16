@@ -27,7 +27,7 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
-        public event Action<Message> OnAnomalyFound;
+        public event Action<GameEvent> OnAnomalyFound;
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -176,11 +176,11 @@ namespace Engine.Management
             turn = gameSession.Turn;
             Logger.Debug($"[StartNewOneSecondTurn] {turn}");
 
-            foreach (var message in gameSession.GetCurrentTurnMessage())
+            foreach (var message in gameSession.GetCurrentTurnEvents())
             {
                 if (message.IsPause) PauseSession();
 
-                if (message.Type == MessageTypes.AnomalyFound)
+                if (message.Type == GameEventTypes.AnomalyFound)
                 {
                     OnAnomalyFound?.Invoke(message);
                 }

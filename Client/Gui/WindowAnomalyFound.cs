@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using Message = OutlandAreaCommon.Tactical.Message;
+using OutlandAreaCommon.Tactical;
 
 namespace Engine.Gui
 {
     public partial class WindowAnomalyFound : Form
     {
-        public Message Message { get; set; }
+        public GameEvent GameEvent { get; set; }
         public WindowAnomalyFound()
         {
             InitializeComponent();
