@@ -93,7 +93,10 @@
     <Compile Include="Equipment\Factory.cs" />
     <Compile Include="Equipment\General\Reactor\IReactor.cs" />
     <Compile Include="Equipment\General\Reactor\Reactor.cs" />
-    <Compile Include="Equipment\General\Scanner\Scanner.cs" />
+    <Compile Include="Equipment\General\Scanner\DeepScanner.cs" />
+    <Compile Include="Equipment\General\Scanner\DeepScannerProbe.cs" />
+    <Compile Include="Equipment\General\Scanner\IDeepScanProbe.cs" />
+    <Compile Include="Equipment\General\Scanner\SpaceScanner.cs" />
     <Compile Include="Equipment\General\Scanner\IScanner.cs" />
     <Compile Include="Equipment\IModule.cs" />
     <Compile Include="Equipment\ModuleExtensions.cs" />

@@ -36,7 +36,7 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
             Assert.AreEqual(2000, scannerModule.ScanRange);
             Assert.AreEqual(55, scannerModule.Power);
             Assert.AreEqual(5005, scannerModule.OwnerId);
-            Assert.AreEqual("Scanner Mk I", scannerModule.Name);
+            Assert.AreEqual("SpaceScanner Mk I", scannerModule.Name);
             Assert.AreEqual(true, scannerModule.IsEnabled);
         }
 

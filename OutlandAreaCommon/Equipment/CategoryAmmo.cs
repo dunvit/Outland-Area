@@ -4,6 +4,7 @@
     {
         LightMissile = 100,
         SmallHybridCharge = 300,
+        DeepScanProbe = 400,
         None = 0
     }
 }

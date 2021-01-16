@@ -59,7 +59,7 @@ namespace OutlandAreaCommon.Equipment
             switch (id)
             {
                 case "SCR5001":
-                    resultModule = new Scanner
+                    resultModule = new SpaceScanner
                     {
                         Id = new Random().NextInt(),
                         OwnerId = ownerId,
@@ -69,7 +69,7 @@ namespace OutlandAreaCommon.Equipment
                         ActivationCost = 10,
                         ReloadTime = 5,
                         Reloading = 5,
-                        Name = "Scanner Mk I"
+                        Name = "SpaceScanner Mk I"
                     };
                     break;
                 case "GRM5002":

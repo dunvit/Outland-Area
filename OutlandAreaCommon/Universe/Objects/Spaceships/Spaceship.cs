@@ -56,9 +56,9 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
             return result;
         }
 
-        public List<Scanner> GetScanningModules()
+        public List<SpaceScanner> GetScanningModules()
         {
-            return Modules.Where(module => module.Category == Category.Scanner).Cast<Scanner>().ToList();
+            return Modules.Where(module => module.Category == Category.Scanner).Cast<SpaceScanner>().ToList();
         }
 
 

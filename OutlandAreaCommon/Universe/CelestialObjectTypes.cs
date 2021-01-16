@@ -11,7 +11,8 @@ namespace OutlandAreaCommon.Universe
         SpaceshipNpcEnemy = 202,
         SpaceshipNpcFriend = 203,
         Asteroid = 1,
-        Explosion = 800
+        Explosion = 800,
+        ScanProbe = 600
     }
 
     public static class CelestialObjectTypesExtensions
