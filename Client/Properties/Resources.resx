@@ -121,13 +121,16 @@
   <data name="ShootButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShootButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BordersUnselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BordersUnselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Borders" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Borders.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BordersSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BordersSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BordersUnselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BordersUnselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Radar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Radar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

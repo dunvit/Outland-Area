@@ -23,9 +23,18 @@ namespace Engine.Gui.Controls.TacticalLayer
             {
                 if(eventInBattle.IsTechnicalLog) continue;
 
-                Invoke(new MethodInvoker(delegate () {
-                    txtLog.Text += $"Turn {eventInBattle.Turn} \t {eventInBattle.Message}" + Environment.NewLine;
-                }));
+                try
+                {
+                    Invoke(new MethodInvoker(delegate () {
+                        txtLog.Text += $"Turn {eventInBattle.Turn} \t {eventInBattle.Message}" + Environment.NewLine;
+                    }));
+                }
+                catch (Exception e)
+                {
+                    // After application close crash.
+                }
+
+                
             }
         }
 

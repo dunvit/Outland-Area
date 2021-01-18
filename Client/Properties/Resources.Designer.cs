@@ -93,6 +93,16 @@ namespace Engine.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Radar {
+            get {
+                object obj = ResourceManager.GetObject("Radar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ShootButton {
             get {
                 object obj = ResourceManager.GetObject("ShootButton", resourceCulture);

@@ -32,7 +32,6 @@
             this.cmdRunGame = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.crlTacticalMap = new Engine.Gui.Controls.TacticalMap();
-            this.crlWeaponLauncher = new Engine.Gui.Controls.TacticalLayer.CommandsWeaponCompartment();
             this.battleInformation1 = new Engine.Gui.Controls.TacticalLayer.BattleInformation();
             this.crlSelectedObject = new Engine.Gui.Controls.TacticalLayer.SelectedBaseCelestialObject();
             this.weaponCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.WeaponCompartment();
@@ -46,7 +45,7 @@
             this.flatButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.flatButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.flatButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.flatButton1.Location = new System.Drawing.Point(40, 52);
+            this.flatButton1.Location = new System.Drawing.Point(3, 32);
             this.flatButton1.Name = "flatButton1";
             this.flatButton1.Size = new System.Drawing.Size(117, 23);
             this.flatButton1.TabIndex = 0;
@@ -61,7 +60,7 @@
             this.cmdRunGame.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.cmdRunGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdRunGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(161)))));
-            this.cmdRunGame.Location = new System.Drawing.Point(40, 23);
+            this.cmdRunGame.Location = new System.Drawing.Point(3, 3);
             this.cmdRunGame.Name = "cmdRunGame";
             this.cmdRunGame.Size = new System.Drawing.Size(117, 23);
             this.cmdRunGame.TabIndex = 2;
@@ -73,28 +72,19 @@
             // 
             this.panel1.Controls.Add(this.cmdRunGame);
             this.panel1.Controls.Add(this.flatButton1);
-            this.panel1.Location = new System.Drawing.Point(-2, 3);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.Size = new System.Drawing.Size(126, 60);
             this.panel1.TabIndex = 3;
             // 
             // crlTacticalMap
             // 
             this.crlTacticalMap.BackColor = System.Drawing.Color.Black;
             this.crlTacticalMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crlTacticalMap.Location = new System.Drawing.Point(149, 187);
+            this.crlTacticalMap.Location = new System.Drawing.Point(88, 131);
             this.crlTacticalMap.Name = "crlTacticalMap";
-            this.crlTacticalMap.Size = new System.Drawing.Size(694, 578);
+            this.crlTacticalMap.Size = new System.Drawing.Size(755, 634);
             this.crlTacticalMap.TabIndex = 5;
-            // 
-            // crlWeaponLauncher
-            // 
-            this.crlWeaponLauncher.BackColor = System.Drawing.Color.Black;
-            this.crlWeaponLauncher.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crlWeaponLauncher.Location = new System.Drawing.Point(1615, 202);
-            this.crlWeaponLauncher.Name = "crlWeaponLauncher";
-            this.crlWeaponLauncher.Size = new System.Drawing.Size(293, 207);
-            this.crlWeaponLauncher.TabIndex = 9;
             // 
             // battleInformation1
             // 
@@ -132,7 +122,6 @@
             this.Controls.Add(this.weaponCompartment1);
             this.Controls.Add(this.crlSelectedObject);
             this.Controls.Add(this.battleInformation1);
-            this.Controls.Add(this.crlWeaponLauncher);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.crlTacticalMap);
             this.DoubleBuffered = true;
@@ -140,6 +129,7 @@
             this.Name = "WindowTacticalLayerContainer";
             this.Text = "WindowTacticalLeyerContainer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowTacticalLayerContainer_FormClosing);
+            this.Shown += new System.EventHandler(this.WindowTacticalLayerContainer_Shown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -151,7 +141,6 @@
         private Controls.Common.FlatButton cmdRunGame;
         private System.Windows.Forms.Panel panel1;
         private Controls.TacticalMap crlTacticalMap;
-        private Controls.TacticalLayer.CommandsWeaponCompartment crlWeaponLauncher;
         private Controls.TacticalLayer.BattleInformation battleInformation1;
         private Controls.TacticalLayer.SelectedBaseCelestialObject crlSelectedObject;
         private Controls.TacticalLayer.Compartments.WeaponCompartment weaponCompartment1;

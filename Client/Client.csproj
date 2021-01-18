@@ -150,6 +150,12 @@
       <DependentUpon>GenericCompartment.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\GranularObjectInformation.cs" />
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\GenericActiveModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\GenericActiveModule.Designer.cs">
+      <DependentUpon>GenericActiveModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -234,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
       <DependentUpon>GenericCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Modules\GenericActiveModule.resx">
+      <DependentUpon>GenericActiveModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.resx">
       <DependentUpon>SelectedBaseCelestialObject.cs</DependentUpon>
@@ -413,6 +422,7 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Radar.png" />
     <None Include="Resources\BordersUnselected.png" />
     <None Include="Resources\BordersSelected.png" />
     <None Include="Resources\Borders.png" />

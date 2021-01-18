@@ -2,6 +2,7 @@
 using System.Reflection;
 using log4net;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
@@ -14,6 +15,9 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
         public static void Execute(GameSession gameSession)
         {
+
+            return;
+
             switch (gameSession.Turn)
             {
                 case 1:

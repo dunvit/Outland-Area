@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace Engine.Gui.Controls.Common
 {
@@ -39,6 +37,16 @@ namespace Engine.Gui.Controls.Common
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
             borderImage.Image = Properties.Resources.BordersSelected;
+        }
+
+        private void InvokeClick(object sender, EventArgs e)
+        {
+            OnClick(e);
+        }
+
+        public void Unselect()
+        {
+            borderImage.Image = Properties.Resources.BordersUnselected;
         }
     }
 }

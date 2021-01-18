@@ -43,6 +43,7 @@ namespace Engine.Gui.Controls.Common
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.InvokeClick);
             this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             // 
             // borderImage
@@ -54,6 +55,7 @@ namespace Engine.Gui.Controls.Common
             this.borderImage.Size = new System.Drawing.Size(48, 48);
             this.borderImage.TabIndex = 1;
             this.borderImage.TabStop = false;
+            this.borderImage.Click += new System.EventHandler(this.InvokeClick);
             this.borderImage.MouseEnter += new System.EventHandler(this.borderImage_MouseEnter);
             this.borderImage.MouseLeave += new System.EventHandler(this.borderImage_MouseLeave);
             // 

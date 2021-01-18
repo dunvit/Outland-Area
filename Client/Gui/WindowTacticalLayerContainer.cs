@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Engine.Tools;
 using OutlandAreaCommon.Equipment;
@@ -29,8 +30,7 @@ namespace Engine.Gui
             crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
 
-            crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
-            
+            weaponCompartment1.OnActivateModule += crlTacticalMap.ActivateModule;
         }
 
         private void Event_AnomalyFound(GameEvent gameEvent)
@@ -67,7 +67,7 @@ namespace Engine.Gui
         {
             foreach (var module in gameSession.GetPlayerSpaceShip().ToSpaceship().GetWeaponModules())
             {
-                crlWeaponLauncher.ResetData(gameSession, module);
+                weaponCompartment1.ResetData(gameSession, module);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Engine.Gui
             
             foreach (var module in playerSpaceship.Modules.Where(m => m.Category == Category.Weapon))
             {
-                crlWeaponLauncher.Initialization(module);
+                weaponCompartment1.Initialization(module);
             }
 
         }
@@ -95,6 +95,12 @@ namespace Engine.Gui
         private void WindowTacticalLayerContainer_FormClosing(object sender, FormClosingEventArgs e)
         {
             crlTacticalMap.CloseTacticalMap();
+        }
+
+        private void WindowTacticalLayerContainer_Shown(object sender, EventArgs e)
+        {
+            Thread.Sleep(200);
+            Global.Game.ResumeSession();
         }
     }
 }

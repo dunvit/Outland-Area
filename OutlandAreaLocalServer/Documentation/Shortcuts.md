@@ -3,7 +3,7 @@
 ```yaml
 Message: [Main Task ID][Main Name] - [Internal Task ID]Internal name
 ```
-
+---
 __Logs__:
 
 ```csharp
@@ -15,3 +15,10 @@ Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 Logger.Debug(TraceMessage.Execute(this,""));
 ```
 ---    
+
+__Images from Resources__:
+
+```csharp
+Engine.Properties.Resources.BordersSelected;
+```
+---
