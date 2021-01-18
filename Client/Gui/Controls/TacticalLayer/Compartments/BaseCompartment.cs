@@ -12,6 +12,17 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
 {
     public partial class BaseCompartment : UserControl
     {
+        public string CompartmentModuleName 
+        { 
+            get => txtName.Text; 
+
+            set
+            {
+                txtName.Text = value.ToUpper();
+                Refresh();
+            }
+        }
+
         public BaseCompartment()
         {
             InitializeComponent();

@@ -30,7 +30,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseCompartment));
-            this.txtWeaponName = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -48,15 +48,15 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtWeaponName
+            // txtName
             // 
-            this.txtWeaponName.Font = new System.Drawing.Font("Rod", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWeaponName.ForeColor = System.Drawing.Color.Chocolate;
-            this.txtWeaponName.Location = new System.Drawing.Point(4, 33);
-            this.txtWeaponName.Name = "txtWeaponName";
-            this.txtWeaponName.Size = new System.Drawing.Size(159, 11);
-            this.txtWeaponName.TabIndex = 35;
-            this.txtWeaponName.Text = "COMPARTMENT NAME";
+            this.txtName.Font = new System.Drawing.Font("Rod", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtName.ForeColor = System.Drawing.Color.Chocolate;
+            this.txtName.Location = new System.Drawing.Point(4, 33);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(159, 11);
+            this.txtName.TabIndex = 35;
+            this.txtName.Text = "COMPARTMENT NAME";
             // 
             // pictureBox1
             // 
@@ -92,7 +92,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.DimGray;
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Location = new System.Drawing.Point(11, 55);
+            this.pictureBox4.Location = new System.Drawing.Point(11, 56);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(48, 10);
             this.pictureBox4.TabIndex = 39;
@@ -102,7 +102,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.DimGray;
             this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox5.Location = new System.Drawing.Point(65, 55);
+            this.pictureBox5.Location = new System.Drawing.Point(65, 56);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(48, 10);
             this.pictureBox5.TabIndex = 40;
@@ -112,7 +112,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.DimGray;
             this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox6.Location = new System.Drawing.Point(119, 55);
+            this.pictureBox6.Location = new System.Drawing.Point(119, 56);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(48, 10);
             this.pictureBox6.TabIndex = 41;
@@ -120,9 +120,10 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.txtWeaponName);
+            this.panel1.Controls.Add(this.txtName);
             this.panel1.Location = new System.Drawing.Point(3, 43);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(174, 119);
@@ -167,7 +168,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         }
 
         #endregion
-        private System.Windows.Forms.Label txtWeaponName;
+        private System.Windows.Forms.Label txtName;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;

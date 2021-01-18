@@ -133,6 +133,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.Designer.cs">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\WeaponCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\WeaponCompartment.Designer.cs">
+      <DependentUpon>WeaponCompartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapTools.cs" />
@@ -222,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.resx">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\WeaponCompartment.resx">
+      <DependentUpon>WeaponCompartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
       <DependentUpon>GenericCompartment.cs</DependentUpon>
