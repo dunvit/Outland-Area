@@ -73,6 +73,12 @@
               {
                 "id": "GRM5002",
                 "name": "Reactor Mk I"
+              },
+              {
+                "id": "SCR5001"
+              },
+              {
+                "id": "DSCR001"
               }
             ],
             "shields": [

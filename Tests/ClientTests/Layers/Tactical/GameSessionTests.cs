@@ -1,6 +1,7 @@
 ﻿using Engine.Layers.Tactical;
 using LanguageExt;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
@@ -36,7 +37,14 @@ namespace Tests.ClientTests.Layers.Tactical
 
             var spaceShip = (Spaceship) gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(7, spaceShip.Modules.Count);
+            Assert.AreEqual(8, spaceShip.Modules.Count);
+
+            //var modules = spaceShip.GetModules(Category.DeepScanner);
+            Assert.AreEqual(1, spaceShip.GetModules(Category.DeepScanner).Count);
+            Assert.AreEqual(1, spaceShip.GetModules(Category.SpaceScanner).Count);
+            Assert.AreEqual(2, spaceShip.GetModules(Category.Shield).Count);
+            Assert.AreEqual(2, spaceShip.GetModules(Category.Reactor).Count);
+            Assert.AreEqual(1, spaceShip.GetModules(Category.Weapon).Count);
         }
 
         

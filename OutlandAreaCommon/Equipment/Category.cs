@@ -6,6 +6,7 @@
         Shield,
         Propulsion,
         Reactor,
-        Scanner
+        SpaceScanner,
+        DeepScanner
     }
 }

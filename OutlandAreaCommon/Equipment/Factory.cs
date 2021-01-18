@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using OutlandAreaCommon.Equipment.General.Reactor;
 using OutlandAreaCommon.Equipment.General.Scanner;
 using OutlandAreaCommon.Equipment.Propulsion;
@@ -58,12 +59,22 @@ namespace OutlandAreaCommon.Equipment
 
             switch (id)
             {
+                case "DSCR001":
+                    resultModule = new DeepScanner
+                    {
+                        Category = Category.DeepScanner,
+                        ScanRange = 300,
+                        Power = 60,
+                        ActivationCost = 70,
+                        ReloadTime = 25,
+                        Reloading = 25,
+                        Name = "DeepScanner Mk I"
+                    };
+                    break;
                 case "SCR5001":
                     resultModule = new SpaceScanner
                     {
-                        Id = new Random().NextInt(),
-                        OwnerId = ownerId,
-                        Category = Category.Scanner,
+                        Category = Category.SpaceScanner,
                         ScanRange = 2000,
                         Power = 55,
                         ActivationCost = 10,
@@ -75,15 +86,19 @@ namespace OutlandAreaCommon.Equipment
                 case "GRM5002":
                     resultModule = new Reactor
                     {
-                        Id = new Random().NextInt(),
-                        OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 2000,
                         Category = Category.Reactor,
                         Name = "Reactor Mk I"
                     };
                     break;
+
+                default:
+                    throw new InvalidDataException("Module not converted successfully.");
             }
+
+            resultModule.Id = new Random().NextInt();
+            resultModule.OwnerId = ownerId;
 
             return resultModule;
         }

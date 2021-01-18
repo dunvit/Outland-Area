@@ -35,7 +35,10 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
             {
                 float result = 0;
 
-                foreach (var shield in Modules.Where(module => module.Category == Category.Shield).Cast<ShieldModule>())
+                foreach (var shield in Modules.
+                    Where(module => module != null).
+                    Where(module => module.Category == Category.Shield).
+                    Cast<ShieldModule>())
                 {
                     result =+ (float) shield.Power;
                 }
@@ -58,7 +61,12 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
 
         public List<SpaceScanner> GetScanningModules()
         {
-            return Modules.Where(module => module.Category == Category.Scanner).Cast<SpaceScanner>().ToList();
+            return Modules.Where(module => module.Category == Category.SpaceScanner).Cast<SpaceScanner>().ToList();
+        }
+
+        public List<IModule> GetModules(Category modulesCategory)
+        {
+            return Modules.Where(module => module.Category == modulesCategory).ToList();
         }
 
 
