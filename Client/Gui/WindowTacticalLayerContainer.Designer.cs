@@ -147,7 +147,7 @@
             // 
             this.genericCompartment1.BackColor = System.Drawing.Color.Black;
             this.genericCompartment1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.genericCompartment1.Location = new System.Drawing.Point(311, 1010);
+            this.genericCompartment1.Location = new System.Drawing.Point(311, 1002);
             this.genericCompartment1.Name = "genericCompartment1";
             this.genericCompartment1.Size = new System.Drawing.Size(293, 56);
             this.genericCompartment1.TabIndex = 13;
@@ -157,6 +157,7 @@
             this.crlSelectedObject.BackColor = System.Drawing.Color.Black;
             this.crlSelectedObject.Location = new System.Drawing.Point(1588, 12);
             this.crlSelectedObject.Name = "crlSelectedObject";
+            this.crlSelectedObject.SelectedCelestialObject = null;
             this.crlSelectedObject.Size = new System.Drawing.Size(320, 184);
             this.crlSelectedObject.TabIndex = 14;
             // 

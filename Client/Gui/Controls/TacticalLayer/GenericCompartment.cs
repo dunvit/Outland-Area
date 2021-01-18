@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Engine.Gui.Controls.TacticalLayer
@@ -15,8 +9,6 @@ namespace Engine.Gui.Controls.TacticalLayer
         public GenericCompartment()
         {
             InitializeComponent();
-
-
         }
 
         private Point _locationMax = Point.Empty;

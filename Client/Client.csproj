@@ -82,6 +82,12 @@
     <Compile Include="Gui\BaseFullScreenWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Gui\Controls\Common\ActionButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\Common\ActionButton.Designer.cs">
+      <DependentUpon>ActionButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\Common\CustomProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -114,6 +120,18 @@
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.Designer.cs">
       <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.Designer.cs">
+      <DependentUpon>GenericModuleAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.Designer.cs">
+      <DependentUpon>ScannerCompartment.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
@@ -178,6 +196,9 @@
     <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="Tools\MicroLibrary.cs" />
     <Compile Include="Tools\Scheduler.cs" />
+    <EmbeddedResource Include="Gui\Controls\Common\ActionButton.resx">
+      <DependentUpon>ActionButton.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\Common\CustomProgressBar.resx">
       <DependentUpon>CustomProgressBar.cs</DependentUpon>
     </EmbeddedResource>
@@ -195,6 +216,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.resx">
       <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.resx">
+      <DependentUpon>GenericModuleAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.resx">
+      <DependentUpon>ScannerCompartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
       <DependentUpon>GenericCompartment.cs</DependentUpon>
@@ -216,6 +243,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowTacticalLayerContainer.resx">
       <DependentUpon>WindowTacticalLayerContainer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -254,7 +282,6 @@
     <None Include="Data\Maps\Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Documentation\OpenTasks.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -269,7 +296,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Documentation\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Logs\Plug.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -375,6 +404,10 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\BordersUnselected.png" />
+    <None Include="Resources\BordersSelected.png" />
+    <None Include="Resources\Borders.png" />
+    <None Include="Resources\ShootButton.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OutlandAreaCommon\OutlandAreaCommon.csproj">
