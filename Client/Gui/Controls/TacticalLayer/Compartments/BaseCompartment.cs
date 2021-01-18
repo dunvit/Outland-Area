@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Engine.Gui.Controls.TacticalLayer.Compartments
 {
-    public partial class ScannerCompartment : UserControl
+    public partial class BaseCompartment : UserControl
     {
-        public ScannerCompartment()
+        public BaseCompartment()
         {
             InitializeComponent();
         }

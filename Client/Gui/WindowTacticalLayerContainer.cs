@@ -19,20 +19,15 @@ namespace Engine.Gui
             if (DebugTools.IsInDesignMode())
                 return;
 
-            Global.Game.OnSelectCelestialObject += controlCommands.Event_SelectCelestialObject;
            
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
             Global.Game.OnAnomalyFound += Event_AnomalyFound;
             Global.Game.OnEndTurn += Event_EndTurn;
             
 
-            controlCommands.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnAlignToCelestialObject += Global.Game.AddCommandAlignTo;
             crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
-            controlCommands.OnAlignToCelestialObject += crlTacticalMap.CommandAlignTo;
-            controlCommands.OnOrbitCelestialObject += Global.Game.AddCommandOrbit;
-            controlCommands.OnOpenFire += Global.Game.AddCommandOpenFire;
 
             crlWeaponLauncher.OnActivateModule += crlTacticalMap.ActivateModule;
             

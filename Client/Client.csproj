@@ -127,11 +127,11 @@
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.Designer.cs">
       <DependentUpon>GenericModuleAction.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.cs">
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.Designer.cs">
-      <DependentUpon>ScannerCompartment.cs</DependentUpon>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.Designer.cs">
+      <DependentUpon>BaseCompartment.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapData.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\DrawMapDataObject.cs" />
@@ -220,8 +220,8 @@
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.resx">
       <DependentUpon>GenericModuleAction.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\ScannerCompartment.resx">
-      <DependentUpon>ScannerCompartment.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.resx">
+      <DependentUpon>BaseCompartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\GenericCompartment.resx">
       <DependentUpon>GenericCompartment.cs</DependentUpon>
