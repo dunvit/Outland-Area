@@ -31,6 +31,8 @@ namespace Engine.Gui
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
 
             weaponCompartment1.OnActivateModule += crlTacticalMap.ActivateModule;
+
+            scanningCompartment.OnActivateModule += Global.Game.ActivateModule;
         }
 
         private void Event_AnomalyFound(GameEvent gameEvent)
@@ -79,6 +81,8 @@ namespace Engine.Gui
             {
                 weaponCompartment1.Initialization(module);
             }
+
+
 
         }
 

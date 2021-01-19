@@ -12,6 +12,7 @@ using Engine.Gui.Controls.TacticalLayer;
 using MicroLibrary;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 
@@ -319,7 +320,7 @@ namespace Engine.Gui.Controls
             OnAlignToCelestialObject?.Invoke(Global.Game.GetSelectedObject());
         }
 
-        public void ActivateModule(ICelestialObject celestialObject)
+        public void ActivateModule(IModule module, ICelestialObject celestialObject)
         {
             _activeCelestialObject = celestialObject;
             _activeModule = (CelestialObjectTypes) celestialObject.Classification;

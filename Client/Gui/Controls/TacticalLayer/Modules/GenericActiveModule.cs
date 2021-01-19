@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Engine.Gui.Controls.TacticalLayer.Compartments;
-using log4net;
+﻿using log4net;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Engine.Gui.Controls.TacticalLayer.Modules
 {

@@ -114,7 +114,26 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var generalModule in allModulesSystems["general"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateGeneralModule(spaceship.Id, (string)generalModule["id"]));
+                                        var compartment = 0;
+                                        var slot = 0;
+
+                                        if (generalModule["compartment"] != null)
+                                        {
+                                            compartment = (int) generalModule["compartment"];
+                                        }
+
+                                        if (generalModule["slot"] != null)
+                                        {
+                                            slot = (int) generalModule["slot"];
+                                        }
+
+                                        var module = Factory.CreateGeneralModule(spaceship.Id,
+                                            (string) generalModule["id"]);
+
+                                        module.Compartment = compartment;
+                                        module.Slot = slot;
+
+                                        spaceship.Modules.Add(module);
                                     }
                                 }
 

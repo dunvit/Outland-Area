@@ -115,12 +115,6 @@
     <Compile Include="Gui\Controls\TacticalLayer\CommandsControl.Designer.cs">
       <DependentUpon>CommandsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.Designer.cs">
-      <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
-    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -132,6 +126,12 @@
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.Designer.cs">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScanningCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScanningCompartment.Designer.cs">
+      <DependentUpon>ScanningCompartment.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\WeaponCompartment.cs">
       <SubType>UserControl</SubType>
@@ -226,14 +226,14 @@
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsControl.resx">
       <DependentUpon>CommandsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\TacticalLayer\CommandsWeaponCompartment.resx">
-      <DependentUpon>CommandsWeaponCompartment.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.resx">
       <DependentUpon>GenericModuleAction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.resx">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\ScanningCompartment.resx">
+      <DependentUpon>ScanningCompartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\WeaponCompartment.resx">
       <DependentUpon>WeaponCompartment.cs</DependentUpon>

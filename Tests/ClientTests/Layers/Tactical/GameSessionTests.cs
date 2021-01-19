@@ -39,15 +39,31 @@ namespace Tests.ClientTests.Layers.Tactical
 
             Assert.AreEqual(8, spaceShip.Modules.Count);
 
-            //var modules = spaceShip.GetModules(Category.DeepScanner);
+            
             Assert.AreEqual(1, spaceShip.GetModules(Category.DeepScanner).Count);
             Assert.AreEqual(1, spaceShip.GetModules(Category.SpaceScanner).Count);
             Assert.AreEqual(2, spaceShip.GetModules(Category.Shield).Count);
             Assert.AreEqual(2, spaceShip.GetModules(Category.Reactor).Count);
             Assert.AreEqual(1, spaceShip.GetModules(Category.Weapon).Count);
+
+            var deepScanners = spaceShip.GetModules(Category.DeepScanner);
+            Assert.AreEqual(2, deepScanners[0].Compartment);
+            Assert.AreEqual(2, deepScanners[0].Slot);
+
+            var spaceScanners = spaceShip.GetModules(Category.SpaceScanner);
+            Assert.AreEqual(2, spaceScanners[0].Compartment);
+            Assert.AreEqual(1, spaceScanners[0].Slot);
+
+            var compartmentModules = spaceShip.GetModules(2);
+            Assert.AreEqual(2, compartmentModules.Count);
+            Assert.AreEqual(2, compartmentModules[0].Compartment);
+            Assert.AreEqual(1, compartmentModules[0].Slot);
+            Assert.AreEqual(2, compartmentModules[1].Compartment);
+            Assert.AreEqual(2, compartmentModules[1].Slot);
+
         }
 
-        
+
 
     }
 }

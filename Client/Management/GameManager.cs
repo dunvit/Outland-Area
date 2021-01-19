@@ -6,6 +6,7 @@ using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
 using OutlandAreaCommon.Tactical;
@@ -260,6 +261,11 @@ namespace Engine.Management
                 missile.AmmoId,
                 celestialObject.OwnerId,
                 playerShip.Id);
+        }
+
+        public void ActivateModule(IModule module, ICelestialObject target)
+        {
+            
         }
     }
 }

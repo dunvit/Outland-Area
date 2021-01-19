@@ -69,6 +69,10 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
             return Modules.Where(module => module.Category == modulesCategory).ToList();
         }
 
+        public List<IModule> GetModules(int compartment)
+        {
+            return Modules.Where(module => module.Compartment == compartment).ToList();
+        }
 
         public List<IModule> Modules { get; set; } = new List<IModule>();
     }

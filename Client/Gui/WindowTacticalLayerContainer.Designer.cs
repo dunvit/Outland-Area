@@ -35,6 +35,7 @@
             this.battleInformation1 = new Engine.Gui.Controls.TacticalLayer.BattleInformation();
             this.crlSelectedObject = new Engine.Gui.Controls.TacticalLayer.SelectedBaseCelestialObject();
             this.weaponCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.WeaponCompartment();
+            this.scanningCompartment = new Engine.Gui.Controls.TacticalLayer.Compartments.ScanningCompartment();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,12 +114,22 @@
             this.weaponCompartment1.Size = new System.Drawing.Size(180, 165);
             this.weaponCompartment1.TabIndex = 18;
             // 
+            // scanningCompartment
+            // 
+            this.scanningCompartment.BackColor = System.Drawing.Color.Black;
+            this.scanningCompartment.CompartmentModuleName = "SCANNING COMPARTMENT";
+            this.scanningCompartment.Location = new System.Drawing.Point(208, 903);
+            this.scanningCompartment.Name = "scanningCompartment";
+            this.scanningCompartment.Size = new System.Drawing.Size(180, 165);
+            this.scanningCompartment.TabIndex = 19;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.scanningCompartment);
             this.Controls.Add(this.weaponCompartment1);
             this.Controls.Add(this.crlSelectedObject);
             this.Controls.Add(this.battleInformation1);
@@ -144,5 +155,6 @@
         private Controls.TacticalLayer.BattleInformation battleInformation1;
         private Controls.TacticalLayer.SelectedBaseCelestialObject crlSelectedObject;
         private Controls.TacticalLayer.Compartments.WeaponCompartment weaponCompartment1;
+        private Controls.TacticalLayer.Compartments.ScanningCompartment scanningCompartment;
     }
 }

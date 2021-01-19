@@ -12,7 +12,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
     {
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public event Action<ICelestialObject> OnActivateModule;
+        public event Action<IModule, ICelestialObject> OnActivateModule;
+
+        private IModule _module;
 
         public string CompartmentModuleName 
         { 
@@ -34,11 +36,12 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
 
         private void ActivateFirstModule(ICelestialObject celestialObject)
         {
-            OnActivateModule?.Invoke(celestialObject);
+            OnActivateModule?.Invoke(_module, celestialObject);
         }
 
         public void Initialization(IModule module)
         {
+            _module = module;
             moduleFirst.Initialization(module);
         }
 

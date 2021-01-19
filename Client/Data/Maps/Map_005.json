@@ -51,10 +51,14 @@
                 "name": "Reactor Mk I"
               },
               {
-                "id": "SCR5001"
+                "id": "SCR5001",
+                "compartment": 2,
+                "slot": 1
               },
               {
-                "id": "DSCR001"
+                "id": "DSCR001",
+                "compartment": 2,
+                "slot":  2 
               }
             ],
             "shields": [
