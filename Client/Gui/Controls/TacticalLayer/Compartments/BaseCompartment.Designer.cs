@@ -39,9 +39,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.moduleFirst = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
-            this.moduleSecond = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
             this.moduleThird = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
+            this.moduleSecond = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
+            this.moduleFirst = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -143,14 +143,15 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.pictureBox1.TabIndex = 36;
             this.pictureBox1.TabStop = false;
             // 
-            // moduleFirst
+            // moduleThird
             // 
-            this.moduleFirst.BackColor = System.Drawing.Color.Black;
-            this.moduleFirst.Location = new System.Drawing.Point(11, 4);
-            this.moduleFirst.Name = "moduleFirst";
-            this.moduleFirst.Size = new System.Drawing.Size(48, 62);
-            this.moduleFirst.TabIndex = 43;
-            this.moduleFirst.Visible = false;
+            this.moduleThird.BackColor = System.Drawing.Color.Black;
+            this.moduleThird.Location = new System.Drawing.Point(119, 4);
+            this.moduleThird.Name = "moduleThird";
+            this.moduleThird.Size = new System.Drawing.Size(48, 62);
+            this.moduleThird.TabIndex = 45;
+            this.moduleThird.Visible = false;
+
             // 
             // moduleSecond
             // 
@@ -161,14 +162,14 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.moduleSecond.TabIndex = 44;
             this.moduleSecond.Visible = false;
             // 
-            // moduleThird
+            // moduleFirst
             // 
-            this.moduleThird.BackColor = System.Drawing.Color.Black;
-            this.moduleThird.Location = new System.Drawing.Point(119, 4);
-            this.moduleThird.Name = "moduleThird";
-            this.moduleThird.Size = new System.Drawing.Size(48, 62);
-            this.moduleThird.TabIndex = 45;
-            this.moduleThird.Visible = false;
+            this.moduleFirst.BackColor = System.Drawing.Color.Black;
+            this.moduleFirst.Location = new System.Drawing.Point(11, 4);
+            this.moduleFirst.Name = "moduleFirst";
+            this.moduleFirst.Size = new System.Drawing.Size(48, 62);
+            this.moduleFirst.TabIndex = 43;
+            this.moduleFirst.Visible = false;
             // 
             // BaseCompartment
             // 

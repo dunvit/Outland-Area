@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using log4net;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
@@ -33,12 +34,18 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         {
             InitializeComponent();
 
-            moduleFirst.OnActivateModule += ActivateFirstModule;
+            moduleFirst.OnActivateModule += ActivateModule;
+            moduleSecond.OnActivateModule += ActivateModule;
+            moduleThird.OnActivateModule += ActivateModule;
         }
 
-        private void ActivateFirstModule(ICelestialObject celestialObject)
+        private void ActivateModule(IModule module)
         {
-            OnActivateModule?.Invoke(_module, celestialObject);
+            Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' activated from slot {module.Slot} for compartment {module.Compartment}"));
+
+            OnActivateModule?.Invoke(module, null);
+
+            
         }
 
         public void Initialization(IModule module)

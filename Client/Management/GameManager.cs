@@ -25,6 +25,7 @@ namespace Engine.Management
         
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnBattleInitialization;
+        public event Action<IModule, ICelestialObject> OnActivateModuleForTacticalMap;
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
@@ -265,7 +266,28 @@ namespace Engine.Management
 
         public void ActivateModule(IModule module, ICelestialObject target)
         {
-            
+            switch (module.Category)
+            {
+                case Category.Weapon:
+                    var missile = MissilesFactory.GetMissile(module.ToWeapon().AmmoId).ToCelestialObject();
+
+                    missile.OwnerId = (int)module.Id;
+
+                    OnActivateModuleForTacticalMap?.Invoke(module, missile);
+                    break;
+                case Category.Shield:
+                    break;
+                case Category.Propulsion:
+                    break;
+                case Category.Reactor:
+                    break;
+                case Category.SpaceScanner:
+                    break;
+                case Category.DeepScanner:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
