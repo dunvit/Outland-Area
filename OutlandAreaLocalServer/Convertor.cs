@@ -106,7 +106,25 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var weaponModule in allModulesSystems["weapon"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateWeaponModule(spaceship.Id, (string)weaponModule["id"]));
+                                        var compartment = 0;
+                                        var slot = 0;
+
+                                        if (weaponModule["compartment"] != null)
+                                        {
+                                            compartment = (int)weaponModule["compartment"];
+                                        }
+
+                                        if (weaponModule["slot"] != null)
+                                        {
+                                            slot = (int)weaponModule["slot"];
+                                        }
+
+                                        var module = Factory.CreateWeaponModule(spaceship.Id, (string)weaponModule["id"]);
+
+                                        module.Compartment = compartment;
+                                        module.Slot = slot;
+
+                                        spaceship.Modules.Add(module);
                                     }
                                 }
 
@@ -127,8 +145,7 @@ namespace OutlandAreaLocalServer
                                             slot = (int) generalModule["slot"];
                                         }
 
-                                        var module = Factory.CreateGeneralModule(spaceship.Id,
-                                            (string) generalModule["id"]);
+                                        var module = Factory.CreateGeneralModule(spaceship.Id, (string) generalModule["id"]);
 
                                         module.Compartment = compartment;
                                         module.Slot = slot;

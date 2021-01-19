@@ -264,7 +264,7 @@ namespace Engine.Management
                 playerShip.Id);
         }
 
-        public void ActivateModule(IModule module, ICelestialObject target)
+        public void ActivateModule(IModule module)
         {
             switch (module.Category)
             {

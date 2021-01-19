@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using log4net;
+﻿using log4net;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
-using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Universe;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Engine.Gui.Controls.TacticalLayer.Compartments
 {
@@ -15,9 +13,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
     {
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public event Action<IModule, ICelestialObject> OnActivateModule;
-
-        private IModule _module;
+        public event Action<IModule> OnActivateModule;
 
         public string CompartmentModuleName 
         { 
@@ -43,16 +39,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         {
             Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' activated from slot {module.Slot} for compartment {module.Compartment}"));
 
-            OnActivateModule?.Invoke(module, null);
-
-            
-        }
-
-        public void Initialization(IModule module)
-        {
-            _module = module;
-            moduleFirst.Initialization(module);
-            moduleFirst.Visible = true;
+            OnActivateModule?.Invoke(module);
         }
 
         public void Initialization(List<IModule> modules)

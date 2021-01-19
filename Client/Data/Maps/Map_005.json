@@ -38,7 +38,9 @@
             "weapon": [
               {
                 "id": "WRS5002",
-                "name": "125mm Railgun I"
+                "name": "125mm Railgun I",
+                "compartment": 1,
+                "slot": 1
               }
             ],
             "general": [

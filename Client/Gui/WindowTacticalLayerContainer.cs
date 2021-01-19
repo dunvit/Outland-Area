@@ -67,23 +67,15 @@ namespace Engine.Gui
 
         private void Event_EndTurn(GameSession gameSession)
         {
-            foreach (var module in gameSession.GetPlayerSpaceShip().ToSpaceship().GetWeaponModules())
-            {
-                weaponCompartment1.ResetData(gameSession, module);
-            }
-
+            weaponCompartment1.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(1));
             scanningCompartment.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(2));
         }
 
         private void Event_BattleInitialization(GameSession gameSession)
         {
             var playerSpaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
-            
-            foreach (var module in playerSpaceship.Modules.Where(m => m.Category == Category.Weapon))
-            {
-                weaponCompartment1.Initialization(module);
-            }
 
+            weaponCompartment1.Initialization(playerSpaceship.GetModules(1));
             scanningCompartment.Initialization(playerSpaceship.GetModules(2));
         }
 
