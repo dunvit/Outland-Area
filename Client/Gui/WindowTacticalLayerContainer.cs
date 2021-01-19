@@ -71,6 +71,8 @@ namespace Engine.Gui
             {
                 weaponCompartment1.ResetData(gameSession, module);
             }
+
+            scanningCompartment.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(2));
         }
 
         private void Event_BattleInitialization(GameSession gameSession)
@@ -82,8 +84,7 @@ namespace Engine.Gui
                 weaponCompartment1.Initialization(module);
             }
 
-
-
+            scanningCompartment.Initialization(playerSpaceship.GetModules(2));
         }
 
         private void Event_Exit(object sender, EventArgs e)

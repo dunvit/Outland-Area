@@ -40,6 +40,8 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.moduleFirst = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
+            this.moduleSecond = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
+            this.moduleThird = new Engine.Gui.Controls.TacticalLayer.Modules.GenericActiveModule();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -148,12 +150,33 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.moduleFirst.Name = "moduleFirst";
             this.moduleFirst.Size = new System.Drawing.Size(48, 62);
             this.moduleFirst.TabIndex = 43;
+            this.moduleFirst.Visible = false;
+            // 
+            // moduleSecond
+            // 
+            this.moduleSecond.BackColor = System.Drawing.Color.Black;
+            this.moduleSecond.Location = new System.Drawing.Point(65, 4);
+            this.moduleSecond.Name = "moduleSecond";
+            this.moduleSecond.Size = new System.Drawing.Size(48, 62);
+            this.moduleSecond.TabIndex = 44;
+            this.moduleSecond.Visible = false;
+            // 
+            // moduleThird
+            // 
+            this.moduleThird.BackColor = System.Drawing.Color.Black;
+            this.moduleThird.Location = new System.Drawing.Point(119, 4);
+            this.moduleThird.Name = "moduleThird";
+            this.moduleThird.Size = new System.Drawing.Size(48, 62);
+            this.moduleThird.TabIndex = 45;
+            this.moduleThird.Visible = false;
             // 
             // BaseCompartment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.moduleThird);
+            this.Controls.Add(this.moduleSecond);
             this.Controls.Add(this.moduleFirst);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
@@ -189,5 +212,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Modules.GenericActiveModule moduleFirst;
+        private Modules.GenericActiveModule moduleSecond;
+        private Modules.GenericActiveModule moduleThird;
     }
 }

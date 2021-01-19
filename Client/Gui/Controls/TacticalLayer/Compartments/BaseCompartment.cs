@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using log4net;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
@@ -43,11 +45,73 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         {
             _module = module;
             moduleFirst.Initialization(module);
+            moduleFirst.Visible = true;
+        }
+
+        public void Initialization(List<IModule> modules)
+        {
+            Logger.Debug(TraceMessage.Execute(this, "Modules initialization started."));
+
+            foreach (var module in modules)
+            {
+                switch (module.Slot)
+                {
+                    case 1:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' docked to slot {module.Slot} for compartment {module.Compartment}"));
+                        moduleFirst.Initialization(module);
+                        moduleFirst.Tag = module;
+                        moduleFirst.Visible = true;
+                        break;
+
+                    case 2:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' docked to slot {module.Slot} for compartment {module.Compartment}"));
+                        moduleSecond.Initialization(module);
+                        moduleSecond.Tag = module;
+                        moduleSecond.Visible = true;
+                        break;
+
+                    case 3:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' docked to slot {module.Slot} for compartment {module.Compartment}"));
+                        moduleThird.Initialization(module);
+                        moduleThird.Tag = module;
+                        moduleThird.Visible = true;
+                        break;
+                }
+            }
         }
 
         public void ResetData(GameSession gameSession, IWeaponModule module)
         {
             moduleFirst.ResetData(gameSession, module);
+        }
+
+        public void ResetData(GameSession gameSession, List<IModule> modules)
+        {
+            Logger.Debug(TraceMessage.Execute(this, "Modules update started."));
+
+            foreach (var module in modules)
+            {
+                switch (module.Slot)
+                {
+                    case 1:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' updated in slot {module.Slot} for compartment {module.Compartment}"));
+                        if(module is IWeaponModule slot1Module)
+                            moduleFirst.ResetData(gameSession, slot1Module);
+                        break;
+
+                    case 2:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' updated in slot {module.Slot} for compartment {module.Compartment}"));
+                        if (module is IWeaponModule slot2Module)
+                            moduleSecond.ResetData(gameSession, slot2Module);
+                        break;
+
+                    case 3:
+                        Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' updated in slot {module.Slot} for compartment {module.Compartment}"));
+                        if (module is IWeaponModule slot3Module)
+                            moduleThird.ResetData(gameSession, slot3Module);
+                        break;
+                }
+            }
         }
 
         private void Event_MouseLeave(object sender, EventArgs e)
