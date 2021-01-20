@@ -97,6 +97,7 @@
     <Compile Include="Gui\Controls\Common\FlatButton.Designer.cs">
       <DependentUpon>FlatButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\Common\MouseLocationTracker.cs" />
     <Compile Include="Gui\Controls\TacticalLayer\BattleInformation.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -66,6 +66,7 @@ namespace Engine.Gui.Controls.Common
             this.Controls.Add(this.borderImage);
             this.Name = "ActionButton";
             this.Size = new System.Drawing.Size(48, 48);
+            this.Load += new System.EventHandler(this.ActionButton_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.borderImage)).EndInit();
             this.ResumeLayout(false);
