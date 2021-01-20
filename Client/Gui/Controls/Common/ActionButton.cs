@@ -7,9 +7,44 @@ namespace Engine.Gui.Controls.Common
 {
     public partial class ActionButton : UserControl
     {
+        private Timer mTimer;
+
+        private bool isSelected = false;
+
         public ActionButton()
         {
             InitializeComponent();
+
+            mTimer = new Timer {Interval = 200};
+            mTimer.Tick += mTimer_Tick;
+            mTimer.Enabled = true;
+        }
+
+        private void mTimer_Tick(object sender, EventArgs e)
+        {
+            if (AmIStillInsideTheUserControl(this))
+            {
+                if (isSelected == false)
+                {
+                    borderImage.Image = Properties.Resources.BordersSelected;
+                }
+
+                isSelected = true;
+            }
+            else
+            {
+                if (isSelected == true)
+                {
+                    borderImage.Image = Properties.Resources.BordersUnselected;
+                }
+
+                isSelected = false;
+            }
+        }
+
+        private bool AmIStillInsideTheUserControl(Control control)
+        {
+            return control.RectangleToScreen(control.ClientRectangle).Contains(Cursor.Position);
         }
 
         [Browsable(true)]
@@ -22,21 +57,6 @@ namespace Engine.Gui.Controls.Common
                 pictureBox1.Image = value;
                 Refresh();
             }
-        }
-
-        private void borderImage_MouseEnter(object sender, EventArgs e)
-        {
-            borderImage.Image = Properties.Resources.BordersSelected;
-        }
-
-        private void borderImage_MouseLeave(object sender, EventArgs e)
-        {
-            borderImage.Image = Properties.Resources.BordersUnselected;
-        }
-
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
-        {
-            borderImage.Image = Properties.Resources.BordersSelected;
         }
 
         private void InvokeClick(object sender, EventArgs e)

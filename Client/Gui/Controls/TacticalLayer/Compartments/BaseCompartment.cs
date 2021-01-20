@@ -14,6 +14,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public event Action<IModule> OnActivateModule;
+        public event Action<IModule> OnPreActivateModule;
 
         public string CompartmentModuleName 
         { 
@@ -72,11 +73,6 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
                         break;
                 }
             }
-        }
-
-        public void ResetData(GameSession gameSession, IWeaponModule module)
-        {
-            moduleFirst.ResetData(gameSession, module);
         }
 
         public void ResetData(GameSession gameSession, List<IModule> modules)
