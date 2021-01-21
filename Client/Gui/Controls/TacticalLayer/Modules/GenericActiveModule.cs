@@ -1,10 +1,8 @@
 ﻿using log4net;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
-using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Equipment.Weapon;
 using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Universe;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -16,7 +14,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private IModule _module;
+        public event Action<IModule> OnExecuteModule;
         public event Action<IModule> OnActivateModule;
+        public event Action<IModule> OnDeactivateModule;
 
         public GenericActiveModule()
         {
@@ -30,6 +30,14 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
             _module = module;
 
             actionIcon.Picture = Properties.Resources.Radar;
+            actionIcon.OnMouseEnter += delegate
+            {
+                OnActivateModule?.Invoke(module);
+            };
+            actionIcon.OnMouseLeave += delegate
+            {
+                OnDeactivateModule?.Invoke(module);
+            };
         }
 
         private delegate void ProgressBarCallback(GameSession gameSession, IWeaponModule module);
@@ -69,7 +77,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
                 return;
             }
 
-            OnActivateModule?.Invoke(_module);
+            OnExecuteModule?.Invoke(_module);
         }
 
         public void Unselect()

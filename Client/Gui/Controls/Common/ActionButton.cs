@@ -7,13 +7,13 @@ namespace Engine.Gui.Controls.Common
 {
     public partial class ActionButton : UserControl
     {
-        private MouseLocationTracker mouseLocationTracker;
+        private MouseLocationTracker _mouseLocationTracker;
+        public new Action OnMouseEnter;
+        public new Action OnMouseLeave;
 
         public ActionButton()
         {
             InitializeComponent();
-
-
         }
 
 
@@ -41,16 +41,18 @@ namespace Engine.Gui.Controls.Common
 
         private void ActionButton_Load(object sender, EventArgs e)
         {
-            mouseLocationTracker = new MouseLocationTracker(this);
+            _mouseLocationTracker = new MouseLocationTracker(this);
 
-            mouseLocationTracker.OnMouseInControl += delegate
+            _mouseLocationTracker.OnMouseInControl += delegate
             {
                 borderImage.Image = Properties.Resources.BordersSelected;
+                OnMouseEnter?.Invoke();
             };
 
-            mouseLocationTracker.OnMouseOutControl += delegate
+            _mouseLocationTracker.OnMouseOutControl += delegate
             {
                 borderImage.Image = Properties.Resources.BordersUnselected;
+                OnMouseLeave?.Invoke();
             };
         }
     }

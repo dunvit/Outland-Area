@@ -1,10 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OutlandAreaCommon.Tactical;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OutlandAreaCommon.Server.DataProcessing;
+using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaLocalServer;
 
 namespace OutlandAreaCommon.Tactical.Tests
@@ -21,6 +18,28 @@ namespace OutlandAreaCommon.Tactical.Tests
             localServer.Initialization(sessionName);
 
             return localServer;
+        }
+
+        [TestMethod()]
+        public void GetObjectsByDistanceTests()
+        {
+            var localServer = CreateGameServer("Session_ObjectsByDistance");
+
+            var gameSession = localServer.RefreshGameSession(sessionID);
+
+            Assert.AreEqual(4, gameSession.SpaceMap.CelestialObjects.Count);
+
+            var objectsByDistance = gameSession.GetCelestialObjectsByDistance();
+
+            Assert.AreEqual(3, objectsByDistance.Count);
+
+            Assert.AreEqual("OBJ_01", objectsByDistance[0].Name);
+            Assert.AreEqual("OBJ_03", objectsByDistance[1].Name);
+            Assert.AreEqual("OBJ_02", objectsByDistance[2].Name);
+
+            var closest = gameSession.GetCelestialObjectsByDistance().FirstOrDefault(o => o.IsScanned == false);
+
+            Assert.AreEqual("OBJ_01", closest.Name);
         }
 
         [TestMethod()]
@@ -50,14 +69,16 @@ namespace OutlandAreaCommon.Tactical.Tests
 
             gameSession.AddEvent(new GameEvent { CelestialObjectId = 3, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound });
 
-            Assert.AreEqual(2, gameSession.GetCurrentTurnEvents().Count);
+            Assert.AreEqual(1, gameSession.GetCurrentTurnEvents().Count);
 
             localServer.TurnCalculation();
 
             gameSession = localServer.RefreshGameSession(sessionID);
 
             Assert.AreEqual(2, gameSession.GetTurnEvents(3).Count);
-            Assert.AreEqual(2, gameSession.GetTurnEvents(2).Count);
+            Assert.AreEqual(1, gameSession.GetTurnEvents(2).Count);
+
+            
         }
     }
 }

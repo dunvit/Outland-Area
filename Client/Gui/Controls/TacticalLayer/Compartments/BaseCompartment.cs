@@ -13,8 +13,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
     {
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event Action<IModule> OnExecuteModule;
         public event Action<IModule> OnActivateModule;
-        public event Action<IModule> OnPreActivateModule;
+        public event Action<IModule> OnDeactivateModule;
 
         public string CompartmentModuleName 
         { 
@@ -31,9 +32,24 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         {
             InitializeComponent();
 
+            moduleFirst.OnExecuteModule += ExecuteModule;
+            moduleSecond.OnExecuteModule += ExecuteModule;
+            moduleThird.OnExecuteModule += ExecuteModule;
+
             moduleFirst.OnActivateModule += ActivateModule;
             moduleSecond.OnActivateModule += ActivateModule;
             moduleThird.OnActivateModule += ActivateModule;
+
+            moduleFirst.OnDeactivateModule += DeactivateModule;
+            moduleSecond.OnDeactivateModule += DeactivateModule;
+            moduleThird.OnDeactivateModule += DeactivateModule;
+        }
+
+        private void DeactivateModule(IModule module)
+        {
+            Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' deactivated from slot {module.Slot} for compartment {module.Compartment}"));
+
+            OnDeactivateModule?.Invoke(module);
         }
 
         private void ActivateModule(IModule module)
@@ -41,6 +57,13 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' activated from slot {module.Slot} for compartment {module.Compartment}"));
 
             OnActivateModule?.Invoke(module);
+        }
+
+        private void ExecuteModule(IModule module)
+        {
+            Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' executed from slot {module.Slot} for compartment {module.Compartment}"));
+
+            OnExecuteModule?.Invoke(module);
         }
 
         public void Initialization(List<IModule> modules)

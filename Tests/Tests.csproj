@@ -134,6 +134,9 @@
     <None Include="Data\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\Session_ObjectsByDistance.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Maps\MessageTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

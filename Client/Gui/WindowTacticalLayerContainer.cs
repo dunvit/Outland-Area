@@ -31,9 +31,16 @@ namespace Engine.Gui
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
 
             Global.Game.OnActivateModuleForTacticalMap += crlTacticalMap.ActivateModule;
+            weaponCompartment1.OnExecuteModule += Global.Game.ExecuteModule;
             weaponCompartment1.OnActivateModule += Global.Game.ActivateModule;
+            weaponCompartment1.OnDeactivateModule += Global.Game.DeactivateModule;
+
+            scanningCompartment.OnExecuteModule += Global.Game.ExecuteModule;
             scanningCompartment.OnActivateModule += Global.Game.ActivateModule;
+            scanningCompartment.OnDeactivateModule += Global.Game.DeactivateModule;
         }
+
+        //public void SetConnector
 
         private void Event_AnomalyFound(GameEvent gameEvent)
         {
@@ -63,7 +70,6 @@ namespace Engine.Gui
 
             return windowAnomalyFound.ShowDialog();
         }
-
 
         private void Event_EndTurn(GameSession gameSession)
         {

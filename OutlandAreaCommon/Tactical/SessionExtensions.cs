@@ -5,6 +5,7 @@ using LanguageExt;
 using LanguageExt.SomeHelp;
 using log4net;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
@@ -107,17 +108,21 @@ namespace OutlandAreaCommon.Tactical
             return Option<List<ICelestialObject>>.Some(gameSession.SpaceMap.CelestialObjects);
         }
 
+        public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession)
+        {
+            return gameSession.SpaceMap.CelestialObjects.Map(celestialObject => (celestialObject,
+                    Coordinates.GetDistance(
+                        gameSession.GetPlayerSpaceShip().GetLocation(),
+                        celestialObject.GetLocation())
+                )).
+                OrderBy(e => e.Item2).Map(e => e.celestialObject).
+                Where(celestialObject => celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).
+                ToList();
+        }
+
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
         {
-            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
-            {
-                if (id == celestialObjects.Id)
-                {
-                    return celestialObjects.DeepClone();
-                }
-            }
-
-            return null;
+            return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();
         }
 
         public static void AddCelestialObject(this GameSession session, ICelestialObject celestialObject)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using OutlandAreaCommon.Equipment;
 
 namespace Engine.Gui
 {
@@ -8,12 +9,14 @@ namespace Engine.Gui
     {
         private List<Form> Screens;
 
+        private WindowTacticalLayerContainer tacticalLayerContainer = new WindowTacticalLayerContainer();
+
         public void Initialization()
         {
             Screens = new List<Form>
             {
-                new WindowMenu(), 
-                new WindowTacticalLayerContainer()
+                new WindowMenu(),
+                tacticalLayerContainer
             };
 
             foreach (var screen in Screens)
@@ -25,6 +28,11 @@ namespace Engine.Gui
                 }
             }
 
+        }
+
+        public void ConnectClosestObjects(IModule module)
+        {
+            //tacticalLayerContainer.
         }
 
         public Form GetScreen(string key)

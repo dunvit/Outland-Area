@@ -28,7 +28,6 @@ namespace Engine.Gui.Controls.Common
                 if (_isSelected == false)
                 {
                     OnMouseInControl?.Invoke();
-                    //borderImage.Image = Properties.Resources.BordersSelected;
                 }
 
                 _isSelected = true;
@@ -38,7 +37,6 @@ namespace Engine.Gui.Controls.Common
                 if (_isSelected == true)
                 {
                     OnMouseOutControl?.Invoke();
-                    //borderImage.Image = Properties.Resources.BordersUnselected;
                 }
 
                 _isSelected = false;

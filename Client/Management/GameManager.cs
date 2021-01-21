@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Engine.Gui;
 using Engine.Management.Server;
 using Engine.Tools;
@@ -9,6 +10,7 @@ using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
+using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
@@ -264,7 +266,7 @@ namespace Engine.Management
                 playerShip.Id);
         }
 
-        public void ActivateModule(IModule module)
+        public void ExecuteModule(IModule module)
         {
             switch (module.Category)
             {
@@ -284,6 +286,51 @@ namespace Engine.Management
                 case Category.SpaceScanner:
                     break;
                 case Category.DeepScanner:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void ActivateModule(IModule module)
+        {
+            switch (module.Category)
+            {
+                case Category.Weapon:
+                    break;
+                case Category.Shield:
+                    break;
+                case Category.Propulsion:
+                    break;
+                case Category.Reactor:
+                    break;
+                case Category.SpaceScanner:
+                    break;
+                case Category.DeepScanner:
+                   
+                    _ui.ConnectClosestObjects(module);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void DeactivateModule(IModule module)
+        {
+            switch (module.Category)
+            {
+                case Category.Weapon:
+                    break;
+                case Category.Shield:
+                    break;
+                case Category.Propulsion:
+                    break;
+                case Category.Reactor:
+                    break;
+                case Category.SpaceScanner:
+                    break;
+                case Category.DeepScanner:
+                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
