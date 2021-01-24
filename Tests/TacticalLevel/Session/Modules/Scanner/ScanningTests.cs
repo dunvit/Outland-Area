@@ -11,23 +11,13 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
     [TestClass]
     public class ScanningTests
     {
-        private static int sessionID = 0;
-
-        private static LocalGameServer CreateGameServer(string sessionName)
-        {
-            var localServer = new LocalGameServer();
-
-            localServer.Initialization(sessionName);
-
-            return localServer;
-        }
 
         [TestMethod]
         public void ScanningModuleExistOnPlayerShip_Test()
         {
-            var localServer = CreateGameServer("Map_005");
+            var localServer = EnvironmentGlobal.CreateGameServer("Map_005");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             var scanners = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules();
 
@@ -45,9 +35,9 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
         [TestMethod]
         public void DeepScanningModuleExistOnPlayerShip_Test()
         {
-            var localServer = CreateGameServer("Map_005");
+            var localServer = EnvironmentGlobal.CreateGameServer("Map_005");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             var scanners = gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(Category.DeepScanner);
 
@@ -65,9 +55,9 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
         [TestMethod]
         public void AutomaticExecuteScanningModule_Test()
         {
-            var localServer = CreateGameServer("ScanningModuleTest");
+            var localServer = EnvironmentGlobal.CreateGameServer("ScanningModuleTest");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             var scanners = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules();
 
@@ -77,13 +67,13 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
 
             Assert.AreEqual(scannerModule.ReloadTime, scannerModule.Reloading);
 
-            localServer.ResumeSession(sessionID);
+            localServer.ResumeSession();
 
             Assert.AreEqual(2, gameSession.SpaceMap.CelestialObjects.Count);
 
             localServer.TurnCalculation();
 
-            var gameSessionTurn1 = localServer.RefreshGameSession(sessionID);
+            var gameSessionTurn1 = localServer.RefreshGameSession();
 
             scannerModule = gameSessionTurn1.GetPlayerSpaceShip().ToSpaceship().GetScanningModules()[0];
 

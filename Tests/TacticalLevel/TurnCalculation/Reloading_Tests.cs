@@ -8,23 +8,14 @@ namespace Tests.TacticalLevel.TurnCalculation
     [TestClass]
     public class Reloading_Tests
     {
-        private static int sessionID = 0;
 
-        private static LocalGameServer CreateGameServer(string sessionName)
-        {
-            var localServer = new LocalGameServer();
-
-            localServer.Initialization(sessionName);
-
-            return localServer;
-        }
 
         [TestMethod]
         public void WeaponModuleReloading_Test()
         {
-            var localServer = CreateGameServer("WeaponModuleReloading_Test");
+            var localServer = EnvironmentGlobal.CreateGameServer("WeaponModuleReloading_Test");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             var weaponModules = gameSession.GetPlayerSpaceShip().ToSpaceship().GetWeaponModules();
 
@@ -34,11 +25,11 @@ namespace Tests.TacticalLevel.TurnCalculation
 
             Assert.AreEqual(weaponModule.ReloadTime, weaponModule.Reloading);
 
-            localServer.ResumeSession(sessionID);
+            localServer.ResumeSession();
 
             localServer.TurnCalculation();
 
-            gameSession = localServer.RefreshGameSession(sessionID);
+            gameSession = localServer.RefreshGameSession();
 
             weaponModule = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules()[0];
 
@@ -50,7 +41,7 @@ namespace Tests.TacticalLevel.TurnCalculation
             {
                 localServer.TurnCalculation();
 
-                gameSession = localServer.RefreshGameSession(sessionID);
+                gameSession = localServer.RefreshGameSession();
 
                 weaponModule = gameSession.GetPlayerSpaceShip().ToSpaceship().GetScanningModules()[0];
             }

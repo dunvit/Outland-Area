@@ -63,13 +63,13 @@ namespace OutlandAreaLocalServer
             isDebug = false;
         }
 
-        public GameSession RefreshGameSession(int id)
+        public GameSession RefreshGameSession(int id = 0)
         {
             Logger.Debug($"[{GetType().Name}]\t RefreshGameSession id={id}");
             return _gameSession;
         }
 
-        public void ResumeSession(int id)
+        public void ResumeSession(int id = 0)
         {
             Logger.Debug($"[{GetType().Name}]\t ResumeSession id={id}");
             _gameSession.SpaceMap.IsEnabled = true;

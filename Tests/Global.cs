@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OutlandAreaLocalServer;
 
 namespace Tests
 {
@@ -11,6 +7,17 @@ namespace Tests
         public static void Initialization()
         {
             log4net.Config.XmlConfigurator.Configure();
+        }
+
+        private static int sessionID = 0;
+
+        public static LocalGameServer CreateGameServer(string sessionName)
+        {
+            var localServer = new LocalGameServer();
+
+            localServer.Initialization(sessionName);
+
+            return localServer;
         }
     }
 }

@@ -1,31 +1,19 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OutlandAreaCommon.Server.DataProcessing;
-using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaLocalServer;
+using Tests;
 
 namespace OutlandAreaCommon.Tactical.Tests
 {
     [TestClass()]
     public class GameSessionTests
     {
-        private static int sessionID = 0;
-
-        private static LocalGameServer CreateGameServer(string sessionName)
-        {
-            var localServer = new LocalGameServer();
-
-            localServer.Initialization(sessionName);
-
-            return localServer;
-        }
 
         [TestMethod()]
         public void GetObjectsByDistanceTests()
         {
-            var localServer = CreateGameServer("Session_ObjectsByDistance");
+            var localServer = EnvironmentGlobal.CreateGameServer("Session_ObjectsByDistance");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             Assert.AreEqual(4, gameSession.SpaceMap.CelestialObjects.Count);
 
@@ -45,25 +33,25 @@ namespace OutlandAreaCommon.Tactical.Tests
         [TestMethod()]
         public void AddMessageTest()
         {
-            var localServer = CreateGameServer("MessageTest");
+            var localServer = EnvironmentGlobal.CreateGameServer("MessageTest");
 
-            var gameSession = localServer.RefreshGameSession(sessionID);
+            var gameSession = localServer.RefreshGameSession();
 
             Assert.AreEqual(0, gameSession.GetCurrentTurnEvents().Count);
 
-            localServer.ResumeSession(sessionID);
+            localServer.ResumeSession();
 
             localServer.TurnCalculation();
 
             Assert.AreEqual(0, gameSession.GetCurrentTurnEvents().Count);
 
-            gameSession = localServer.RefreshGameSession(sessionID);
+            gameSession = localServer.RefreshGameSession();
 
             gameSession.AddEvent(new GameEvent{CelestialObjectId = 1, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound});
 
             localServer.TurnCalculation();
 
-            gameSession = localServer.RefreshGameSession(sessionID);
+            gameSession = localServer.RefreshGameSession();
 
             gameSession.AddEvent(new GameEvent { CelestialObjectId = 2, IsOpenWindow = true, Type = GameEventTypes.AnomalyFound });
 
@@ -73,7 +61,7 @@ namespace OutlandAreaCommon.Tactical.Tests
 
             localServer.TurnCalculation();
 
-            gameSession = localServer.RefreshGameSession(sessionID);
+            gameSession = localServer.RefreshGameSession();
 
             Assert.AreEqual(2, gameSession.GetTurnEvents(3).Count);
             Assert.AreEqual(1, gameSession.GetTurnEvents(2).Count);
