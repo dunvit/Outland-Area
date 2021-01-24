@@ -1,4 +1,7 @@
-﻿using OutlandAreaCommon.Equipment;
+﻿using System.Collections.Generic;
+using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui
 {
@@ -8,6 +11,7 @@ namespace Engine.Gui
 
         void Initialization();
 
-        void ConnectClosestObjects(IModule module);
+        void ConnectClosestObjects(GameSession gameSession, IModule module, IEnumerable<ICelestialObject> objects,
+            bool show);
     }
 }

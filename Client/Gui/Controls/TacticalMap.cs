@@ -118,6 +118,8 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            DrawMapTools.DrawConnectors(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
+
             DrawMapTools.DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
 
             DrawMapTools.DrawChangeMovementDestination(graphics, _gameSession, pointInSpace, granularTurnInformation, turnStep, _screenParameters);
@@ -324,6 +326,14 @@ namespace Engine.Gui.Controls
         {
             _activeCelestialObject = celestialObject;
             _activeModule = (CelestialObjectTypes) celestialObject.Classification;
+        }
+
+        IEnumerable<ICelestialObject> _connectors = new List<ICelestialObject>();
+
+        public void Connectors(GameSession gameSession, IModule module,IEnumerable<ICelestialObject> objects, bool show)
+        {
+            _connectors = objects;
+
         }
     }
 }

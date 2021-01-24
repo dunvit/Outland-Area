@@ -8,7 +8,7 @@ namespace Engine
         public static Settings ApplicationSettings { get; private set; }
         public static GameManager Game { get; private set; }
 
-        public static readonly UiManager GameUiManager = new UiManager();
+        public static UiManager GameUiManager;
 
         public static void GameInitialization()
         {
@@ -17,6 +17,8 @@ namespace Engine
             ApplicationSettings = ReloadApplicationSettings();
 
             Game = new GameManager();
+
+            GameUiManager = new UiManager();
 
             GameUiManager.Initialization();
 

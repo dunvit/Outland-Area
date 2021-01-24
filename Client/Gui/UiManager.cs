@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using OutlandAreaCommon.Equipment;
+using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui
 {
@@ -9,14 +11,14 @@ namespace Engine.Gui
     {
         private List<Form> Screens;
 
-        private WindowTacticalLayerContainer tacticalLayerContainer = new WindowTacticalLayerContainer();
+        private readonly WindowTacticalLayerContainer _tacticalLayerContainer = new WindowTacticalLayerContainer();
 
         public void Initialization()
         {
             Screens = new List<Form>
             {
                 new WindowMenu(),
-                tacticalLayerContainer
+                _tacticalLayerContainer
             };
 
             foreach (var screen in Screens)
@@ -30,9 +32,9 @@ namespace Engine.Gui
 
         }
 
-        public void ConnectClosestObjects(IModule module)
+        public void ConnectClosestObjects(GameSession gameSession, IModule module, IEnumerable<ICelestialObject> objects, bool show)
         {
-            //tacticalLayerContainer.
+            _tacticalLayerContainer.ConnectClosestObjects(gameSession, module, objects, show);
         }
 
         public Form GetScreen(string key)

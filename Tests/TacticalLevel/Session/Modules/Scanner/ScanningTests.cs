@@ -4,7 +4,6 @@ using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.General.Scanner;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaLocalServer;
 
 namespace Tests.TacticalLevel.Session.Modules.Scanner
 {

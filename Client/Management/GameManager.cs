@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -10,7 +11,6 @@ using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
-using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
@@ -307,13 +307,15 @@ namespace Engine.Management
                 case Category.SpaceScanner:
                     break;
                 case Category.DeepScanner:
-                   
-                    _ui.ConnectClosestObjects(module);
+                    var objects = _gameSession.GetCelestialObjectsByDistance().
+                        Where(o => o.IsScanned == false );
+                    _ui.ConnectClosestObjects(_gameSession, module, objects, true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
 
         public void DeactivateModule(IModule module)
         {
@@ -330,7 +332,7 @@ namespace Engine.Management
                 case Category.SpaceScanner:
                     break;
                 case Category.DeepScanner:
-                    
+                    _ui.ConnectClosestObjects(_gameSession, module, new List<ICelestialObject>(), false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

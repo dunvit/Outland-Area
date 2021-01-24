@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Engine.Tools;
+using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui
@@ -104,6 +107,13 @@ namespace Engine.Gui
         {
             Thread.Sleep(200);
             Global.Game.ResumeSession();
+        }
+
+        
+
+        public void ConnectClosestObjects(GameSession gameSession, IModule module, IEnumerable<ICelestialObject> objects, bool show)
+        {
+            crlTacticalMap.Connectors(gameSession, module, objects, show);
         }
     }
 }

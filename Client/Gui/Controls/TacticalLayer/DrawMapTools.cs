@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using Engine.Common.Geometry;
 using Engine.Common.Geometry.Trajectory;
 using Engine.Configuration;
@@ -9,10 +10,12 @@ using Engine.ScreenDrawing;
 using log4net;
 using OutlandArea.Tools;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
+using ObjectLocation = Engine.Common.Geometry.ObjectLocation;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
@@ -382,6 +385,40 @@ namespace Engine.Gui.Controls.TacticalLayer
             graphics.DrawRectangle(new Pen(Color.Gray), rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             graphics.DrawRectangle(new Pen(Color.Black), rectangle.X+1, rectangle.Y+1, rectangle.Width-2, rectangle.Height-2);
             graphics.DrawLine(new Pen(Color.Gray), rectangle.X, rectangle.Y, screenCoordinates.X, screenCoordinates.Y);
+        }
+
+        public static void DrawConnectors(Graphics graphics, GameSession gameSession, IEnumerable<ICelestialObject> connectors, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            if (connectors == null || !connectors.Any()) return;
+
+            var playerSpaceship = gameSession.GetPlayerSpaceShip();
+
+            var connectorPen = new Pen(Color.DimGray);
+
+            foreach (var celestialObject in connectors)
+            {
+                var objectLocation = GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, screenParameters.DrawInterval);
+                var shipLocation = GetCurrentLocation(granularTurnInformation, playerSpaceship, turnStep, screenParameters.DrawInterval);
+
+
+                var directionFromShipToTarget = Coordinates.GetRotation(objectLocation, shipLocation);
+                var directionFromTargetToShip = Coordinates.GetRotation(shipLocation, objectLocation);
+
+                var shipLocationStep = SpaceMapTools.Move(shipLocation, 12, 0, directionFromShipToTarget);
+                var targetLocationStep = SpaceMapTools.Move(objectLocation, 20, 0, directionFromTargetToShip);
+
+                var shipScreenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(shipLocationStep.PointTo.X, shipLocationStep.PointTo.Y));
+
+                var objectScreenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(targetLocationStep.PointTo.X, targetLocationStep.PointTo.Y));
+
+                var targetScreenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(objectLocation.X, objectLocation.Y));
+
+                graphics.DrawLine(connectorPen, shipScreenCoordinates.X, shipScreenCoordinates.Y,
+                    objectScreenCoordinates.X, objectScreenCoordinates.Y);
+
+                graphics.DrawEllipse(connectorPen, targetScreenCoordinates.X - 20, targetScreenCoordinates.Y - 20, 40, 40);
+
+            }
         }
     }
 }
