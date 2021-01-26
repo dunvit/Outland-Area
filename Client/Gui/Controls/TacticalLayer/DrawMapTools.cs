@@ -395,7 +395,13 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             var connectorPen = new Pen(Color.DimGray);
 
-            foreach (var celestialObject in connectors)
+            var objectsInScreenArea = connectors.Where(o =>
+                o.PositionX > screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 &&
+                o.PositionX < screenParameters.CenterScreenOnMap.X + screenParameters.Width / 2 &&
+                o.PositionY > screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 &&
+                o.PositionY < screenParameters.CenterScreenOnMap.Y + screenParameters.Height / 2);
+
+            foreach (var celestialObject in objectsInScreenArea)
             {
                 var objectLocation = GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, screenParameters.DrawInterval);
                 var shipLocation = GetCurrentLocation(granularTurnInformation, playerSpaceship, turnStep, screenParameters.DrawInterval);
@@ -412,7 +418,7 @@ namespace Engine.Gui.Controls.TacticalLayer
                 var objectScreenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(targetLocationStep.PointTo.X, targetLocationStep.PointTo.Y));
 
                 var targetScreenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(objectLocation.X, objectLocation.Y));
-
+                                                                                    
                 graphics.DrawLine(connectorPen, shipScreenCoordinates.X, shipScreenCoordinates.Y,
                     objectScreenCoordinates.X, objectScreenCoordinates.Y);
 
