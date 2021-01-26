@@ -11,6 +11,7 @@ namespace Engine.Gui.Controls.Common
 
         public event Action OnMouseInControl;
         public event Action OnMouseOutControl;
+        public event Action OnMouseResumeIntoControl;
 
         public MouseLocationTracker(UserControl control)
         {
@@ -28,6 +29,10 @@ namespace Engine.Gui.Controls.Common
                 if (_isSelected == false)
                 {
                     OnMouseInControl?.Invoke();
+                }
+                else
+                {
+                    OnMouseResumeIntoControl?.Invoke();
                 }
 
                 _isSelected = true;

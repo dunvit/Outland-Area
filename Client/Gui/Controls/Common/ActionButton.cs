@@ -54,6 +54,11 @@ namespace Engine.Gui.Controls.Common
                 borderImage.Image = Properties.Resources.BordersUnselected;
                 OnMouseLeave?.Invoke();
             };
+
+            _mouseLocationTracker.OnMouseResumeIntoControl += delegate
+            {
+                OnMouseEnter?.Invoke();
+            };
         }
     }
 }
