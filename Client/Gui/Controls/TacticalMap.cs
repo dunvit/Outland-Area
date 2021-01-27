@@ -335,5 +335,11 @@ namespace Engine.Gui.Controls
             _connectors = objects;
 
         }
+
+        public void ActivateModuleForSelectObject(IModule module, Func<GameSession, List<ICelestialObject>> objectsInMap)
+        {
+            var a = objectsInMap(_gameSession);
+
+        }
     }
 }

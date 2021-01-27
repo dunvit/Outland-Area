@@ -395,11 +395,13 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             var connectorPen = new Pen(Color.DimGray);
 
-            var objectsInScreenArea = connectors.Where(o =>
-                o.PositionX > screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 &&
-                o.PositionX < screenParameters.CenterScreenOnMap.X + screenParameters.Width / 2 &&
-                o.PositionY > screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 &&
-                o.PositionY < screenParameters.CenterScreenOnMap.Y + screenParameters.Height / 2);
+            //var objectsInScreenArea = connectors.Where(o => 
+            //    o.PositionX > screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 &&
+            //    o.PositionX < screenParameters.CenterScreenOnMap.X + screenParameters.Width / 2 &&
+            //    o.PositionY > screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 &&
+            //    o.PositionY < screenParameters.CenterScreenOnMap.Y + screenParameters.Height / 2);
+
+            var objectsInScreenArea = connectors.Where(o => screenParameters.PointInVisibleScreen(o.PositionX, o.PositionY));
 
             foreach (var celestialObject in objectsInScreenArea)
             {

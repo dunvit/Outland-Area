@@ -33,7 +33,9 @@ namespace Engine.Gui
             crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
 
-            Global.Game.OnActivateModuleForTacticalMap += crlTacticalMap.ActivateModule;
+            Global.Game.OnActivateModuleForPointInMap += crlTacticalMap.ActivateModule;
+            Global.Game.OnActivateModuleForSelectObjectInMap += crlTacticalMap.ActivateModuleForSelectObject;
+
             weaponCompartment1.OnExecuteModule += Global.Game.ExecuteModule;
             weaponCompartment1.OnActivateModule += Global.Game.ActivateModule;
             weaponCompartment1.OnDeactivateModule += Global.Game.DeactivateModule;

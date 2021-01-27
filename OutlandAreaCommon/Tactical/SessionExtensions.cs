@@ -120,6 +120,8 @@ namespace OutlandAreaCommon.Tactical
                 ToList();
         }
 
+        
+
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
         {
             return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();

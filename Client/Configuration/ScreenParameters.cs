@@ -22,5 +22,19 @@ namespace Engine.Configuration
             Width = width;
             Height = height;
         }
+
+        public Rectangle VisibleScreen()
+        {
+            return new Rectangle(CenterScreenOnMap.X - Width / 2,
+                CenterScreenOnMap.Y - Height / 2,
+                Width, Height);
+        }
+
+        public bool PointInVisibleScreen(float x, float y)
+        {
+            
+
+            return VisibleScreen().Contains((int) x, (int) y);
+        }
     }
 }

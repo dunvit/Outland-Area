@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using Engine.Gui;
 using Engine.Management.Server;
 using Engine.Tools;
@@ -27,7 +26,8 @@ namespace Engine.Management
         
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnBattleInitialization;
-        public event Action<IModule, ICelestialObject> OnActivateModuleForTacticalMap;
+        public event Action<IModule, ICelestialObject> OnActivateModuleForPointInMap;
+        public event Action<IModule, Func<GameSession, List<ICelestialObject>>> OnActivateModuleForSelectObjectInMap;
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
@@ -275,7 +275,7 @@ namespace Engine.Management
 
                     missile.OwnerId = (int)module.Id;
 
-                    OnActivateModuleForTacticalMap?.Invoke(module, missile);
+                    OnActivateModuleForPointInMap?.Invoke(module, missile);
                     break;
                 case Category.Shield:
                     break;
@@ -286,6 +286,7 @@ namespace Engine.Management
                 case Category.SpaceScanner:
                     break;
                 case Category.DeepScanner:
+                    OnActivateModuleForSelectObjectInMap?.Invoke(module, SpaceMapActions.GetUnknownCelestialObjectsByDistance);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -307,9 +308,7 @@ namespace Engine.Management
                 case Category.SpaceScanner:
                     break;
                 case Category.DeepScanner:
-                    var objects = _gameSession.GetCelestialObjectsByDistance().
-                        Where(o => o.IsScanned == false );
-                    _ui.ConnectClosestObjects(_gameSession, module, objects, true);
+                    _ui.ConnectClosestObjects(_gameSession, module, SpaceMapActions.GetUnknownCelestialObjectsByDistance(_gameSession), true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

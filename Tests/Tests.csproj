@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="CharacterSystem\CharacterTests.cs" />
     <Compile Include="ClientTests\Layers\Tactical\GameSessionTests.cs" />
+    <Compile Include="Configuration\ScreenParametersTests.cs" />
     <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="DialogSystems\DialogsTests.cs" />
     <Compile Include="Examples\CoordinatesTests.cs" />
