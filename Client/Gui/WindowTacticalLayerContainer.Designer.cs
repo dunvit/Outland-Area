@@ -36,6 +36,8 @@
             this.crlSelectedObject = new Engine.Gui.Controls.TacticalLayer.SelectedBaseCelestialObject();
             this.weaponCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.WeaponCompartment();
             this.scanningCompartment = new Engine.Gui.Controls.TacticalLayer.Compartments.ScanningCompartment();
+            this.propulsionCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.PropulsionCompartment();
+            this.propulsionCompartment2 = new Engine.Gui.Controls.TacticalLayer.Compartments.PropulsionCompartment();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,12 +125,32 @@
             this.scanningCompartment.Size = new System.Drawing.Size(180, 165);
             this.scanningCompartment.TabIndex = 19;
             // 
+            // propulsionCompartment1
+            // 
+            this.propulsionCompartment1.BackColor = System.Drawing.Color.Black;
+            this.propulsionCompartment1.CompartmentModuleName = "PROPULSION COMPARTMENT";
+            this.propulsionCompartment1.Location = new System.Drawing.Point(407, 903);
+            this.propulsionCompartment1.Name = "propulsionCompartment1";
+            this.propulsionCompartment1.Size = new System.Drawing.Size(180, 165);
+            this.propulsionCompartment1.TabIndex = 20;
+            // 
+            // propulsionCompartment2
+            // 
+            this.propulsionCompartment2.BackColor = System.Drawing.Color.Black;
+            this.propulsionCompartment2.CompartmentModuleName = "PROPULSION COMPARTMENT";
+            this.propulsionCompartment2.Location = new System.Drawing.Point(602, 903);
+            this.propulsionCompartment2.Name = "propulsionCompartment2";
+            this.propulsionCompartment2.Size = new System.Drawing.Size(180, 165);
+            this.propulsionCompartment2.TabIndex = 21;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.propulsionCompartment2);
+            this.Controls.Add(this.propulsionCompartment1);
             this.Controls.Add(this.scanningCompartment);
             this.Controls.Add(this.weaponCompartment1);
             this.Controls.Add(this.crlSelectedObject);
@@ -156,5 +178,7 @@
         private Controls.TacticalLayer.SelectedBaseCelestialObject crlSelectedObject;
         private Controls.TacticalLayer.Compartments.WeaponCompartment weaponCompartment1;
         private Controls.TacticalLayer.Compartments.ScanningCompartment scanningCompartment;
+        private Controls.TacticalLayer.Compartments.PropulsionCompartment propulsionCompartment1;
+        private Controls.TacticalLayer.Compartments.PropulsionCompartment propulsionCompartment2;
     }
 }

@@ -98,6 +98,12 @@
       <DependentUpon>FlatButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\Common\MouseLocationTracker.cs" />
+    <Compile Include="Gui\Controls\Dummy.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\Dummy.Designer.cs">
+      <DependentUpon>Dummy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\BattleInformation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +134,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.Designer.cs">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\PropulsionCompartment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\PropulsionCompartment.Designer.cs">
+      <DependentUpon>PropulsionCompartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\ScanningCompartment.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -156,6 +168,12 @@
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Modules\GenericActiveModule.Designer.cs">
       <DependentUpon>GenericActiveModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\PropulsionTurn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\PropulsionTurn.Designer.cs">
+      <DependentUpon>PropulsionTurn.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.cs">
       <SubType>UserControl</SubType>
@@ -218,6 +236,9 @@
     <EmbeddedResource Include="Gui\Controls\Common\FlatButton.resx">
       <DependentUpon>FlatButton.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\Dummy.resx">
+      <DependentUpon>Dummy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\BattleInformation.resx">
       <DependentUpon>BattleInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -233,6 +254,9 @@
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.resx">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\PropulsionCompartment.resx">
+      <DependentUpon>PropulsionCompartment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\ScanningCompartment.resx">
       <DependentUpon>ScanningCompartment.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Modules\GenericActiveModule.resx">
       <DependentUpon>GenericActiveModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Modules\PropulsionTurn.resx">
+      <DependentUpon>PropulsionTurn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.resx">
       <DependentUpon>SelectedBaseCelestialObject.cs</DependentUpon>
@@ -423,6 +450,11 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Propulsion_TurnRightInActive.png" />
+    <None Include="Resources\Propulsion_TurnRightActive.png" />
+    <None Include="Resources\Propulsion_TurnLeftActive.png" />
+    <None Include="Resources\Propulsion_RightLeftInActive.png" />
+    <None Include="Resources\Propulsion_TurnLeftInActive.png" />
     <None Include="Resources\Radar.png" />
     <None Include="Resources\BordersUnselected.png" />
     <None Include="Resources\BordersSelected.png" />

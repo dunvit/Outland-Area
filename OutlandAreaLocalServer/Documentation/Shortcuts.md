@@ -4,6 +4,11 @@
 Message: [Main Task ID][Main Name] - [Internal Task ID]Internal name
 ```
 ---
+__Debug__:
+```csharp
+if (DebugTools.IsInDesignMode()) return;
+```
+___
 __Logs__:
 
 ```csharp

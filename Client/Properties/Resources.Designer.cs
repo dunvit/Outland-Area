@@ -93,6 +93,56 @@ namespace Engine.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_RightLeftInActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_RightLeftInActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_TurnLeftActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_TurnLeftActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_TurnLeftInActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_TurnLeftInActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_TurnRightActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_TurnRightActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_TurnRightInActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_TurnRightInActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Radar {
             get {
                 object obj = ResourceManager.GetObject("Radar", resourceCulture);

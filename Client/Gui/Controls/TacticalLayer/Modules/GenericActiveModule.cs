@@ -6,6 +6,7 @@ using OutlandAreaCommon.Tactical;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Engine.Tools;
 
 namespace Engine.Gui.Controls.TacticalLayer.Modules
 {
@@ -28,6 +29,8 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
         public void Initialization(IModule module)
         {
             _module = module;
+
+            if (DebugTools.IsInDesignMode()) return;
 
             actionIcon.Picture = Properties.Resources.Radar;
             actionIcon.OnMouseEnter += delegate

@@ -3,6 +3,8 @@
     public enum CommandTypes
     {
         MoveForward = 200,
+        TurnLeft = 201,
+        TurnRight = 202,
         Fire = 300,
         AlignTo = 100,
         Orbit = 110,

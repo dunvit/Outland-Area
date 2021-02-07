@@ -27,7 +27,9 @@
             "weapon": [
               {
                 "id": "WRS5002",
-                "name": "125mm Railgun I"
+                "name": "125mm Railgun I",
+                "compartment": 1,
+                "slot": 1
               }
             ],
             "general": [
@@ -40,10 +42,14 @@
                 "name": "Reactor Mk I"
               },
               {
-                "id": "SCR5001"
+                "id": "SCR5001",
+                "compartment": 2,
+                "slot": 1
               },
               {
-                "id": "DSCR001"
+                "id": "DSCR001",
+                "compartment": 2,
+                "slot": 2
               }
             ],
             "shields": [

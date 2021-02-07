@@ -7,7 +7,7 @@ namespace Engine.Gui.Controls.Common
     {
         private Timer mTimer;
         private bool _isSelected;
-        private readonly UserControl _control;
+        private readonly Control _control;
 
         public event Action OnMouseInControl;
         public event Action OnMouseOutControl;
@@ -22,8 +22,19 @@ namespace Engine.Gui.Controls.Common
             mTimer.Enabled = true;
         }
 
+        public MouseLocationTracker(Control control)
+        {
+            _control = control;
+
+            mTimer = new Timer { Interval = 200 };
+            mTimer.Tick += mTimer_Tick;
+            mTimer.Enabled = true;
+        }
+
         private void mTimer_Tick(object sender, EventArgs e)
         {
+            if (Tools.DebugTools.IsInDesignMode()) return;
+
             if (AmIStillInsideTheUserControl(_control))
             {
                 if (_isSelected == false)
