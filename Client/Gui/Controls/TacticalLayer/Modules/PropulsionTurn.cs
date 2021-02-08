@@ -1,6 +1,5 @@
 ﻿using System;
 using Engine.Gui.Controls.Common;
-using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui.Controls.TacticalLayer.Modules
@@ -27,11 +26,17 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
         private void TurnRight(object sender, EventArgs e)
         {
             Turn(CommandTypes.TurnRight);
+
+            imageRightPart.Image = Properties.Resources.Propulsion_TurnRightResume;
+            imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
         }
 
         private void TurnLeft(object sender, EventArgs e)
         {
             Turn(CommandTypes.TurnLeft);
+
+            imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftResume;
+            imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
         }
 
         private void Turn(CommandTypes type)
@@ -41,11 +46,6 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
                 // Send command to server
                 OnTurn?.Invoke(type);
             }
-        }
-
-        private void InvokeClick(object sender, EventArgs e)
-        {
-            OnClick(e);
         }
 
         private void PropulsionTurn_Load(object sender, EventArgs e)
@@ -60,7 +60,15 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
 
             _mouseLocationTrackerLeft.OnMouseOutControl += delegate
             {
-                imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                if (Type == CommandTypes.TurnLeft)
+                {
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftResume;
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                }
+                else
+                {
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                }
             };
 
             _mouseLocationTrackerRight = new MouseLocationTracker(imageRightPart);
@@ -72,8 +80,44 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
 
             _mouseLocationTrackerRight.OnMouseOutControl += delegate
             {
-                imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                if (Type == CommandTypes.TurnRight)
+                {
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightResume;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                }
+                else
+                {
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                }
             };
+        }
+
+        public void UpdateNavigationIcon(CommandTypes commandType)
+        {
+            switch (commandType)
+            {
+                case CommandTypes.MoveForward:
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                    break;
+                case CommandTypes.TurnLeft:
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftResume;
+                    break;
+                case CommandTypes.TurnRight:
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightResume;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                    break;
+                case CommandTypes.StopShip:
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                    break;
+                case CommandTypes.Acceleration:
+                    imageRightPart.Image = Properties.Resources.Propulsion_TurnRightInActive;
+                    imageLeftPart.Image = Properties.Resources.Propulsion_TurnLeftInActive;
+                    break;
+
+            }
         }
     }
 }

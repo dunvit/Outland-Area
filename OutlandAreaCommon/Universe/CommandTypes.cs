@@ -6,6 +6,7 @@
         TurnLeft = 201,
         TurnRight = 202,
         StopShip = 203,
+        Acceleration = 204,
         Fire = 300,
         AlignTo = 100,
         Orbit = 110,

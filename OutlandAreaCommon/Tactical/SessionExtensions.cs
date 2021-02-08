@@ -56,7 +56,37 @@ namespace OutlandAreaCommon.Tactical
 
             return npcSpaceships;
         }
-        
+
+
+        public static ICelestialObject AGetCelestialObject(this GameSession gameSession, long id)
+        {
+            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
+            {
+                if (id == celestialObjects.Id)
+                {
+                    return celestialObjects;
+                }
+            }
+
+            return null;
+        }
+        /*
+         *
+         *
+         *
+         *
+         foreach (var spaceShip in gameSession.SpaceMap.CelestialObjects.Where(mapCelestialObject => mapCelestialObject.Id == command.CelestialObjectId))
+                    {
+                        Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} " +
+                                     $"Direction before: {directionBeforeManeuver} " +
+                                     $"Direction after: {directionAfterManeuver} ");
+                        spaceShip.Direction = directionAfterManeuver;
+                    }
+         *
+         *
+         *
+         */
+
 
         public static CommandTypes GetMovementType(this GameSession session, long id)
         {
@@ -122,9 +152,12 @@ namespace OutlandAreaCommon.Tactical
 
         
 
-        public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
+        public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = true)
         {
-            return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();
+            if(isCopy)
+                return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();
+
+            return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
         }
 
         public static void AddCelestialObject(this GameSession session, ICelestialObject celestialObject)
@@ -169,6 +202,7 @@ namespace OutlandAreaCommon.Tactical
                 case CommandTypes.TurnLeft:
                 case CommandTypes.TurnRight:
                 case CommandTypes.MoveForward:
+                case CommandTypes.Acceleration:
                 case CommandTypes.StopShip:
                     commands = RemoveMovementCommands(command, session);
                     break;

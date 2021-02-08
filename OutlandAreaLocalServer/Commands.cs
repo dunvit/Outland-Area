@@ -36,6 +36,8 @@ namespace OutlandAreaLocalServer
                 {
                     case CommandTypes.TurnLeft:
                     case CommandTypes.TurnRight:
+                    case CommandTypes.Acceleration:
+                    case CommandTypes.StopShip:
                     case CommandTypes.MoveForward:
 
                         var executeNavigationCommand = new CommandsExecute.Navigation().Execute(result, command);

@@ -30,20 +30,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowMenu));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtShipName = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.txtShipName = new System.Windows.Forms.Label();
             this.flatButton5 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton4 = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton3 = new Engine.Gui.Controls.Common.FlatButton();
             this.cmdStartNewGame = new Engine.Gui.Controls.Common.FlatButton();
             this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.lblVersion);
             this.panel1.Controls.Add(this.txtShipName);
             this.panel1.Controls.Add(this.flatButton5);
@@ -57,17 +60,15 @@
             this.panel1.Size = new System.Drawing.Size(325, 450);
             this.panel1.TabIndex = 0;
             // 
-            // txtShipName
+            // pictureBox1
             // 
-            this.txtShipName.BackColor = System.Drawing.Color.Transparent;
-            this.txtShipName.Font = new System.Drawing.Font("Protomolecule", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtShipName.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.txtShipName.Location = new System.Drawing.Point(66, 50);
-            this.txtShipName.Name = "txtShipName";
-            this.txtShipName.Size = new System.Drawing.Size(203, 33);
-            this.txtShipName.TabIndex = 13;
-            this.txtShipName.Text = "OUTLAND AREA";
-            this.txtShipName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.pictureBox1.Image = global::Engine.Properties.Resources.Propulsion_AccelerationResume;
+            this.pictureBox1.Location = new System.Drawing.Point(236, 307);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(49, 50);
+            this.pictureBox1.TabIndex = 23;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // lblVersion
             // 
@@ -79,6 +80,18 @@
             this.lblVersion.Size = new System.Drawing.Size(52, 15);
             this.lblVersion.TabIndex = 22;
             this.lblVersion.Text = "v1.0.1";
+            // 
+            // txtShipName
+            // 
+            this.txtShipName.BackColor = System.Drawing.Color.Transparent;
+            this.txtShipName.Font = new System.Drawing.Font("Protomolecule", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtShipName.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtShipName.Location = new System.Drawing.Point(66, 50);
+            this.txtShipName.Name = "txtShipName";
+            this.txtShipName.Size = new System.Drawing.Size(203, 33);
+            this.txtShipName.TabIndex = 13;
+            this.txtShipName.Text = "OUTLAND AREA";
+            this.txtShipName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // flatButton5
             // 
@@ -165,6 +178,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OUTLAND AREA";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -179,5 +193,6 @@
         private Controls.Common.FlatButton flatButton4;
         private System.Windows.Forms.Label txtShipName;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

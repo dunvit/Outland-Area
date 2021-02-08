@@ -175,6 +175,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\Modules\PropulsionTurn.Designer.cs">
       <DependentUpon>PropulsionTurn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\Propulsion_ForwardStop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Modules\Propulsion_ForwardStop.Designer.cs">
+      <DependentUpon>Propulsion_ForwardStop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -271,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Modules\PropulsionTurn.resx">
       <DependentUpon>PropulsionTurn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Modules\Propulsion_ForwardStop.resx">
+      <DependentUpon>Propulsion_ForwardStop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\SelectedBaseCelestialObject.resx">
       <DependentUpon>SelectedBaseCelestialObject.cs</DependentUpon>
@@ -450,6 +459,17 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Propulsion_AccelerationResume.png" />
+    <None Include="Resources\Propulsion_AccelerationInActive.png" />
+    <None Include="Resources\Propulsion_AccelerationActive.png" />
+    <None Include="Resources\Propulsion_StopResume.png" />
+    <None Include="Resources\Propulsion_StopInActive.png" />
+    <None Include="Resources\Propulsion_StopActive.png" />
+    <None Include="Resources\Propulsion_ForwardResume.png" />
+    <None Include="Resources\Propulsion_ForwardInActive.png" />
+    <None Include="Resources\Propulsion_ForwardActive.png" />
+    <None Include="Resources\Propulsion_TurnRightResume.png" />
+    <None Include="Resources\Propulsion_TurnLeftResume.png" />
     <None Include="Resources\Propulsion_TurnRightInActive.png" />
     <None Include="Resources\Propulsion_TurnRightActive.png" />
     <None Include="Resources\Propulsion_TurnLeftActive.png" />

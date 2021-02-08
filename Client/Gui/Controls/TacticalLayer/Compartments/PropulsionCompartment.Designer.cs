@@ -31,16 +31,17 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         {
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.commandTurn = new Engine.Gui.Controls.TacticalLayer.Modules.PropulsionTurn();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtDirection = new System.Windows.Forms.Label();
-            this.txtVelocity = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtVelocity = new System.Windows.Forms.Label();
+            this.txtDirection = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.commandTurn = new Engine.Gui.Controls.TacticalLayer.Modules.PropulsionTurn();
+            this.commandForwardStop = new Engine.Gui.Controls.TacticalLayer.Modules.Propulsion_ForwardStop();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,66 +68,35 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.panel3.Size = new System.Drawing.Size(167, 68);
             this.panel3.TabIndex = 46;
             // 
-            // commandTurn
+            // label10
             // 
-            this.commandTurn.BackColor = System.Drawing.Color.Black;
-            this.commandTurn.Location = new System.Drawing.Point(11, 4);
-            this.commandTurn.Name = "commandTurn";
-            this.commandTurn.Size = new System.Drawing.Size(48, 62);
-            this.commandTurn.TabIndex = 47;
-            this.commandTurn.Type = OutlandAreaCommon.Universe.CommandTypes.MoveForward;
+            this.label10.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.DarkGray;
+            this.label10.Location = new System.Drawing.Point(126, 46);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(37, 22);
+            this.label10.TabIndex = 44;
+            this.label10.Text = "dgr/s";
             // 
-            // label2
+            // label9
             // 
-            this.label2.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label2.Location = new System.Drawing.Point(7, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 11);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "DIRECTION";
+            this.label9.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.DarkGray;
+            this.label9.Location = new System.Drawing.Point(126, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(37, 22);
+            this.label9.TabIndex = 43;
+            this.label9.Text = "m/s";
             // 
-            // label3
+            // label8
             // 
-            this.label3.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label3.Location = new System.Drawing.Point(7, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 10);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "VELOCITY";
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label4.Location = new System.Drawing.Point(7, 47);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 11);
-            this.label4.TabIndex = 38;
-            this.label4.Text = "AGILITY";
-            // 
-            // txtDirection
-            // 
-            this.txtDirection.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDirection.ForeColor = System.Drawing.Color.Orange;
-            this.txtDirection.Location = new System.Drawing.Point(87, 4);
-            this.txtDirection.Name = "txtDirection";
-            this.txtDirection.Size = new System.Drawing.Size(37, 11);
-            this.txtDirection.TabIndex = 39;
-            this.txtDirection.Text = "217";
-            this.txtDirection.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // txtVelocity
-            // 
-            this.txtVelocity.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVelocity.ForeColor = System.Drawing.Color.Orange;
-            this.txtVelocity.Location = new System.Drawing.Point(87, 25);
-            this.txtVelocity.Name = "txtVelocity";
-            this.txtVelocity.Size = new System.Drawing.Size(37, 11);
-            this.txtVelocity.TabIndex = 40;
-            this.txtVelocity.Text = "217";
-            this.txtVelocity.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label8.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.DarkGray;
+            this.label8.Location = new System.Drawing.Point(126, 4);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 22);
+            this.label8.TabIndex = 42;
+            this.label8.Text = "dgr";
             // 
             // label7
             // 
@@ -139,46 +109,88 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.label7.Text = "1";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label8
+            // txtVelocity
             // 
-            this.label8.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.DarkGray;
-            this.label8.Location = new System.Drawing.Point(126, 4);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 22);
-            this.label8.TabIndex = 42;
-            this.label8.Text = "dgr";
+            this.txtVelocity.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtVelocity.ForeColor = System.Drawing.Color.Orange;
+            this.txtVelocity.Location = new System.Drawing.Point(87, 25);
+            this.txtVelocity.Name = "txtVelocity";
+            this.txtVelocity.Size = new System.Drawing.Size(37, 11);
+            this.txtVelocity.TabIndex = 40;
+            this.txtVelocity.Text = "217";
+            this.txtVelocity.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label9
+            // txtDirection
             // 
-            this.label9.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.DarkGray;
-            this.label9.Location = new System.Drawing.Point(126, 25);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(37, 22);
-            this.label9.TabIndex = 43;
-            this.label9.Text = "m/s";
+            this.txtDirection.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDirection.ForeColor = System.Drawing.Color.Orange;
+            this.txtDirection.Location = new System.Drawing.Point(87, 4);
+            this.txtDirection.Name = "txtDirection";
+            this.txtDirection.Size = new System.Drawing.Size(37, 11);
+            this.txtDirection.TabIndex = 39;
+            this.txtDirection.Text = "217";
+            this.txtDirection.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label10
+            // label4
             // 
-            this.label10.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.DarkGray;
-            this.label10.Location = new System.Drawing.Point(126, 46);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(37, 22);
-            this.label10.TabIndex = 44;
-            this.label10.Text = "dgr/s";
+            this.label4.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label4.Location = new System.Drawing.Point(7, 47);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 11);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "AGILITY";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label3.Location = new System.Drawing.Point(7, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 10);
+            this.label3.TabIndex = 37;
+            this.label3.Text = "VELOCITY";
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Cambria", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label2.Location = new System.Drawing.Point(7, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 11);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "DIRECTION";
+            // 
+            // commandTurn
+            // 
+            this.commandTurn.BackColor = System.Drawing.Color.Black;
+            this.commandTurn.Location = new System.Drawing.Point(11, 4);
+            this.commandTurn.Name = "commandTurn";
+            this.commandTurn.Size = new System.Drawing.Size(48, 62);
+            this.commandTurn.TabIndex = 47;
+            this.commandTurn.Type = OutlandAreaCommon.Universe.CommandTypes.MoveForward;
+            // 
+            // commandForwardStop
+            // 
+            this.commandForwardStop.BackColor = System.Drawing.Color.Black;
+            this.commandForwardStop.Location = new System.Drawing.Point(65, 4);
+            this.commandForwardStop.Name = "commandForwardStop";
+            this.commandForwardStop.Size = new System.Drawing.Size(48, 62);
+            this.commandForwardStop.TabIndex = 48;
+            this.commandForwardStop.Type = OutlandAreaCommon.Universe.CommandTypes.MoveForward;
             // 
             // PropulsionCompartment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.commandForwardStop);
             this.Controls.Add(this.commandTurn);
             this.Controls.Add(this.panel3);
             this.Name = "PropulsionCompartment";
             this.Controls.SetChildIndex(this.moduleFirst, 0);
             this.Controls.SetChildIndex(this.panel3, 0);
             this.Controls.SetChildIndex(this.commandTurn, 0);
+            this.Controls.SetChildIndex(this.commandForwardStop, 0);
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -199,5 +211,6 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private Modules.Propulsion_ForwardStop commandForwardStop;
     }
 }

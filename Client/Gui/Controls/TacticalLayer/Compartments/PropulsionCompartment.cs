@@ -21,6 +21,8 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             CompartmentModuleName = "Propulsion Compartment";
 
             commandTurn.OnTurn += ChangeNavigationDirection;
+
+            commandForwardStop.OnChangeMode += ChangeNavigationDirection;
         }
 
         private void ChangeNavigationDirection(CommandTypes directionType)
@@ -41,6 +43,24 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             txtVelocity.Invoke(new MethodInvoker(delegate () {
                 txtVelocity.Text = spaceShip.Speed.ToString("0.##");
             }));
+
+            var command = gameSession.GetSpaceShipCommands(gameSession.GetPlayerSpaceShip().Id)
+                .Where(c => c.Type.ToInt() > 199 && c.Type.ToInt() < 299).FirstOrDefault();
+
+            if (command == null)
+            {
+                commandTurn.Type = CommandTypes.MoveForward;
+                commandForwardStop.Type = CommandTypes.MoveForward;
+                command = new Command{Type = CommandTypes.MoveForward};
+            }
+            else
+            {
+                commandTurn.Type = command.Type;
+                commandForwardStop.Type = command.Type;
+            }
+
+            commandTurn.UpdateNavigationIcon(command.Type);
+            commandForwardStop.UpdateNavigationIcon(command.Type);
         }
 
         public void Initialization(List<IModule> modules)

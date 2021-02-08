@@ -3,6 +3,7 @@ using log4net;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaLocalServer.CommandsExecute
 {
@@ -18,8 +19,79 @@ namespace OutlandAreaLocalServer.CommandsExecute
             double directionBeforeManeuver = 0;
             double directionAfterManeuver = 0;
 
+            Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} ");
+
+            var currentSpaceShip = gameSession.GetCelestialObject(command.CelestialObjectId).ToSpaceship();
+
+            if (currentSpaceShip == null)
+            {
+                Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} space ship not found.");
+                return new CommandExecuteResult { Command = command, IsResume = isResume };
+            }
+
+            var updatedObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
+
             switch (command.Type)
             {
+                case CommandTypes.StopShip:
+                    if (currentSpaceShip.Speed <= 0)
+                    {
+                        var commandMoveForward = new Command
+                        {
+                            Type = CommandTypes.MoveForward,
+                            TargetCelestialObjectId = command.TargetCelestialObjectId,
+                            TargetCellId = command.TargetCellId,
+                            CelestialObjectId = command.CelestialObjectId,
+                            MemberId = command.MemberId
+                        };
+
+                        gameSession.GetCelestialObject(command.CelestialObjectId, false).Speed = 0;
+
+                        return new CommandExecuteResult { Command = commandMoveForward, IsResume = true };
+                    }
+
+                    // Update current space ship speed
+                    Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} " +
+                                 $"Speed before: {updatedObject.Speed} " +
+                                 $"Speed after: {updatedObject.Speed - 1} ");
+
+                    updatedObject.Speed = updatedObject.Speed - 1;
+
+                    return new CommandExecuteResult { Command = command, IsResume = true };
+
+                case CommandTypes.Acceleration:
+                    
+
+                    if (currentSpaceShip.Speed >= currentSpaceShip.MaxSpeed)
+                    {
+                        var commandMoveForward = new Command
+                        {
+                            Type = CommandTypes.MoveForward,
+                            TargetCelestialObjectId = command.TargetCelestialObjectId,
+                            TargetCellId = command.TargetCellId,
+                            CelestialObjectId = command.CelestialObjectId,
+                            MemberId = command.MemberId
+                        };
+
+                        gameSession.GetCelestialObject(command.CelestialObjectId, false).Speed =
+                            currentSpaceShip.MaxSpeed;
+
+                        return new CommandExecuteResult { Command = commandMoveForward, IsResume = true };
+                    }
+
+                    // Update current space ship speed
+                    updatedObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
+
+                    var speedBeforeManeuver = updatedObject.Speed;
+
+                    updatedObject.Speed = updatedObject.Speed + 1;
+
+                    Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} " +
+                                 $"Speed before: {speedBeforeManeuver} " +
+                                 $"Speed after: {updatedObject.Speed} ");
+
+                    return new CommandExecuteResult { Command = command, IsResume = true };
+
                 case CommandTypes.TurnLeft:
                     Logger.Debug($"[{GetType().Name}]\t CommandsExecute Navigation - {command.Type} ");
 
