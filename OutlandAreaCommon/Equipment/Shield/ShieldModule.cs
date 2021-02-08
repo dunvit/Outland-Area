@@ -6,7 +6,7 @@ namespace OutlandAreaCommon.Equipment.Shield
     [Serializable]
     public class ShieldModule : BaseModule, IModule, IShieldModule
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public Category Category { get; set; }
         public double ActivationCost { get; set; }

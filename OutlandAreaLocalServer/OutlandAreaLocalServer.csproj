@@ -87,6 +87,7 @@
     <Compile Include="CommandsExecute\AlignTo.cs" />
     <Compile Include="CommandsExecute\ExecuteFire.cs" />
     <Compile Include="CommandsExecute\Explosion.cs" />
+    <Compile Include="CommandsExecute\Navigation.cs" />
     <Compile Include="CommandsExecute\Scanning.cs" />
     <Compile Include="CommandsExecute\SessionEvents.cs" />
     <Compile Include="Convertor.cs" />

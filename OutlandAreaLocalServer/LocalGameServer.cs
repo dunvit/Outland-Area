@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Timers;
 using log4net;
 using OutlandAreaCommon;
@@ -183,6 +184,17 @@ namespace OutlandAreaLocalServer
             turnGameSession.Turn++;
 
             _gameSession = turnGameSession;
+        }
+
+        public void ForceUpdate(ICelestialObject celestialObject)
+        {
+            foreach (var mapObject in _gameSession.SpaceMap.CelestialObjects.Where(mapObject => mapObject.Id == celestialObject.Id))
+            {
+                mapObject.Direction = celestialObject.Direction;
+                mapObject.PositionY = celestialObject.PositionY;
+                mapObject.PositionX = celestialObject.PositionX;
+                mapObject.Speed = celestialObject.Speed;
+            }
         }
     }
 }

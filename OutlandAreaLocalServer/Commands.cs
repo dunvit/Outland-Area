@@ -34,6 +34,19 @@ namespace OutlandAreaLocalServer
             {
                 switch (command.Type)
                 {
+                    case CommandTypes.TurnLeft:
+                    case CommandTypes.TurnRight:
+                    case CommandTypes.MoveForward:
+
+                        var executeNavigationCommand = new CommandsExecute.Navigation().Execute(result, command);
+
+                        if (executeNavigationCommand.IsResume)
+                        {
+                            result.Commands.Add(executeNavigationCommand.Command.DeepClone());
+                        }
+ 
+                        break;
+
                     case CommandTypes.Scanning:
                         new CommandsExecute.Scanning().Execute(result, command);
 

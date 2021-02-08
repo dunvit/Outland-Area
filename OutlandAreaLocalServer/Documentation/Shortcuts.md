@@ -27,3 +27,11 @@ __Images from Resources__:
 Engine.Properties.Resources.BordersSelected;
 ```
 ---
+
+__Cross-thread operation not valid__:
+```csharp
+txtVelocity.Invoke(new MethodInvoker(delegate () {
+                txtVelocity.Text = spaceShip.Speed.ToString("0.##");
+            }));
+```
+___

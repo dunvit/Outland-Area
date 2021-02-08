@@ -43,9 +43,9 @@ namespace Engine.Gui
             scanningCompartment.OnExecuteModule += Global.Game.ExecuteModule;
             scanningCompartment.OnActivateModule += Global.Game.ActivateModule;
             scanningCompartment.OnDeactivateModule += Global.Game.DeactivateModule;
-        }
 
-        //public void SetConnector
+            propulsionCompartment1.OnChangeDirection += Global.Game.NavigationChangeDirection;
+        }
 
         private void Event_AnomalyFound(GameEvent gameEvent)
         {
@@ -80,6 +80,7 @@ namespace Engine.Gui
         {
             weaponCompartment1.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(1));
             scanningCompartment.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(2));
+            propulsionCompartment1.ResetData(gameSession, gameSession.GetPlayerSpaceShip().ToSpaceship().GetModules(2));
         }
 
         private void Event_BattleInitialization(GameSession gameSession)
@@ -88,6 +89,7 @@ namespace Engine.Gui
 
             weaponCompartment1.Initialization(playerSpaceship.GetModules(1));
             scanningCompartment.Initialization(playerSpaceship.GetModules(2));
+            propulsionCompartment1.Initialization(playerSpaceship.GetModules(3));
         }
 
         private void Event_Exit(object sender, EventArgs e)

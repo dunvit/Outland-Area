@@ -166,6 +166,14 @@ namespace OutlandAreaCommon.Tactical
                     commands = RemoveMovementCommands(command, session);
                     break;
 
+                case CommandTypes.TurnLeft:
+                case CommandTypes.TurnRight:
+                case CommandTypes.MoveForward:
+                case CommandTypes.StopShip:
+                    commands = RemoveMovementCommands(command, session);
+                    break;
+
+
                 default:
                     commands = session.Commands;
                     break;
@@ -200,7 +208,7 @@ namespace OutlandAreaCommon.Tactical
                 // Remove only commands for current spaceship
                 if (command.CelestialObjectId == newCommand.CelestialObjectId)
                 {
-                    if ((int)command.Type < 99 || (int)command.Type > 200)
+                    if ((int)command.Type < 200 || (int)command.Type > 249)
                     {
                         commands.Add(command);
                     }

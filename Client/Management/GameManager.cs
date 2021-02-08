@@ -337,5 +337,12 @@ namespace Engine.Management
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public void NavigationChangeDirection(IModule module, CommandTypes directionType)
+        {
+            var playerShip = _gameSession.GetPlayerSpaceShip();
+
+            Command(_gameSession.Id, playerShip.Id, (int) module.Id, 0, 0, (int)directionType);
+        }
     }
 }

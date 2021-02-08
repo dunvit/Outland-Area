@@ -12,7 +12,7 @@ namespace Tests.Configuration
         {
             var screen = new ScreenParameters(1920, 1080, 10000, 10000);
 
-            Assert.AreEqual(new Rectangle(9040, 9460, 10960, 10540), screen.VisibleScreen());
+            Assert.AreEqual(new Rectangle(9040, 9460, 1920, 1080), screen.VisibleScreen());
         }
 
         [TestMethod()]

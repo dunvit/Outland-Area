@@ -1,4 +1,5 @@
-﻿using LanguageExt;
+﻿using System.Linq;
+using LanguageExt;
 using OutlandAreaCommon.Universe;
 
 namespace OutlandAreaCommon.Tactical
@@ -7,12 +8,9 @@ namespace OutlandAreaCommon.Tactical
     {
         public static Option<ICelestialObject> GetCelestialObjectOption(this CelestialMap celestialMap, long id)
         {
-            foreach (var celestialObjects in celestialMap.CelestialObjects)
+            foreach (var celestialObjects in celestialMap.CelestialObjects.Where(celestialObjects => id == celestialObjects.Id))
             {
-                if (id == celestialObjects.Id)
-                {
-                    return Option<ICelestialObject>.Some(celestialObjects.DeepClone());
-                }
+                return Option<ICelestialObject>.Some(celestialObjects.DeepClone());
             }
 
             return Option<ICelestialObject>.None;

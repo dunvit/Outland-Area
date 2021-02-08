@@ -5,6 +5,7 @@
         MoveForward = 200,
         TurnLeft = 201,
         TurnRight = 202,
+        StopShip = 203,
         Fire = 300,
         AlignTo = 100,
         Orbit = 110,

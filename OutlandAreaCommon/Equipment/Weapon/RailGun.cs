@@ -5,7 +5,7 @@ namespace OutlandAreaCommon.Equipment.Weapon
     [Serializable]
     public class RailGun : BaseModule, IModule, IWeaponModule
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public Category Category { get; set; }
         public double ActivationCost { get; set; }

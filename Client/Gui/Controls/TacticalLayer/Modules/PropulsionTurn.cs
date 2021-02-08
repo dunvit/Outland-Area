@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Engine.Gui.Controls.Common;
+using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Universe;
 
 namespace Engine.Gui.Controls.TacticalLayer.Modules
@@ -17,6 +10,8 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
         private MouseLocationTracker _mouseLocationTrackerLeft;
         private MouseLocationTracker _mouseLocationTrackerRight;
 
+        public event Action<CommandTypes> OnTurn;
+
         public CommandTypes Type { get; set; }
 
         public PropulsionTurn()
@@ -24,6 +19,28 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
             InitializeComponent();
 
             Type = CommandTypes.MoveForward;
+
+            imageLeftPart.Click += TurnLeft;
+            imageRightPart.Click += TurnRight;
+        }
+
+        private void TurnRight(object sender, EventArgs e)
+        {
+            Turn(CommandTypes.TurnRight);
+        }
+
+        private void TurnLeft(object sender, EventArgs e)
+        {
+            Turn(CommandTypes.TurnLeft);
+        }
+
+        private void Turn(CommandTypes type)
+        {
+            if (Type != type)
+            {
+                // Send command to server
+                OnTurn?.Invoke(type);
+            }
         }
 
         private void InvokeClick(object sender, EventArgs e)

@@ -98,7 +98,26 @@ namespace OutlandAreaLocalServer
                                 {
                                     foreach (var propulsionModule in allModulesSystems["propulsion"].ToArray())
                                     {
-                                        spaceship.Modules.Add(Factory.CreateMicroWarpDrive(spaceship.Id, (string)propulsionModule["id"]));
+                                        var compartment = 0;
+                                        var slot = 0;
+
+                                        if (propulsionModule["compartment"] != null)
+                                        {
+                                            compartment = (int)propulsionModule["compartment"];
+                                        }
+
+                                        if (propulsionModule["slot"] != null)
+                                        {
+                                            slot = (int)propulsionModule["slot"];
+                                        }
+
+
+                                        var module = Factory.CreateMicroWarpDrive(spaceship.Id, (string)propulsionModule["id"]);
+
+                                        module.Compartment = compartment;
+                                        module.Slot = slot;
+
+                                        spaceship.Modules.Add(module);
                                     }
                                 }
 
