@@ -31,6 +31,8 @@ namespace Engine.Gui.Controls.Common
             mTimer.Enabled = true;
         }
 
+        public bool IsActive => _isSelected;
+
         private void mTimer_Tick(object sender, EventArgs e)
         {
             if (Tools.DebugTools.IsInDesignMode()) return;
@@ -44,6 +46,7 @@ namespace Engine.Gui.Controls.Common
                 else
                 {
                     OnMouseResumeIntoControl?.Invoke();
+
                 }
 
                 _isSelected = true;

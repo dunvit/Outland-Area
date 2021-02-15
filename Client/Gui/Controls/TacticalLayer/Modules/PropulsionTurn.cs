@@ -94,6 +94,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
 
         public void UpdateNavigationIcon(CommandTypes commandType)
         {
+            if (_mouseLocationTrackerLeft.IsActive) return;
+            if (_mouseLocationTrackerRight.IsActive) return;
+
             switch (commandType)
             {
                 case CommandTypes.MoveForward:

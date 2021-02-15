@@ -62,10 +62,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Engine.Properties.Resources.Propulsion_AccelerationResume;
+            this.pictureBox1.Image = global::Engine.Properties.Resources.Propulsion_ResumeMovementActive;
             this.pictureBox1.Location = new System.Drawing.Point(236, 307);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(49, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(42, 42);
             this.pictureBox1.TabIndex = 23;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;

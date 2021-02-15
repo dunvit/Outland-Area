@@ -42,6 +42,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.label2 = new System.Windows.Forms.Label();
             this.commandTurn = new Engine.Gui.Controls.TacticalLayer.Modules.PropulsionTurn();
             this.commandForwardStop = new Engine.Gui.Controls.TacticalLayer.Modules.Propulsion_ForwardStop();
+            this.commandMoveForward = new Engine.Gui.Controls.TacticalLayer.Compartments.Actions.GenericSingleCommand();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -179,18 +180,30 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             this.commandForwardStop.TabIndex = 48;
             this.commandForwardStop.Type = OutlandAreaCommon.Universe.CommandTypes.MoveForward;
             // 
+            // commandMoveForward
+            // 
+            this.commandMoveForward.BackColor = System.Drawing.Color.Black;
+            this.commandMoveForward.Location = new System.Drawing.Point(119, 4);
+            this.commandMoveForward.Name = "commandMoveForward";
+            this.commandMoveForward.Size = new System.Drawing.Size(48, 62);
+            this.commandMoveForward.TabIndex = 49;
+            // 
             // PropulsionCompartment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.commandMoveForward);
             this.Controls.Add(this.commandForwardStop);
             this.Controls.Add(this.commandTurn);
             this.Controls.Add(this.panel3);
             this.Name = "PropulsionCompartment";
+            this.Controls.SetChildIndex(this.moduleSecond, 0);
+            this.Controls.SetChildIndex(this.moduleThird, 0);
             this.Controls.SetChildIndex(this.moduleFirst, 0);
             this.Controls.SetChildIndex(this.panel3, 0);
             this.Controls.SetChildIndex(this.commandTurn, 0);
             this.Controls.SetChildIndex(this.commandForwardStop, 0);
+            this.Controls.SetChildIndex(this.commandMoveForward, 0);
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -212,5 +225,6 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private Modules.Propulsion_ForwardStop commandForwardStop;
+        private Actions.GenericSingleCommand commandMoveForward;
     }
 }

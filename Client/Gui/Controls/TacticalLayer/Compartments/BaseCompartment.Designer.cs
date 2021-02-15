@@ -213,7 +213,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         protected Modules.GenericActiveModule moduleFirst;
-        private Modules.GenericActiveModule moduleSecond;
-        private Modules.GenericActiveModule moduleThird;
+        protected Modules.GenericActiveModule moduleSecond;
+        protected Modules.GenericActiveModule moduleThird;
     }
 }

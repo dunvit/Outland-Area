@@ -82,6 +82,9 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
 
         public void UpdateNavigationIcon(CommandTypes commandType)
         {
+            if (_mouseLocationTrackerStop.IsActive) return;
+            if (_mouseLocationTrackerAcceleration.IsActive) return;
+
             switch (commandType)
             {
                 case CommandTypes.MoveForward:
@@ -104,7 +107,6 @@ namespace Engine.Gui.Controls.TacticalLayer.Modules
                     imageAcceleration.Image = Properties.Resources.Propulsion_AccelerationResume;
                     imageStop.Image = Properties.Resources.Propulsion_StopInActive;
                     break;
-
             }
         }
     }

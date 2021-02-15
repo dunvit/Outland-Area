@@ -20,9 +20,19 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
 
             CompartmentModuleName = "Propulsion Compartment";
 
+            commandMoveForward.ImageActive = Properties.Resources.Propulsion_ResumeMovementActive;
+            commandMoveForward.ImageInActive = Properties.Resources.Propulsion_ResumeMovementInActive;
+            commandMoveForward.ImageContinued = Properties.Resources.Propulsion_ResumeMovementResume;
+            commandMoveForward.OnExecute += MoveForwardCommandExecute;
+
             commandTurn.OnTurn += ChangeNavigationDirection;
 
             commandForwardStop.OnChangeMode += ChangeNavigationDirection;
+        }
+
+        private void MoveForwardCommandExecute(CommandTypes directionType)
+        {
+            OnChangeDirection?.Invoke(PropulsionModule, directionType);
         }
 
         private void ChangeNavigationDirection(CommandTypes directionType)
@@ -61,6 +71,7 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
 
             commandTurn.UpdateNavigationIcon(command.Type);
             commandForwardStop.UpdateNavigationIcon(command.Type);
+            commandMoveForward.Update(command.Type);
         }
 
         public void Initialization(List<IModule> modules)

@@ -128,6 +128,12 @@
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.Designer.cs">
       <DependentUpon>GenericModuleAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericSingleCommand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericSingleCommand.Designer.cs">
+      <DependentUpon>GenericSingleCommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -256,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericModuleAction.resx">
       <DependentUpon>GenericModuleAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\Actions\GenericSingleCommand.resx">
+      <DependentUpon>GenericSingleCommand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalLayer\Compartments\BaseCompartment.resx">
       <DependentUpon>BaseCompartment.cs</DependentUpon>
@@ -459,6 +468,12 @@
     <Content Include="Images\TradeGoods\Wheat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Propulsion_ResumeMovementActive.png" />
+    <None Include="Resources\Propulsion_ResumeMovementResume.png" />
+    <None Include="Resources\Propulsion_ResumeMovementInActive.png" />
+    <None Include="Resources\Propulsion_KeepSpeedResume.png" />
+    <None Include="Resources\Propulsion_KeepSpeedActive.png" />
+    <None Include="Resources\Propulsion_KeepSpeedInActive.png" />
     <None Include="Resources\Propulsion_AccelerationResume.png" />
     <None Include="Resources\Propulsion_AccelerationInActive.png" />
     <None Include="Resources\Propulsion_AccelerationActive.png" />

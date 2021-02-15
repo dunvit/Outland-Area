@@ -153,6 +153,66 @@ namespace Engine.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_KeepSpeedActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_KeepSpeedActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_KeepSpeedInActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_KeepSpeedInActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_KeepSpeedResume {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_KeepSpeedResume", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_ResumeMovementActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_ResumeMovementActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_ResumeMovementInActive {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_ResumeMovementInActive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Propulsion_ResumeMovementResume {
+            get {
+                object obj = ResourceManager.GetObject("Propulsion_ResumeMovementResume", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Propulsion_RightLeftInActive {
             get {
                 object obj = ResourceManager.GetObject("Propulsion_RightLeftInActive", resourceCulture);
