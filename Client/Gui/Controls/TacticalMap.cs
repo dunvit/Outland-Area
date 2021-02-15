@@ -118,6 +118,8 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            DrawMapTools.DrawGrid(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
+
             DrawMapTools.DrawConnectors(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
 
             DrawMapTools.DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);

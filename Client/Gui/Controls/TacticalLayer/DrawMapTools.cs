@@ -428,5 +428,48 @@ namespace Engine.Gui.Controls.TacticalLayer
 
             }
         }
+
+        public static void DrawGrid(Graphics graphics, GameSession gameSession, IEnumerable<ICelestialObject> connectors, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            double xLeftPosition = screenParameters.CenterScreenOnMap.X - screenParameters.Center.X;
+            double yLeftPosition = screenParameters.CenterScreenOnMap.Y - screenParameters.Center.Y;
+
+            DrawGridByStep(graphics, xLeftPosition, yLeftPosition, 10, Color.FromArgb(8, 8, 8), screenParameters);
+            DrawGridByStep(graphics, xLeftPosition, yLeftPosition, 100, Color.FromArgb(18, 18, 18), screenParameters);
+
+        }
+
+        private static void DrawGridByStep(Graphics graphics, double xLeftPosition, double yLeftPosition, int step, Color color, ScreenParameters screenParameters)
+        {
+            var smallGridPen = new Pen(color);
+
+            const int offsetX = 400;
+            const int offsetY = 400;
+
+            var leftCornerX = (int)Math.Round(xLeftPosition / step) * step - offsetX;
+            var leftCornerY = (int)Math.Round(yLeftPosition / step) * step - offsetY;
+
+            for (var i = leftCornerX;
+                i < screenParameters.CenterScreenOnMap.X + screenParameters.Center.X + offsetX * 2;
+                i += step)
+            {
+                var lineFrom = UI.ToScreenCoordinates(screenParameters, new PointF(i, leftCornerY));
+                var lineTo = UI.ToScreenCoordinates(screenParameters, new PointF(i, leftCornerY + screenParameters.Height + offsetY));
+
+
+                graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+            }
+
+            for (var i = leftCornerY;
+                i < screenParameters.CenterScreenOnMap.Y + screenParameters.Center.Y + offsetY * 2;
+                i += step)
+            {
+                var lineFrom = UI.ToScreenCoordinates(screenParameters, new PointF(leftCornerX, i));
+                var lineTo = UI.ToScreenCoordinates(screenParameters, new PointF(leftCornerX + screenParameters.Width + offsetX * 2, i));
+
+
+                graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+            }
+        }
     }
 }
