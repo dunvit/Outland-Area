@@ -370,7 +370,6 @@ namespace Engine.Gui.Controls.TacticalLayer
             }
         }
 
-
         public static void DrawMouseMoveObject(Graphics graphics, GameSession gameSession, ICelestialObject celestialObject, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
         {
             if (celestialObject == null) return;
@@ -394,12 +393,6 @@ namespace Engine.Gui.Controls.TacticalLayer
             var playerSpaceship = gameSession.GetPlayerSpaceShip();
 
             var connectorPen = new Pen(Color.DimGray);
-
-            //var objectsInScreenArea = connectors.Where(o => 
-            //    o.PositionX > screenParameters.CenterScreenOnMap.X - screenParameters.Width / 2 &&
-            //    o.PositionX < screenParameters.CenterScreenOnMap.X + screenParameters.Width / 2 &&
-            //    o.PositionY > screenParameters.CenterScreenOnMap.Y - screenParameters.Height / 2 &&
-            //    o.PositionY < screenParameters.CenterScreenOnMap.Y + screenParameters.Height / 2);
 
             var objectsInScreenArea = connectors.Where(o => screenParameters.PointInVisibleScreen(o.PositionX, o.PositionY));
 
