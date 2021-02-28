@@ -15,7 +15,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
         {
             var isResume = true;
 
-            double mobilityInDegrees = 1;
+            double mobilityInDegrees = 5;
             double directionBeforeManeuver = 0;
             double directionAfterManeuver = 0;
 

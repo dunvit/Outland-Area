@@ -15,7 +15,6 @@ using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
-using ObjectLocation = Engine.Common.Geometry.ObjectLocation;
 
 namespace Engine.Gui.Controls.TacticalLayer
 {
@@ -76,6 +75,22 @@ namespace Engine.Gui.Controls.TacticalLayer
             }
 
         }
+
+        public static void DrawSpaceShipMovement(Graphics graphics, GameSession gameSession,
+            SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep,
+            MovementLog history,
+            ScreenParameters screenParameters)
+        {
+            foreach (var celestialObject in gameSession.SpaceMap.CelestialObjects.Where(o => screenParameters.PointInVisibleScreen(o.PositionX, o.PositionY)))
+            {
+                var historyMovement = history.GetHistoryForCelestialObject(celestialObject.Id);
+
+                var granularTurnPositions = turnMapInformation.Values.Where(o => o.Id == celestialObject.Id);
+
+                DrawTrajectory(graphics, celestialObject, historyMovement, turnMapInformation, turnStep, Color.FromArgb(200, 200, 44), screenParameters);
+            }
+        }
+
 
         public static void DrawSpaceShipMovement(Graphics graphics, GameSession gameSession, SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep, FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>> history, ScreenParameters screenParameters)
         {
@@ -252,7 +267,46 @@ namespace Engine.Gui.Controls.TacticalLayer
 
         //------------------------------------------------------------------------------------
 
-        private static void DrawCurveTrajectory(Graphics graphics, List<ObjectLocation> results, Color color, ScreenParameters screenParameters, bool isDrawArrow = false)
+        private static void DrawTrajectory(Graphics graphics, ICelestialObject celestialObject, IEnumerable<SpaceMapObjectLocation> results,
+            SortedDictionary<int, GranularObjectInformation> turnMapInformation, int turnStep, Color color, ScreenParameters screenParameters)
+        {
+            var points = new List<PointF>();
+            var startDrawingPosition = new PointF(-10000, -10000);
+            var initialDrawingPosition = new PointF(-10000, -10000);
+            var iteration = -1;
+
+            foreach (var position in results)
+            {
+                var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));
+
+                iteration++;
+
+                if (iteration == 0)
+                {
+                    initialDrawingPosition = new PointF(screenCoordinates.X, screenCoordinates.Y);
+                    continue;
+                }
+
+                if (iteration == 1) startDrawingPosition = new PointF(screenCoordinates.X, screenCoordinates.Y);
+
+                points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
+            }
+
+            var currentPosition = UI.ToScreenCoordinates(screenParameters, GetCurrentLocation(turnMapInformation, celestialObject, turnStep,
+                screenParameters.DrawInterval));
+
+
+            graphics.DrawLine(new Pen(color) { DashStyle = DashStyle.Dash }, initialDrawingPosition, startDrawingPosition);
+
+            points.Add(currentPosition);
+
+            if (points.Count > 2)
+            {
+                graphics.DrawCurve(new Pen(color) { DashStyle = DashStyle.Dash }, points.ToArray());
+            }
+        }
+
+        private static void DrawCurveTrajectory(Graphics graphics, List<SpaceMapObjectLocation> results, Color color, ScreenParameters screenParameters, bool isDrawArrow = false)
         {
             var points = new List<PointF>();
 

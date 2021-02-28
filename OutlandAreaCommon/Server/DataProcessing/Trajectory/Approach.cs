@@ -2,7 +2,7 @@
 {
     public class GetTrajectory
     {
-        //public List<ObjectLocation> Approach(GameSession gameSession, ICelestialObject spaceShip, ICelestialObject targetObject)
+        //public List<SpaceMapObjectLocation> Approach(GameSession gameSession, ICelestialObject spaceShip, ICelestialObject targetObject)
         //{
         //    var pointCurrentLocation = new Point(spaceShip.PositionX, spaceShip.PositionY);
         //    var pointTargetLocation = new Point(targetObject.PositionX, targetObject.PositionY);

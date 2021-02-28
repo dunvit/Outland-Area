@@ -72,11 +72,10 @@ namespace OutlandAreaCommon.Server.DataProcessing
 
             foreach (var celestialObject in result.CelestialObjects)
             {
-                // TODO: Replace method to MoveObject from this class.
-                var position = Tools.MoveCelestialObjects(
+                var position = Engine.Common.Geometry.SpaceMapTools.Move(
                     new PointF(celestialObject.PositionX, celestialObject.PositionY),
                     celestialObject.Speed, 
-                    celestialObject.Direction);
+                    celestialObject.Direction).PointTo;
 
                 Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
 

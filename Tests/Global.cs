@@ -17,6 +17,8 @@ namespace Tests
 
             localServer.Initialization(sessionName);
 
+            localServer.ResumeSession();
+
             return localServer;
         }
     }

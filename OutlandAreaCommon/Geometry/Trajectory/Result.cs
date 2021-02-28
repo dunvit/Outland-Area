@@ -5,7 +5,7 @@ namespace OutlandAreaCommon.Geometry.Trajectory
 {
     public class Result
     {
-        public List<ObjectLocation> Trajectory { get; set; } = new List<ObjectLocation>();
+        public List<SpaceMapObjectLocation> Trajectory { get; set; } = new List<SpaceMapObjectLocation>();
 
         public bool IsCorrect
         {

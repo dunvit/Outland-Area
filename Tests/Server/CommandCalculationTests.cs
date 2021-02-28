@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Castle.DynamicProxy;
 using Engine.Management.Server;
 using LanguageExt;
-using LanguageExt.SomeHelp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
+
 
 namespace Tests.Server
 {
@@ -61,7 +59,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10010, 10000), position);
+            Assert.AreEqual(new PointF(10004, 10000), position);
         }
 
         [TestMethod]
@@ -151,7 +149,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10009, 10000), position);
+            Assert.AreEqual(new PointF(10003, 10000), position);
 
             Assert.AreEqual(2, gameSession.SpaceMap.CelestialObjects.Count);
 
@@ -164,7 +162,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10018, 10001), position);
+            Assert.AreEqual(new PointF(10006, 10000), position);
 
             server.TurnCalculation();
             server.TurnCalculation();
@@ -176,7 +174,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10061, 10020), position);
+            Assert.AreEqual(new PointF(10021, 10007), position);
         }
     }
 }

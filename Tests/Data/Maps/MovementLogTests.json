@@ -6,13 +6,24 @@
     "isEnabled": false,
     "celestialObjects": [
       {
+        "positionX": 10400,
+        "positionY": 10400,
+        "id": 1000348944,
+        "name": "t5ADX",
+        "direction": 164,
+        "speed": 3,
+        "signature": 5771,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
         "positionX": 10000,
         "positionY": 10000,
         "id": 5005,
         "name": "HMS Glowworm",
         "direction": 90,
-        "speed": 20,
-        "maxSpeed": 20,
+        "speed": 5,
+        "maxSpeed": 12,
         "signature": 200,
         "classification": 200,
         "isScanned": false,
@@ -21,16 +32,13 @@
             "propulsion": [
               {
                 "id": "PMV5002",
-                "compartment": 3,
                 "name": "VVVV"
               }
             ],
             "weapon": [
               {
                 "id": "WRS5002",
-                "name": "125mm Railgun I",
-                "compartment": 1,
-                "slot": 1
+                "name": "125mm Railgun I"
               }
             ],
             "general": [
@@ -43,14 +51,10 @@
                 "name": "Reactor Mk I"
               },
               {
-                "id": "SCR5001",
-                "compartment": 2,
-                "slot": 1
+                "id": "SCR5001"
               },
               {
-                "id": "DSCR001",
-                "compartment": 2,
-                "slot": 2
+                "id": "DSCR001"
               }
             ],
             "shields": [
@@ -62,10 +66,10 @@
                 "id": "SSM5002",
                 "name": "Shield Mk II"
               }
-            ]
+            ] 
           }
-
-        ]
+          
+        ] 
       }
     ],
     "turn": 0

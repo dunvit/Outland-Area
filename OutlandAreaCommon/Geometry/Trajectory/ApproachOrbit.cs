@@ -7,10 +7,10 @@ namespace Engine.Common.Geometry.Trajectory
 {
     public class ApproachOrbit
     {
-        public static List<ObjectLocation> Calculate(PointF location, PointF center, double direction, int maxIterations = 500)
+        public static List<SpaceMapObjectLocation> Calculate(PointF location, PointF center, double direction, int maxIterations = 500)
         {
             const int radius = 30;
-            var result = new List<ObjectLocation>();
+            var result = new List<SpaceMapObjectLocation>();
 
             var orbitInformation = SpaceMapTools.GetRadiusPoint(location, center, radius, direction);
 
@@ -30,7 +30,7 @@ namespace Engine.Common.Geometry.Trajectory
             }
             else
             {
-                var previousIteration = new ObjectLocation
+                var previousIteration = new SpaceMapObjectLocation
                 {
                     Distance = SpaceMapTools.GetDistance(center, location),
                     Direction = direction,
@@ -71,7 +71,7 @@ namespace Engine.Common.Geometry.Trajectory
                 if (attackAzimuth > 360) attackAzimuth = attackAzimuth - 360;
 
 
-                result.Add(new ObjectLocation
+                result.Add(new SpaceMapObjectLocation
                 {
                     Distance = distance, 
                     Direction = attackAzimuth, 

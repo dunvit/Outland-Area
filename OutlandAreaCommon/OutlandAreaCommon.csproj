@@ -111,7 +111,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Geometry\Extensions.cs" />
     <Compile Include="Geometry\MovementType.cs" />
-    <Compile Include="Geometry\ObjectLocation.cs" />
+    <Compile Include="Geometry\SpaceMapObjectLocation.cs" />
     <Compile Include="Geometry\SpaceMapTools.cs" />
     <Compile Include="Geometry\SpaceMapVector.cs" />
     <Compile Include="Geometry\TrajectoryType.cs" />
@@ -150,6 +150,7 @@
     <Compile Include="Universe\Objects\BaseCelestialObject.cs" />
     <Compile Include="Universe\Objects\CelestialObjectExtensions.cs" />
     <Compile Include="Universe\Objects\CelestialObjectsFactory.cs" />
+    <Compile Include="Universe\Objects\MovementLog.cs" />
     <Compile Include="Universe\Objects\PointInSpace.cs" />
     <Compile Include="Universe\Objects\Spaceships\Explosion.cs" />
     <Compile Include="Universe\Objects\Spaceships\ISpaceship.cs" />

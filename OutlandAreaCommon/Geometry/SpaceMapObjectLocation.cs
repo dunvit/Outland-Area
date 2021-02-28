@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Engine.Common.Geometry
 {
-    public class ObjectLocation
+    [Serializable]
+    public class SpaceMapObjectLocation
     {
         public double Direction { get; set; }
 

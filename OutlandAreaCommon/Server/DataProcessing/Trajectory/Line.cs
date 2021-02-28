@@ -9,7 +9,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
         {
             var result = new List<ObjectLocation>();
 
-            //var previousIteration = new ObjectLocation{
+            //var previousIteration = new SpaceMapObjectLocation{
             //    Direction = direction, 
             //    Coordinates = from, 
             //    Point = new PointF(from.X, from.Y), 
@@ -17,7 +17,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
 
             //for (var iteration = 1; iteration < maxIterations; iteration++)
             //{
-            //    var iterationResult = new ObjectLocation
+            //    var iterationResult = new SpaceMapObjectLocation
             //    {
             //        IsLinearMotion = true,
             //        Direction = direction,

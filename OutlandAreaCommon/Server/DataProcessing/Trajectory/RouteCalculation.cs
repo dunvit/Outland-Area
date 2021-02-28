@@ -9,7 +9,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
         {
             var result = new List<ObjectLocation>();
 
-            //var initial = new ObjectLocation
+            //var initial = new SpaceMapObjectLocation
             //{
             //    ScanRange = Coordinates.GetDistance(targetLocation, currentLocation),
             //    Direction = currentDirection,
@@ -20,13 +20,13 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
 
             //var previousIteration = initial;
 
-            //ObjectLocation linearMotionStartPoint = null;
+            //SpaceMapObjectLocation linearMotionStartPoint = null;
 
             //var direction = currentDirection;
 
             //for (var iteration = 0; iteration < iterations; iteration++)
             //{
-            //    var iterationResult = new ObjectLocation
+            //    var iterationResult = new SpaceMapObjectLocation
             //    {
             //        IsLinearMotion = previousIteration.IsLinearMotion,
             //        Direction = previousIteration.Direction,
@@ -67,7 +67,7 @@ namespace OutlandAreaCommon.Server.DataProcessing.Trajectory
             //    previousIteration = iterationResult;
             //}
 
-            //result.Add(new ObjectLocation { ScanRange = 0, Direction = direction, IsLinearMotion = true, Iteration = result.Count, Coordinates = targetLocation });
+            //result.Add(new SpaceMapObjectLocation { ScanRange = 0, Direction = direction, IsLinearMotion = true, Iteration = result.Count, Coordinates = targetLocation });
 
             return result;
         }

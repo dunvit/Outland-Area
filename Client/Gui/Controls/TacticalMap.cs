@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Engine.Configuration;
 using Engine.Tools;
@@ -15,6 +16,7 @@ using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace Engine.Gui.Controls
 {
@@ -35,6 +37,8 @@ namespace Engine.Gui.Controls
         private ICelestialObject MouseMoveCelestialObject { get; set; }
         private SortedDictionary<int, GranularObjectInformation> granularTurnInformation;
         private FixedSizedQueue<SortedDictionary<int, GranularObjectInformation>> History;
+
+        private MovementLog HistoryMovementLog = new MovementLog();
 
         private CelestialObjectTypes _activeModule = CelestialObjectTypes.None;
         private ICelestialObject _activeCelestialObject;
@@ -126,7 +130,7 @@ namespace Engine.Gui.Controls
 
             DrawMapTools.DrawChangeMovementDestination(graphics, _gameSession, pointInSpace, granularTurnInformation, turnStep, _screenParameters);
 
-            DrawMapTools.DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, turnStep, History, _screenParameters);
+            DrawMapTools.DrawSpaceShipMovement(graphics, _gameSession, granularTurnInformation, turnStep, HistoryMovementLog, _screenParameters);
 
             DrawMapTools.DrawMissiles(graphics, _gameSession, granularTurnInformation, turnStep, _screenParameters);
 
@@ -163,7 +167,6 @@ namespace Engine.Gui.Controls
 
             OnRefreshSelectedCelestialObject?.Invoke(selectedCelestialObject, _gameSession.GetPlayerSpaceShip());
         }
-
 
         private void MapClick(object sender, MouseEventArgs e)
         {
@@ -215,11 +218,11 @@ namespace Engine.Gui.Controls
 
             Logger.Info(TraceMessage.Execute(this, $"MapClick"));
 
-            if (e.Button == MouseButtons.Right)
-            {
-                AlignToCommand(null, e);
-                return;
-            }
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    AlignToCommand(null, e);
+            //    return;
+            //}
 
 
             if (celestialObjectInRange != null)
@@ -228,13 +231,13 @@ namespace Engine.Gui.Controls
             }
             else
             {
-                Global.Game.SelectPointInSpace(mouseMapCoordinates);
+                // Movement by mouse click
+                //Global.Game.SelectPointInSpace(mouseMapCoordinates);
             }
 
-            pointInSpace = mouseMapCoordinates;
+            //pointInSpace = mouseMapCoordinates;
         }
-
-        
+ 
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
@@ -260,11 +263,15 @@ namespace Engine.Gui.Controls
 
             Logger.Debug(TraceMessage.Execute(this, $"Turn: {gameSession.Turn}."));
 
+            HistoryMovementLog.Update(_gameSession);
+
             _gameSession = gameSession;
 
             turnStep = 0;
 
             granularTurnInformation = CalculateGranularTurnInformation(_gameSession);
+
+            
 
             var timeDrawScreen = Stopwatch.StartNew();
 
@@ -272,6 +279,7 @@ namespace Engine.Gui.Controls
 
             Logger.Debug(TraceMessage.Execute(this, $"Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms."));
         }
+
 
         private SortedDictionary<int, GranularObjectInformation> CalculateGranularTurnInformation(GameSession gameSession)
         {

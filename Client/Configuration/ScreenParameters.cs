@@ -32,9 +32,12 @@ namespace Engine.Configuration
 
         public bool PointInVisibleScreen(float x, float y)
         {
-            
-
             return VisibleScreen().Contains((int) x, (int) y);
+        }
+
+        public bool PointInVisibleScreen(PointF point)
+        {
+            return VisibleScreen().Contains((int)point.X, (int)point.Y);
         }
     }
 }

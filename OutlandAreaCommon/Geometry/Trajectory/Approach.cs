@@ -15,7 +15,7 @@ namespace Engine.Common.Geometry.Trajectory
             var result = new Result();
 
             // In this case first iteration - start position for calculation.
-            var previousIteration = new ObjectLocation
+            var previousIteration = new SpaceMapObjectLocation
             {
                 Distance = SpaceMapTools.GetDistance(targetLocation, currentLocation),
                 Direction = direction,
@@ -29,7 +29,7 @@ namespace Engine.Common.Geometry.Trajectory
             {
                 var location = SpaceMapTools.Move(previousIteration.Coordinates.ToVector2(), 1, previousIteration.Direction);
 
-                var iterationResult = new ObjectLocation
+                var iterationResult = new SpaceMapObjectLocation
                 {
                     Direction = previousIteration.Direction,
                     Iteration = iteration,
@@ -107,7 +107,7 @@ namespace Engine.Common.Geometry.Trajectory
                     {
                         linearIteration++;
 
-                        result.Trajectory.Add(new ObjectLocation
+                        result.Trajectory.Add(new SpaceMapObjectLocation
                         {
                             Coordinates = points,
                             Distance = SpaceMapTools.GetDistance(targetLocation, points),
@@ -142,14 +142,14 @@ namespace Engine.Common.Geometry.Trajectory
             return result;
         }
 
-        public static List<ObjectLocation> CalculateIteration(PointF currentLocation, PointF targetLocation, double direction, double speed, int maxIterations = 2000)
+        public static List<SpaceMapObjectLocation> CalculateIteration(PointF currentLocation, PointF targetLocation, double direction, double speed, int maxIterations = 2000)
         {
             const int agility = 5;
 
-            var result = new List<ObjectLocation>();
+            var result = new List<SpaceMapObjectLocation>();
 
             // In this case first iteration - start position for calculation.
-            var previousIteration = new ObjectLocation
+            var previousIteration = new SpaceMapObjectLocation
             {
                 Distance = SpaceMapTools.GetDistance(targetLocation, currentLocation),
                 Direction = direction,
@@ -163,7 +163,7 @@ namespace Engine.Common.Geometry.Trajectory
             {
                 var location = SpaceMapTools.Move(previousIteration.Coordinates.ToVector2(), 1, previousIteration.Direction);
 
-                var iterationResult = new ObjectLocation
+                var iterationResult = new SpaceMapObjectLocation
                 {
                     Direction = previousIteration.Direction,
                     Iteration = iteration,
@@ -222,7 +222,7 @@ namespace Engine.Common.Geometry.Trajectory
                 previousIteration = iterationResult;
             }
 
-            //result.Add(new ObjectLocation { ScanRange = 0, Direction = direction, Iteration = result.Count, Coordinates = targetLocation });
+            //result.Add(new SpaceMapObjectLocation { ScanRange = 0, Direction = direction, Iteration = result.Count, Coordinates = targetLocation });
 
             return result;
         }

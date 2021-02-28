@@ -115,6 +115,7 @@
     <Compile Include="Tactical\GameSessionTests.cs" />
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMapTests.cs" />
     <Compile Include="Universe\Objects\CelestialObjectsFactoryTests.cs" />
+    <Compile Include="Universe\Objects\MovementLogTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -134,6 +135,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Dialogs\1001.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\MovementLogTests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Maps\NavigationTests.json">
