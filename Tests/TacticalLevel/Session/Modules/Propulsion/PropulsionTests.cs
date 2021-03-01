@@ -34,7 +34,7 @@ namespace Tests.TacticalLevel.Session.Modules.Propulsion
 
             gameSession = localServer.RefreshGameSession();
 
-            Assert.AreEqual(1, gameSession.GetPlayerSpaceShip().Direction);
+            Assert.AreEqual(363, gameSession.GetPlayerSpaceShip().Direction);
 
             var spaceShip = gameSession.GetPlayerSpaceShip();
 
@@ -54,7 +54,7 @@ namespace Tests.TacticalLevel.Session.Modules.Propulsion
 
             gameSession = localServer.RefreshGameSession();
 
-            Assert.AreEqual(360, gameSession.GetPlayerSpaceShip().Direction);
+            Assert.AreEqual(364, gameSession.GetPlayerSpaceShip().Direction);
 
             localServer.TurnCalculation();
 
@@ -66,7 +66,7 @@ namespace Tests.TacticalLevel.Session.Modules.Propulsion
 
             gameSession = localServer.RefreshGameSession();
 
-            Assert.AreEqual(358, gameSession.GetPlayerSpaceShip().Direction);
+            Assert.AreEqual(354, gameSession.GetPlayerSpaceShip().Direction);
 
             localServer.Command(gameSession.Id, gameSession.GetPlayerSpaceShip().Id, propModule.Id, 0, 0, (int)CommandTypes.TurnRight);
 

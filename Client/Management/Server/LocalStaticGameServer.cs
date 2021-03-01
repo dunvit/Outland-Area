@@ -26,14 +26,14 @@ namespace Engine.Management.Server
 
         public GameSession Initialization()
         {
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_003"));
+            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_003"));
 
             return _gameSession;
         }
 
         public GameSession Initialization(string map = "Map_004")
         {
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap(map));
+            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap(map));
 
             _gameSession.Commands = new List<Command>();
 

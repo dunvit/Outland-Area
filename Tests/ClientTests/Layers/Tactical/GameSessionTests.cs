@@ -18,8 +18,8 @@ namespace Tests.ClientTests.Layers.Tactical
         [TestMethod]
         public void MapCelestialObjectsCountTest()
         {
-            var _gameSession = Convertor.ToGameSession(
-                Convertor.GetSavedMap("Map_005"));
+            var _gameSession = ScenarioConvertor.ToGameSession(
+                ScenarioConvertor.GetSavedMap("Map_005"));
 
             Assert.AreEqual(2, _gameSession.SpaceMap.CelestialObjects.Count);
         }
@@ -27,7 +27,7 @@ namespace Tests.ClientTests.Layers.Tactical
         [TestMethod]
         public void GetPlayerSpaceShipTest()
         {
-            var gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("PlayerSpaceShipTest"));
+            var gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("PlayerSpaceShipTest"));
 
             Assert.AreEqual("HMS Glowworm", gameSession.GetPlayerSpaceShip().Name);
             Assert.AreEqual(90, gameSession.GetPlayerSpaceShip().Direction);

@@ -21,7 +21,8 @@ namespace OutlandAreaLocalServer.CommandsExecute
             {
                 Logger.Debug(TraceMessage.Execute(this,"Add new asteroid."));
 
-                gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
+                if (gameSession.IsRandomObjectsGeneration) 
+                    gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
             }
 
             return new CommandExecuteResult { Command = command, IsResume = false };

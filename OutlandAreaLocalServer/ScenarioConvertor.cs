@@ -9,11 +9,11 @@ using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaLocalServer
 {
-    public class Convertor
+    public class ScenarioConvertor
     {
         public static string GetSavedMap(string mapName)
         {
-            var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Maps\" + mapName + @".json");
+            var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + mapName + @".json");
 
             // Open the text file using a stream reader.
             using (var sr = new StreamReader(fileLocation))
@@ -33,6 +33,11 @@ namespace OutlandAreaLocalServer
                 Id = (int)jObject["id"],
                 Turn = (int)jObject["turn"]
             };
+
+            if (jObject["generation"] != null)
+            {
+                gameSession.IsRandomObjectsGeneration = (bool) jObject["generation"];
+            }
 
             var celestialMap = new CelestialMap
             {

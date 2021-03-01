@@ -90,7 +90,7 @@
     <Compile Include="CommandsExecute\Navigation.cs" />
     <Compile Include="CommandsExecute\Scanning.cs" />
     <Compile Include="CommandsExecute\SessionEvents.cs" />
-    <Compile Include="Convertor.cs" />
+    <Compile Include="ScenarioConvertor.cs" />
     <Compile Include="LocalGameServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reloading.cs" />

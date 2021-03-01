@@ -137,37 +137,37 @@
     <None Include="Data\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\MovementLogTests.json">
+    <None Include="Data\Scenarios\MovementLogTests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\NavigationTests.json">
+    <None Include="Data\Scenarios\NavigationTests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Session_ObjectsByDistance.json">
+    <None Include="Data\Scenarios\Session_ObjectsByDistance.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\MessageTest.json">
+    <None Include="Data\Scenarios\MessageTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\CelestialObjectsFactoryTests.json">
+    <None Include="Data\Scenarios\CelestialObjectsFactoryTests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\ScanningModuleTest.json">
+    <None Include="Data\Scenarios\ScanningModuleTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\PlayerSpaceShipTest.json">
+    <None Include="Data\Scenarios\PlayerSpaceShipTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\WeaponModuleReloading_Test.json">
+    <None Include="Data\Scenarios\WeaponModuleReloading_Test.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_005.json">
+    <None Include="Data\Scenarios\Map_005.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Tests_Map_004.json">
+    <None Include="Data\Scenarios\Tests_Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_004.json">
+    <None Include="Data\Scenarios\Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

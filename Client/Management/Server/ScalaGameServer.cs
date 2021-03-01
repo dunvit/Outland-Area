@@ -93,7 +93,7 @@ namespace Engine.Management.Server
 
             var stopwatchParsing = Stopwatch.StartNew();
 
-            var gameSession = Convertor.ToGameSession(mapContent);
+            var gameSession = ScenarioConvertor.ToGameSession(mapContent);
 
             stopwatchParsing.Stop();
 

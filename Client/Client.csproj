@@ -334,16 +334,16 @@
     <None Include="Data\Characters\637066561468099898\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_005.json">
+    <None Include="Data\Scenarios\Map_005.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_FirstBattle.json">
+    <None Include="Data\Scenarios\Map_FirstBattle.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_OneShip.json">
+    <None Include="Data\Scenarios\Map_OneShip.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Maps\Map_004.json">
+    <None Include="Data\Scenarios\Map_004.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

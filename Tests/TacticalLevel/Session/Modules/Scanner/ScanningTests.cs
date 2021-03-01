@@ -82,7 +82,7 @@ namespace Tests.TacticalLevel.Session.Modules.Scanner
 
             Thread.Sleep(200);
 
-            Assert.AreEqual(3, gameSessionTurn1.SpaceMap.CelestialObjects.Count);
+            Assert.AreEqual(2, gameSessionTurn1.SpaceMap.CelestialObjects.Count);
         }
 
     }

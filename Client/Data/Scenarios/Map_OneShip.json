@@ -1,6 +1,7 @@
 {
   "id": 1005302115,
   "turn": 0,
+  "generation": false,
   "celestialMap": {
     "id": "1047625112",
     "isEnabled": false,

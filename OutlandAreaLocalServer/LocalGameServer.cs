@@ -26,9 +26,9 @@ namespace OutlandAreaLocalServer
         public GameSession Initialization()
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_OneShip"));
-            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_FirstBattle"));
-            //_gameSession = Convertor.ToGameSession(Convertor.GetSavedMap("Map_005"));
+            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_OneShip"));
+            //_gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_FirstBattle"));
+            //_gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_005"));
 
             _gameSession.Commands = new List<Command>();
 
@@ -44,7 +44,7 @@ namespace OutlandAreaLocalServer
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
 
-            _gameSession = Convertor.ToGameSession(Convertor.GetSavedMap(sessionName));
+            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap(sessionName));
 
             _gameSession.Commands = new List<Command>();
 

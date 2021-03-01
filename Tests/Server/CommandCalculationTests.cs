@@ -149,7 +149,7 @@ namespace Tests.Server
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
-            Assert.AreEqual(new PointF(10003, 10000), position);
+            Assert.AreEqual(new PointF(10003.98f, 10000.35f), position);
 
             Assert.AreEqual(2, gameSession.SpaceMap.CelestialObjects.Count);
 
