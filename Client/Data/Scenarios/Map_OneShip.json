@@ -2,6 +2,9 @@
   "id": 1005302115,
   "turn": 0,
   "generation": false,
+  "spawn.rules": {
+    "asteroidSmall":  0 
+  }, 
   "celestialMap": {
     "id": "1047625112",
     "isEnabled": false,

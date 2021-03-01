@@ -34,9 +34,11 @@ namespace OutlandAreaLocalServer
                 Turn = (int)jObject["turn"]
             };
 
-            if (jObject["generation"] != null)
+            if (jObject["spawn.rules"] != null)
             {
-                gameSession.IsRandomObjectsGeneration = (bool) jObject["generation"];
+                var spawnRules = jObject["spawn.rules"];
+
+                gameSession.SpawnRules.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
             }
 
             var celestialMap = new CelestialMap

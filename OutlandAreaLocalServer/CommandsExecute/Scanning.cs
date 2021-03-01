@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using log4net;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
@@ -17,12 +18,11 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             gameSession.AddHistoryMessage("started.", GetType().Name, true);
 
-            if (Tools.RandomizeDice100() > RandomGenerator.BaseAsteroidChance)
+            if (Tools.RandomizeDice100() < gameSession.SpawnRules.AsteroidSmallSize)
             {
                 Logger.Debug(TraceMessage.Execute(this,"Add new asteroid."));
 
-                if (gameSession.IsRandomObjectsGeneration) 
-                    gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
+                gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
             }
 
             return new CommandExecuteResult { Command = command, IsResume = false };

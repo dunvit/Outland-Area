@@ -29,8 +29,6 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
         private static void AddAsteroid(GameSession gameSession)
         {
-            if (gameSession.IsRandomObjectsGeneration == false) return;
-
             var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
 
             ICelestialObject newCelestialObject = new Asteroid

@@ -15,8 +15,6 @@ namespace OutlandAreaCommon.Common
 
         private static readonly Random RandomBase = new Random((int)DateTime.UtcNow.Ticks);
 
-        public const double BaseAsteroidChance = 20;
-
         public static int Get(int max = 0, int min = 0)
         {
 

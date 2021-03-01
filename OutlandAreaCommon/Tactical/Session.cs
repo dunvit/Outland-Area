@@ -20,7 +20,9 @@ namespace OutlandAreaCommon.Tactical
 
         public CelestialMap SpaceMap { get; set; }
 
-        public bool IsRandomObjectsGeneration { get; set; } = true;
+        
+
+        public SpawnRules SpawnRules { get; set; } = new SpawnRules();
 
         public List<Command> Commands { get; set; }
 

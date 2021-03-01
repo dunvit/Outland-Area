@@ -131,6 +131,7 @@
     <Compile Include="Server\DataProcessing\Trajectory\Orbit.cs" />
     <Compile Include="Server\DataProcessing\Trajectory\RouteCalculation.cs" />
     <Compile Include="Server\IGameServer.cs" />
+    <Compile Include="SpawnRules.cs" />
     <Compile Include="Tactical\CelestialMap.cs" />
     <Compile Include="Tactical\CelestialMapExtensions.cs" />
     <Compile Include="Tactical\Command.cs" />
