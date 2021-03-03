@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using Engine.Gui.Controller;
 using Engine.Gui.Controls.TacticalLayer;
 using MicroLibrary;
 using OutlandAreaCommon;
@@ -122,7 +123,16 @@ namespace Engine.Gui.Controls
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            DrawMapTools.DrawGrid(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
+            var currentTurnBoardInfo = new BoardInfo
+            {
+                GraphicSurface = graphics, 
+                ScreenInfo = _screenParameters, 
+                TurnInfo = granularTurnInformation ,
+                TurnStep = turnStep
+            };
+
+
+            DrawMapTools.DrawGrid(currentTurnBoardInfo);
 
             DrawMapTools.DrawConnectors(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
 

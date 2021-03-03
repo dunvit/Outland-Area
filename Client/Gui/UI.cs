@@ -3,12 +3,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using Engine.Configuration;
+using Engine.Gui.Model;
 
 namespace Engine.Gui
 {
     public class UI
     {
-        public static PointF ToScreenCoordinates(ScreenParameters screenParameters, PointF celestialObjectPosition)
+        public static PointF ToScreenCoordinates(IScreenInfo screenParameters, PointF celestialObjectPosition)
         {
             var relativeX = (celestialObjectPosition.X - screenParameters.CenterScreenOnMap.X) + screenParameters.Width / 2;
             var relativeY = (celestialObjectPosition.Y - screenParameters.CenterScreenOnMap.Y) + screenParameters.Height / 2;

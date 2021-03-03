@@ -1,6 +1,8 @@
-﻿namespace Engine.Layers.Tactical
+﻿using Engine.Gui.Model;
+
+namespace Engine.Layers.Tactical
 {
-    public class MapSettings
+    public class MapSettings : IMapDrawSettings
     {
         public bool IsDrawCelestialObjectCoordinates { get; set; } = false;
 

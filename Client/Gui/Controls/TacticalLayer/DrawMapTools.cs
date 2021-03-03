@@ -6,6 +6,7 @@ using System.Linq;
 using Engine.Common.Geometry;
 using Engine.Common.Geometry.Trajectory;
 using Engine.Configuration;
+using Engine.Gui.Model;
 using Engine.ScreenDrawing;
 using log4net;
 using OutlandArea.Tools;
@@ -476,17 +477,17 @@ namespace Engine.Gui.Controls.TacticalLayer
             }
         }
 
-        public static void DrawGrid(Graphics graphics, GameSession gameSession, IEnumerable<ICelestialObject> connectors, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        //public static void DrawGrid(Graphics graphics, GameSession gameSession, IEnumerable<ICelestialObject> connectors, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        public static void DrawGrid(IBoardInfo boardInfo)
         {
-            double xLeftPosition = screenParameters.CenterScreenOnMap.X - screenParameters.Center.X;
-            double yLeftPosition = screenParameters.CenterScreenOnMap.Y - screenParameters.Center.Y;
+            double xLeftPosition = boardInfo.ScreenInfo.CenterScreenOnMap.X - boardInfo.ScreenInfo.Center.X;
+            double yLeftPosition = boardInfo.ScreenInfo.CenterScreenOnMap.Y - boardInfo.ScreenInfo.Center.Y;
 
-            DrawGridByStep(graphics, xLeftPosition, yLeftPosition, 10, Color.FromArgb(8, 8, 8), screenParameters);
-            DrawGridByStep(graphics, xLeftPosition, yLeftPosition, 100, Color.FromArgb(18, 18, 18), screenParameters);
-
+            DrawGridByStep(boardInfo, xLeftPosition, yLeftPosition, 10, Color.FromArgb(8, 8, 8));
+            DrawGridByStep(boardInfo, xLeftPosition, yLeftPosition, 100, Color.FromArgb(18, 18, 18));
         }
 
-        private static void DrawGridByStep(Graphics graphics, double xLeftPosition, double yLeftPosition, int step, Color color, ScreenParameters screenParameters)
+        private static void DrawGridByStep(IBoardInfo boardInfo, double xLeftPosition, double yLeftPosition, int step, Color color)
         {
             var smallGridPen = new Pen(color);
 
@@ -497,25 +498,25 @@ namespace Engine.Gui.Controls.TacticalLayer
             var leftCornerY = (int)Math.Round(yLeftPosition / step) * step - offsetY;
 
             for (var i = leftCornerX;
-                i < screenParameters.CenterScreenOnMap.X + screenParameters.Center.X + offsetX * 2;
+                i < boardInfo.ScreenInfo.CenterScreenOnMap.X + boardInfo.ScreenInfo.Center.X + offsetX * 2;
                 i += step)
             {
-                var lineFrom = UI.ToScreenCoordinates(screenParameters, new PointF(i, leftCornerY));
-                var lineTo = UI.ToScreenCoordinates(screenParameters, new PointF(i, leftCornerY + screenParameters.Height + offsetY));
+                var lineFrom = UI.ToScreenCoordinates(boardInfo.ScreenInfo, new PointF(i, leftCornerY));
+                var lineTo = UI.ToScreenCoordinates(boardInfo.ScreenInfo, new PointF(i, leftCornerY + boardInfo.ScreenInfo.Height + offsetY));
 
 
-                graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+                boardInfo.GraphicSurface.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
             }
 
             for (var i = leftCornerY;
-                i < screenParameters.CenterScreenOnMap.Y + screenParameters.Center.Y + offsetY * 2;
+                i < boardInfo.ScreenInfo.CenterScreenOnMap.Y + boardInfo.ScreenInfo.Center.Y + offsetY * 2;
                 i += step)
             {
-                var lineFrom = UI.ToScreenCoordinates(screenParameters, new PointF(leftCornerX, i));
-                var lineTo = UI.ToScreenCoordinates(screenParameters, new PointF(leftCornerX + screenParameters.Width + offsetX * 2, i));
+                var lineFrom = UI.ToScreenCoordinates(boardInfo.ScreenInfo, new PointF(leftCornerX, i));
+                var lineTo = UI.ToScreenCoordinates(boardInfo.ScreenInfo, new PointF(leftCornerX + boardInfo.ScreenInfo.Width + offsetX * 2, i));
 
 
-                graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+                boardInfo.GraphicSurface.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
             }
         }
     }

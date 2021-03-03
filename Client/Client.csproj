@@ -82,6 +82,7 @@
     <Compile Include="Gui\BaseFullScreenWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Gui\Controller\BoardInfo.cs" />
     <Compile Include="Gui\Controls\Common\ActionButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -207,6 +208,9 @@
     </Compile>
     <Compile Include="Gui\Extensions.cs" />
     <Compile Include="Gui\IUiManager.cs" />
+    <Compile Include="Gui\Model\IBoardInfo.cs" />
+    <Compile Include="Gui\Model\IMapDrawSettings.cs" />
+    <Compile Include="Gui\Model\IScreenInfo.cs" />
     <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
     <Compile Include="Gui\WindowAnomalyFound.cs">
