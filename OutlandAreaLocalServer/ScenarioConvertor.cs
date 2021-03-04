@@ -30,7 +30,7 @@ namespace OutlandAreaLocalServer
             var mapBody = GetSavedMap(mapName);
             var gameSession = ToGameSession(mapBody);
 
-            gameSession.ScenarioEvents = LoadScenarioEvents(mapName);
+            gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\Events\" + mapName);
 
             return gameSession;
         }
@@ -226,6 +226,15 @@ namespace OutlandAreaLocalServer
         private static IEnumerable<IScenarioEvent> LoadScenarioEvents(string folder)
         {
             var results = new List<IScenarioEvent>();
+
+            var directoryLocation = Path.Combine(Environment.CurrentDirectory, folder);
+
+            var d = new DirectoryInfo(directoryLocation);
+
+            foreach (var file in d.GetFiles())
+            {
+                
+            }
 
             return results;
         }

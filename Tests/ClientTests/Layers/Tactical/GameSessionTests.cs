@@ -61,6 +61,12 @@ namespace Tests.ClientTests.Layers.Tactical
         }
 
 
+        [TestMethod]
+        public void LoadScenarioEventsTest()
+        {
+            var _gameSession = ScenarioConvertor.LoadGameSession("LoadScenarioEvents");
 
+            Assert.AreEqual(2, _gameSession.SpaceMap.CelestialObjects.Count);
+        }
     }
 }
