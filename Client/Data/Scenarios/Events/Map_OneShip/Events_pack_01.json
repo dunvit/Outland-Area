@@ -1,22 +1,53 @@
 {
   "id": 1005302115,
   "turn": 0,
-  "generation": false,
-  "spawn.rules": {
-    "asteroidSmall": 0
-  }, 
   "celestialMap": {
     "id": "1047625112",
     "isEnabled": false,
     "celestialObjects": [
+      {
+        "positionX": 10400,
+        "positionY": 10400,
+        "id": 1000348944,
+        "name": "t5ADX",
+        "direction": 164,
+        "speed": 3,
+        "signature": 5771,
+        "classification": 1,
+        "isScanned": false
+      },
+      {
+        "positionX": 9700,
+        "positionY": 10110,
+        "id": 1000348945,
+        "name": "Maroder",
+        "direction": 90,
+        "speed": 6,
+        "maxSpeed": 12,
+        "signature": 75,
+        "classification": 202,
+        "isScanned": false
+      },
+      {
+        "positionX": 10100,
+        "positionY": 10100,
+        "id": 1000348946,
+        "name": "Prison ship 'Rodor'",
+        "direction": 90,
+        "speed": 6,
+        "maxSpeed": 12,
+        "signature": 75,
+        "classification": 203,
+        "isScanned": false
+      },
       {
         "positionX": 10000,
         "positionY": 10000,
         "id": 5005,
         "name": "HMS Glowworm",
         "direction": 90,
-        "speed": 20,
-        "maxSpeed": 20,
+        "speed": 10,
+        "maxSpeed": 12,
         "signature": 200,
         "classification": 200,
         "isScanned": false,
@@ -32,9 +63,7 @@
             "weapon": [
               {
                 "id": "WRS5002",
-                "name": "125mm Railgun I",
-                "compartment": 1,
-                "slot": 1
+                "name": "125mm Railgun I"
               }
             ],
             "general": [
@@ -47,14 +76,10 @@
                 "name": "Reactor Mk I"
               },
               {
-                "id": "SCR5001",
-                "compartment": 2,
-                "slot": 1
+                "id": "SCR5001"
               },
               {
-                "id": "DSCR001",
-                "compartment": 2,
-                "slot": 2
+                "id": "DSCR001"
               }
             ],
             "shields": [

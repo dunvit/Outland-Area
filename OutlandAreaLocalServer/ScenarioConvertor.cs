@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Tactical.Model;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 
@@ -21,6 +23,16 @@ namespace OutlandAreaLocalServer
                 // Read the stream as a string, and write the string to the console.
                 return sr.ReadToEnd().Replace("\r", "").Replace("\n", "");
             }
+        }
+
+        public static GameSession LoadGameSession(string mapName)
+        {
+            var mapBody = GetSavedMap(mapName);
+            var gameSession = ToGameSession(mapBody);
+
+            gameSession.ScenarioEvents = LoadScenarioEvents(mapName);
+
+            return gameSession;
         }
 
         public static GameSession ToGameSession(string body)
@@ -206,7 +218,16 @@ namespace OutlandAreaLocalServer
 
             gameSession.SpaceMap = celestialMap;
 
+            
+
             return gameSession;
+        }
+
+        private static IEnumerable<IScenarioEvent> LoadScenarioEvents(string folder)
+        {
+            var results = new List<IScenarioEvent>();
+
+            return results;
         }
     }
 }

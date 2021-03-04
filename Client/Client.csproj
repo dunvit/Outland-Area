@@ -338,6 +338,9 @@
     <None Include="Data\Characters\637066561468099898\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Scenarios\Events\Map_OneShip\Events_pack_01.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Scenarios\Map_005.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

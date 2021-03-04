@@ -139,6 +139,9 @@
     <Compile Include="Tactical\HistoryMessage.cs" />
     <Compile Include="Tactical\GameEvent.cs" />
     <Compile Include="Tactical\GameEventTypes.cs" />
+    <Compile Include="Tactical\Model\IScenarioEvent.cs" />
+    <Compile Include="Tactical\Scenario\ScenarioEventDialog.cs" />
+    <Compile Include="Tactical\Scenario\ScenarioEventTypes.cs" />
     <Compile Include="Tactical\Session.cs" />
     <Compile Include="Tactical\SessionExtensions.cs" />
     <Compile Include="Tactical\SpaceMapActions.cs" />

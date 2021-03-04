@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using log4net;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Tactical.Model;
 using OutlandAreaCommon.Universe;
 
 namespace OutlandAreaCommon.Tactical
@@ -25,6 +26,8 @@ namespace OutlandAreaCommon.Tactical
         public SpawnRules SpawnRules { get; set; } = new SpawnRules();
 
         public List<Command> Commands { get; set; }
+
+        public IEnumerable<IScenarioEvent> ScenarioEvents { get; set; }
 
         private List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
