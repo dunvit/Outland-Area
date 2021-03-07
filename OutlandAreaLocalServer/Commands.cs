@@ -28,7 +28,7 @@ namespace OutlandAreaLocalServer
             // Clear commands pool
             result.Commands = new List<Command>();
 
-            CommandsExecute.SessionEvents.Execute(result);
+            
 
             foreach (var command in gameSession.Commands)
             {

@@ -21,15 +21,13 @@ namespace OutlandAreaCommon.Tactical
 
         public CelestialMap SpaceMap { get; set; }
 
-        
-
         public SpawnRules SpawnRules { get; set; } = new SpawnRules();
 
         public List<Command> Commands { get; set; }
 
-        public IEnumerable<IScenarioEvent> ScenarioEvents { get; set; }
+        public List<IScenarioEvent> ScenarioEvents { get; set; }
 
-        private List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
+        public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
         public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
 
@@ -54,6 +52,12 @@ namespace OutlandAreaCommon.Tactical
         public List<GameEvent> GetCurrentTurnEvents()
         {
             return GameEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
+        }
+
+
+        public List<IScenarioEvent> GetScenarioEvents()
+        {
+            return ScenarioEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
         }
     }
 }

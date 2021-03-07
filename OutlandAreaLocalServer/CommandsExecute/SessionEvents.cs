@@ -2,7 +2,6 @@
 using System.Reflection;
 using log4net;
 using OutlandAreaCommon;
-using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
@@ -13,19 +12,31 @@ namespace OutlandAreaLocalServer.CommandsExecute
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static void Execute(GameSession gameSession)
+        public GameSession Execute(GameSession gameSession)
         {
+            gameSession.AddHistoryMessage($"SessionEvents started.", GetType().Name, true);
 
-            return;
+            var result = gameSession.DeepClone();
 
-            switch (gameSession.Turn)
+            foreach (var scenarioEvent in gameSession.GetScenarioEvents())
             {
-                case 1:
-                    AddAsteroid(gameSession);
-                    break;
+                Logger.Debug($"Found scenario event (id={scenarioEvent.Id}.");
 
+                var newGameEvent = new GameEvent
+                {
+                    Turn = gameSession.Turn + 1,
+                    Type = GameEventTypes.OpenDialog,
+                    IsPause = true,
+                    IsOpenWindow = true,
+                    DialogId = scenarioEvent.ToScenarioEventDialog().DialogId
+                };
+
+                result.AddEvent(newGameEvent);
             }
+
+            return result;
         }
+
 
         private static void AddAsteroid(GameSession gameSession)
         {

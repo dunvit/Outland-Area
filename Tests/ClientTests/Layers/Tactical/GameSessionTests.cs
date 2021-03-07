@@ -1,4 +1,6 @@
-﻿using Engine.Layers.Tactical;
+﻿using System.Collections.Immutable;
+using System.Linq;
+using Engine.Layers.Tactical;
 using LanguageExt;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OutlandAreaCommon.Equipment;
@@ -64,9 +66,29 @@ namespace Tests.ClientTests.Layers.Tactical
         [TestMethod]
         public void LoadScenarioEventsTest()
         {
-            var _gameSession = ScenarioConvertor.LoadGameSession("LoadScenarioEvents");
+            var localServer = EnvironmentGlobal.CreateGameServer("LoadScenarioEvents");
 
-            Assert.AreEqual(2, _gameSession.SpaceMap.CelestialObjects.Count);
+            var gameSession = localServer.RefreshGameSession();
+
+            Assert.AreEqual(1, gameSession.SpaceMap.CelestialObjects.Count);
+
+            Assert.AreEqual(1, gameSession.ScenarioEvents.Count());
+
+            Assert.AreEqual(10, gameSession.ScenarioEvents[0].Id);
+            Assert.AreEqual(10, gameSession.ScenarioEvents[0].ToScenarioEventDialog().Id);
+            Assert.AreEqual(7001, gameSession.ScenarioEvents[0].ToScenarioEventDialog().DialogId);
+
+
+            localServer.ResumeSession();
+
+            localServer.TurnCalculation();
+
+            localServer.TurnCalculation();
+
+            var gameSessionTurn1 = localServer.RefreshGameSession();
+            
+            Assert.AreEqual(1,gameSessionTurn1.GameEvents.Count);
+
         }
     }
 }

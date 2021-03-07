@@ -15,5 +15,7 @@ namespace OutlandAreaCommon.Tactical
         public bool IsOpenWindow { get; set; }
 
         public long CelestialObjectId { get; set; }
+
+        public long DialogId { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 using OutlandAreaLocalServer.Actions;
 using OutlandAreaLocalServer.ArtificialIntelligence;
+using OutlandAreaLocalServer.CommandsExecute;
 
 namespace OutlandAreaLocalServer
 {
@@ -26,7 +27,7 @@ namespace OutlandAreaLocalServer
         public GameSession Initialization()
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
-            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_OneShip"));
+            _gameSession = ScenarioConvertor.LoadGameSession("Map_OneShip");
             //_gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_FirstBattle"));
             //_gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap("Map_005"));
 
@@ -44,7 +45,7 @@ namespace OutlandAreaLocalServer
         {
             Logger.Info($"[{GetType().Name}]\t [Initialization]");
 
-            _gameSession = ScenarioConvertor.ToGameSession(ScenarioConvertor.GetSavedMap(sessionName));
+            _gameSession = ScenarioConvertor.LoadGameSession(sessionName);
 
             _gameSession.Commands = new List<Command>();
 
@@ -166,6 +167,8 @@ namespace OutlandAreaLocalServer
             var turnGameSession = _gameSession.DeepClone();
 
             turnGameSession.AddHistoryMessage($"Calculation start", GetType().Name, true);
+
+            turnGameSession = new SessionEvents().Execute(turnGameSession);
 
             turnGameSession = new AutomaticLaunchModules().Execute(turnGameSession);
 

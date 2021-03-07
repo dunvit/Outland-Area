@@ -32,6 +32,8 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
         public event Action<GameEvent> OnAnomalyFound;
+        public event Action<GameEvent> OnOpenDialog;
+
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -187,6 +189,11 @@ namespace Engine.Management
                 if (message.Type == GameEventTypes.AnomalyFound)
                 {
                     OnAnomalyFound?.Invoke(message);
+                }
+
+                if (message.Type == GameEventTypes.OpenDialog)
+                {
+                    OnOpenDialog?.Invoke(message);
                 }
             }
 

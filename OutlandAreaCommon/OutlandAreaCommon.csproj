@@ -141,6 +141,7 @@
     <Compile Include="Tactical\GameEventTypes.cs" />
     <Compile Include="Tactical\Model\IScenarioEvent.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventDialog.cs" />
+    <Compile Include="Tactical\Scenario\ScenarioEventExtension.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventTypes.cs" />
     <Compile Include="Tactical\Session.cs" />
     <Compile Include="Tactical\SessionExtensions.cs" />

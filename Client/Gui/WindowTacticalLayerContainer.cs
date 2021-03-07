@@ -26,6 +26,7 @@ namespace Engine.Gui
            
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
             Global.Game.OnAnomalyFound += Event_AnomalyFound;
+            Global.Game.OnOpenDialog += Event_OpenDialog;
             Global.Game.OnEndTurn += Event_EndTurn;
             
 
@@ -50,7 +51,16 @@ namespace Engine.Gui
         private void Event_AnomalyFound(GameEvent gameEvent)
         {
             var a = CallModalForm(gameEvent);
+            Global.Game.ResumeSession();
         }
+
+        private void Event_OpenDialog(GameEvent gameEvent)
+        {
+            var a = CallModalForm(gameEvent);
+
+            Global.Game.ResumeSession();
+        }
+        //Event_OpenDialog
 
         private delegate DialogResult RefreshCallback(GameEvent gameEvent);
 

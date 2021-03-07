@@ -8,6 +8,8 @@ namespace OutlandAreaCommon.Tactical.Model
 
         int Turn { get; set; }
 
+        bool IsEnabled { get; set; }
+
         ScenarioEventTypes Type { get; set; }
 
         void Execute(GameSession session);

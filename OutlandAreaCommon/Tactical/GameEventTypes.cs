@@ -3,7 +3,8 @@
 
     public enum GameEventTypes
     {
-        AnomalyFound = 200
+        AnomalyFound = 200,
+        OpenDialog = 300
     }
 
     public static class GameEventTypesExtensions

@@ -30,7 +30,7 @@ namespace OutlandAreaLocalServer
             var mapBody = GetSavedMap(mapName);
             var gameSession = ToGameSession(mapBody);
 
-            gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\Events\" + mapName);
+            gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\Events\" + mapName).ToList();
 
             return gameSession;
         }
@@ -231,9 +231,67 @@ namespace OutlandAreaLocalServer
 
             var d = new DirectoryInfo(directoryLocation);
 
+            if (d.Exists == false)
+            {
+                return results;
+            }
+
             foreach (var file in d.GetFiles())
             {
-                
+                results.AddRange(LoadEventsFromFile(file.FullName));
+            }
+
+            return results;
+        }
+
+        private static IEnumerable<IScenarioEvent> LoadEventsFromFile(string file)
+        {
+            var results = new List<IScenarioEvent>();
+
+            using (var sr = new StreamReader(file))
+            {
+                // Read the stream as a string, and write the string to the console.
+                var body = sr.ReadToEnd().Replace("\r", "").Replace("\n", "");
+                results.AddRange(ConvertStringToEvents(body));
+            }
+
+            return results;
+        }
+
+        private static IEnumerable<IScenarioEvent> ConvertStringToEvents(string body)
+        {
+            var results = new List<IScenarioEvent>();
+
+            var jObject = JObject.Parse(body);
+
+            if (jObject["events"] != null)
+            {
+                foreach (var jEvent in jObject["events"].ToArray())
+                {
+                    if (jEvent["Type"] == null) continue;
+
+                    IScenarioEvent scenarioEvent = null;
+
+                    switch (jEvent["Type"].ToString())
+                    {
+                        case "1":
+                            scenarioEvent = new ScenarioEventDialog((int)jEvent["DialogId"])
+                            {
+                                Type = ScenarioEventTypes.Dialog 
+                            };
+                            break;
+
+                        default:
+                            continue;
+                    }
+
+                    
+                    scenarioEvent.Id = (int) jEvent["Id"];
+                    scenarioEvent.Turn = (int)jEvent["Turn"];
+                    scenarioEvent.Scene = (int)jEvent["Scene"];
+
+                    results.Add(scenarioEvent);
+                }
             }
 
             return results;

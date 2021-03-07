@@ -9,10 +9,22 @@ namespace OutlandAreaCommon.Tactical
         public int Id { get; set; }
         public int Scene { get; set; }
         public int Turn { get; set; }
+        public bool IsEnabled { get; set; } = true;
+        public int DialogId { get; set; }
         public ScenarioEventTypes Type { get; set; }
+
+        public ScenarioEventDialog(int dialogId)
+        {
+            DialogId = dialogId;
+        }
+
         public void Execute(GameSession session)
         {
-            throw new System.NotImplementedException();
+            IsEnabled = false;
         }
+
+        //IEnumerable<IScenarioEvent>
+
+        
     }
 }
