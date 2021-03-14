@@ -6,6 +6,7 @@ using System.Reflection;
 using log4net;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical.Model;
+using OutlandAreaCommon.Tactical.Scenario;
 using OutlandAreaCommon.Universe;
 
 namespace OutlandAreaCommon.Tactical
@@ -21,7 +22,7 @@ namespace OutlandAreaCommon.Tactical
 
         public CelestialMap SpaceMap { get; set; }
 
-        public SpawnRules SpawnRules { get; set; } = new SpawnRules();
+        public Rules Rules { get; set; } = new Rules();
 
         public List<Command> Commands { get; set; }
 

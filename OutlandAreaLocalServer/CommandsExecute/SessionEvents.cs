@@ -18,6 +18,13 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             var result = gameSession.DeepClone();
 
+            if (gameSession.Rules.IsEventsEnabled == false)
+            {
+                gameSession.AddHistoryMessage("SessionEvents canceled by scenario configuration.", GetType().Name, true);
+
+                return result;
+            }
+
             foreach (var scenarioEvent in gameSession.GetScenarioEvents())
             {
                 Logger.Debug($"Found scenario event (id={scenarioEvent.Id}.");

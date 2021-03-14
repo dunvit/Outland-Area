@@ -46,12 +46,24 @@ namespace OutlandAreaLocalServer
                 Turn = (int)jObject["turn"]
             };
 
-            if (jObject["spawn.rules"] != null)
+            if (jObject["rules"] != null)
             {
-                var spawnRules = jObject["spawn.rules"];
+                var rules = jObject["rules"];
 
-                gameSession.SpawnRules.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
+                if (rules["spawn"] != null)
+                {
+                    var spawnRules = rules["spawn"];
+
+                    gameSession.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
+                }
+
+                if (rules["events"] != null)
+                {
+                    gameSession.Rules.IsEventsEnabled = (bool)rules["events"];
+                }
             }
+
+            
 
             var celestialMap = new CelestialMap
             {

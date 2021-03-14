@@ -18,7 +18,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             gameSession.AddHistoryMessage("started.", GetType().Name, true);
 
-            if (Tools.RandomizeDice100() < gameSession.SpawnRules.AsteroidSmallSize)
+            if (Tools.RandomizeDice100() < gameSession.Rules.Spawn.AsteroidSmallSize)
             {
                 Logger.Debug(TraceMessage.Execute(this,"Add new asteroid."));
 
