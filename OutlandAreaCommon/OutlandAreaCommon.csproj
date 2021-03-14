@@ -39,6 +39,9 @@
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.2.0.0\lib\net452\Nancy.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -122,6 +125,11 @@
     <Compile Include="Geometry\Trajectory\OrbitRotation.cs" />
     <Compile Include="Geometry\Trajectory\Prototypes\OrbitPrototype.cs" />
     <Compile Include="Geometry\Trajectory\Result.cs" />
+    <Compile Include="Schemes\CelestialScheme.cs" />
+    <Compile Include="Schemes\CharacterScheme.cs" />
+    <Compile Include="Schemes\DialogExitScheme.cs" />
+    <Compile Include="Schemes\DialogRowScheme.cs" />
+    <Compile Include="Schemes\LocationScheme.cs" />
     <Compile Include="Server\DataProcessing\CommandExecuteResult.cs" />
     <Compile Include="Server\DataProcessing\CommandsExecute\Movement.cs" />
     <Compile Include="Server\DataProcessing\Coordinates.cs" />
@@ -140,6 +148,11 @@
     <Compile Include="Tactical\GameEvent.cs" />
     <Compile Include="Tactical\GameEventTypes.cs" />
     <Compile Include="Tactical\Model\IScenarioEvent.cs" />
+    <Compile Include="Tactical\Scenario\Characters.cs" />
+    <Compile Include="Tactical\Scenario\Dialogs.cs" />
+    <Compile Include="Tactical\Scenario\Dialog\Aligments.cs" />
+    <Compile Include="Tactical\Scenario\Dialog\Character.cs" />
+    <Compile Include="Tactical\Scenario\Dialog\Row.cs" />
     <Compile Include="Tactical\Scenario\Rules.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventDialog.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventExtension.cs" />

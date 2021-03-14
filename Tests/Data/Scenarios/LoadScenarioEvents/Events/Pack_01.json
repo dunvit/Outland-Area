@@ -1,0 +1,11 @@
+{
+  "events": [
+    {
+      "Id": 10,
+      "Scene": 1,
+      "Turn": 1,
+      "Type": 1,
+      "DialogId": 7001
+    }
+  ]
+}

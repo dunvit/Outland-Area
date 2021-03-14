@@ -5,8 +5,10 @@ using System.Linq;
 using System.Reflection;
 using log4net;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Schemes;
 using OutlandAreaCommon.Tactical.Model;
 using OutlandAreaCommon.Tactical.Scenario;
+using OutlandAreaCommon.Tactical.Scenario.Dialog;
 using OutlandAreaCommon.Universe;
 
 namespace OutlandAreaCommon.Tactical
@@ -16,6 +18,8 @@ namespace OutlandAreaCommon.Tactical
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        public string ScenarioName { get; set; }
+
         public int Id { get; set; }
 
         public int Turn { get; set; }
@@ -24,7 +28,11 @@ namespace OutlandAreaCommon.Tactical
 
         public Rules Rules { get; set; } = new Rules();
 
+        private Dialogs GameDialogs { get; set; }
+
         public List<Command> Commands { get; set; }
+
+        public Characters Characters { get; set; } = new Characters();
 
         public List<IScenarioEvent> ScenarioEvents { get; set; }
 
@@ -59,6 +67,26 @@ namespace OutlandAreaCommon.Tactical
         public List<IScenarioEvent> GetScenarioEvents()
         {
             return ScenarioEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
+        }
+
+        public Character GetCharacter(long id)
+        {
+            if (Characters.IsExist(id) == false)
+            {
+                Characters.Add(new Character(ScenarioName, id));
+            }
+
+            return Characters.Get(id);
+        }
+
+        public DialogRowScheme GetDialogRow(long id)
+        {
+            return GameDialogs.Get(id);
+        }
+
+        public void Initialization()
+        {
+            GameDialogs = new Dialogs(ScenarioName);
         }
     }
 }

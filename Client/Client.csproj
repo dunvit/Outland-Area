@@ -332,25 +332,25 @@
     <None Include="Configuration\Version.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Characters\637066561468099897\Info.json">
+    <None Include="Data\Scenarios\Map_FirstBattle\CelestialObjects\637066561468043700.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Characters\637066561468099898\Info.json">
+    <None Include="Data\Scenarios\Map_OneShip\CelestialObjects\637066561468043700.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Events\Map_OneShip\Events_pack_01.json">
+    <None Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_005.json">
+    <None Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_FirstBattle.json">
+    <None Include="Data\Scenarios\Map_OneShip\Events\Events_pack_01.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_OneShip.json">
+    <None Include="Data\Scenarios\Map_FirstBattle\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_004.json">
+    <None Include="Data\Scenarios\Map_OneShip\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -368,6 +368,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\Scenarios\Map_FirstBattle\Events\" />
     <Folder Include="Documentation\" />
   </ItemGroup>
   <ItemGroup>
@@ -376,28 +377,28 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Characters\637066561468099897\Front.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Full.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Left.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Right.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Front.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Full.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Left.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Right.png">
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Ammunition\Missiles\Inferno_Light_Missile.png">

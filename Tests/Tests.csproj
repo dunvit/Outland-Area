@@ -113,6 +113,7 @@
     <Compile Include="TacticalLevel\Session\Modules\Scanner\ScanningTests.cs" />
     <Compile Include="TacticalLevel\TurnCalculation\Reloading_Tests.cs" />
     <Compile Include="Tactical\GameSessionTests.cs" />
+    <Compile Include="Tactical\Scenario\Dialog\DialogsTests.cs" />
     <Compile Include="UI\Screens\BattleBoardControls\TacticalMapTests.cs" />
     <Compile Include="Universe\Objects\CelestialObjectsFactoryTests.cs" />
     <Compile Include="Universe\Objects\MovementLogTests.cs" />
@@ -128,52 +129,61 @@
     <None Include="Configuration\Version.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Characters\637066561468099897\Info.json">
+    <None Include="Data\Scenarios\General\CelestialObjects\637066561468043700.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Characters\637066561468099898\Info.json">
+    <None Include="Data\Scenarios\General\Characters\637066561468099897\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Dialogs\1001.json">
+    <None Include="Data\Scenarios\General\Characters\637066561468099898\Info.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Events\LoadScenarioEvents\Pack_01.json">
+    <None Include="Data\Scenarios\General\Dialogs\1001.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\LoadScenarioEvents.json">
+    <None Include="Data\Scenarios\General\Events\Pack_01.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\MovementLogTests.json">
+    <None Include="Data\Scenarios\General\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\NavigationTests.json">
+    <None Include="Data\Scenarios\LoadScenarioEvents\Events\Pack_01.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Session_ObjectsByDistance.json">
+    <None Include="Data\Scenarios\LoadScenarioEvents\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\MessageTest.json">
+    <None Include="Data\Scenarios\MovementLogTests\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\CelestialObjectsFactoryTests.json">
+    <None Include="Data\Scenarios\NavigationTests\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\ScanningModuleTest.json">
+    <None Include="Data\Scenarios\Session_ObjectsByDistance\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\PlayerSpaceShipTest.json">
+    <None Include="Data\Scenarios\MessageTest\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\WeaponModuleReloading_Test.json">
+    <None Include="Data\Scenarios\CelestialObjectsFactoryTests\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_005.json">
+    <None Include="Data\Scenarios\ScanningModuleTest\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Tests_Map_004.json">
+    <None Include="Data\Scenarios\PlayerSpaceShipTest\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\Map_004.json">
+    <None Include="Data\Scenarios\WeaponModuleReloading_Test\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Scenarios\Map_005\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Scenarios\Tests_Map_004\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Scenarios\Map_004\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -193,28 +203,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Characters\637066561468099897\Front.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099897\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Full.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099897\Full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Left.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099897\Left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099897\Right.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099897\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Front.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099898\Front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Full.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099898\Full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Left.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099898\Left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Characters\637066561468099898\Right.png">
+    <Content Include="Data\Scenarios\General\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Moq4_Documentation.txt" />

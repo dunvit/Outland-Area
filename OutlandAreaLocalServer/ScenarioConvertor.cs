@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Tactical.Model;
+using OutlandAreaCommon.Tactical.Scenario;
 using OutlandAreaCommon.Universe.Objects;
 using OutlandAreaCommon.Universe.Objects.Spaceships;
 
@@ -15,7 +16,7 @@ namespace OutlandAreaLocalServer
     {
         public static string GetSavedMap(string mapName)
         {
-            var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + mapName + @".json");
+            var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + mapName + @"\General.json");
 
             // Open the text file using a stream reader.
             using (var sr = new StreamReader(fileLocation))
@@ -30,7 +31,11 @@ namespace OutlandAreaLocalServer
             var mapBody = GetSavedMap(mapName);
             var gameSession = ToGameSession(mapBody);
 
-            gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\Events\" + mapName).ToList();
+            gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\" + mapName + @"\Events").ToList();
+            
+            gameSession.ScenarioName = mapName;
+
+            gameSession.Initialization();
 
             return gameSession;
         }
