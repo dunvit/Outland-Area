@@ -52,7 +52,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
             var modulesWeapon = npcShip.Modules.
                 Where(module => module.Category == Category.Weapon).
                 //Map(_ => _.ToWeapon()). // Convert to weapon type
-                Where(_ => _.ToWeapon().ReloadTime <= _.ToWeapon().Reloading); // Get only modules with ready to use
+                Where(_ => _.ToWeapon().ReloadTime <= _.ToWeapon().Reloading); // GetInteger only modules with ready to use
 
 
             var distance = Coordinates.GetDistance(npcShip.GetLocation(), targetSpaceship.GetLocation());

@@ -5,23 +5,6 @@ namespace OutlandAreaCommon
 {
     public class Tools
     {
-        private static readonly Random RandomBase = new Random();
-
-        public static double Randomize(double minimum, double maximum)
-        {
-            return RandomBase.NextDouble() * (maximum - minimum) + minimum;
-        }
-
-        public static int RandomizeInt(int minimum, int maximum)
-        {
-            return RandomBase.Next(minimum, maximum);
-        }
-
-        public static double RandomizeDice100()
-        {
-            return RandomBase.NextDouble() * 100;
-        }
-
         public static PointF MoveCelestialObjects(PointF currentLocation, int speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
@@ -59,11 +42,5 @@ namespace OutlandAreaCommon
 
             return new PointF(centerPosition.X + relativeX, centerPosition.Y + relativeY);
         }
-
-        
-
-        
     }
-
-    
 }

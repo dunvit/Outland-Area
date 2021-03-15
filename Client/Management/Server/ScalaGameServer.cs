@@ -63,13 +63,13 @@ namespace Engine.Management.Server
             // If required by the server, set the credentials.
             request.Credentials = CredentialCache.DefaultCredentials;
 
-            // Get the response.
+            // GetInteger the response.
             var response = request.GetResponse();
             // Display the status.
             //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
 
             var mapContent = "";
-            // Get the stream containing content returned by the server.
+            // GetInteger the stream containing content returned by the server.
             // The using block ensures the stream is automatically closed.
             using (var dataStream = response.GetResponseStream())
             {
@@ -87,7 +87,7 @@ namespace Engine.Management.Server
 
             stopwatch.Stop();
 
-            _logger($"Get game session from server {_applicationSettings.ServerAddress + route} finished for {stopwatch.Elapsed.TotalMilliseconds}.");
+            _logger($"GetInteger game session from server {_applicationSettings.ServerAddress + route} finished for {stopwatch.Elapsed.TotalMilliseconds}.");
 
             stopwatch.Start();
 
@@ -97,7 +97,7 @@ namespace Engine.Management.Server
 
             stopwatchParsing.Stop();
 
-            _logger($"Get game session parsing finished for {stopwatchParsing.Elapsed.TotalMilliseconds}. " +
+            _logger($"GetInteger game session parsing finished for {stopwatchParsing.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {gameSession.Id}. " +
                     $" Turn = {gameSession.Turn}. " +
                     $" SpaceMap objects count is {gameSession.SpaceMap.CelestialObjects.Count}.");
@@ -137,13 +137,13 @@ namespace Engine.Management.Server
             // If required by the server, set the credentials.
             request.Credentials = CredentialCache.DefaultCredentials;
 
-            // Get the response.
+            // GetInteger the response.
             var response = request.GetResponse();
             // Display the status.
             //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
 
             var mapContent = "";
-            // Get the stream containing content returned by the server.
+            // GetInteger the stream containing content returned by the server.
             // The using block ensures the stream is automatically closed.
             using (var dataStream = response.GetResponseStream())
             {
@@ -159,7 +159,7 @@ namespace Engine.Management.Server
 
             stopwatch.Stop();
 
-            _logger($"Get answer from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
+            _logger($"GetInteger answer from server finished for {stopwatch.Elapsed.TotalMilliseconds}");
 
             stopwatch.Start();
         }

@@ -26,11 +26,11 @@ namespace OutlandAreaCommon.Universe.Objects
             ICelestialObject newCelestialObject = new Asteroid
             {
                 Id = new Random().NextInt(),
-                PositionX = spaceship.PositionX + 500 + (int)Tools.Randomize(1, 200),
-                PositionY = spaceship.PositionY + 500 + (int)Tools.Randomize(1, 200),
+                PositionX = spaceship.PositionX + 500 + RandomGenerator.GetInteger(1, 200),
+                PositionY = spaceship.PositionY + 500 + RandomGenerator.GetInteger(1, 200),
                 Name = RandomGenerator.GenerateCelestialObjectName(),
                 Direction = RandomGenerator.Direction(),
-                Speed = Tools.RandomizeInt(1, 30),
+                Speed = RandomGenerator.GetInteger(1, 30),
                 Classification = CelestialObjectTypes.Asteroid.ToInt(),
                 IsScanned = false,
                 Signature = 210

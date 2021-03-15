@@ -5,6 +5,7 @@ using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Server.DataProcessing;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaLocalServer.CommandsExecute
 {
@@ -18,11 +19,11 @@ namespace OutlandAreaLocalServer.CommandsExecute
 
             gameSession.AddHistoryMessage("started.", GetType().Name, true);
 
-            if (Tools.RandomizeDice100() < gameSession.Rules.Spawn.AsteroidSmallSize)
+            if (RandomGenerator.DiceRoller() < gameSession.Rules.Spawn.AsteroidSmallSize)
             {
                 Logger.Debug(TraceMessage.Execute(this,"Add new asteroid."));
 
-                gameSession.AddCelestialObject(RandomGenerator.Asteroid(gameSession));
+                gameSession.AddCelestialObject(CelestialObjectsFactory.GenerateAsteroid(gameSession));
             }
 
             return new CommandExecuteResult { Command = command, IsResume = false };

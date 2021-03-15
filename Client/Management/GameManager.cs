@@ -171,7 +171,7 @@ namespace Engine.Management
                 StartNewOneSecondTurn(_gameSession);
             }
 
-            Logger.Debug($"Get game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
+            Logger.Debug($"GetInteger game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
                     $"Game session id = {_gameSession.Id}." +
                     $" Turn = {_gameSession.Turn}." +
                     $" SpaceMap objects count is {_gameSession.SpaceMap.CelestialObjects.Count}.");

@@ -39,7 +39,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
         private void AddTarget(Spaceship npcShip, List<ICelestialObject> targetSpaceships)
         {
-            var id = RandomGenerator.Get(targetSpaceships.Count);
+            var id = RandomGenerator.GetInteger(targetSpaceships.Count);
             try
             {
                 var targetSpaceship = targetSpaceships[id];

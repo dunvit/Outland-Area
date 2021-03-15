@@ -1,39 +1,30 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
-using log4net;
-using log4net.Repository.Hierarchy;
-using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Universe;
-using OutlandAreaCommon.Universe.Objects;
 
 namespace OutlandAreaCommon.Common
 {
     public static class RandomGenerator
     {
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private static readonly Random RandomBase = new Random((int)DateTime.UtcNow.Ticks);
 
-        public static int Get(int max = 0, int min = 0)
+        public static int GetInteger(int max = 0, int min = 0)
         {
-
             return RandomBase.Next(min, max);
         }
 
-        public static int GetModuleId()
+        public static double GetDouble(double minimum = 0, double maximum = 0)
         {
-            return RandomBase.Next(100000);
+            return RandomBase.NextDouble() * (maximum - minimum) + minimum;
+        }
+
+        public static double DiceRoller(int numberOfSides = 100)
+        {
+            return RandomBase.NextDouble() * numberOfSides;
         }
 
         public static double Direction()
         {
-            return Tools.Randomize(0, 359);
-        }
-
-        public static ICelestialObject Asteroid(GameSession gameSession)
-        {
-            return CelestialObjectsFactory.GenerateAsteroid(gameSession);
+            return GetDouble(0, 359);
         }
 
         public static string GenerateCelestialObjectName()

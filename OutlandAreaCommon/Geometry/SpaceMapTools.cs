@@ -288,7 +288,7 @@ namespace Engine.Common.Geometry
                 double cx2 = cx0 + a * (cx1 - cx0) / dist;
                 double cy2 = cy0 + a * (cy1 - cy0) / dist;
 
-                // Get the points P3.
+                // GetInteger the points P3.
                 intersection1 = new PointF(
                     (float)(cx2 + h * (cy1 - cy0) / dist),
                     (float)(cy2 - h * (cx1 - cx0) / dist));
