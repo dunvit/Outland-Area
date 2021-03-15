@@ -10,7 +10,7 @@ namespace OutlandAreaCommon.Tactical.Model
 
         bool IsEnabled { get; set; }
 
-        ScenarioEventTypes Type { get; set; }
+        GameEventTypes Type { get; set; }
 
         void Execute(GameSession session);
     }

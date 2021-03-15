@@ -11,7 +11,7 @@ namespace OutlandAreaCommon.Tactical
         public int Turn { get; set; }
         public bool IsEnabled { get; set; } = true;
         public int DialogId { get; set; }
-        public ScenarioEventTypes Type { get; set; }
+        public GameEventTypes Type { get; set; }
 
         public ScenarioEventDialog(int dialogId)
         {

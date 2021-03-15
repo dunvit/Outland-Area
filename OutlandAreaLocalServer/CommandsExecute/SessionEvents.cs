@@ -39,6 +39,7 @@ namespace OutlandAreaLocalServer.CommandsExecute
                     DialogId = scenarioEvent.ToScenarioEventDialog().DialogId
                 };
 
+
                 result.AddEvent(newGameEvent);
             }
 

@@ -291,10 +291,10 @@ namespace OutlandAreaLocalServer
 
                     switch (jEvent["Type"].ToString())
                     {
-                        case "1":
+                        case "300":
                             scenarioEvent = new ScenarioEventDialog((int)jEvent["DialogId"])
                             {
-                                Type = ScenarioEventTypes.Dialog 
+                                Type = GameEventTypes.OpenDialog 
                             };
                             break;
 

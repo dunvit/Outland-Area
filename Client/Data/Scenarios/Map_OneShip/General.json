@@ -2,7 +2,7 @@
   "id": 1005302115,
   "turn": 0,
   "rules": {
-    "events": false,
+    "events": true,
     "spawn": {
       "asteroidSmall": 0
     }
