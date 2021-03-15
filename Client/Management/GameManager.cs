@@ -7,6 +7,7 @@ using Engine.Management.Server;
 using Engine.Tools;
 using log4net;
 using OutlandAreaCommon;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Equipment.Ammunition.Missiles;
 using OutlandAreaCommon.Server;
@@ -206,7 +207,7 @@ namespace Engine.Management
 
             if ((CelestialObjectTypes) celestialObject.Classification == CelestialObjectTypes.PointInMap)
             {
-                celestialObject.Id = new Random().NextInt();
+                celestialObject.Id = RandomGenerator.GetId();
                 celestialObject.Name = "Point in space";
                 celestialObject.Classification = (int) CelestialObjectTypes.PointInMap;
 
@@ -229,7 +230,7 @@ namespace Engine.Management
 
             var targetPointInSpace = new PointInSpace
             {
-                Id = new Random().NextInt(),
+                Id = RandomGenerator.GetId(),
                 PositionY = missile.PositionY,
                 PositionX = missile.PositionX,
                 Speed = 0,

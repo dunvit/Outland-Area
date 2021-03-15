@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment.General.Reactor;
 using OutlandAreaCommon.Equipment.General.Scanner;
 using OutlandAreaCommon.Equipment.Propulsion;
@@ -18,7 +19,7 @@ namespace OutlandAreaCommon.Equipment
             {
                 case "PMV5002":
                     resultModule = new MicroWarpDrive {
-                        Id = new Random().NextInt(),
+                        Id = RandomGenerator.GetId(),
                         OwnerId = ownerId,
                         ActivationCost = 100, 
                         Power = 2000, 
@@ -38,7 +39,7 @@ namespace OutlandAreaCommon.Equipment
                 case "WRS5002":
                     resultModule = new LightMissileLauncher
                     {
-                        Id = new Random().NextInt(),
+                        Id = RandomGenerator.GetId(),
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Category = Category.Weapon,
@@ -97,7 +98,7 @@ namespace OutlandAreaCommon.Equipment
                     throw new InvalidDataException("Module not converted successfully.");
             }
 
-            resultModule.Id = new Random().NextInt();
+            resultModule.Id = RandomGenerator.GetId();
             resultModule.OwnerId = ownerId;
 
             return resultModule;
@@ -112,7 +113,7 @@ namespace OutlandAreaCommon.Equipment
                 case "SSM5001":
                     resultModule = new ShieldModule
                     {
-                        Id = new Random().NextInt(),
+                        Id = RandomGenerator.GetId(),
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 200,
@@ -124,7 +125,7 @@ namespace OutlandAreaCommon.Equipment
                 case "SSM5002":
                     resultModule = new ShieldModule
                     {
-                        Id = new Random().NextInt(),
+                        Id = RandomGenerator.GetId(),
                         OwnerId = ownerId,
                         ActivationCost = 110,
                         Power = 250,

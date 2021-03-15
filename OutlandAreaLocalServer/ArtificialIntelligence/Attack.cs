@@ -63,7 +63,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
             {
                 var missile = MissilesFactory.GetMissile(weaponModule.ToWeapon().AmmoId).ToCelestialObject();
 
-                missile.Id = new Random().NextInt();
+                missile.Id = RandomGenerator.GetId();
                 missile.OwnerId = npcShip.Id;
                 missile.PositionX = npcShip.PositionX;
                 missile.PositionY = npcShip.PositionY;
@@ -72,7 +72,7 @@ namespace OutlandAreaLocalServer.ArtificialIntelligence
 
                 var targetPointInSpace = new PointInSpace
                 {
-                    Id = new Random().NextInt(),
+                    Id = RandomGenerator.GetId(),
                     PositionY = weaponTargetPointInSpace.Y,
                     PositionX = weaponTargetPointInSpace.X,
                     Speed = 0,

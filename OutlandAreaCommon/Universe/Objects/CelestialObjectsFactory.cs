@@ -25,7 +25,7 @@ namespace OutlandAreaCommon.Universe.Objects
 
             ICelestialObject newCelestialObject = new Asteroid
             {
-                Id = new Random().NextInt(),
+                Id = RandomGenerator.GetId(),
                 PositionX = spaceship.PositionX + 500 + RandomGenerator.GetInteger(1, 200),
                 PositionY = spaceship.PositionY + 500 + RandomGenerator.GetInteger(1, 200),
                 Name = RandomGenerator.GenerateCelestialObjectName(),

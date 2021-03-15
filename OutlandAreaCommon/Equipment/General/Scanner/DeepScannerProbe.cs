@@ -1,4 +1,5 @@
 ﻿using System;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 
@@ -14,7 +15,7 @@ namespace OutlandAreaCommon.Equipment.General.Scanner
 
         public DeepScannerProbe()
         {
-            Id = new Random().NextInt();
+            Id = RandomGenerator.GetId();
             Speed = 90;
             Classification = (int)CelestialObjectTypes.ScanProbe;
             Name = "Deep Scan Object Probe Mk I";

@@ -1,4 +1,5 @@
 ﻿using System;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
 
@@ -14,7 +15,7 @@ namespace OutlandAreaCommon.Equipment.Ammunition.Missiles.LightMissiles
 
         public InfernoLightMissile()
         {
-            Id = new Random().NextInt();
+            Id = RandomGenerator.GetId();
             Speed = 30;
             Classification = (int) CelestialObjectTypes.Missile;
             Name = "Inferno Light Missile";

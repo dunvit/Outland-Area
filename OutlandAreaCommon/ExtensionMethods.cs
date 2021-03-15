@@ -21,11 +21,7 @@ namespace OutlandAreaCommon
             }
         }
 
-        public static int NextInt(this Random random)
-        {
-            Thread.Sleep(50);
-            return random.Next(1000000000, int.MaxValue);
-        }
+        
 
         
     }

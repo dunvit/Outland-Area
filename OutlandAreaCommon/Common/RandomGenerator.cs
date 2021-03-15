@@ -7,9 +7,14 @@ namespace OutlandAreaCommon.Common
     {
         private static readonly Random RandomBase = new Random((int)DateTime.UtcNow.Ticks);
 
-        public static int GetInteger(int max = 0, int min = 0)
+        public static int GetInteger(int min = 0, int max = 0)
         {
             return RandomBase.Next(min, max);
+        }
+
+        public static int GetId()
+        {
+            return RandomBase.Next(1000000000, int.MaxValue);
         }
 
         public static double GetDouble(double minimum = 0, double maximum = 0)

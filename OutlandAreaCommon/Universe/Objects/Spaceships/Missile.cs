@@ -1,4 +1,5 @@
 ﻿using System;
+using OutlandAreaCommon.Common;
 
 namespace OutlandAreaCommon.Universe.Objects.Spaceships
 {
@@ -10,7 +11,7 @@ namespace OutlandAreaCommon.Universe.Objects.Spaceships
 
         public Missile()
         {
-            Id = new Random().NextInt();
+            Id = RandomGenerator.GetId();
         }
     }
 }

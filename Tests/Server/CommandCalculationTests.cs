@@ -5,7 +5,7 @@ using System.Linq;
 using Engine.Management.Server;
 using LanguageExt;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OutlandAreaCommon;
+using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Equipment;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
@@ -22,7 +22,7 @@ namespace Tests.Server
         {
             var celestialObject = new PointInSpace
             {
-                Id = new Random().NextInt(),
+                Id = RandomGenerator.GetId(),
                 Name = "Point in space",
                 Speed = 0,
                 Direction = 0,
