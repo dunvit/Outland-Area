@@ -1,17 +1,13 @@
 ﻿using System;
 using OutlandAreaCommon.Tactical.Model;
+using OutlandAreaCommon.Tactical.Scenario;
 
 namespace OutlandAreaCommon.Tactical
 {
     [Serializable]
-    public class ScenarioEventDialog : IScenarioEvent
+    public class ScenarioEventDialog : ScenarioEventBase, IScenarioEvent
     {
-        public int Id { get; set; }
-        public int Scene { get; set; }
-        public int Turn { get; set; }
-        public bool IsEnabled { get; set; } = true;
         public int DialogId { get; set; }
-        public GameEventTypes Type { get; set; }
 
         public ScenarioEventDialog(int dialogId)
         {
@@ -22,9 +18,5 @@ namespace OutlandAreaCommon.Tactical
         {
             IsEnabled = false;
         }
-
-        //IEnumerable<IScenarioEvent>
-
-        
     }
 }

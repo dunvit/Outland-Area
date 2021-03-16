@@ -298,6 +298,28 @@ namespace OutlandAreaLocalServer
                             };
                             break;
 
+                        case "210":
+                            scenarioEvent = new ScenarioEventGenerateNpcSpaceShip((int)jEvent["DialogId"])
+                            {
+                                Type = GameEventTypes.NpcSpaceShipFound
+                            };
+
+                            if (jEvent["Generation"] != null)
+                            {
+                                foreach (var jsonSpaceShip in jEvent["Generation"].ToArray())
+                                {
+                                    ((ScenarioEventGenerateNpcSpaceShip) scenarioEvent).AddSpaceShip(
+                                        (int)jsonSpaceShip["SpaceShipClass"],
+                                        (int)jsonSpaceShip["SpaceShipType"],
+                                        (int)jsonSpaceShip["Standing"],
+                                        (string)jsonSpaceShip["Message"]);
+                                }
+                            }
+
+
+
+                            break;
+
                         default:
                             continue;
                     }

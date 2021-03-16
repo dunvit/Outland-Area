@@ -154,8 +154,10 @@
     <Compile Include="Tactical\Scenario\Dialog\Character.cs" />
     <Compile Include="Tactical\Scenario\Dialog\Row.cs" />
     <Compile Include="Tactical\Scenario\Rules.cs" />
+    <Compile Include="Tactical\Scenario\ScenarioEventBase.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventDialog.cs" />
     <Compile Include="Tactical\Scenario\ScenarioEventExtension.cs" />
+    <Compile Include="Tactical\Scenario\ScenarioEventGenerateNpcSpaceShip.cs" />
     <Compile Include="Tactical\Session.cs" />
     <Compile Include="Tactical\SessionExtensions.cs" />
     <Compile Include="Tactical\SpaceMapActions.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Universe\Objects\Spaceships\Explosion.cs" />
     <Compile Include="Universe\Objects\Spaceships\ISpaceship.cs" />
     <Compile Include="Universe\Objects\Spaceships\Missile.cs" />
+    <Compile Include="Universe\Objects\Spaceships\NPC\Fury.cs" />
     <Compile Include="Universe\Objects\Spaceships\Spaceship.cs" />
     <Compile Include="Universe\Objects\Spaceships\SpaceShipInfo.cs" />
   </ItemGroup>

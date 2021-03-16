@@ -196,6 +196,12 @@ namespace Engine.Management
                 {
                     OnOpenDialog?.Invoke(message);
                 }
+
+                // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
+                if (message.Type == GameEventTypes.NpcSpaceShipFound)
+                {
+                    OnOpenDialog?.Invoke(message);
+                }
             }
 
             OnEndTurn?.Invoke(gameSession);

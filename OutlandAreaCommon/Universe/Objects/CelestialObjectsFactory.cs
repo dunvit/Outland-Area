@@ -39,5 +39,28 @@ namespace OutlandAreaCommon.Universe.Objects
 
             return newCelestialObject;
         }
+
+        public static ICelestialObject GenerateNpcShip(GameSession gameSession, int spaceShipClass, int spaceShipType, int standing)
+        {
+            Logger.Debug($"[CelestialObjectsFactory][GenerateNpcShip] Start generate.");
+
+            var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
+
+            ICelestialObject newCelestialObject = new Asteroid
+            {
+                Id = RandomGenerator.GetId(),
+                PositionX = spaceship.PositionX + 500 + RandomGenerator.GetInteger(1, 200),
+                PositionY = spaceship.PositionY + 500 + RandomGenerator.GetInteger(1, 200),
+                Name = RandomGenerator.GenerateCelestialObjectName(),
+                Direction = RandomGenerator.Direction(),
+                Speed = RandomGenerator.GetInteger(1, 30),
+                Classification = CelestialObjectTypes.Asteroid.ToInt(),
+                IsScanned = false,
+                Signature = 210
+            };
+
+
+            return newCelestialObject;
+        }
     }
 }

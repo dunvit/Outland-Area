@@ -72,7 +72,7 @@ namespace Tests.ClientTests.Layers.Tactical
 
             Assert.AreEqual(1, gameSession.SpaceMap.CelestialObjects.Count);
 
-            Assert.AreEqual(1, gameSession.ScenarioEvents.Count());
+            Assert.AreEqual(2, gameSession.ScenarioEvents.Count());
 
             Assert.AreEqual(10, gameSession.ScenarioEvents[0].Id);
             Assert.AreEqual(10, gameSession.ScenarioEvents[0].ToScenarioEventDialog().Id);
@@ -88,6 +88,21 @@ namespace Tests.ClientTests.Layers.Tactical
             var gameSessionTurn1 = localServer.RefreshGameSession();
             
             Assert.AreEqual(1,gameSessionTurn1.GameEvents.Count);
+
+            localServer.TurnCalculation();
+
+            gameSessionTurn1 = localServer.RefreshGameSession();
+
+            Assert.AreEqual(1, gameSessionTurn1.GameEvents.Count);
+
+            localServer.TurnCalculation();
+
+            gameSessionTurn1 = localServer.RefreshGameSession();
+
+            Assert.AreEqual(2, gameSessionTurn1.GameEvents.Count);
+
+            Assert.AreEqual(7001, gameSessionTurn1.GameEvents[1].DialogId);
+
 
         }
     }

@@ -4,8 +4,10 @@ using log4net;
 using OutlandAreaCommon;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Tactical.Scenario;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships.NPC;
 
 namespace OutlandAreaLocalServer.CommandsExecute
 {
@@ -30,15 +32,31 @@ namespace OutlandAreaLocalServer.CommandsExecute
             {
                 Logger.Debug($"Found scenario event (id={scenarioEvent.Id}.");
 
-                var newGameEvent = new GameEvent
-                {
-                    Turn = gameSession.Turn + 1,
-                    Type = GameEventTypes.OpenDialog,
-                    IsPause = true,
-                    IsOpenWindow = true,
-                    DialogId = scenarioEvent.ToScenarioEventDialog().DialogId
-                };
+                var newGameEvent = new GameEvent();
 
+                switch (scenarioEvent.Type)
+                {
+                    case GameEventTypes.AnomalyFound:
+                        break;
+                    case GameEventTypes.OpenDialog:
+                        newGameEvent.Type = GameEventTypes.OpenDialog;
+                        newGameEvent.DialogId = scenarioEvent.ToScenarioEventDialog().DialogId;
+                        break;
+                    case GameEventTypes.NpcSpaceShipFound:
+                        newGameEvent.Type = GameEventTypes.NpcSpaceShipFound;
+                        newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip) scenarioEvent).DialogId;
+                        ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(gameSession);
+                        var npcSpaceShip = Fury.Generate(gameSession);
+                        gameSession.SpaceMap.CelestialObjects.Add(npcSpaceShip);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                newGameEvent.Turn = gameSession.Turn + 1;
+                
+                newGameEvent.IsPause = true;
+                newGameEvent.IsOpenWindow = true;
 
                 result.AddEvent(newGameEvent);
             }
