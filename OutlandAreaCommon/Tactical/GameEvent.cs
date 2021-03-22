@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace OutlandAreaCommon.Tactical
 {
@@ -17,5 +18,9 @@ namespace OutlandAreaCommon.Tactical
         public long CelestialObjectId { get; set; }
 
         public long DialogId { get; set; }
+
+        public List<string> GenericObjects { get; set; } = new List<string>();
+
+
     }
 }

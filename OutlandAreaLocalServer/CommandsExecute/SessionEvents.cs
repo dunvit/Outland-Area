@@ -45,9 +45,9 @@ namespace OutlandAreaLocalServer.CommandsExecute
                     case GameEventTypes.NpcSpaceShipFound:
                         newGameEvent.Type = GameEventTypes.NpcSpaceShipFound;
                         newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip) scenarioEvent).DialogId;
-                        ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(gameSession);
-                        var npcSpaceShip = Fury.Generate(gameSession);
-                        gameSession.SpaceMap.CelestialObjects.Add(npcSpaceShip);
+                        newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
+                        //var npcSpaceShip = Fury.Generate(gameSession);
+                        //gameSession.SpaceMap.CelestialObjects.Add(npcSpaceShip);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

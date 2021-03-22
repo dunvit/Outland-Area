@@ -175,6 +175,7 @@
     <Compile Include="Universe\Objects\Spaceships\Explosion.cs" />
     <Compile Include="Universe\Objects\Spaceships\ISpaceship.cs" />
     <Compile Include="Universe\Objects\Spaceships\Missile.cs" />
+    <Compile Include="Universe\Objects\Spaceships\NpcSpaceshipGenerationModel.cs" />
     <Compile Include="Universe\Objects\Spaceships\NPC\Fury.cs" />
     <Compile Include="Universe\Objects\Spaceships\Spaceship.cs" />
     <Compile Include="Universe\Objects\Spaceships\SpaceShipInfo.cs" />

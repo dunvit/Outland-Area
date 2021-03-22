@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OutlandAreaCommon.Tactical.Model;
 using OutlandAreaCommon.Tactical.Scenario;
 
@@ -14,9 +15,11 @@ namespace OutlandAreaCommon.Tactical
             DialogId = dialogId;
         }
 
-        public void Execute(GameSession session)
+        public List<string> Execute(GameSession session)
         {
             IsEnabled = false;
+
+            return new List<string>();
         }
     }
 }

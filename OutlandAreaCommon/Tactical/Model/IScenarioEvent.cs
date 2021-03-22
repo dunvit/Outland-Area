@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace OutlandAreaCommon.Tactical.Model
 {
     public interface IScenarioEvent
@@ -12,6 +14,6 @@ namespace OutlandAreaCommon.Tactical.Model
 
         GameEventTypes Type { get; set; }
 
-        void Execute(GameSession session);
+        List<string> Execute(GameSession session);
     }
 }

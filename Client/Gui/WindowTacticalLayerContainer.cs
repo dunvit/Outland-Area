@@ -26,7 +26,8 @@ namespace Engine.Gui
            
             Global.Game.OnBattleInitialization += Event_BattleInitialization;
             Global.Game.OnAnomalyFound += Event_AnomalyFound;
-            Global.Game.OnOpenDialog += Event_OpenDialog;
+            Global.Game.OnOpenDialog += EventDialog;
+            Global.Game.OnFoundSpaceship += Event_FoundSpaceship;
             Global.Game.OnEndTurn += Event_EndTurn;
             
 
@@ -48,21 +49,52 @@ namespace Engine.Gui
             propulsionCompartment1.OnChangeDirection += Global.Game.NavigationChangeDirection;
         }
 
+        private void Event_FoundSpaceship(GameEvent gameEvent)
+        {
+            Global.Game.PauseSession();
+
+            var dialogResult = CallModalFormFoundSpaceship(gameEvent);
+
+            Global.Game.ResumeSession();
+        }
+
         private void Event_AnomalyFound(GameEvent gameEvent)
         {
             var a = CallModalForm(gameEvent);
             Global.Game.ResumeSession();
         }
 
-        private void Event_OpenDialog(GameEvent gameEvent)
+        private void EventDialog(GameEvent gameEvent)
         {
             var a = CallModalForm(gameEvent);
 
             Global.Game.ResumeSession();
         }
-        //Event_OpenDialog
+        //EventDialog
 
         private delegate DialogResult RefreshCallback(GameEvent gameEvent);
+
+        private static DialogResult CallModalFormFoundSpaceship(GameEvent gameEvent)
+        {
+            Form mainForm = null;
+            if (Application.OpenForms.Count > 0)
+                mainForm = Application.OpenForms[0];
+
+            if (mainForm != null && mainForm.InvokeRequired)
+            {
+                RefreshCallback d = CallModalFormFoundSpaceship;
+                return (DialogResult)mainForm.Invoke(d, gameEvent);
+            }
+
+            var windowAnomalyFound = new WindowAnomalyFound
+            {
+                ShowInTaskbar = false,
+                ShowIcon = false,
+                GameEvent = gameEvent
+            };
+
+            return windowAnomalyFound.ShowDialog();
+        }
 
         private static DialogResult CallModalForm(GameEvent gameEvent)
         {

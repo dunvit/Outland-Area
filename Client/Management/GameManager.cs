@@ -14,6 +14,7 @@ using OutlandAreaCommon.Server;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 using OutlandAreaLocalServer;
 
 namespace Engine.Management
@@ -34,6 +35,7 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnSelectCelestialObject;
         public event Action<GameEvent> OnAnomalyFound;
         public event Action<GameEvent> OnOpenDialog;
+        public event Action<GameEvent> OnFoundSpaceship;
 
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -200,7 +202,7 @@ namespace Engine.Management
                 // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
                 if (message.Type == GameEventTypes.NpcSpaceShipFound)
                 {
-                    OnOpenDialog?.Invoke(message);
+                    OnFoundSpaceship?.Invoke(message);
                 }
             }
 

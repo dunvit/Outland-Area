@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using OutlandAreaCommon.Tactical.Model;
+using OutlandAreaCommon.Universe.Objects;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 
 namespace OutlandAreaCommon.Tactical.Scenario
 {
@@ -9,28 +11,42 @@ namespace OutlandAreaCommon.Tactical.Scenario
     {
         public int DialogId { get; set; }
 
-        private List<Tuple<int, int, int, string>> _spaceShips;
+        private List<NpcSpaceshipGenerationModel> _spaceShips;
 
         public ScenarioEventGenerateNpcSpaceShip(int dialogId)
         {
             DialogId = dialogId;
 
-            _spaceShips = new List<Tuple<int, int, int, string>>();
+            _spaceShips = new List<NpcSpaceshipGenerationModel>();
         }
 
         public void AddSpaceShip(int spaceShipClass, int spaceShipType, int standing, string message)
         {
-            _spaceShips.Add(new Tuple<int, int, int, string>(spaceShipClass, spaceShipType, standing, message));
+            _spaceShips.Add(new NpcSpaceshipGenerationModel(spaceShipClass, spaceShipType, standing, message));
         }
 
-        public List<Tuple<int, int, int, string>> GetSpaceShips()
+        public List<NpcSpaceshipGenerationModel> GetSpaceShips()
         {
             return _spaceShips.DeepClone();
         }
 
-        public void Execute(GameSession session)
+        public List<string> Execute(GameSession session)
         {
-            throw new NotImplementedException();
+            var result = new List<string>();
+
+            foreach (var spaceShip in _spaceShips)
+            {
+                var generatedSpaceShip =
+                    CelestialObjectsFactory.GenerateNpcShip(session, spaceShip.SpaceShipClass, spaceShip.SpaceShipType, spaceShip.Standing);
+
+                spaceShip.Message = $"Found spaceship. Engine signature is '{generatedSpaceShip.Id}'";
+
+                result.Add(generatedSpaceShip.Id.ToString());
+
+                session.SpaceMap.CelestialObjects.Add(generatedSpaceShip);
+            }
+
+            return result;
         }
     }
 }

@@ -12,6 +12,11 @@ namespace OutlandAreaCommon.Common
             return RandomBase.Next(min, max);
         }
 
+        public static int GetInteger(int min)
+        {
+            return RandomBase.Next(min);
+        }
+
         public static int GetId()
         {
             return RandomBase.Next(1000000000, int.MaxValue);

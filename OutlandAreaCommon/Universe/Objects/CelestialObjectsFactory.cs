@@ -8,6 +8,7 @@ using log4net;
 using log4net.Repository.Hierarchy;
 using OutlandAreaCommon.Common;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects.Spaceships.NPC;
 
 namespace OutlandAreaCommon.Universe.Objects
 {
@@ -46,19 +47,7 @@ namespace OutlandAreaCommon.Universe.Objects
 
             var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
 
-            ICelestialObject newCelestialObject = new Asteroid
-            {
-                Id = RandomGenerator.GetId(),
-                PositionX = spaceship.PositionX + 500 + RandomGenerator.GetInteger(1, 200),
-                PositionY = spaceship.PositionY + 500 + RandomGenerator.GetInteger(1, 200),
-                Name = RandomGenerator.GenerateCelestialObjectName(),
-                Direction = RandomGenerator.Direction(),
-                Speed = RandomGenerator.GetInteger(1, 30),
-                Classification = CelestialObjectTypes.Asteroid.ToInt(),
-                IsScanned = false,
-                Signature = 210
-            };
-
+            ICelestialObject newCelestialObject = Fury.Generate(gameSession);
 
             return newCelestialObject;
         }
