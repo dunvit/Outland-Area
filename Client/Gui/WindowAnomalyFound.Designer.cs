@@ -29,10 +29,20 @@ namespace Engine.Gui
         /// </summary>
         private void InitializeComponent()
         {
-            this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.flatButton1 = new Engine.Gui.Controls.Common.FlatButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.flatButton1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(385, 204);
+            this.panel1.TabIndex = 1;
             // 
             // flatButton1
             // 
@@ -49,16 +59,6 @@ namespace Engine.Gui
             this.flatButton1.UseVisualStyleBackColor = false;
             this.flatButton1.Click += new System.EventHandler(this.Event_Exit);
             // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.flatButton1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(385, 204);
-            this.panel1.TabIndex = 1;
-            // 
             // WindowAnomalyFound
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -69,6 +69,9 @@ namespace Engine.Gui
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowAnomalyFound";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "WindowAnomalyFound";
             this.Load += new System.EventHandler(this.WindowAnomalyFound_Load);
             this.panel1.ResumeLayout(false);

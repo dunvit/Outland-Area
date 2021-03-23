@@ -4,10 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Common.Geometry;
 using log4net;
 using log4net.Repository.Hierarchy;
 using OutlandAreaCommon.Common;
+using OutlandAreaCommon.Geometry;
 using OutlandAreaCommon.Tactical;
+using OutlandAreaCommon.Universe.Objects.Spaceships;
 using OutlandAreaCommon.Universe.Objects.Spaceships.NPC;
 
 namespace OutlandAreaCommon.Universe.Objects
@@ -47,7 +50,25 @@ namespace OutlandAreaCommon.Universe.Objects
 
             var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
 
-            ICelestialObject newCelestialObject = Fury.Generate(gameSession);
+            Spaceship newCelestialObject = null;
+
+            switch (spaceShipType)
+            {
+                case 12:
+                    newCelestialObject = Fury.Generate();
+                    break;
+                default:
+                    break;
+            }
+
+            if (newCelestialObject != null)
+            {
+                newCelestialObject.PositionX = spaceship.PositionX + Math.Abs(500 + RandomGenerator.GetInteger(-20, 20));
+                newCelestialObject.PositionY = spaceship.PositionY + Math.Abs(500 + RandomGenerator.GetInteger(-20, 20));
+                newCelestialObject.Speed = newCelestialObject.MaxSpeed;
+
+                newCelestialObject.Direction = SpaceMapTools.GetAngleBetweenPoints(newCelestialObject.GetLocation().ToVector2(), spaceship.GetLocation().ToVector2());
+            }
 
             return newCelestialObject;
         }

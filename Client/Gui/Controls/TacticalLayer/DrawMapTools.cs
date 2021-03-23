@@ -276,6 +276,11 @@ namespace Engine.Gui.Controls.TacticalLayer
             var initialDrawingPosition = new PointF(-10000, -10000);
             var iteration = -1;
 
+            if (celestialObject.Classification == CelestialObjectTypes.Missile.ToInt())
+            {
+                return;
+            }
+
             foreach (var position in results)
             {
                 var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(position.Coordinates.X, position.Coordinates.Y));

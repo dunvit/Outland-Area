@@ -118,53 +118,62 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BordersUnselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BordersUnselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BordersSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BordersSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_KeepSpeedActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_KeepSpeedActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Propulsion_TurnRightInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_TurnRightInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_TurnRightActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_TurnRightActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_RightLeftInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_RightLeftInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_KeepSpeedInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_KeepSpeedInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Radar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Radar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ShootButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ShootButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Propulsion_StopInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_StopInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Propulsion_ForwardInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_ForwardInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Borders" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Borders.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShootButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShootButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_StopActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_StopActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BordersUnselected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BordersUnselected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_TurnLeftInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_TurnLeftInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_AccelerationActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_AccelerationActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Propulsion_ResumeMovementResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_ResumeMovementResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Propulsion_KeepSpeedResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_KeepSpeedResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_StopInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_StopInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Propulsion_AccelerationResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_AccelerationResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_StopActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_StopActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_TurnLeftResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_TurnLeftResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Radar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Radar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BordersSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BordersSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_AccelerationActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_AccelerationActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Full" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Full.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_KeepSpeedInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_KeepSpeedInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_ResumeMovementInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_ResumeMovementInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_TurnLeftInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_TurnLeftInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_AccelerationInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_AccelerationInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Propulsion_StopResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_StopResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,14 +181,23 @@
   <data name="Propulsion_TurnRightResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_TurnRightResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_TurnLeftResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_TurnLeftResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Propulsion_RightLeftInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_RightLeftInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_TurnRightActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_TurnRightActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_ResumeMovementActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_ResumeMovementActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Propulsion_ForwardResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_ForwardResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_AccelerationResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_AccelerationResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Borders" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Borders.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Propulsion_KeepSpeedActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Propulsion_KeepSpeedActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Propulsion_TurnLeftActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_TurnLeftActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -187,16 +205,10 @@
   <data name="Propulsion_ForwardActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Propulsion_ForwardActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_AccelerationInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_AccelerationInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Propulsion_ResumeMovementInActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_ResumeMovementInActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_ResumeMovementResume" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_ResumeMovementResume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Propulsion_ResumeMovementActive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Propulsion_ResumeMovementActive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Right1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Right1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

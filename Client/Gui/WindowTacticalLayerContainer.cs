@@ -49,32 +49,32 @@ namespace Engine.Gui
             propulsionCompartment1.OnChangeDirection += Global.Game.NavigationChangeDirection;
         }
 
-        private void Event_FoundSpaceship(GameEvent gameEvent)
+        private void Event_FoundSpaceship(GameEvent gameEvent, GameSession gameSession)
         {
             Global.Game.PauseSession();
 
-            var dialogResult = CallModalFormFoundSpaceship(gameEvent);
+            var dialogResult = CallModalFormFoundSpaceship(gameEvent, gameSession);
 
             Global.Game.ResumeSession();
         }
 
-        private void Event_AnomalyFound(GameEvent gameEvent)
+        private void Event_AnomalyFound(GameEvent gameEvent, GameSession gameSession)
         {
-            var a = CallModalForm(gameEvent);
+            var a = CallModalForm(gameEvent, gameSession);
             Global.Game.ResumeSession();
         }
 
-        private void EventDialog(GameEvent gameEvent)
+        private void EventDialog(GameEvent gameEvent, GameSession gameSession)
         {
-            var a = CallModalForm(gameEvent);
+            var a = CallModalForm(gameEvent, gameSession);
 
             Global.Game.ResumeSession();
         }
         //EventDialog
 
-        private delegate DialogResult RefreshCallback(GameEvent gameEvent);
+        private delegate DialogResult RefreshCallback(GameEvent gameEvent, GameSession gameSession);
 
-        private static DialogResult CallModalFormFoundSpaceship(GameEvent gameEvent)
+        private static DialogResult CallModalFormFoundSpaceship(GameEvent gameEvent, GameSession gameSession)
         {
             Form mainForm = null;
             if (Application.OpenForms.Count > 0)
@@ -83,20 +83,21 @@ namespace Engine.Gui
             if (mainForm != null && mainForm.InvokeRequired)
             {
                 RefreshCallback d = CallModalFormFoundSpaceship;
-                return (DialogResult)mainForm.Invoke(d, gameEvent);
+                return (DialogResult)mainForm.Invoke(d, gameEvent, gameSession);
             }
 
-            var windowAnomalyFound = new WindowAnomalyFound
+            var windowAnomalyFound = new WindowSpaceShipFound
             {
                 ShowInTaskbar = false,
                 ShowIcon = false,
-                GameEvent = gameEvent
+                GameEvent = gameEvent,
+                Session = gameSession
             };
 
             return windowAnomalyFound.ShowDialog();
         }
 
-        private static DialogResult CallModalForm(GameEvent gameEvent)
+        private static DialogResult CallModalForm(GameEvent gameEvent, GameSession gameSession)
         {
             Form mainForm = null;
             if (Application.OpenForms.Count > 0)
@@ -105,7 +106,7 @@ namespace Engine.Gui
             if (mainForm != null && mainForm.InvokeRequired)
             {
                 RefreshCallback d = CallModalForm;
-                return (DialogResult)mainForm.Invoke(d, gameEvent);
+                return (DialogResult)mainForm.Invoke(d, gameEvent, gameSession);
             }
 
             var windowAnomalyFound = new WindowAnomalyFound

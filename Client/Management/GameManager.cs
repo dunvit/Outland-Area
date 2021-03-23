@@ -33,9 +33,9 @@ namespace Engine.Management
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
         public event Action<ICelestialObject> OnSelectCelestialObject;
-        public event Action<GameEvent> OnAnomalyFound;
-        public event Action<GameEvent> OnOpenDialog;
-        public event Action<GameEvent> OnFoundSpaceship;
+        public event Action<GameEvent, GameSession> OnAnomalyFound;
+        public event Action<GameEvent, GameSession> OnOpenDialog;
+        public event Action<GameEvent, GameSession> OnFoundSpaceship;
 
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -185,28 +185,30 @@ namespace Engine.Management
             turn = gameSession.Turn;
             Logger.Debug($"[StartNewOneSecondTurn] {turn}");
 
+            OnEndTurn?.Invoke(gameSession);
+
             foreach (var message in gameSession.GetCurrentTurnEvents())
             {
                 if (message.IsPause) PauseSession();
 
                 if (message.Type == GameEventTypes.AnomalyFound)
                 {
-                    OnAnomalyFound?.Invoke(message);
+                    OnAnomalyFound?.Invoke(message, gameSession);
                 }
 
                 if (message.Type == GameEventTypes.OpenDialog)
                 {
-                    OnOpenDialog?.Invoke(message);
+                    OnOpenDialog?.Invoke(message, gameSession);
                 }
 
                 // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
                 if (message.Type == GameEventTypes.NpcSpaceShipFound)
                 {
-                    OnFoundSpaceship?.Invoke(message);
+                    OnFoundSpaceship?.Invoke(message, gameSession);
                 }
             }
 
-            OnEndTurn?.Invoke(gameSession);
+            
         }
 
         public void AddCommandAlignTo(ICelestialObject celestialObject)
