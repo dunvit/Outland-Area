@@ -35,8 +35,9 @@ namespace Engine.Gui
             crlTacticalMap.OnLaunchMissile += Global.Game.AddCommandOpenFire;
             crlTacticalMap.OnRefreshSelectedCelestialObject += crlSelectedObject.Event_SelectCelestialObject;
 
-            Global.Game.OnActivateModuleForPointInMap += crlTacticalMap.ActivateModule;
-            Global.Game.OnActivateModuleForSelectObjectInMap += crlTacticalMap.ActivateModuleForSelectObject;
+
+            Global.Game.OnExecuteModuleForSelectObjectOnMap += crlTacticalMap.ExecuteModuleForSelectSelectObject;
+            Global.Game.OnActivateModuleForSelectObjectInMap += crlTacticalMap.ExecuteModuleForSelectSelectObject;
 
             weaponCompartment1.OnExecuteModule += Global.Game.ExecuteModule;
             weaponCompartment1.OnActivateModule += Global.Game.ActivateModule;
@@ -47,6 +48,9 @@ namespace Engine.Gui
             scanningCompartment.OnDeactivateModule += Global.Game.DeactivateModule;
 
             propulsionCompartment1.OnChangeDirection += Global.Game.NavigationChangeDirection;
+            propulsionCompartment1.OnExecuteModule += Global.Game.ExecuteModule;
+            propulsionCompartment1.OnActivateModule += Global.Game.ActivateModule;
+            propulsionCompartment1.OnDeactivateModule += Global.Game.DeactivateModule;
         }
 
         private void Event_FoundSpaceship(GameEvent gameEvent, GameSession gameSession)

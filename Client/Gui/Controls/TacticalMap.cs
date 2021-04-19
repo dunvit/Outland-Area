@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Engine.Configuration;
 using Engine.Tools;
@@ -52,6 +51,11 @@ namespace Engine.Gui.Controls
 
         private PointF mouseCoordinates = PointF.Empty;
 
+        IEnumerable<ICelestialObject> _connectorsShow = new List<ICelestialObject>();
+        IEnumerable<ICelestialObject> _connectorsSelect = new List<ICelestialObject>();
+
+        private TacticalMapMode _mode = TacticalMapMode.General;
+
         public TacticalMap()
         {
             InitializeComponent();
@@ -65,8 +69,6 @@ namespace Engine.Gui.Controls
 
             
         }
-
-        
 
         private void Initialization()
         {
@@ -134,7 +136,11 @@ namespace Engine.Gui.Controls
 
             DrawMapTools.DrawGrid(currentTurnBoardInfo);
 
-            DrawMapTools.DrawConnectors(graphics, _gameSession, _connectors, granularTurnInformation, turnStep, _screenParameters);
+            DrawMapTools.DrawSelectedObject(graphics, _mode, _gameSession , MouseMoveCelestialObject, _connectorsSelect, granularTurnInformation, turnStep, _screenParameters);
+
+            DrawMapTools.DrawConnectors(graphics, _gameSession, _connectorsShow, granularTurnInformation, turnStep, _screenParameters);
+
+            DrawMapTools.DrawConnectors(graphics, _gameSession, _connectorsSelect, granularTurnInformation, turnStep, _screenParameters);
 
             DrawMapTools.DrawDestinationPoint(graphics, _gameSession, destinationPoint, _screenParameters);
 
@@ -221,6 +227,7 @@ namespace Engine.Gui.Controls
                 case CelestialObjectTypes.Asteroid:
                     break;
                 case CelestialObjectTypes.None:
+                    _connectorsShow = new List<ICelestialObject>();
                     break;
             }
 
@@ -247,7 +254,6 @@ namespace Engine.Gui.Controls
 
             //pointInSpace = mouseMapCoordinates;
         }
- 
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
@@ -290,7 +296,6 @@ namespace Engine.Gui.Controls
             Logger.Debug(TraceMessage.Execute(this, $"Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms."));
         }
 
-
         private SortedDictionary<int, GranularObjectInformation> CalculateGranularTurnInformation(GameSession gameSession)
         {
             var result = new SortedDictionary<int, GranularObjectInformation>();
@@ -322,44 +327,27 @@ namespace Engine.Gui.Controls
             }
         }
 
-        public void CommandAlignTo(ICelestialObject celestialObject)
-        {
-            pointInSpace = PointF.Empty;
-
-            destinationPoint = celestialObject.DeepClone();
-        }
-
-        private void AlignToCommand(object sender, MouseEventArgs e)
-        {
-            pointInSpace = PointF.Empty;
-
-            var mouseScreenCoordinates = OutlandAreaCommon.Tools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
-
-            var mouseMapCoordinates = OutlandAreaCommon.Tools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
-
-            Global.Game.SelectPointInSpace(mouseMapCoordinates);
-
-            OnAlignToCelestialObject?.Invoke(Global.Game.GetSelectedObject());
-        }
-
-        public void ActivateModule(IModule module, ICelestialObject celestialObject)
+        public void ExecuteModule(IModule module, ICelestialObject celestialObject)
         {
             _activeCelestialObject = celestialObject;
             _activeModule = (CelestialObjectTypes) celestialObject.Classification;
         }
 
-        IEnumerable<ICelestialObject> _connectors = new List<ICelestialObject>();
-
         public void Connectors(GameSession gameSession, IModule module,IEnumerable<ICelestialObject> objects, bool show)
         {
-            _connectors = objects;
-
+            _connectorsShow = objects;
+            //_connectorsSelect = new List<ICelestialObject>();
+            _mode = TacticalMapMode.ShowObjects;
         }
 
-        public void ActivateModuleForSelectObject(IModule module, Func<GameSession, List<ICelestialObject>> objectsInMap)
+        public void ExecuteModuleForSelectSelectObject(IModule module, Func<GameSession, List<ICelestialObject>> objectsInMap)
         {
-            var a = objectsInMap(_gameSession);
+            _mode = TacticalMapMode.SelectObjects;
 
+            _connectorsSelect = objectsInMap(_gameSession);
+            //_connectorsShow = new List<ICelestialObject>();
+
+            _mode = TacticalMapMode.SelectObjects;
         }
     }
 }

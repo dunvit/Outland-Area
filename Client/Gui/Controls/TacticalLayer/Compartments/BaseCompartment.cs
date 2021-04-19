@@ -45,21 +45,21 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             moduleThird.OnDeactivateModule += DeactivateModule;
         }
 
-        private void DeactivateModule(IModule module)
+        protected void DeactivateModule(IModule module)
         {
             Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' deactivated from slot {module.Slot} for compartment {module.Compartment}"));
 
             OnDeactivateModule?.Invoke(module);
         }
 
-        private void ActivateModule(IModule module)
+        protected void ActivateModule(IModule module)
         {
             Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' activated from slot {module.Slot} for compartment {module.Compartment}"));
 
             OnActivateModule?.Invoke(module);
         }
 
-        private void ExecuteModule(IModule module)
+        protected void ExecuteModule(IModule module)
         {
             Logger.Debug(TraceMessage.Execute(this, $"Module '{module.Name}' executed from slot {module.Slot} for compartment {module.Compartment}"));
 

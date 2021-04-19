@@ -430,21 +430,7 @@ namespace Engine.Gui.Controls.TacticalLayer
             }
         }
 
-        public static void DrawMouseMoveObject(Graphics graphics, GameSession gameSession, ICelestialObject celestialObject, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
-        {
-            if (celestialObject == null) return;
-
-            var location = GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, screenParameters.DrawInterval);
-
-            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
-
-            var rectangle = new RectangleF(screenCoordinates.X + 30, screenCoordinates.Y + 30, 100, 40);
-
-            graphics.FillRectangle(new SolidBrush(Color.DimGray), rectangle);
-            graphics.DrawRectangle(new Pen(Color.Gray), rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-            graphics.DrawRectangle(new Pen(Color.Black), rectangle.X+1, rectangle.Y+1, rectangle.Width-2, rectangle.Height-2);
-            graphics.DrawLine(new Pen(Color.Gray), rectangle.X, rectangle.Y, screenCoordinates.X, screenCoordinates.Y);
-        }
+        
 
         public static void DrawConnectors(Graphics graphics, GameSession gameSession, IEnumerable<ICelestialObject> connectors, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
         {
@@ -523,6 +509,36 @@ namespace Engine.Gui.Controls.TacticalLayer
 
                 boardInfo.GraphicSurface.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
             }
+        }
+
+        public static void DrawMouseMoveObject(Graphics graphics, GameSession gameSession, ICelestialObject celestialObject, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            if (celestialObject == null) return;
+
+            var location = GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, screenParameters.DrawInterval);
+
+            var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
+
+            var rectangle = new RectangleF(screenCoordinates.X + 30, screenCoordinates.Y + 30, 100, 40);
+
+            graphics.FillRectangle(new SolidBrush(Color.DimGray), rectangle);
+            graphics.DrawRectangle(new Pen(Color.Gray), rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            graphics.DrawRectangle(new Pen(Color.Black), rectangle.X + 1, rectangle.Y + 1, rectangle.Width - 2, rectangle.Height - 2);
+            graphics.DrawLine(new Pen(Color.Gray), rectangle.X, rectangle.Y, screenCoordinates.X, screenCoordinates.Y);
+        }
+
+        public static void DrawSelectedObject(Graphics graphics, TacticalMapMode mode, GameSession gameSession, ICelestialObject celestialObject, IEnumerable<ICelestialObject> connectorsSelect, SortedDictionary<int, GranularObjectInformation> granularTurnInformation, int turnStep, ScreenParameters screenParameters)
+        {
+            //var location = GetCurrentLocation(granularTurnInformation, celestialObject, turnStep, screenParameters.DrawInterval);
+
+            //var screenCoordinates = UI.ToScreenCoordinates(screenParameters, new PointF(location.X, location.Y));
+
+            //var rectangle = new RectangleF(screenCoordinates.X + 30, screenCoordinates.Y + 30, 100, 40);
+
+            //graphics.FillRectangle(new SolidBrush(Color.DimGray), rectangle);
+            //graphics.DrawRectangle(new Pen(Color.Gray), rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            //graphics.DrawRectangle(new Pen(Color.Black), rectangle.X + 1, rectangle.Y + 1, rectangle.Width - 2, rectangle.Height - 2);
+            //graphics.DrawLine(new Pen(Color.Gray), rectangle.X, rectangle.Y, screenCoordinates.X, screenCoordinates.Y);
         }
     }
 }

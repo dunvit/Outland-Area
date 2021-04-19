@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Engine.Gui.Prototype;
 
 namespace Engine.Gui
 {
@@ -20,6 +21,12 @@ namespace Engine.Gui
         private void Event_StartNewGame(object sender, EventArgs e)
         {
             Global.GenerateGameSession();
+        }
+
+        private void flatButton3_Click(object sender, EventArgs e)
+        {
+            var screenPrototypeContainer = new screenPrototypeContainer();
+            var a = screenPrototypeContainer.ShowDialog();
         }
     }
 }

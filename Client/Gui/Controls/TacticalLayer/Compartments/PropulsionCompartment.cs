@@ -28,6 +28,33 @@ namespace Engine.Gui.Controls.TacticalLayer.Compartments
             commandTurn.OnTurn += ChangeNavigationDirection;
 
             commandForwardStop.OnChangeMode += ChangeNavigationDirection;
+
+            commandMoveForward.OnActivateModule += EventActivateModule;
+            commandForwardStop.OnActivateModule += EventActivateModule;
+            commandTurn.OnActivateModule += EventActivateModule;
+
+            commandMoveForward.OnDeactivateModule += EventDeactivateModule;
+            commandForwardStop.OnDeactivateModule += EventDeactivateModule;
+            commandTurn.OnDeactivateModule += EventDeactivateModule;
+
+            commandMoveForward.OnExecuteModule += EventExecuteModule;
+            commandForwardStop.OnExecuteModule += EventExecuteModule;
+            commandTurn.OnExecuteModule += EventExecuteModule;
+        }
+
+        private void EventExecuteModule(IModule module)
+        {
+            Global.Game.ActivateModule(module); 
+        }
+
+        private void EventDeactivateModule(IModule module)
+        {
+            Global.Game.DeactivateModule(module);
+        }
+
+        private void EventActivateModule(IModule module)
+        {
+            Global.Game.ActivateModule(module);
         }
 
         private void MoveForwardCommandExecute(CommandTypes directionType)

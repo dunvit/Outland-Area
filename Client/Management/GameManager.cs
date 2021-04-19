@@ -14,7 +14,6 @@ using OutlandAreaCommon.Server;
 using OutlandAreaCommon.Tactical;
 using OutlandAreaCommon.Universe;
 using OutlandAreaCommon.Universe.Objects;
-using OutlandAreaCommon.Universe.Objects.Spaceships;
 using OutlandAreaLocalServer;
 
 namespace Engine.Management
@@ -28,7 +27,8 @@ namespace Engine.Management
         
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnBattleInitialization;
-        public event Action<IModule, ICelestialObject> OnActivateModuleForPointInMap;
+        public event Action<IModule> OnActivateModule;
+        public event Action<IModule, Func<GameSession, List<ICelestialObject>>> OnExecuteModuleForSelectObjectOnMap;
         public event Action<IModule, Func<GameSession, List<ICelestialObject>>> OnActivateModuleForSelectObjectInMap;
         public event Action<ICelestialObject> OnMouseMoveCelestialObject;
         public event Action<ICelestialObject> OnMouseLeaveCelestialObject;
@@ -36,6 +36,8 @@ namespace Engine.Management
         public event Action<GameEvent, GameSession> OnAnomalyFound;
         public event Action<GameEvent, GameSession> OnOpenDialog;
         public event Action<GameEvent, GameSession> OnFoundSpaceship;
+
+
 
 
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -292,8 +294,8 @@ namespace Engine.Management
                     var missile = MissilesFactory.GetMissile(module.ToWeapon().AmmoId).ToCelestialObject();
 
                     missile.OwnerId = (int)module.Id;
-
-                    OnActivateModuleForPointInMap?.Invoke(module, missile);
+                    OnExecuteModuleForSelectObjectOnMap?.Invoke(module, SpaceMapActions.GetSpaceshipsByDistance);
+                    //OnExecuteModuleForPointInMap?.Invoke(module, missile);
                     break;
                 case Category.Shield:
                     break;
@@ -316,14 +318,20 @@ namespace Engine.Management
             switch (module.Category)
             {
                 case Category.Weapon:
+                    OnActivateModule?.Invoke(module);
+                    //_ui.ConnectClosestObjects(_gameSession, module, SpaceMapActions.GetSpaceshipsByDistance(_gameSession), true);
                     break;
                 case Category.Shield:
+                    OnActivateModule?.Invoke(module);
                     break;
                 case Category.Propulsion:
+                    OnActivateModule?.Invoke(module);
                     break;
                 case Category.Reactor:
+                    OnActivateModule?.Invoke(module);
                     break;
                 case Category.SpaceScanner:
+                    OnActivateModule?.Invoke(module);
                     break;
                 case Category.DeepScanner:
                     _ui.ConnectClosestObjects(_gameSession, module, SpaceMapActions.GetUnknownCelestialObjectsByDistance(_gameSession), true);
@@ -339,6 +347,7 @@ namespace Engine.Management
             switch (module.Category)
             {
                 case Category.Weapon:
+                    _ui.ConnectClosestObjects(_gameSession, module, new List<ICelestialObject>(), false);
                     break;
                 case Category.Shield:
                     break;

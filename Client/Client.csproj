@@ -206,11 +206,84 @@
     <Compile Include="Gui\Controls\TacticalMap.Designer.cs">
       <DependentUpon>TacticalMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\TacticalMapMode.cs" />
     <Compile Include="Gui\Extensions.cs" />
     <Compile Include="Gui\IUiManager.cs" />
     <Compile Include="Gui\Model\IBoardInfo.cs" />
     <Compile Include="Gui\Model\IMapDrawSettings.cs" />
     <Compile Include="Gui\Model\IScreenInfo.cs" />
+    <Compile Include="Gui\Prototype\ModuleReactor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleReactor.Designer.cs">
+      <DependentUpon>ModuleReactor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleECM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleECM.Designer.cs">
+      <DependentUpon>ModuleECM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleNavigation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleNavigation.Designer.cs">
+      <DependentUpon>ModuleNavigation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModulePointDefenceTurret.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModulePointDefenceTurret.Designer.cs">
+      <DependentUpon>ModulePointDefenceTurret.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleWeaponLauncher.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleWeaponLauncher.Designer.cs">
+      <DependentUpon>ModuleWeaponLauncher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModuleBase.Designer.cs">
+      <DependentUpon>ModuleBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\controlPrototypeTacticalScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\controlPrototypeTacticalScreen.Designer.cs">
+      <DependentUpon>controlPrototypeTacticalScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\screenPrototypeContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\screenPrototypeContainer.Designer.cs">
+      <DependentUpon>screenPrototypeContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\TargetSelector\TargetRow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\TargetSelector\TargetRow.Designer.cs">
+      <DependentUpon>TargetRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\TargetSelector\TargetSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\TargetSelector\TargetSelector.Designer.cs">
+      <DependentUpon>TargetSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Prototype\WeaponShotCalculation\WeaponShotCalculation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\WeaponShotCalculation\WeaponShotCalculation.Designer.cs">
+      <DependentUpon>WeaponShotCalculation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\TacticalScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\TacticalScreen.Designer.cs">
+      <DependentUpon>TacticalScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\UI.cs" />
     <Compile Include="Gui\UiManager.cs" />
     <Compile Include="Gui\WindowAnomalyFound.cs">
@@ -246,6 +319,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenDrawing\SpaceMapGraphics.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Tools\CrossThreadExtensions.cs" />
     <Compile Include="Tools\DebugTools.cs" />
     <Compile Include="Tools\MicroLibrary.cs" />
     <Compile Include="Tools\Scheduler.cs" />
@@ -308,6 +382,42 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalMap.resx">
       <DependentUpon>TacticalMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModuleReactor.resx">
+      <DependentUpon>ModuleReactor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModuleECM.resx">
+      <DependentUpon>ModuleECM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModuleNavigation.resx">
+      <DependentUpon>ModuleNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModulePointDefenceTurret.resx">
+      <DependentUpon>ModulePointDefenceTurret.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModuleWeaponLauncher.resx">
+      <DependentUpon>ModuleWeaponLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModuleBase.resx">
+      <DependentUpon>ModuleBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\controlPrototypeTacticalScreen.resx">
+      <DependentUpon>controlPrototypeTacticalScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\screenPrototypeContainer.resx">
+      <DependentUpon>screenPrototypeContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\TargetSelector\TargetRow.resx">
+      <DependentUpon>TargetRow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\TargetSelector\TargetSelector.resx">
+      <DependentUpon>TargetSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\WeaponShotCalculation\WeaponShotCalculation.resx">
+      <DependentUpon>WeaponShotCalculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\TacticalScreen.resx">
+      <DependentUpon>TacticalScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\WindowAnomalyFound.resx">
       <DependentUpon>WindowAnomalyFound.cs</DependentUpon>

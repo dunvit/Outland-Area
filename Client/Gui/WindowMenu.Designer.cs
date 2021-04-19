@@ -135,6 +135,7 @@
             this.flatButton3.TabIndex = 2;
             this.flatButton3.Text = "Single battle";
             this.flatButton3.UseVisualStyleBackColor = false;
+            this.flatButton3.Click += new System.EventHandler(this.flatButton3_Click);
             // 
             // cmdStartNewGame
             // 

@@ -37,6 +37,7 @@
             this.weaponCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.WeaponCompartment();
             this.scanningCompartment = new Engine.Gui.Controls.TacticalLayer.Compartments.ScanningCompartment();
             this.propulsionCompartment1 = new Engine.Gui.Controls.TacticalLayer.Compartments.PropulsionCompartment();
+            this.tacticalScreen1 = new Engine.Gui.TacticalScreen();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,12 +134,21 @@
             this.propulsionCompartment1.Size = new System.Drawing.Size(180, 165);
             this.propulsionCompartment1.TabIndex = 20;
             // 
+            // tacticalScreen1
+            // 
+            this.tacticalScreen1.BackColor = System.Drawing.Color.Black;
+            this.tacticalScreen1.Location = new System.Drawing.Point(284, 44);
+            this.tacticalScreen1.Name = "tacticalScreen1";
+            this.tacticalScreen1.Size = new System.Drawing.Size(150, 150);
+            this.tacticalScreen1.TabIndex = 21;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.tacticalScreen1);
             this.Controls.Add(this.propulsionCompartment1);
             this.Controls.Add(this.scanningCompartment);
             this.Controls.Add(this.weaponCompartment1);
@@ -168,5 +178,6 @@
         private Controls.TacticalLayer.Compartments.WeaponCompartment weaponCompartment1;
         private Controls.TacticalLayer.Compartments.ScanningCompartment scanningCompartment;
         private Controls.TacticalLayer.Compartments.PropulsionCompartment propulsionCompartment1;
+        private TacticalScreen tacticalScreen1;
     }
 }
