@@ -47,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Scenarios\Map_FirstBattle\Events\" />
-    <Folder Include="UI\Controls\" />
     <Folder Include="UI\Tools\" />
   </ItemGroup>
 

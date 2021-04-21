@@ -30,16 +30,27 @@ namespace Engine.UI.Screens
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gameSessionInformation1 = new Engine.UI.Controls.GameSessionInformation();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.gameSessionInformation1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
+            // 
+            // gameSessionInformation1
+            // 
+            this.gameSessionInformation1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(14)))), ((int)(((byte)(14)))));
+            this.gameSessionInformation1.Location = new System.Drawing.Point(11, 11);
+            this.gameSessionInformation1.Name = "gameSessionInformation1";
+            this.gameSessionInformation1.Size = new System.Drawing.Size(246, 148);
+            this.gameSessionInformation1.TabIndex = 0;
             // 
             // WindowTacticalLayerContainer
             // 
@@ -52,6 +63,7 @@ namespace Engine.UI.Screens
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowTacticalLayerContainer";
             this.Text = "WindowTacticalLayerContainer";
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -59,5 +71,6 @@ namespace Engine.UI.Screens
         #endregion
 
         private System.Windows.Forms.Panel panel1;
+        private Controls.GameSessionInformation gameSessionInformation1;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Engine.Gui;
+using Engine.UI;
+
 //using Engine.Management;
 
 namespace Engine
@@ -18,7 +20,7 @@ namespace Engine
 
             Game = new GameManager();
 
-            //GameUiManager = new UiManager();
+            Game.UiManager = new UiManager();
 
             //GameUiManager.Initialization();
 

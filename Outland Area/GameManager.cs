@@ -16,7 +16,7 @@ namespace Engine
 
         private readonly IGameServer _gameServer;
         private GameSession _gameSession;
-        public static UiManager UiManager;
+        public UiManager UiManager { get; set; }
 
         public event Action<GameSession> OnEndTurn;
 
@@ -36,7 +36,7 @@ namespace Engine
                     break;
             }
 
-            UiManager = new UiManager();
+            
 
             
         }
@@ -59,7 +59,7 @@ namespace Engine
 
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
 
-            _gameServer.ResumeSession(0);
+            _gameServer.ResumeSession(_gameSession.Id);
         }
 
         private void GetDataFromServer()
@@ -71,6 +71,8 @@ namespace Engine
             if (gameSession != null)
             {
                 _gameSession = gameSession;
+
+                OnEndTurn?.Invoke(_gameSession.DeepClone());
             }
             else
             {
@@ -80,12 +82,22 @@ namespace Engine
 
             timeMetricGetGameSession.Stop();
 
-            Logger.Info($"Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
 
             //Logger.Debug($"GetInteger game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
             //             $"Game session id = {_gameSession.Id}." +
             //             $" Turn = {_gameSession.Turn}." +
             //             $" SpaceMap objects count is {_gameSession.SpaceMap.CelestialObjects.Count}.");
+        }
+
+        public void SessionResume()
+        {
+            _gameServer.ResumeSession(_gameSession.Id);
+        }
+
+        public void SessionPause()
+        {
+            _gameServer.PauseSession(_gameSession.Id);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace EngineCore
 
             _gameSession.Turn++;
 
-            Logger.Debug($"Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[Server] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
         }
 
         public GameSession RefreshGameSession(int id)
