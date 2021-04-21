@@ -8,6 +8,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Front.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Full.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Left.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Right.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Front.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Full.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Left.png" />
+    <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Scenarios\Map_FirstBattle\Events\" />
     <Folder Include="UI\Controls\" />
     <Folder Include="UI\Tools\" />
   </ItemGroup>
@@ -46,6 +85,27 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Configuration\Version.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_FirstBattle\CelestialObjects\637066561468043700.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_FirstBattle\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_OneShip\CelestialObjects\637066561468043700.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_OneShip\Events\Events_pack_01.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Map_OneShip\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -14,6 +14,8 @@ namespace EngineCore
 
         public string ScenarioName { get; set; }
 
+        public bool IsPause { get; set; }
+
         public int Id { get; set; }
 
         public int Turn { get; set; }
