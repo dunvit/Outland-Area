@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Engine.UI;
 using Engine.UI.Screens;
 using EngineCore;
+using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
 using log4net.Repository.Hierarchy;

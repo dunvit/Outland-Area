@@ -1,4 +1,6 @@
-﻿namespace EngineCore
+﻿using EngineCore.Session;
+
+namespace EngineCore
 {
     public interface IGameServer
     {

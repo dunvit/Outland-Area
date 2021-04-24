@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using EngineCore.Scenario;
+using EngineCore.Universe.Model;
 using log4net;
 
-namespace EngineCore
+namespace EngineCore.Session
 {
     [Serializable]
     public class GameSession
@@ -20,21 +20,21 @@ namespace EngineCore
 
         public int Turn { get; set; }
 
-        //public CelestialMap SpaceMap { get; set; }
+        public CelestialMap SpaceMap { get; set; }
 
-        //public Rules Rules { get; set; } = new Rules();
+        public Rules Rules { get; set; } = new Rules();
 
         //private Dialogs GameDialogs { get; set; }
 
-        //public List<Command> Commands { get; set; }
+        public List<Command> Commands { get; set; }
 
         //public Characters Characters { get; set; } = new Characters();
 
-        //public List<IScenarioEvent> ScenarioEvents { get; set; }
+        public List<IScenarioEvent> ScenarioEvents { get; set; }
 
         //public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
-        //public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
+        public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
 
         //public Hashtable History { get; set; } = new Hashtable();
 
