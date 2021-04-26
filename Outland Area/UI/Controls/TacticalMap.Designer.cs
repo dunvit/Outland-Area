@@ -1,7 +1,7 @@
 ﻿
 namespace Engine.UI.Controls
 {
-    partial class UserControl1
+    partial class TacticalMap
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,32 +29,34 @@ namespace Engine.UI.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtTurn = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // txtTurn
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(51, 62);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1asdasdasd";
+            this.txtTurn.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtTurn.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtTurn.Location = new System.Drawing.Point(0, 231);
+            this.txtTurn.Name = "txtTurn";
+            this.txtTurn.Size = new System.Drawing.Size(274, 16);
+            this.txtTurn.TabIndex = 0;
+            this.txtTurn.Text = "label1";
             // 
-            // UserControl1
+            // TacticalMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Silver;
-            this.Controls.Add(this.label1);
-            this.Name = "UserControl1";
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(7)))), ((int)(((byte)(7)))));
+            this.Controls.Add(this.txtTurn);
+            this.DoubleBuffered = true;
+            this.Name = "TacticalMap";
+            this.Size = new System.Drawing.Size(274, 247);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtTurn;
     }
 }

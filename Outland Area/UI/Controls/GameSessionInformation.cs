@@ -2,11 +2,15 @@
 using Engine.Tools;
 using EngineCore;
 using EngineCore.Session;
+using EngineCore.Tools;
+using log4net;
 
 namespace Engine.UI.Controls
 {
     public partial class GameSessionInformation : UserControl
     {
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private GameSession _gameSession;
         private const string MessageResume = "Resume";
         private const string MessagePause = "Pause";
@@ -20,7 +24,10 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {
-            _gameSession = gameSession;
+            _gameSession = gameSession.DeepClone();
+
+            Logger.Debug($"[GameSessionInformation] Refresh game information for turn '{_gameSession.Turn}'.");
+
             this.PerformSafely(RefreshControl);
         }
 
