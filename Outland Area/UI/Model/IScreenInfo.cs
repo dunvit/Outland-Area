@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using Engine.Gui.Model;
 
-namespace Engine.Gui.Model
+namespace Engine.UI.Model
 {
     public interface IScreenInfo
     {
@@ -14,6 +10,8 @@ namespace Engine.Gui.Model
         int Height { get; }
         int DrawInterval { get; set; }
         Point CenterScreenOnMap { get; set; }
+
+        Graphics GraphicSurface { get; set; }
 
         IMapDrawSettings Settings { get; set; }
     }

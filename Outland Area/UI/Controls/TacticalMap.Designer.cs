@@ -46,7 +46,7 @@ namespace Engine.UI.Controls
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(7)))), ((int)(((byte)(7)))));
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.txtTurn);
             this.DoubleBuffered = true;
             this.Name = "TacticalMap";

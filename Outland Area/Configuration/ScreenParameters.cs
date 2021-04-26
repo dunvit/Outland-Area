@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Engine.Gui.Model;
 using Engine.Layers.Tactical;
+using Engine.UI.Model;
 
 namespace Engine.Configuration
 {
@@ -11,6 +12,7 @@ namespace Engine.Configuration
         public int Height { get; }
         public int DrawInterval { get; set; }
         public Point CenterScreenOnMap { get; set; }
+        public Graphics GraphicSurface { get; set; }
         public IMapDrawSettings Settings { get; set; } = new MapSettings();
 
         public ScreenParameters(int width, int height, int centerScreenX = 10000, int centerScreenY = 10000)
