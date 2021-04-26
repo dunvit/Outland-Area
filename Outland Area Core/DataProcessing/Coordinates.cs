@@ -67,18 +67,20 @@ namespace EngineCore.DataProcessing
             return new PointF(x, y);
         }
 
-        public CelestialMap Recalculate(CelestialMap spaceMap)
+        public CelestialMap Recalculate(CelestialMap spaceMap, TurnSettings settings)
         {
             var result = spaceMap.DeepClone();
 
             foreach (var celestialObject in result.CelestialObjects)
             {
+                var speedInTick = celestialObject.Speed / settings.UnitsPerSecond;
+
                 var position = SpaceMapTools.Move(
                     new PointF(celestialObject.PositionX, celestialObject.PositionY),
-                    celestialObject.Speed, 
+                    speedInTick,
                     celestialObject.Direction).PointTo;
 
-                Logger.Debug($"Object {celestialObject.Name} moved from {celestialObject.GetLocation()} to {position}");
+                Logger.Debug($"Object '{celestialObject.Name}' id='{celestialObject.Id}' moved from {celestialObject.GetLocation()} to {position}");
 
                 celestialObject.PreviousPositionX = celestialObject.PositionX;
                 celestialObject.PreviousPositionY = celestialObject.PositionY;
@@ -89,10 +91,6 @@ namespace EngineCore.DataProcessing
 
             return result;
         }
-
-
-
-        
 
         public static bool IsLinearMotion(ObjectLocation currentLocation, PointF targetLocation)
         {

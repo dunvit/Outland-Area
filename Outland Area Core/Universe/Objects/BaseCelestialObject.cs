@@ -18,9 +18,10 @@ namespace EngineCore.Universe.Objects
         public string Name { get; set; }
         public double Direction { get; set; }
         public int Signature { get; set; }
-        public int Speed { get; set; }
+        public float Speed { get; set; }
 
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
+
     }
 }

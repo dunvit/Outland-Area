@@ -8,7 +8,7 @@ namespace EngineCore.Geometry
     public class SpaceMapTools
     {
         #region Move
-        public static SpaceMapVector Move(Vector2 from, int speed, double angle)
+        public static SpaceMapVector Move(Vector2 from, double speed, double angle)
         {
             var angleInRadians = (angle - 90) * (Math.PI) / 180; 
 
@@ -18,7 +18,7 @@ namespace EngineCore.Geometry
             return new SpaceMapVector(new PointF(from.X, from.Y), new PointF(x, y), angle);
         }
 
-        public static SpaceMapVector Move(PointF from, int speed, double angle)
+        public static SpaceMapVector Move(PointF from, double speed, double angle)
         {
             return Move(new Vector2(from.X, from.Y), speed, angle);
         }

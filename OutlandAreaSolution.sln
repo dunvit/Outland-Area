@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaCommon", "Outlan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaLocalServer", "OutlandAreaLocalServer\OutlandAreaLocalServer.csproj", "{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outland Area", "Outland Area\Outland Area.csproj", "{F91DE236-1A13-4692-9755-1B220D66331C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Outland Area", "Outland Area\Outland Area.csproj", "{F91DE236-1A13-4692-9755-1B220D66331C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outland Area Core", "Outland Area Core\Outland Area Core.csproj", "{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Outland Area Core", "Outland Area Core\Outland Area Core.csproj", "{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outland Area Core Tests", "Outland Area CoreTests\Outland Area Core Tests.csproj", "{8924A920-D52E-4C42-8DBC-9345738BCFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8924A920-D52E-4C42-8DBC-9345738BCFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8924A920-D52E-4C42-8DBC-9345738BCFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8924A920-D52E-4C42-8DBC-9345738BCFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8924A920-D52E-4C42-8DBC-9345738BCFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using EngineCore.DataProcessing;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
@@ -10,10 +11,13 @@ namespace EngineCore
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private GameSession _gameSession;
+        private TurnSettings _turnSettings;
 
         public GameSession Initialization(string scenario)
         {
             var stopwatch = Stopwatch.StartNew();
+
+            _turnSettings = new TurnSettings();
 
             _gameSession = ScenarioConvertor.LoadGameSession("Map_OneShip");
 
@@ -46,6 +50,16 @@ namespace EngineCore
             var stopwatch = Stopwatch.StartNew();
 
             _gameSession.Turn++;
+
+            var turnGameSession = _gameSession.DeepClone();
+
+            //-------------------------------------------------------------------------------------------------- Start calculations
+
+            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
+
+            //--------------------------------------------------------------------------------------------------- End calculations
+
+            _gameSession = turnGameSession.DeepClone();
 
             Logger.Debug($"[Server] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
         }

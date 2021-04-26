@@ -10,6 +10,7 @@ namespace EngineCore.Universe.Equipment.Ammunition.Missiles.LightMissiles
     {
         public int AmmoId { get; set; } = 101;
         public new long OwnerId { get; set; }
+
         public float Damage { get; set; } = 30;
         public float ExplosionRadius { get; set; } = 80;
 
