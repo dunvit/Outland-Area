@@ -45,7 +45,7 @@ namespace EngineCore
             isDebug = false;
         }
 
-        private void TurnCalculation()
+        public void TurnCalculation()
         {
             var stopwatch = Stopwatch.StartNew();
 

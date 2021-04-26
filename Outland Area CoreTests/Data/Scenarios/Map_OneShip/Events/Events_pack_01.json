@@ -1,0 +1,18 @@
+{
+  "events": [
+    {
+      "Id": 10,
+      "Scene": 1,
+      "Turn": 1,
+      "Type": 210,
+      "DialogId": 7001,
+      "Generation": [
+        {
+          "SpaceShipClass": 1,
+          "SpaceShipType": 12,
+          "Standing": 50
+        }
+      ]
+    }
+  ]
+}
