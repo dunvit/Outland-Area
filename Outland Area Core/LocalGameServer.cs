@@ -19,7 +19,7 @@ namespace EngineCore
 
             _turnSettings = new TurnSettings();
 
-            _gameSession = ScenarioConvertor.LoadGameSession("Map_OneShip");
+            _gameSession = ScenarioConvertor.LoadGameSession(scenario);
 
             _gameSession.IsPause = true;
 

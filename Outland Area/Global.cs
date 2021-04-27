@@ -27,9 +27,9 @@ namespace Engine
             //Game.Initialization(GameUiManager);
         }
 
-        public static void GenerateGameSession()
+        public static void GenerateGameSession(string scenario)
         {
-            Game.StartNewGameSession();
+            Game.StartNewGameSession(scenario);
         }
 
         private static Settings ReloadApplicationSettings()

@@ -19,7 +19,12 @@ namespace Engine
 
         private void Event_StartNewGameSession(object sender, EventArgs e)
         {
-            Global.GenerateGameSession();
+            Global.GenerateGameSession("Map_OneShip");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Global.GenerateGameSession("TestScenario_1");
         }
     }
 }

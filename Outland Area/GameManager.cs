@@ -48,9 +48,9 @@ namespace Engine
             return UiManager.GetScreen(screenName);
         }
 
-        public void StartNewGameSession()
+        public void StartNewGameSession(string scenario)
         {
-            _gameSession = _gameServer.Initialization("");
+            _gameSession = _gameServer.Initialization(scenario);
 
             UiManager.StartNewGameSession();
 

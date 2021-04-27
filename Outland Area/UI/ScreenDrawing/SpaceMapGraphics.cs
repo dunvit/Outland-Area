@@ -27,7 +27,7 @@ namespace Engine.UI.ScreenDrawing
         {
             var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
 
-            var endArrowPoint = Coordinates.MoveObject(screenCoordinates, currentObject.Speed * 2, currentObject.Direction);
+            var endArrowPoint = Coordinates.MoveObject(screenCoordinates, 12, currentObject.Direction);
 
             DrawArrow(screenInfo.GraphicSurface, new SpaceMapVector(screenCoordinates, endArrowPoint, currentObject.Direction), color, arrowSize);
 

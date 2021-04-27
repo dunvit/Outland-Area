@@ -113,6 +113,8 @@ namespace Engine.UI.Controls
 
             _refreshInProgress = true;
 
+            //UpdateTrajectoryHistory(_gameSession);
+
             Image image = new Bitmap(Width, Height);
 
             var graphics = Graphics.FromImage(image);

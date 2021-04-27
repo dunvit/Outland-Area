@@ -83,12 +83,23 @@ namespace Engine.UI.DrawEngine
                     case CelestialObjectTypes.SpaceshipNpcFriend:
                         break;
                     case CelestialObjectTypes.Asteroid:
+                        DrawAsteroid(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;
                 }
 
             }
+        }
+
+        private static void DrawAsteroid(IScreenInfo screenInfo, ICelestialObject spaceShip)
+        {
+            var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(spaceShip.PositionX, spaceShip.PositionY));
+
+            var color = Color.Gray;
+
+            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            screenInfo.GraphicSurface.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         private static void DrawSpaceship(IScreenInfo screenInfo, ICelestialObject spaceShip)
@@ -145,6 +156,7 @@ namespace Engine.UI.DrawEngine
                         color = Color.SeaGreen;
                         break;
                     case CelestialObjectTypes.Asteroid:
+
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;
