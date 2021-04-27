@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms.VisualStyles;
 using Engine.Configuration;
 using Engine.UI.Model;
@@ -7,6 +10,7 @@ using Engine.UI.ScreenDrawing;
 using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
+using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 
@@ -147,6 +151,29 @@ namespace Engine.UI.DrawEngine
                 }
 
                 SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+            }
+        }
+
+        public static void DrawHistoryTrajectory(IScreenInfo screenInfo, GameSession gameSession, Hashtable history)
+        {
+            foreach (var currentObject in gameSession.SpaceMap.CelestialObjects)
+            {
+                if (!history.ContainsKey(currentObject.Id)) continue;
+
+                var results = ((FixedSizedQueue<PointF>)history[currentObject.Id]).GetData();
+
+                var points = new List<PointF>();
+
+                foreach (var position in results)
+                {
+                    var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, position);
+
+                    points.Add(new PointF(screenCoordinates.X, screenCoordinates.Y));
+                }
+
+                var pen = new Pen(Color.FromArgb(77, 77, 77)){DashStyle = DashStyle.Dot};
+
+                screenInfo.GraphicSurface.DrawCurve(pen, points.ToArray());
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -6,8 +8,11 @@ using System.Windows.Forms;
 using Engine.Configuration;
 using Engine.UI.DrawEngine;
 using Engine.UI.Model;
+using EngineCore.DataProcessing;
+using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Objects;
 using log4net;
 
 namespace Engine.UI.Controls
@@ -20,6 +25,7 @@ namespace Engine.UI.Controls
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
         private bool _refreshInProgress;
+        private Hashtable _history = new Hashtable();
 
         public TacticalMap()
         {
@@ -45,9 +51,58 @@ namespace Engine.UI.Controls
         {
             _gameSession = gameSession.DeepClone();
 
+            UpdateTrajectoryHistory(_gameSession);
+
             Logger.Info($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
 
             RefreshControl();
+        }
+
+        private void UpdateTrajectoryHistory(GameSession gameSession)
+        {
+            var settings = new TurnSettings();
+
+            foreach (var currentObject in gameSession.SpaceMap.CelestialObjects)
+            {
+                if (_history.ContainsKey(currentObject.Id))
+                {
+                    var queueHistoryPoints = (FixedSizedQueue<PointF>)_history[currentObject.Id];
+                    queueHistoryPoints.Enqueue(currentObject.GetLocation());
+                    _history[currentObject.Id] = queueHistoryPoints;
+                }
+                else
+                {
+                    var celestialObjectTrajectoryHistory = new FixedSizedQueue<PointF>(settings.UnitsPerSecond * settings.HistoryPeriodInSeconds);
+
+                    var reverseDirection = (currentObject.Direction - 180).To360Degrees();
+
+                    var speedInTick = currentObject.Speed / settings.UnitsPerSecond;
+
+                    var previousPosition = currentObject.GetLocation();
+
+                    var positionsReverse = new List<PointF>();
+
+                    for (int i = 0; i < settings.UnitsPerSecond * settings.HistoryPeriodInSeconds; i++)
+                    {
+                        var position = SpaceMapTools.Move(
+                            previousPosition,
+                            speedInTick,
+                            reverseDirection
+                            ).PointTo;
+
+                        previousPosition = new PointF(position.X, position.Y);
+
+                        positionsReverse.Add(position);
+                    }
+
+                    for (var i = positionsReverse.Count - 1; i > 0; i--)
+                    {
+                        celestialObjectTrajectoryHistory.Enqueue(positionsReverse[i]);
+                    }
+
+                    _history.Add(currentObject.Id, celestialObjectTrajectoryHistory);
+                }
+            }
         }
 
         private void RefreshControl()
@@ -94,6 +149,8 @@ namespace Engine.UI.Controls
             DrawTacticalMap.DrawCelestialObjects(screenParameters, gameSession);
 
             DrawTacticalMap.DrawDirections(screenParameters, gameSession);
+
+            DrawTacticalMap.DrawHistoryTrajectory(screenParameters, gameSession, _history);
         }
     }
 }
