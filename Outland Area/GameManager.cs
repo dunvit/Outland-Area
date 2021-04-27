@@ -20,6 +20,7 @@ namespace Engine
         public UiManager UiManager { get; set; }
 
         public event Action<GameSession> OnEndTurn;
+        public event Action<GameSession> OnStartGameSession;
 
         public GameManager()
         {
@@ -56,7 +57,7 @@ namespace Engine
             //_gameSession = Initialization();
 
             //OnBattleInitialization?.Invoke(_gameSession.DeepClone());
-            OnEndTurn?.Invoke(_gameSession.DeepClone());
+            OnStartGameSession?.Invoke(_gameSession.DeepClone());
 
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
 

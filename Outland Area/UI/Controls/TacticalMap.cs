@@ -4,8 +4,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using Engine.Configuration;
-using Engine.Tools;
 using Engine.UI.DrawEngine;
+using Engine.UI.Model;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
@@ -19,16 +19,27 @@ namespace Engine.UI.Controls
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
+        private bool _refreshInProgress;
 
         public TacticalMap()
         {
             InitializeComponent();
 
-            if (Global.Game != null)
-                Global.Game.OnEndTurn += Event_EndTurn;
+            if (Global.Game is null) return;
 
-            
+            Global.Game.OnEndTurn += Event_EndTurn;
+            Global.Game.OnStartGameSession += Event_StartGameSession;
         }
+
+        private void Event_StartGameSession(GameSession gameSession)
+        {
+            _gameSession = gameSession.DeepClone();
+
+            Logger.Info($"[TacticalMap] Start game session for id '{_gameSession.Id}'.");
+
+            RefreshControl();
+        }
+
 
         private void Event_EndTurn(GameSession gameSession)
         {
@@ -36,14 +47,16 @@ namespace Engine.UI.Controls
 
             Logger.Info($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
 
-            this.PerformSafely(RefreshControl);
+            RefreshControl();
         }
 
         private void RefreshControl()
         {
+            if (_refreshInProgress) return;
+
             var timeDrawScreen = Stopwatch.StartNew();
 
-            txtTurn.Text = _gameSession.Turn + "";
+            _refreshInProgress = true;
 
             Image image = new Bitmap(Width, Height);
 
@@ -60,17 +73,27 @@ namespace Engine.UI.Controls
                     GraphicSurface = graphics
                 };
 
-            //------------------------------------------------------------------------------------------------------ Start Drawing
-            
-            DrawTacticalMap.DrawBackGround(_screenParameters);
+            DrawTacticalMapScreen(_screenParameters, _gameSession);
 
-            DrawTacticalMap.DrawGrid(_screenParameters);
+            BackgroundImage = image; 
 
-            //------------------------------------------------------------------------------------------------------ Finish Drawing
+            _refreshInProgress = false;
 
-            BackgroundImage = image;
+            Logger.Info($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+        }
 
-            Logger.Info($"[TacticalMap] Refresh control was successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+
+
+        private void DrawTacticalMapScreen(IScreenInfo screenParameters, GameSession gameSession)
+        {
+            // TODO: - Draw back ground only once
+            DrawTacticalMap.DrawBackGround(screenParameters);
+
+            DrawTacticalMap.DrawGrid(screenParameters);
+
+            DrawTacticalMap.DrawCelestialObjects(screenParameters, gameSession);
+
+            DrawTacticalMap.DrawDirections(screenParameters, gameSession);
         }
     }
 }

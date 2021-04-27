@@ -13,7 +13,7 @@ namespace EngineCore.DataProcessing
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static PointF MoveObject(PointF currentLocation, int speed, double angleInGraduses)
+        public static PointF MoveObject(PointF currentLocation, double speed, double angleInGraduses)
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 

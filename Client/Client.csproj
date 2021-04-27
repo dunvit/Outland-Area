@@ -212,6 +212,12 @@
     <Compile Include="Gui\Model\IBoardInfo.cs" />
     <Compile Include="Gui\Model\IMapDrawSettings.cs" />
     <Compile Include="Gui\Model\IScreenInfo.cs" />
+    <Compile Include="Gui\Prototype\ModulePreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Prototype\ModulePreview.Designer.cs">
+      <DependentUpon>ModulePreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Prototype\ModuleReactor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -382,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\TacticalMap.resx">
       <DependentUpon>TacticalMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Prototype\ModulePreview.resx">
+      <DependentUpon>ModulePreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Prototype\ModuleReactor.resx">
       <DependentUpon>ModuleReactor.cs</DependentUpon>
