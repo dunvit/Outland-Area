@@ -22,5 +22,8 @@ namespace EngineCore.Universe.Equipment
         /// Fitting - Slot position
         /// </summary>
         public int Slot { get; set; }
+
+        public double ReloadTime { get; set; }
+        public double Reloading { get; set; }
     }
 }

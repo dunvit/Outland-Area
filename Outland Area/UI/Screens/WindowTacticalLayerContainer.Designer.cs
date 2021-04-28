@@ -30,14 +30,21 @@ namespace Engine.UI.Screens
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.crlCommandsContainer = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.gameSessionInformation1 = new Engine.UI.Controls.GameSessionInformation();
             this.crlTacticalMap = new Engine.UI.Controls.TacticalMap();
             this.panel1.SuspendLayout();
+            this.crlCommandsContainer.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.crlCommandsContainer);
             this.panel1.Controls.Add(this.gameSessionInformation1);
             this.panel1.Controls.Add(this.crlTacticalMap);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -45,6 +52,47 @@ namespace Engine.UI.Screens
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
+            // 
+            // crlCommandsContainer
+            // 
+            this.crlCommandsContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(7)))), ((int)(((byte)(7)))));
+            this.crlCommandsContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crlCommandsContainer.Controls.Add(this.panel3);
+            this.crlCommandsContainer.Location = new System.Drawing.Point(11, 181);
+            this.crlCommandsContainer.Name = "crlCommandsContainer";
+            this.crlCommandsContainer.Size = new System.Drawing.Size(246, 168);
+            this.crlCommandsContainer.TabIndex = 2;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Black;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(244, 26);
+            this.panel3.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(226, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(11, 16);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "x";
+            // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.Color.DarkGray;
+            this.label2.Location = new System.Drawing.Point(3, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(165, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Commands";
             // 
             // gameSessionInformation1
             // 
@@ -76,6 +124,8 @@ namespace Engine.UI.Screens
             this.Text = "WindowTacticalLayerContainer";
             this.Load += new System.EventHandler(this.Event_LoadTacticalLayer);
             this.panel1.ResumeLayout(false);
+            this.crlCommandsContainer.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -85,5 +135,9 @@ namespace Engine.UI.Screens
         private System.Windows.Forms.Panel panel1;
         private Controls.GameSessionInformation gameSessionInformation1;
         private Controls.TacticalMap crlTacticalMap;
+        private System.Windows.Forms.Panel crlCommandsContainer;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

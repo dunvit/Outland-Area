@@ -21,6 +21,7 @@ namespace Engine
 
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnStartGameSession;
+        public event Action<GameSession> OnInitializationFinish;
 
         public GameManager()
         {
@@ -100,6 +101,11 @@ namespace Engine
         public void SessionPause()
         {
             _gameServer.PauseSession(_gameSession.Id);
+        }
+
+        public void InitializationFinish()
+        {
+            OnInitializationFinish?.Invoke(_gameSession);
         }
     }
 }

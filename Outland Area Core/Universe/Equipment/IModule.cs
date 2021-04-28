@@ -17,5 +17,8 @@
         /// Fitting - Slot position
         /// </summary>
         int Slot { get; set; }
+
+        double ReloadTime { get; set; }
+        double Reloading { get; set; }
     }
 }
