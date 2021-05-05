@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using EngineCore.Session;
-using EngineCore.Tools;
 using EngineCore.Universe.Objects;
 
 namespace Engine.UI.Controls
@@ -40,12 +34,16 @@ namespace Engine.UI.Controls
 
             foreach (var module in spaceShip.Modules)
             {
-                if (module.Id == Id)
-                {
-                    crlModuleName.Text = module.Name;
-                    return;
-                }
+                if (module.Id != Id) continue;
+
+                crlModuleName.Text = module.Name;
+                return;
             }
+        }
+
+        private void Event_ModuleActivate(object sender, EventArgs e)
+        {
+            Global.Game.EventActivateModule(Id);
         }
     }
 }

@@ -22,7 +22,14 @@ namespace Engine.UI.Screens
             if (Global.Game is null) return;
 
             Global.Game.OnEndTurn += Event_EndTurn;
+            Global.Game.OnSelectModule += Event_SelectModule;
             Global.Game.OnStartGameSession += Event_StartGameSession;
+        }
+
+        private void Event_SelectModule(int moduleId)
+        {
+            crlModule.Initialization(moduleId);
+            crlModule.Visible = true;
         }
 
         private void Event_EndTurn(GameSession gameSession)
@@ -60,6 +67,8 @@ namespace Engine.UI.Screens
             }
 
             crlCommandsContainer.Height = countModulesPreview * 100 + 50;
+
+            crlModule.Location = new Point((Width / 2) - (crlModule.Width / 2), Height - crlModule.Height - 20);
         }
         
 

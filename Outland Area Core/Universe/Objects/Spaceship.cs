@@ -83,5 +83,10 @@ namespace EngineCore.Universe.Objects
         }
 
         public List<IModule> Modules { get; set; } = new List<IModule>();
+
+        public IModule GetModule(int moduleId)
+        {
+            return Modules.FirstOrDefault(module => module.Id == moduleId);
+        }
     }
 }

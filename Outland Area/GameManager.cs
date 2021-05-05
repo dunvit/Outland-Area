@@ -2,12 +2,10 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using Engine.UI;
-using Engine.UI.Screens;
 using EngineCore;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
-using log4net.Repository.Hierarchy;
 
 namespace Engine
 {
@@ -21,6 +19,7 @@ namespace Engine
 
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnStartGameSession;
+        public event Action<int> OnSelectModule;
         public event Action<GameSession> OnInitializationFinish;
 
         public GameManager()
@@ -106,6 +105,11 @@ namespace Engine
         public void InitializationFinish()
         {
             OnInitializationFinish?.Invoke(_gameSession);
+        }
+
+        public void EventActivateModule(int id)
+        {
+            OnSelectModule?.Invoke(id);
         }
     }
 }

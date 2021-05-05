@@ -36,6 +36,7 @@ namespace Engine.UI.Screens
             this.label2 = new System.Windows.Forms.Label();
             this.gameSessionInformation1 = new Engine.UI.Controls.GameSessionInformation();
             this.crlTacticalMap = new Engine.UI.Controls.TacticalMap();
+            this.crlModule = new Engine.UI.Controls.Module();
             this.panel1.SuspendLayout();
             this.crlCommandsContainer.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -44,13 +45,14 @@ namespace Engine.UI.Screens
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.crlModule);
             this.panel1.Controls.Add(this.crlCommandsContainer);
             this.panel1.Controls.Add(this.gameSessionInformation1);
             this.panel1.Controls.Add(this.crlTacticalMap);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 450);
+            this.panel1.Size = new System.Drawing.Size(1215, 734);
             this.panel1.TabIndex = 0;
             // 
             // crlCommandsContainer
@@ -111,12 +113,22 @@ namespace Engine.UI.Screens
             this.crlTacticalMap.TabIndex = 1;
             this.crlTacticalMap.Load += new System.EventHandler(this.crlTacticalMap_Load);
             // 
+            // crlModule
+            // 
+            this.crlModule.BackColor = System.Drawing.Color.Black;
+            this.crlModule.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crlModule.Location = new System.Drawing.Point(443, 602);
+            this.crlModule.Name = "crlModule";
+            this.crlModule.Size = new System.Drawing.Size(277, 100);
+            this.crlModule.TabIndex = 3;
+            this.crlModule.Visible = false;
+            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1215, 734);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -139,5 +151,6 @@ namespace Engine.UI.Screens
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private Controls.Module crlModule;
     }
 }

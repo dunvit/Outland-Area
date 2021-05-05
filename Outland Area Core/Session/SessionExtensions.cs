@@ -15,13 +15,13 @@ namespace EngineCore.Session
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static ICelestialObject GetPlayerSpaceShip(this GameSession session)
+        public static Spaceship GetPlayerSpaceShip(this GameSession session)
         {
             foreach (var celestialObject in session.SpaceMap.CelestialObjects)
             {
                 if (celestialObject.Classification == 200)
                 {
-                    return celestialObject.DeepClone();
+                    return celestialObject.DeepClone().ToSpaceship();
                 }
             }
 
