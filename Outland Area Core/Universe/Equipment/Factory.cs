@@ -21,7 +21,9 @@ namespace EngineCore.Universe.Equipment
                         Id = RandomGenerator.GetId(),
                         OwnerId = ownerId,
                         ActivationCost = 100, 
-                        Power = 2000, 
+                        Power = 2000,
+                        ReloadTime = 1,
+                        Reloading = 1,
                         Category = Category.Propulsion, 
                         Name = "Civilian Prototype Mk I"};
                     break;
@@ -88,6 +90,8 @@ namespace EngineCore.Universe.Equipment
                     {
                         ActivationCost = 100,
                         Power = 2000,
+                        ReloadTime = 1,
+                        Reloading = 1,
                         Category = Category.Reactor,
                         Name = "Reactor Mk I"
                     };
@@ -116,6 +120,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 200,
+                        ReloadTime = 1,
+                        Reloading = 1,
                         Category = Category.Shield,
                         Name = "Shield Mk I"
                     };
@@ -128,6 +134,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 110,
                         Power = 250,
+                        ReloadTime = 1,
+                        Reloading = 1,
                         Category = Category.Shield,
                         Name = "Shield Mk II"
                     };

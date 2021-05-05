@@ -36,6 +36,9 @@ namespace Engine.UI.Controls
             var module = gameSession.GetPlayerSpaceShip().GetModule(_moduleId);
 
             crlModuleName.Text = module.Name;
+
+            crlReloading.Maximum = (int) module.ReloadTime;
+            crlReloading.CurrentValue = (int) module.Reloading;
         }
 
         private void Event_CloseModule(object sender, EventArgs e)
