@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -35,6 +36,12 @@ namespace Engine.UI.Controls
 
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnStartGameSession += Event_StartGameSession;
+            Global.Game.OnInitializationFinish += Event_Initialization;
+        }
+
+        private void Event_Initialization(GameSession gameSession)
+        {
+            Global.Game.SessionResume();
         }
 
         private void Event_StartGameSession(GameSession gameSession)
@@ -49,6 +56,7 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {
+            
             _gameSession = gameSession.DeepClone();
 
             UpdateTrajectoryHistory(_gameSession);
@@ -100,7 +108,26 @@ namespace Engine.UI.Controls
                         celestialObjectTrajectoryHistory.Enqueue(positionsReverse[i]);
                     }
 
-                    _history.Add(currentObject.Id, celestialObjectTrajectoryHistory);
+                    try
+                    {
+                        _history.Add(currentObject.Id, celestialObjectTrajectoryHistory);
+                    }
+                    catch 
+                    {
+                        try
+                        {
+                            var queueHistoryPoints = (FixedSizedQueue<PointF>)_history[currentObject.Id];
+                            queueHistoryPoints.Enqueue(currentObject.GetLocation());
+                            _history[currentObject.Id] = queueHistoryPoints;
+                        }
+                        catch 
+                        {
+                            Logger.Error($"[TacticalMap] Error on refresh space map for turn '{_gameSession.Turn}' " +
+                                $"and object id '{currentObject.Id}' name '{currentObject.Name}'.");
+                        }
+                    }
+
+                    
                 }
             }
         }

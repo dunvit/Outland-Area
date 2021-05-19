@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using Engine.Tools;
 using EngineCore.Session;
-using EngineCore.Universe.Objects;
 
 namespace Engine.UI.Controls
 {
@@ -20,25 +20,23 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {
-            RefreshControl(gameSession);
+            // TODO: Open after redesign control (cross-thread problem) 
+            //RefreshControl(gameSession);
         }
 
         private void Event_Initialization(GameSession gameSession)
         {
-            RefreshControl(gameSession);
+            this.PerformSafely(RefreshControl, gameSession);
         }
 
         private void RefreshControl(GameSession gameSession)
         {
-            var spaceShip = gameSession.GetPlayerSpaceShip().ToSpaceship();
+            var module = gameSession.GetPlayerSpaceShip().GetModule(Id);
 
-            foreach (var module in spaceShip.Modules)
-            {
-                if (module.Id != Id) continue;
+            crlModuleName.Text = module.Name;
 
-                crlModuleName.Text = module.Name;
-                return;
-            }
+            crlModuleReload.Maximum = (int)module.ReloadTime;
+            crlModuleReload.CurrentValue = (int)module.Reloading;
         }
 
         private void Event_ModuleActivate(object sender, EventArgs e)

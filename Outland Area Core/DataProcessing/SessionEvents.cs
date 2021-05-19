@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Reflection;
+using EngineCore.Events;
+using EngineCore.Scenario;
+using EngineCore.Session;
+using EngineCore.Tools;
 using log4net;
-using OutlandAreaCommon;
-using OutlandAreaCommon.Tactical;
-using OutlandAreaCommon.Tactical.Scenario;
 
-namespace OutlandAreaLocalServer.CommandsExecute
+namespace EngineCore.DataProcessing
 {
     public class SessionEvents
     {
@@ -40,17 +41,15 @@ namespace OutlandAreaLocalServer.CommandsExecute
                         break;
                     case GameEventTypes.NpcSpaceShipFound:
                         newGameEvent.Type = GameEventTypes.NpcSpaceShipFound;
-                        newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip) scenarioEvent).DialogId;
+                        newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).DialogId;
                         newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
-                        //var npcSpaceShip = Fury.Generate(gameSession);
-                        //gameSession.SpaceMap.CelestialObjects.Add(npcSpaceShip);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
                 newGameEvent.Turn = gameSession.Turn + 1;
-                
+
                 newGameEvent.IsPause = true;
                 newGameEvent.IsOpenWindow = true;
 

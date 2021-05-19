@@ -57,6 +57,10 @@ namespace EngineCore
 
             turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
 
+            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession);
+
+            turnGameSession = new SessionEvents().Execute(turnGameSession);
+
             //--------------------------------------------------------------------------------------------------- End calculations
 
             _gameSession = turnGameSession.DeepClone();

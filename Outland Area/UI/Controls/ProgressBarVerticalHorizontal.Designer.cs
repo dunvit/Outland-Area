@@ -36,10 +36,10 @@ namespace Engine.UI.Controls
             // crlFilledSurface
             // 
             this.crlFilledSurface.BackColor = System.Drawing.Color.BurlyWood;
-            this.crlFilledSurface.Dock = System.Windows.Forms.DockStyle.Left;
-            this.crlFilledSurface.Location = new System.Drawing.Point(0, 0);
+            this.crlFilledSurface.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.crlFilledSurface.Location = new System.Drawing.Point(0, 38);
             this.crlFilledSurface.Name = "crlFilledSurface";
-            this.crlFilledSurface.Size = new System.Drawing.Size(53, 21);
+            this.crlFilledSurface.Size = new System.Drawing.Size(8, 78);
             this.crlFilledSurface.TabIndex = 1;
             this.crlFilledSurface.TabStop = false;
             // 

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Engine.UI;
 using EngineCore;
+using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
@@ -21,6 +23,9 @@ namespace Engine
         public event Action<GameSession> OnStartGameSession;
         public event Action<int> OnSelectModule;
         public event Action<GameSession> OnInitializationFinish;
+        public event Action<GameEvent, GameSession> OnFoundSpaceship;
+
+        public List<string> AcceptedEvents = new List<string>();
 
         public GameManager()
         {
@@ -61,7 +66,7 @@ namespace Engine
 
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
 
-            _gameServer.ResumeSession(_gameSession.Id);
+            //_gameServer.ResumeSession(_gameSession.Id);
         }
 
         private void GetDataFromServer()
@@ -73,6 +78,47 @@ namespace Engine
             if (gameSession != null)
             {
                 _gameSession = gameSession;
+
+                var turnEvents = gameSession.GetCurrentTurnEvents();
+
+                Logger.Info($"Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
+
+                if(turnEvents.Count > 0)
+                {
+                    var a = "";
+                }
+
+                foreach (var message in turnEvents)
+                {
+                    if (AcceptedEvents.Contains(message.Id))
+                    {
+                        Logger.Info($"Event ({message.Id}) already exist in cach.");
+                        continue;
+                    }
+
+                    Logger.Info($"Event ({message.Id}) addad to cach.");
+                    AcceptedEvents.Add(message.Id);
+
+                    if (message.IsPause) SessionPause();
+
+                    if (message.Type == GameEventTypes.AnomalyFound)
+                    {
+                        //OnAnomalyFound?.Invoke(message, gameSession);
+                    }
+
+                    if (message.Type == GameEventTypes.OpenDialog)
+                    {
+                        //OnOpenDialog?.Invoke(message, gameSession);
+                    }
+
+                    // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
+                    if (message.Type == GameEventTypes.NpcSpaceShipFound)
+                    {
+                        OnFoundSpaceship?.Invoke(message, gameSession);
+                    }
+
+                    
+                }
 
                 OnEndTurn?.Invoke(_gameSession.DeepClone());
             }
@@ -94,11 +140,13 @@ namespace Engine
 
         public void SessionResume()
         {
+            Logger.Info($"Game resumed. Turn is {_gameSession.Turn}");
             _gameServer.ResumeSession(_gameSession.Id);
         }
 
         public void SessionPause()
         {
+            Logger.Info($"Game paused. Turn is {_gameSession.Turn}");
             _gameServer.PauseSession(_gameSession.Id);
         }
 

@@ -42,6 +42,11 @@ namespace EngineCore.Tools
             return RandomString(6) + "-" + RandomNumber(4) + "-" + RandomNumber(4);
         }
 
+        public static string GenerateGameEventId()
+        {
+            return RandomString(3) + "-" + RandomNumber(12) + "-" + RandomNumber(4);
+        }
+
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

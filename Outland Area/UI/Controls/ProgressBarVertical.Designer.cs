@@ -35,7 +35,7 @@ namespace Engine.UI.Controls
             // 
             // crlFilledSurface
             // 
-            this.crlFilledSurface.BackColor = System.Drawing.Color.BurlyWood;
+            this.crlFilledSurface.BackColor = System.Drawing.Color.Beige;
             this.crlFilledSurface.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.crlFilledSurface.Location = new System.Drawing.Point(0, 38);
             this.crlFilledSurface.Name = "crlFilledSurface";

@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{70287100-0A5A-4F86-B56A-6D58CB30B01E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaCommon", "OutlandAreaCommon\OutlandAreaCommon.csproj", "{EC750C9B-68C5-40D6-8B98-5058EF786DA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaLocalServer", "OutlandAreaLocalServer\OutlandAreaLocalServer.csproj", "{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}"
@@ -15,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Outland Area", "Outland Are
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Outland Area Core", "Outland Area Core\Outland Area Core.csproj", "{55645712-7539-4CAF-8CD9-9F60C8A7CE0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outland Area Core Tests", "Outland Area CoreTests\Outland Area Core Tests.csproj", "{8924A920-D52E-4C42-8DBC-9345738BCFAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Outland Area Core Tests", "Outland Area CoreTests\Outland Area Core Tests.csproj", "{8924A920-D52E-4C42-8DBC-9345738BCFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70287100-0A5A-4F86-B56A-6D58CB30B01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70287100-0A5A-4F86-B56A-6D58CB30B01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70287100-0A5A-4F86-B56A-6D58CB30B01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70287100-0A5A-4F86-B56A-6D58CB30B01E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29592FA3-7F7E-4BA8-AD8D-BD656BBCC520}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU

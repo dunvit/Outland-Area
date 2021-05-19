@@ -6,6 +6,8 @@ namespace EngineCore.Events
     [Serializable]
     public class GameEvent
     {
+        public string Id { get; set; } = Tools.RandomGenerator.GenerateGameEventId();
+
         public GameEventTypes Type { get; set; }
 
         public int Turn { get; set; }

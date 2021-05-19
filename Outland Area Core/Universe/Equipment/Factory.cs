@@ -10,6 +10,8 @@ namespace EngineCore.Universe.Equipment
 {
     public class Factory
     {
+        const int ticksInSecond = 10;
+
         public static IModule CreateMicroWarpDrive(int ownerId, string id)
         {
             IModule resultModule = null;
@@ -22,8 +24,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100, 
                         Power = 2000,
-                        ReloadTime = 1,
-                        Reloading = 1,
+                        ReloadTime = 1 * ticksInSecond,
+                        Reloading = 1 * ticksInSecond,
                         Category = Category.Propulsion, 
                         Name = "Civilian Prototype Mk I"};
                     break;
@@ -44,8 +46,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Category = Category.Weapon,
-                        ReloadTime = 12,
-                        Reloading = 12,
+                        ReloadTime = 12 * ticksInSecond,
+                        Reloading = 12 * ticksInSecond,
                         AmmoId = 101,
                         Name = "Light Missile Launcher I"
                     };
@@ -68,8 +70,8 @@ namespace EngineCore.Universe.Equipment
                         ScanRange = 300,
                         Power = 60,
                         ActivationCost = 70,
-                        ReloadTime = 25,
-                        Reloading = 25,
+                        ReloadTime = 25 * ticksInSecond,
+                        Reloading = 25 * ticksInSecond,
                         Name = "DeepScanner Mk I"
                     };
                     break;
@@ -80,8 +82,8 @@ namespace EngineCore.Universe.Equipment
                         ScanRange = 2000,
                         Power = 55,
                         ActivationCost = 10,
-                        ReloadTime = 5,
-                        Reloading = 5,
+                        ReloadTime = 5 * ticksInSecond,
+                        Reloading = 5 * ticksInSecond,
                         Name = "SpaceScanner Mk I"
                     };
                     break;
@@ -90,8 +92,8 @@ namespace EngineCore.Universe.Equipment
                     {
                         ActivationCost = 100,
                         Power = 2000,
-                        ReloadTime = 1,
-                        Reloading = 1,
+                        ReloadTime = 1 * ticksInSecond,
+                        Reloading = 1 * ticksInSecond,
                         Category = Category.Reactor,
                         Name = "Reactor Mk I"
                     };
@@ -120,8 +122,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Power = 200,
-                        ReloadTime = 1,
-                        Reloading = 1,
+                        ReloadTime = 1 * ticksInSecond,
+                        Reloading = 1 * ticksInSecond,
                         Category = Category.Shield,
                         Name = "Shield Mk I"
                     };
@@ -134,8 +136,8 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 110,
                         Power = 250,
-                        ReloadTime = 1,
-                        Reloading = 1,
+                        ReloadTime = 1 * ticksInSecond,
+                        Reloading = 1 * ticksInSecond,
                         Category = Category.Shield,
                         Name = "Shield Mk II"
                     };

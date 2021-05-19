@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using EngineCore.Events;
 using EngineCore.Scenario;
 using EngineCore.Universe.Model;
 using log4net;
@@ -32,38 +34,40 @@ namespace EngineCore.Session
 
         public List<IScenarioEvent> ScenarioEvents { get; set; }
 
-        //public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
+        public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
         public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
+
+
 
         //public Hashtable History { get; set; } = new Hashtable();
 
         //public ICelestialObject SelectedObject { get; set; }
 
-        //public void AddEvent(GameEvent gameEvent)
-        //{
-        //    gameEvent.Turn = Turn + 1;
+        public void AddEvent(GameEvent gameEvent)
+        {
+            gameEvent.Turn = Turn + 1;
 
-        //    Logger.Info(TraceMessage.Execute(this, $"Add event.Turn = {gameEvent.Turn} Turn = {Turn}"));
+            Logger.Info($"Add event.Turn = {gameEvent.Turn} Turn = {Turn}");
 
-        //    GameEvents.Add(gameEvent);
-        //}
+            GameEvents.Add(gameEvent);
+        }
 
-        //public List<GameEvent> GetTurnEvents(int turn)
-        //{
-        //    return GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
-        //}
+        public List<GameEvent> GetTurnEvents(int turn)
+        {
+            return GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
+        }
 
-        //public List<GameEvent> GetCurrentTurnEvents()
-        //{
-        //    return GameEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
-        //}
+        public List<GameEvent> GetCurrentTurnEvents()
+        {
+            return GameEvents.Where(_ => _.Turn + 5 > Turn).Map(message => message).ToList();
+        }
 
 
-        //public List<IScenarioEvent> GetScenarioEvents()
-        //{
-        //    return ScenarioEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
-        //}
+        public List<IScenarioEvent> GetScenarioEvents()
+        {
+            return ScenarioEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
+        }
 
         //public Character GetCharacter(long id)
         //{
