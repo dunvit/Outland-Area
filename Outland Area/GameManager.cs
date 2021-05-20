@@ -23,7 +23,6 @@ namespace Engine
         public event Action<GameSession> OnStartGameSession;
         public event Action<int> OnSelectModule;
         public event Action<GameSession> OnInitializationFinish;
-        public event Action<GameEvent, GameSession> OnFoundSpaceship;
 
         public List<string> AcceptedEvents = new List<string>();
 
@@ -42,10 +41,6 @@ namespace Engine
                     _gameServer = new LocalGameServer();
                     break;
             }
-
-            
-
-            
         }
 
         public Form ShowScreen(string screenName)
@@ -57,16 +52,11 @@ namespace Engine
         {
             _gameSession = _gameServer.Initialization(scenario);
 
-            UiManager.StartNewGameSession();
+            UiManager.UiInitialization();
 
-            //_gameSession = Initialization();
-
-            //OnBattleInitialization?.Invoke(_gameSession.DeepClone());
             OnStartGameSession?.Invoke(_gameSession.DeepClone());
 
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
-
-            //_gameServer.ResumeSession(_gameSession.Id);
         }
 
         private void GetDataFromServer()
@@ -75,28 +65,29 @@ namespace Engine
 
             var gameSession = _gameServer.RefreshGameSession(_gameSession.Id);
 
+            if(gameSession.IsPause)
+            {
+                Logger.Debug($"Pause game. Turn is ({gameSession.Turn}).");
+                return;
+            }
+
             if (gameSession != null)
             {
                 _gameSession = gameSession;
 
                 var turnEvents = gameSession.GetCurrentTurnEvents();
 
-                Logger.Info($"Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
-
-                if(turnEvents.Count > 0)
-                {
-                    var a = "";
-                }
+                Logger.Debug($"Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
 
                 foreach (var message in turnEvents)
                 {
                     if (AcceptedEvents.Contains(message.Id))
                     {
-                        Logger.Info($"Event ({message.Id}) already exist in cach.");
+                        Logger.Debug($"Event ({message.Id}) already exist in cach.");
                         continue;
                     }
 
-                    Logger.Info($"Event ({message.Id}) addad to cach.");
+                    Logger.Debug($"Event ({message.Id}) addad to cach.");
                     AcceptedEvents.Add(message.Id);
 
                     if (message.IsPause) SessionPause();
@@ -114,7 +105,8 @@ namespace Engine
                     // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
                     if (message.Type == GameEventTypes.NpcSpaceShipFound)
                     {
-                        OnFoundSpaceship?.Invoke(message, gameSession);
+                        //OnFoundSpaceship?.Invoke(message, gameSession);
+                        //UiManager.OpenGameEventScreen(message, gameSession);
                     }
 
                     
@@ -130,12 +122,7 @@ namespace Engine
 
             timeMetricGetGameSession.Stop();
 
-            Logger.Debug($"Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
-
-            //Logger.Debug($"GetInteger game session parsing finished for {timeMetricGetGameSession.Elapsed.TotalMilliseconds}. " +
-            //             $"Game session id = {_gameSession.Id}." +
-            //             $" Turn = {_gameSession.Turn}." +
-            //             $" SpaceMap objects count is {_gameSession.SpaceMap.CelestialObjects.Count}.");
+            Logger.Info($"Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
         }
 
         public void SessionResume()
@@ -152,7 +139,10 @@ namespace Engine
 
         public void InitializationFinish()
         {
+            UiManager.StartNewGameSession();
             OnInitializationFinish?.Invoke(_gameSession);
+
+            SessionResume();
         }
 
         public void EventActivateModule(int id)

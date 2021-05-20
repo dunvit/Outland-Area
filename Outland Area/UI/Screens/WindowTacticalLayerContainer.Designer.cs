@@ -111,7 +111,6 @@ namespace Engine.UI.Screens
             this.crlTacticalMap.Name = "crlTacticalMap";
             this.crlTacticalMap.Size = new System.Drawing.Size(274, 247);
             this.crlTacticalMap.TabIndex = 1;
-            this.crlTacticalMap.Load += new System.EventHandler(this.crlTacticalMap_Load);
             // 
             // crlModule
             // 
@@ -134,7 +133,6 @@ namespace Engine.UI.Screens
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "WindowTacticalLayerContainer";
             this.Text = "WindowTacticalLayerContainer";
-            this.Load += new System.EventHandler(this.Event_LoadTacticalLayer);
             this.panel1.ResumeLayout(false);
             this.crlCommandsContainer.ResumeLayout(false);
             this.panel3.ResumeLayout(false);

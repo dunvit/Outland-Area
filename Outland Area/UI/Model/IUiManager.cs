@@ -7,6 +7,8 @@ namespace Engine.UI.Model
     {
         void StartNewGameSession();
 
+        void UiInitialization();
+
         void Initialization();
 
     }

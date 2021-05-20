@@ -41,14 +41,27 @@ namespace Engine.UI.Controls
 
         private void Event_Initialization(GameSession gameSession)
         {
-            Global.Game.SessionResume();
+            _gameSession = gameSession.DeepClone();
+
+            Logger.Info($"[TacticalMap.Event_Initialization] Start game session for id '{_gameSession.Id}'.");
+
+            RefreshControl();
+        }
+
+        internal void Refresh(GameSession gameSession)
+        {
+            _gameSession = gameSession.DeepClone();
+
+            Logger.Info($"[TacticalMap.Refresh] Start game session for id '{_gameSession.Id}'.");
+
+            RefreshControl();
         }
 
         private void Event_StartGameSession(GameSession gameSession)
         {
             _gameSession = gameSession.DeepClone();
 
-            Logger.Info($"[TacticalMap] Start game session for id '{_gameSession.Id}'.");
+            Logger.Info($"[TacticalMap.Event_StartGameSession] Start game session for id '{_gameSession.Id}'.");
 
             RefreshControl();
         }
