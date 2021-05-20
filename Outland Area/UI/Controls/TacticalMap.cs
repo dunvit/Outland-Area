@@ -36,27 +36,8 @@ namespace Engine.UI.Controls
 
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnStartGameSession += Event_StartGameSession;
-            Global.Game.OnInitializationFinish += Event_Initialization;
         }
-
-        private void Event_Initialization(GameSession gameSession)
-        {
-            _gameSession = gameSession.DeepClone();
-
-            Logger.Info($"[TacticalMap.Event_Initialization] Start game session for id '{_gameSession.Id}'.");
-
-            RefreshControl();
-        }
-
-        internal void Refresh(GameSession gameSession)
-        {
-            _gameSession = gameSession.DeepClone();
-
-            Logger.Info($"[TacticalMap.Refresh] Start game session for id '{_gameSession.Id}'.");
-
-            RefreshControl();
-        }
-
+        
         private void Event_StartGameSession(GameSession gameSession)
         {
             _gameSession = gameSession.DeepClone();
@@ -65,7 +46,6 @@ namespace Engine.UI.Controls
 
             RefreshControl();
         }
-
 
         private void Event_EndTurn(GameSession gameSession)
         {

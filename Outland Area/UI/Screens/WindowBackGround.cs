@@ -11,6 +11,7 @@ namespace Engine.UI.Screens
 
             BackColor = Color.Black;
 
+            this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
             this.WindowState = FormWindowState.Normal;
             this.ShowIcon = false;

@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using EngineCore;
+﻿using EngineCore.Session;
 
 namespace Engine.UI.Model
 {
     public interface IUiManager
     {
-        void StartNewGameSession();
+        void StartNewGameSession(GameSession gameSession);
 
         void UiInitialization();
 

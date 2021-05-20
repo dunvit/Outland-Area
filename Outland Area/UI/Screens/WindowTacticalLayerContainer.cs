@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using Engine.UI.Controls;
 using EngineCore.Session;
@@ -24,6 +23,11 @@ namespace Engine.UI.Screens
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnSelectModule += Event_SelectModule;
             Global.Game.OnStartGameSession += Event_StartGameSession;
+
+            Tools.Buffering.SetDoubleBuffered(crlTacticalMap);
+            Tools.Buffering.SetDoubleBuffered(crlCommandsContainer);
+
+            crlTacticalMap.Dock = DockStyle.Fill;
         }
 
         private void Event_SelectModule(int moduleId)
@@ -39,6 +43,8 @@ namespace Engine.UI.Screens
 
         private void Event_StartGameSession(GameSession gameSession)
         {
+            crlTacticalMap.Refresh();
+
             _gameSession = gameSession.DeepClone();
 
             Initialization(_gameSession);
@@ -48,9 +54,6 @@ namespace Engine.UI.Screens
 
         private void Initialization(GameSession gameSession)
         {
-            crlTacticalMap.Dock = DockStyle.Fill;
-            crlTacticalMap.Refresh(gameSession);
-
             var spaceShip = _gameSession.GetPlayerSpaceShip().ToSpaceship();
 
             var countModulesPreview = 0;
@@ -73,7 +76,7 @@ namespace Engine.UI.Screens
 
             crlModule.Location = new Point((Width / 2) - (crlModule.Width / 2), Height - crlModule.Height - 20);
 
-            Logger.Info("[TacticalLayerContainer.Initialization]\t Initialization finished successful.");
+            Logger.Info("[TacticalLayerContainer][Initialization]\t Initialization finished successful.");
         }
     }
 }

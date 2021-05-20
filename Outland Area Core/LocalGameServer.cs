@@ -63,9 +63,16 @@ namespace EngineCore
 
             //--------------------------------------------------------------------------------------------------- End calculations
 
-            _gameSession = turnGameSession.DeepClone();
+            _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
             Logger.Debug($"[Server] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+        }
+
+        private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
+        {
+            calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
+
+            return calculatedGameSession.DeepClone();
         }
 
         public GameSession RefreshGameSession(int id)
@@ -76,11 +83,13 @@ namespace EngineCore
         public void ResumeSession(int id)
         {
             _gameSession.IsPause = false;
+            Logger.Info($"[Server][ResumeSession] Successed.");
         }
 
         public void PauseSession(int id)
         {
             _gameSession.IsPause = true;
+            Logger.Info($"[Server][PauseSession] Successed.");
         }
 
         public void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId)

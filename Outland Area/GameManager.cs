@@ -106,10 +106,8 @@ namespace Engine
                     if (message.Type == GameEventTypes.NpcSpaceShipFound)
                     {
                         //OnFoundSpaceship?.Invoke(message, gameSession);
-                        //UiManager.OpenGameEventScreen(message, gameSession);
+                        UiManager.OpenGameEventScreen(message, gameSession);
                     }
-
-                    
                 }
 
                 OnEndTurn?.Invoke(_gameSession.DeepClone());
@@ -139,7 +137,7 @@ namespace Engine
 
         public void InitializationFinish()
         {
-            UiManager.StartNewGameSession();
+            UiManager.StartNewGameSession(_gameSession);
             OnInitializationFinish?.Invoke(_gameSession);
 
             SessionResume();

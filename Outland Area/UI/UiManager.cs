@@ -55,25 +55,8 @@ namespace Engine.UI
             return null;
         }
 
-        public void StartNewGameSession()
-        {
-            var windowTacticalLayerContainer = GetScreen("WindowTacticalLayerContainer");
-            var windowBackGround = GetScreen("WindowBackGround");
 
-            windowTacticalLayerContainer.Show();
-            windowTacticalLayerContainer.Focus();
-
-            windowBackGround.Hide();
-        }
-
-        public void UiInitialization()
-        {
-            var windowMenu = GetScreen("WindowMenu");
-            var windowBackGround = GetScreen("WindowBackGround");
-
-            windowBackGround.Show();
-            windowMenu.Hide();
-        }
+        
 
         public void OpenGameEventScreen(GameEvent gameEvent, GameSession gameSession)
         {
@@ -109,6 +92,30 @@ namespace Engine.UI
             Logger.Info($"Received game event ({gameEvent.Id}). Open dialog.");
 
             return screen.ShowDialog();
+        }
+
+        public void StartNewGameSession(GameSession gameSession)
+        {
+            Logger.Info("[UiManager][StartNewGameSession]");
+
+            var windowTacticalLayerContainer = GetScreen("WindowTacticalLayerContainer");
+
+            var windowBackGround = GetScreen("WindowBackGround");
+
+            windowTacticalLayerContainer.Show();
+
+            //windowBackGround.Hide();
+        }
+
+        public void UiInitialization()
+        {
+            Logger.Info("[UiManager][UiInitialization]");
+
+            var windowMenu = GetScreen("WindowMenu");
+            var windowBackGround = GetScreen("WindowBackGround");
+
+            windowBackGround.Show();
+            windowMenu.Hide();
         }
     }
 }
