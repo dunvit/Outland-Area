@@ -12,9 +12,9 @@ namespace Outland_Area_CoreTests.DataProcessing
         public void LinearMovementCalculationTest()
         {
 
-            var server = EnvironmentGlobal.CreateGameServer("");
+            var server = EnvironmentGlobal.CreateGameServer("Map_OneShip");
 
-            var gameSession = server.RefreshGameSession(0);
+            var gameSession = server.RefreshGameSession(server.SessionId);
 
             var spaceShip = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id);
 
@@ -25,7 +25,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation();
 
-            gameSession = server.RefreshGameSession(0);
+            gameSession = server.RefreshGameSession(server.SessionId);
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 
@@ -34,7 +34,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             for(var i = 0; i < 19; i++)
                 server.TurnCalculation();
 
-            gameSession = server.RefreshGameSession(0);
+            gameSession = server.RefreshGameSession(server.SessionId);
 
             position = gameSession.GetCelestialObject(gameSession.SpaceMap.CelestialObjects[0].Id).GetLocation();
 

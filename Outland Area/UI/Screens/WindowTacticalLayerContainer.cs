@@ -32,7 +32,7 @@ namespace Engine.UI.Screens
 
         private void Event_SelectModule(int moduleId)
         {
-            crlModule.Initialization(moduleId);
+            crlModule.Initialization(moduleId, _gameSession);
             crlModule.Visible = true;
         }
 

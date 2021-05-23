@@ -13,6 +13,8 @@ namespace EngineCore
         private GameSession _gameSession;
         private TurnSettings _turnSettings;
 
+        public int SessionId { get; private set; }
+
         public GameSession Initialization(string scenario)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -26,6 +28,10 @@ namespace EngineCore
             Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
             Logger.Info($"Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+
+            // TODO: Get session ID in scenarion file
+            SessionId = 0;
+
             return _gameSession.DeepClone();
         }
 
@@ -43,6 +49,14 @@ namespace EngineCore
             TurnCalculation();
 
             isDebug = false;
+        }
+
+        public void TurnCalculation(int turnsCount)
+        {
+            for(var i = 0; i< turnsCount; i++)
+            {
+                TurnCalculation();
+            }
         }
 
         public void TurnCalculation()
@@ -76,6 +90,11 @@ namespace EngineCore
         }
 
         public GameSession RefreshGameSession(int id)
+        {
+            return Convert.ToClient(_gameSession.DeepClone());
+        }
+
+        public GameSession GetCurrentGameSession(int id)
         {
             return _gameSession.DeepClone();
         }

@@ -35,8 +35,8 @@ namespace Engine.UI.Controls
 
             crlModuleName.Text = module.Name;
 
-            crlModuleReload.Maximum = (int)module.ReloadTime;
-            crlModuleReload.CurrentValue = (int)module.Reloading;
+            //crlModuleReload.Maximum = (int)module.ReloadTime;
+            //crlModuleReload.CurrentValue = (int)module.Reloading;
         }
 
         private void Event_ModuleActivate(object sender, EventArgs e)

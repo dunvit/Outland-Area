@@ -77,10 +77,13 @@ namespace Engine.UI.DrawEngine
                         DrawSpaceship(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcNeutral:
+                        DrawSpaceship(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcEnemy:
+                        DrawSpaceship(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcFriend:
+                        DrawSpaceship(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.Asteroid:
                         DrawAsteroid(screenInfo, currentObject);
@@ -135,7 +138,6 @@ namespace Engine.UI.DrawEngine
         public static void DrawDirections(IScreenInfo screenInfo, GameSession gameSession)
         {
             var color = Color.DimGray;
-            // TODO: Get color by space ship classification
 
             foreach (var currentObject in gameSession.SpaceMap.CelestialObjects)
             {
@@ -156,7 +158,7 @@ namespace Engine.UI.DrawEngine
                         color = Color.SeaGreen;
                         break;
                     case CelestialObjectTypes.Asteroid:
-
+                        color = Color.DimGray;
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;

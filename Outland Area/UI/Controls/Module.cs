@@ -18,10 +18,12 @@ namespace Engine.UI.Controls
             Global.Game.OnEndTurn += Event_EndTurn;
         }
 
-        public void Initialization(int moduleId)
+        public void Initialization(int moduleId, GameSession gameSession)
         {
             _moduleId = moduleId;
- 
+
+            var module = gameSession.GetPlayerSpaceShip().GetModule(_moduleId);
+
         }
 
         private void Event_EndTurn(GameSession gameSession)
