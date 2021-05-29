@@ -12,7 +12,7 @@ namespace EngineCore
 
         void PauseSession(int id);
 
-        void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId);
+        void Command(int sessionId, string command);
 
     }
 }

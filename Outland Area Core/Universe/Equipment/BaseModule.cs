@@ -1,10 +1,14 @@
-﻿using System;
+﻿using log4net;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace EngineCore.Universe.Equipment
 {
     [Serializable]
     public class BaseModule
     {
+        [NonSerialized()]
+        protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public int Id { get; set; }
         public long OwnerId { get; set; }
 
@@ -25,5 +29,16 @@ namespace EngineCore.Universe.Equipment
 
         public double ReloadTime { get; set; }
         public double Reloading { get; set; }
+
+        public dynamic CreateServerCommand()
+        {
+            dynamic serverCommand = new JObject();
+
+            serverCommand.ModuleId = Id;
+            serverCommand.Date = DateTime.Now;
+            serverCommand.OwnerId = OwnerId;
+
+            return serverCommand;
+        }
     }
 }

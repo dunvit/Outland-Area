@@ -1,4 +1,5 @@
 ﻿using System;
+using EngineCore.Session;
 using EngineCore.Universe.Equipment.Weapon;
 
 namespace EngineCore.Universe.Equipment.General.Scanner
@@ -15,5 +16,6 @@ namespace EngineCore.Universe.Equipment.General.Scanner
         public int AmmoId { get; set; }
         public double ReloadTime { get; set; }
         public double Reloading { get; set; }
+
     }
 }

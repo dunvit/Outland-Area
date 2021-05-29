@@ -1,4 +1,6 @@
-﻿namespace EngineCore.Universe.Equipment
+﻿using EngineCore.Session;
+
+namespace EngineCore.Universe.Equipment
 {
     public interface IModule
     {
@@ -20,5 +22,7 @@
 
         double ReloadTime { get; set; }
         double Reloading { get; set; }
+
+        
     }
 }

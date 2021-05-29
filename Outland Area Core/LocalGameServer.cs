@@ -1,8 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using EngineCore.DataProcessing;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;
+using Newtonsoft.Json.Linq;
 
 namespace EngineCore
 {
@@ -11,6 +14,10 @@ namespace EngineCore
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private GameSession _gameSession;
+
+        public List<Command> Commands { get; set; } = new List<Command>();
+        public List<Command> CommandsHistory { get; set; } = new List<Command>();
+
         private TurnSettings _turnSettings;
 
         public int SessionId { get; private set; }
@@ -67,6 +74,18 @@ namespace EngineCore
 
             var turnGameSession = _gameSession.DeepClone();
 
+            lock(Commands)
+            {
+                turnGameSession.Commands = Commands.DeepClone();
+
+                foreach (var command in Commands)
+                {
+                    CommandsHistory.Add(command.DeepClone());
+                }
+
+                Commands = new List<Command>();
+            }            
+
             //-------------------------------------------------------------------------------------------------- Start calculations
 
             turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
@@ -85,7 +104,7 @@ namespace EngineCore
         private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
         {
             calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
-
+            
             return calculatedGameSession.DeepClone();
         }
 
@@ -111,9 +130,20 @@ namespace EngineCore
             Logger.Info($"[Server][PauseSession] Successed.");
         }
 
-        public void Command(int sessionId, int objectId, int targetCelestialObjectId, int memberId, int targetCell, int typeId)
+        public void Command(int sessionId, string command)
         {
-            throw new System.NotImplementedException();
+            var typeId = (int)JObject.Parse(command)["TypeId"];
+
+            Logger.Debug($"[{GetType().Name}]\t Add command sessionId={sessionId} typeId={typeId} body={command}");
+
+            Commands.Add(new Command(command));
+        }
+
+        public List<Command> GetCommands(long Id)
+        {
+            var a = CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
+
+            return CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
         }
     }
 }

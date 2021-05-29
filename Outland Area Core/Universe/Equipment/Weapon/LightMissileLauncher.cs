@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineCore.Session;
+using System;
 
 namespace EngineCore.Universe.Equipment.Weapon
 {
@@ -9,6 +10,6 @@ namespace EngineCore.Universe.Equipment.Weapon
         public double ActivationCost { get; set; }
         public CategoryAmmo UsedWith { get; set; } = CategoryAmmo.LightMissile;
         public int AmmoId { get; set; }
-        
+
     }
 }

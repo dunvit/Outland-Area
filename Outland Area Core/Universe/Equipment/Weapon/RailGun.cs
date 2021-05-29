@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineCore.Session;
+using System;
 
 namespace EngineCore.Universe.Equipment.Weapon
 {

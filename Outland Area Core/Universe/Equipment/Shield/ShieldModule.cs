@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineCore.Session;
+using System;
 
 namespace EngineCore.Universe.Equipment.Shield
 {
@@ -10,5 +11,6 @@ namespace EngineCore.Universe.Equipment.Shield
         public Category Category { get; set; }
         public double ActivationCost { get; set; }
         public double Power { get; set; }
+
     }
 }
