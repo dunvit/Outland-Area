@@ -18,7 +18,7 @@ namespace EngineCore.Session
             {
                 if (celestialObject.Classification == 200)
                 {
-                    return celestialObject.DeepClone().ToSpaceship();
+                    return celestialObject.ToSpaceship();
                 }
             }
 

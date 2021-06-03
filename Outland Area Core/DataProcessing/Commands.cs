@@ -5,7 +5,7 @@ namespace EngineCore.DataProcessing
 {
     public class Commands
     {
-        public CelestialMap Execute(GameSession gameSession, TurnSettings settings)
+        public GameSession Execute(GameSession gameSession, TurnSettings settings)
         {
             var result = gameSession.DeepClone();
 
@@ -42,7 +42,7 @@ namespace EngineCore.DataProcessing
                 }
             }
 
-            return result.SpaceMap;
+            return result;
         }
     }
 }

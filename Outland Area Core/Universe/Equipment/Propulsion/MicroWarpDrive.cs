@@ -32,6 +32,8 @@ namespace EngineCore.Universe.Equipment.Propulsion
             return serverCommand;
         }
 
+        
+
         public dynamic TurnLeft()
         {
             Logger.Debug($"[{GetType().Name}]\t Execute command 'TurnLeft'");

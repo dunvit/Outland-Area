@@ -79,11 +79,11 @@ namespace EngineCore
 
             //-------------------------------------------------------------------------------------------------- Start calculations
 
-            turnGameSession.SpaceMap = new Commands().Execute(turnGameSession, _turnSettings);
+            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
 
             turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
 
-            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession);
+            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
             turnGameSession = new SessionEvents().Execute(turnGameSession);
 
@@ -100,7 +100,7 @@ namespace EngineCore
         {
             var spacecraft = turnGameSession.GetPlayerSpaceShip();
 
-            Logger.Info($"[Server][{GetType().Name}][DebugPlayerShipParameters] " +
+            Logger.Debug($"[Server][{GetType().Name}][DebugPlayerShipParameters] " +
                 $"Speed {spacecraft.Speed}/{spacecraft.MaxSpeed} ms. " +
                 $"Location ({spacecraft.PositionX};{spacecraft.PositionY}) " +
                 $"Direction {spacecraft.Direction} degree.");

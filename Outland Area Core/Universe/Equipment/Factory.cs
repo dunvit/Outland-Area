@@ -24,10 +24,10 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100, 
                         Power = 2000,
-                        ReloadTime = 1 * ticksInSecond,
-                        Reloading = 1 * ticksInSecond,
+                        ReloadTime = 2,
+                        Reloading = 2,
                         Category = Category.Propulsion, 
-                        Name = "Civilian Prototype Mk I"};
+                        Name = "Civilian MkIp"};
                     break;
             }
             return resultModule;

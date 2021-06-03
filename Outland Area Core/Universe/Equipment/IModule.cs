@@ -23,6 +23,7 @@ namespace EngineCore.Universe.Equipment
         double ReloadTime { get; set; }
         double Reloading { get; set; }
 
+        void Reload();
         
     }
 }

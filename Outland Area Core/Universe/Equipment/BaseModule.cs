@@ -40,5 +40,10 @@ namespace EngineCore.Universe.Equipment
 
             return serverCommand;
         }
+
+        public void Reload()
+        {
+            Reloading = 0;
+        }
     }
 }

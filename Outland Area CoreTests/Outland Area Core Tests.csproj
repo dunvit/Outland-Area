@@ -24,6 +24,14 @@
     <None Remove="Data\Scenarios\ConvertTests\Characters\637066561468099898\Full.png" />
     <None Remove="Data\Scenarios\ConvertTests\Characters\637066561468099898\Left.png" />
     <None Remove="Data\Scenarios\ConvertTests\Characters\637066561468099898\Right.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099897\Front.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099897\Full.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099897\Left.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099897\Right.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099898\Front.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099898\Full.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099898\Left.png" />
+    <None Remove="Data\Scenarios\Reloading\Characters\637066561468099898\Right.png" />
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Front.png" />
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Full.png" />
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Left.png" />
@@ -81,6 +89,30 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Scenarios\ConvertTests\Characters\637066561468099898\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099897\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099897\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099897\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099897\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099898\Front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099898\Full.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099898\Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Scenarios\Reloading\Characters\637066561468099898\Right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099897\Front.png">
@@ -149,6 +181,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Scenarios\ConvertTests\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Reloading\CelestialObjects\637066561468043700.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Reloading\Characters\637066561468099897\Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Reloading\Characters\637066561468099898\Info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Reloading\Events\Events_pack_01.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\Reloading\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Scenarios\Map_OneShip\CelestialObjects\637066561468043700.json">

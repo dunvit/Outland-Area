@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
@@ -10,7 +11,7 @@ namespace EngineCore.DataProcessing
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CelestialMap Recalculate(GameSession gameSession)
+        public CelestialMap Recalculate(GameSession gameSession, TurnSettings settings)
         {
             var result = gameSession.SpaceMap.DeepClone();
 
@@ -34,8 +35,11 @@ namespace EngineCore.DataProcessing
 
                     if (!(module.Reloading <= module.ReloadTime)) continue;
 
-                    Logger.Debug($"Object {celestialObject.Name} reload module {module.Name} from {module.Reloading} to +1 second.");
-                    module.Reloading++;
+                    Logger.Info($"Object {celestialObject.Name} reload module {module.Name} from {module.Reloading} to {1 / settings.UnitsPerSecond} second.");
+
+                    var reloadingprogress = Math.Round((1.0 / settings.UnitsPerSecond), 2);
+
+                    module.Reloading += reloadingprogress;
 
                     if (module.Reloading == module.ReloadTime)
                     {
