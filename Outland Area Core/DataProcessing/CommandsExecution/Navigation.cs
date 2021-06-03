@@ -1,5 +1,6 @@
 ﻿using EngineCore.Session;
 using EngineCore.Universe.Model;
+using EngineCore.Universe.Objects;
 using log4net;
 
 namespace EngineCore.DataProcessing.CommandsExecution
@@ -12,7 +13,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
         {
             var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
 
-            Logger.Debug($"[{GetType().Name}]\t Execution Navigation command - {command.Type} ");
+            Logger.Debug($"[{GetType().Name}][Execution] Execution Navigation command - {command.Type} turn '{gameSession.Turn}'");
 
             switch (command.Type)
             {
@@ -25,16 +26,32 @@ namespace EngineCore.DataProcessing.CommandsExecution
                 case CommandTypes.StopShip:
                     return StopShip(gameSession, currentCelestialObject);
                 case CommandTypes.Acceleration:
-                    break;
+                    return Acceleration(gameSession, currentCelestialObject);
+                    
             }
 
             return null;
         }
 
-        private GameSession StopShip(GameSession gameSession, ICelestialObject celestialObject)
-        { 
+        private GameSession Acceleration(GameSession gameSession, ICelestialObject celestialObject)
+        {
             // TODO: Add property Agility to Spacecraft
-            const float SpacecraftAgility = 1;            
+            const float SpacecraftAgility = 1;
+
+            var spacecraft = (Spaceship)celestialObject;
+
+            spacecraft.Speed += SpacecraftAgility;
+
+            if (spacecraft.Speed > spacecraft.MaxSpeed) spacecraft.Speed = spacecraft.MaxSpeed;
+
+            return gameSession;
+        }
+
+
+        private GameSession StopShip(GameSession gameSession, ICelestialObject celestialObject)
+        {
+            // TODO: Add property Agility to Spacecraft
+            const float SpacecraftAgility = 1;
 
             celestialObject.Speed = celestialObject.Speed - SpacecraftAgility;
 
@@ -46,7 +63,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
         private GameSession TurnLeft(GameSession gameSession, ICelestialObject celestialObject)
         {
             // TODO: Add property Mobility to Spacecraft
-            const float MobilityInDegrees = 5;
+            const float MobilityInDegrees = 0.5f;
 
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver - MobilityInDegrees > 0) ? directionBeforeManeuver - MobilityInDegrees : 360 - (directionBeforeManeuver - MobilityInDegrees);
@@ -59,7 +76,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
         private GameSession TurnRight(GameSession gameSession, ICelestialObject celestialObject)
         {
             // TODO: Add property Mobility to Spacecraft
-            const float MobilityInDegrees = 5;
+            const float MobilityInDegrees = 0.5f;
 
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver + MobilityInDegrees < 361) ? directionBeforeManeuver + MobilityInDegrees : (directionBeforeManeuver + MobilityInDegrees) - 360;

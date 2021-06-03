@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using EngineCore.DataProcessing;
@@ -15,7 +16,7 @@ namespace EngineCore
 
         private GameSession _gameSession;
 
-        public List<Command> Commands { get; set; } = new List<Command>();
+        public Hashtable Commands { get; set; } = new Hashtable();
         public List<Command> CommandsHistory { get; set; } = new List<Command>();
 
         private TurnSettings _turnSettings;
@@ -34,7 +35,7 @@ namespace EngineCore
 
             Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
-            Logger.Info($"[{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            Logger.Info($"[Server][{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
 
             // TODO: Get session ID in scenarion file
             SessionId = 0;
@@ -88,12 +89,22 @@ namespace EngineCore
 
             //--------------------------------------------------------------------------------------------------- End calculations
 
+            DebugPlayerShipParameters(turnGameSession.DeepClone());
+
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[{GetType().Name}] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
         }
 
-        
+        private void DebugPlayerShipParameters(GameSession turnGameSession)
+        {
+            var spacecraft = turnGameSession.GetPlayerSpaceShip();
+
+            Logger.Info($"[Server][{GetType().Name}][DebugPlayerShipParameters] " +
+                $"Speed {spacecraft.Speed}/{spacecraft.MaxSpeed} ms. " +
+                $"Location ({spacecraft.PositionX};{spacecraft.PositionY}) " +
+                $"Direction {spacecraft.Direction} degree.");
+        }
 
         private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
         {
@@ -115,40 +126,53 @@ namespace EngineCore
         public void ResumeSession(int id)
         {
             _gameSession.IsPause = false;
-            Logger.Info($"[{GetType().Name}] Successed.");
+            Logger.Info($"[Server][{GetType().Name}][ResumeSession] Successed.");
         }
 
         public void PauseSession(int id)
         {
             _gameSession.IsPause = true;
-            Logger.Info($"[{GetType().Name}] Successed.");
+            Logger.Info($"[Server][{GetType().Name}][PauseSession] Successed.");
         }
 
-        public void Command(int sessionId, string command)
+        public void Command(int sessionId, string commandBody)
         {
-            var typeId = (int)JObject.Parse(command)["TypeId"];
+            var typeId = (int)JObject.Parse(commandBody)["TypeId"];
 
-            Logger.Debug($"[{GetType().Name}]\t Add command sessionId={sessionId} typeId={typeId} body={command}");
+            Logger.Debug($"[Server][{GetType().Name}][Command] Add command sessionId={sessionId} typeId={typeId} body={commandBody}");
 
-            Commands.Add(new Command(command));
+            var command = new Command(commandBody);
+
+            var commandKey = sessionId + "_" + command.CelestialObjectId + "_" + command.Type;
+
+            if (Commands.ContainsKey(commandKey))
+            {
+                Logger.Debug($"[Server][{GetType().Name}][Command] Command sessionId={sessionId} typeId={typeId} already added to turn commands.");
+                return;
+            }
+
+            lock (Commands)
+            {
+                 Commands.Add(commandKey,  command);
+            }                
         }
 
-        private List<Command> GetCommands()
+        private Hashtable GetCommands()
         {
-            List<Command> result;
+            Hashtable result;
 
             lock (Commands)
             {
                 result = Commands.DeepClone();
 
-                foreach (var command in Commands)
+                foreach (Command command in Commands.Values)
                 {
                     CommandsHistory.Add(command.DeepClone());
                 }
 
-                Commands = new List<Command>();
+                Commands = new Hashtable();
 
-                Logger.Debug($"[{GetType().Name}]\t Finished clear turn commands. Cpunt is {result.Count}");
+                Logger.Debug($"[Server][{GetType().Name}][GetCommands]\t Finished clear turn commands. Cpunt is {result.Count}");
             }
 
             return result;

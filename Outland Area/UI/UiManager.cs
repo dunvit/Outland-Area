@@ -55,9 +55,6 @@ namespace Engine.UI
             return null;
         }
 
-
-        
-
         public void OpenGameEventScreen(GameEvent gameEvent, GameSession gameSession)
         {
             Global.Game.SessionPause();
@@ -89,14 +86,14 @@ namespace Engine.UI
                 return (DialogResult)mainForm.Invoke(d, screen, gameEvent, gameSession);
             }
 
-            Logger.Info($"Received game event ({gameEvent.Id}). Open dialog.");
+            Logger.Info($"[Client][UiManager][OpenModalForm] Received game event ({gameEvent.Id}). Open dialog.");
 
             return screen.ShowDialog();
         }
 
         public void StartNewGameSession(GameSession gameSession)
         {
-            Logger.Info("[UiManager][StartNewGameSession]");
+            Logger.Info("[Client][UiManager][StartNewGameSession] Activated.");
 
             var windowTacticalLayerContainer = GetScreen("WindowTacticalLayerContainer");
 
@@ -109,7 +106,7 @@ namespace Engine.UI
 
         public void UiInitialization()
         {
-            Logger.Info("[UiManager][UiInitialization]");
+            Logger.Info("[Client][UiManager][] Activated");
 
             var windowMenu = GetScreen("WindowMenu");
             var windowBackGround = GetScreen("WindowBackGround");

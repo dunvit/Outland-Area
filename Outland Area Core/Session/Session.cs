@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -27,7 +28,7 @@ namespace EngineCore.Session
 
         public Rules Rules { get; set; } = new Rules();
 
-        public List<Command> Commands { get; set; } = new List<Command>();
+        public Hashtable Commands { get; set; } = new Hashtable();
 
         public List<IScenarioEvent> ScenarioEvents { get; set; }
 
@@ -44,14 +45,14 @@ namespace EngineCore.Session
             GameEvents.Add(gameEvent);
         }
 
-        public void AddCommand(string commandBody)
-        {
-            Commands.Add(new Command(commandBody));
-        }
+        //public void AddCommand(string commandBody)
+        //{
+        //    Commands.Add(new Command(commandBody));
+        //}
 
         public List<Command> GetCommands(long Id)
         {
-            return Commands.Where(_ => _.CelestialObjectId == Id).ToList();
+            return (from Command command in Commands.Values select command).ToList();
         }
 
         public List<GameEvent> GetTurnEvents(int turn)

@@ -9,7 +9,7 @@ namespace EngineCore.DataProcessing
         {
             var result = gameSession.DeepClone();
 
-            foreach (var command in gameSession.Commands)
+            foreach (Command command in gameSession.Commands.Values)
             {
                 switch (command.Type)
                 {
@@ -25,6 +25,7 @@ namespace EngineCore.DataProcessing
                         result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
                         break;
                     case CommandTypes.Acceleration:
+                        result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
                         break;
                     case CommandTypes.Fire:
                         break;

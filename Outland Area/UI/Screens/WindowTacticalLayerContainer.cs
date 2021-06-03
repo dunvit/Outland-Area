@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Engine.UI.Controls;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
 using log4net;
 
@@ -28,7 +30,49 @@ namespace Engine.UI.Screens
             Tools.Buffering.SetDoubleBuffered(crlCommandsContainer);
 
             crlTacticalMap.Dock = DockStyle.Fill;
+
+            KeyPreview = true;
+            KeyDown += Window_KeyDown;
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Logger.Debug($"[{GetType().Name}][Window_KeyDown]\t Handle the KeyDown event {e.KeyCode} ");
+
+            if (_gameSession.IsPause) return;
+
+            var spacecraft = _gameSession.GetPlayerSpaceShip();
+
+            var commandBody = string.Empty;
+
+            switch (e.KeyCode)
+            {
+                case Keys.S:
+                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].Braking);
+                    Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));                    
+                    break;
+
+                case Keys.D:
+                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].TurnRight);
+                    Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                    break;
+
+                case Keys.A:
+                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].TurnLeft);
+                    Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                    break;
+
+                case Keys.W:
+                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].Acceleration);
+                    Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
 
         private void Event_SelectModule(int moduleId)
         {

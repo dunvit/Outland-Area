@@ -2,10 +2,8 @@
 using EngineCore.Session;
 using EngineCore.Universe.Equipment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace Outland_Area_CoreTests.DataProcessing
 {
@@ -75,7 +73,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(95, spaceship.Direction);
+            Assert.AreEqual(90.5, spaceship.Direction);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnRight));
 
@@ -83,13 +81,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(100, spaceship.Direction);
+            Assert.AreEqual(91, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(100, spaceship.Direction);
+            Assert.AreEqual(91, spaceship.Direction);
         }
 
         [TestMethod()]
@@ -113,7 +111,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(85, spaceship.Direction);
+            Assert.AreEqual(89.5, spaceship.Direction);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnLeft));
 
@@ -121,13 +119,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(80, spaceship.Direction);
+            Assert.AreEqual(89, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(80, spaceship.Direction);
+            Assert.AreEqual(89, spaceship.Direction);
         }
     }
 }

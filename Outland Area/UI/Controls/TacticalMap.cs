@@ -54,7 +54,7 @@ namespace Engine.UI.Controls
 
             UpdateTrajectoryHistory(_gameSession);
 
-            Logger.Info($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
 
             RefreshControl();
         }
@@ -156,7 +156,7 @@ namespace Engine.UI.Controls
 
             _refreshInProgress = false;
 
-            Logger.Info($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
 

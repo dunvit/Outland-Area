@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 using Engine.Tools;
 using EngineCore.Session;
+using log4net;
 
 namespace Engine.UI.Controls
 {
     public partial class Module : UserControl
     {
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private int _moduleId;
 
         public Module()
@@ -18,12 +22,12 @@ namespace Engine.UI.Controls
             Global.Game.OnEndTurn += Event_EndTurn;
         }
 
+
         public void Initialization(int moduleId, GameSession gameSession)
         {
             _moduleId = moduleId;
 
             var module = gameSession.GetPlayerSpaceShip().GetModule(_moduleId);
-
         }
 
         private void Event_EndTurn(GameSession gameSession)

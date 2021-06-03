@@ -26,6 +26,8 @@ namespace Engine
 
         public List<string> AcceptedEvents = new List<string>();
 
+        public List<Command> Commands { get; set; } = new List<Command>();
+
         public GameManager()
         {
             switch (Global.ApplicationSettings.ServerType)
@@ -67,9 +69,12 @@ namespace Engine
 
             if(gameSession.IsPause)
             {
-                Logger.Debug($"Pause game. Turn is ({gameSession.Turn}).");
+                Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Pause game. Turn is ({gameSession.Turn}).");
                 return;
             }
+
+            // Send to server all commands from previous turn.
+            CommandsSending();
 
             if (gameSession != null)
             {
@@ -77,17 +82,17 @@ namespace Engine
 
                 var turnEvents = gameSession.GetCurrentTurnEvents();
 
-                Logger.Debug($"Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
+                Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
 
                 foreach (var message in turnEvents)
                 {
                     if (AcceptedEvents.Contains(message.Id))
                     {
-                        Logger.Debug($"Event ({message.Id}) already exist in cach.");
+                        Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Event ({message.Id}) already exist in cach.");
                         continue;
                     }
 
-                    Logger.Debug($"Event ({message.Id}) addad to cach.");
+                    Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Event ({message.Id}) addad to cach.");
                     AcceptedEvents.Add(message.Id);
 
                     if (message.IsPause) SessionPause();
@@ -114,24 +119,24 @@ namespace Engine
             }
             else
             {
-                Logger.Error($"Critical error on refresh game id={_gameSession.Id}.");
+                Logger.Error($"[Client][{GetType().Name}][GetDataFromServer] Critical error on refresh game id={_gameSession.Id}.");
                 return;
             }
 
             timeMetricGetGameSession.Stop();
 
-            Logger.Info($"Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
         }
 
         public void SessionResume()
         {
-            Logger.Info($"Game resumed. Turn is {_gameSession.Turn}");
+            Logger.Info($"[Client][{GetType().Name}][SessionResume] Game resumed. Turn is {_gameSession.Turn}");
             _gameServer.ResumeSession(_gameSession.Id);
         }
 
         public void SessionPause()
         {
-            Logger.Info($"Game paused. Turn is {_gameSession.Turn}");
+            Logger.Info($"[Client][{GetType().Name}][SessionPause] Game paused. Turn is {_gameSession.Turn}");
             _gameServer.PauseSession(_gameSession.Id);
         }
 
@@ -146,6 +151,40 @@ namespace Engine
         public void EventActivateModule(int id)
         {
             OnSelectModule?.Invoke(id);
+        }
+
+        public void ExecuteCommand(Command command)
+        {
+            Logger.Debug($"[Client][{GetType().Name}][ExecuteCommand] Command ({command.Type}) received.");
+
+            try
+            {
+                lock (commandsLock)
+                {
+                    Commands.Add(command);
+                }
+            }
+            catch (Exception)
+            {
+                Logger.Error($"[Client][{GetType().Name}][ExecuteCommand] Command ({command.Type}) failed.");
+            }
+            
+        }
+
+        object commandsLock = new Object();
+
+        private void CommandsSending()
+        {
+            lock (commandsLock)
+            {
+                foreach (var command in Commands)
+                {
+                    Logger.Debug($"[Client][{GetType().Name}][CommandsSending] Send command ({command.Type}) for turn '{_gameSession.Turn}' to server.");
+                    _gameServer.Command(_gameSession.Id, command.Body);
+                }
+
+                Commands = new List<Command>();
+            }
         }
     }
 }

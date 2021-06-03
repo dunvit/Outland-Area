@@ -10,6 +10,17 @@ namespace EngineCore.Universe.Equipment.Propulsion
         public double ActivationCost { get; set; }
         public double Power { get; set; }
 
+        public dynamic Acceleration()
+        {
+            Logger.Debug($"[{GetType().Name}]\t Execute command 'Acceleration'");
+
+            var serverCommand = CreateServerCommand();
+
+            serverCommand.TypeId = CommandTypes.Acceleration;
+
+            return serverCommand;
+        }
+
         public dynamic Braking()
         {
             Logger.Debug($"[{GetType().Name}]\t Execute command 'Braking'");
