@@ -76,7 +76,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(90.5, spaceship.Direction);
 
             // Reloading time
-            server.TurnCalculation(3 * 20);
+            server.Wait(3);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnRight));
 
@@ -117,7 +117,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(89.5, spaceship.Direction);
 
             // Reloading time
-            server.TurnCalculation(3 * 20);
+            server.Wait(3);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnLeft));
 

@@ -59,6 +59,11 @@ namespace EngineCore
             isDebug = false;
         }
 
+        public void Wait(int seconds)
+        {
+            TurnCalculation(seconds * _turnSettings.UnitsPerSecond);
+        }
+
         public void TurnCalculation(int turnsCount)
         {
             for(var i = 0; i< turnsCount; i++)
