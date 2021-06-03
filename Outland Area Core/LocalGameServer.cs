@@ -34,7 +34,7 @@ namespace EngineCore
 
             Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
-            Logger.Info($"Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            Logger.Info($"[{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
 
             // TODO: Get session ID in scenarion file
             SessionId = 0;
@@ -74,19 +74,11 @@ namespace EngineCore
 
             var turnGameSession = _gameSession.DeepClone();
 
-            lock(Commands)
-            {
-                turnGameSession.Commands = Commands.DeepClone();
-
-                foreach (var command in Commands)
-                {
-                    CommandsHistory.Add(command.DeepClone());
-                }
-
-                Commands = new List<Command>();
-            }            
+            turnGameSession.Commands = GetCommands();
 
             //-------------------------------------------------------------------------------------------------- Start calculations
+
+            turnGameSession.SpaceMap = new Commands().Execute(turnGameSession, _turnSettings);
 
             turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
 
@@ -98,8 +90,10 @@ namespace EngineCore
 
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[Server] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"[{GetType().Name}] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
         }
+
+        
 
         private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
         {
@@ -121,13 +115,13 @@ namespace EngineCore
         public void ResumeSession(int id)
         {
             _gameSession.IsPause = false;
-            Logger.Info($"[Server][ResumeSession] Successed.");
+            Logger.Info($"[{GetType().Name}] Successed.");
         }
 
         public void PauseSession(int id)
         {
             _gameSession.IsPause = true;
-            Logger.Info($"[Server][PauseSession] Successed.");
+            Logger.Info($"[{GetType().Name}] Successed.");
         }
 
         public void Command(int sessionId, string command)
@@ -139,10 +133,29 @@ namespace EngineCore
             Commands.Add(new Command(command));
         }
 
-        public List<Command> GetCommands(long Id)
+        private List<Command> GetCommands()
         {
-            var a = CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
+            List<Command> result;
 
+            lock (Commands)
+            {
+                result = Commands.DeepClone();
+
+                foreach (var command in Commands)
+                {
+                    CommandsHistory.Add(command.DeepClone());
+                }
+
+                Commands = new List<Command>();
+
+                Logger.Debug($"[{GetType().Name}]\t Finished clear turn commands. Cpunt is {result.Count}");
+            }
+
+            return result;
+        }
+
+        public List<Command> GetHistoryCommands(int sessionId, long Id)
+        {
             return CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
         }
     }

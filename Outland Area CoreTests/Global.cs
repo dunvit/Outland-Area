@@ -17,7 +17,7 @@ namespace Outland_Area_CoreTests
 
             localServer.Initialization(sessionName);
 
-            localServer.ResumeSession(1);
+            //localServer.ResumeSession(1);
 
             return localServer;
         }

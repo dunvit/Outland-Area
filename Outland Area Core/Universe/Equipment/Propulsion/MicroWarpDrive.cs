@@ -20,5 +20,27 @@ namespace EngineCore.Universe.Equipment.Propulsion
 
             return serverCommand;
         }
+
+        public dynamic TurnLeft()
+        {
+            Logger.Debug($"[{GetType().Name}]\t Execute command 'TurnLeft'");
+
+            var serverCommand = CreateServerCommand();
+
+            serverCommand.TypeId = CommandTypes.TurnLeft;
+
+            return serverCommand;
+        }
+
+        public dynamic TurnRight()
+        {
+            Logger.Debug($"[{GetType().Name}]\t Execute command 'TurnRight'");
+
+            var serverCommand = CreateServerCommand();
+
+            serverCommand.TypeId = CommandTypes.TurnRight;
+
+            return serverCommand;
+        }
     }
 }
