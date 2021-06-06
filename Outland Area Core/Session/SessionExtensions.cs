@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
+using EngineCore.DataProcessing;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
@@ -32,6 +34,15 @@ namespace EngineCore.Session
 
             return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
         }
+
+        public static double GetDistance(this GameSession session, int objectId, int targetId)
+        {
+            return Coordinates.GetDistance(
+                session.GetCelestialObject(objectId).GetLocation(),
+                session.GetCelestialObject(targetId).GetLocation()
+                );
+        }
+
 
         public static void AddHistoryMessage(this GameSession session, string message, string className, bool isTechnicalLog = false)
         {

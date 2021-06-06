@@ -11,5 +11,14 @@ namespace EngineCore.Universe.Equipment.Weapon
         public CategoryAmmo UsedWith { get; set; } = CategoryAmmo.SmallHybridCharge;
         public int AmmoId { get; set; } = 501;
 
+        public dynamic Shot(int objectId, int targetId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public dynamic Shot(int objectId, int targetId, int moduleId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

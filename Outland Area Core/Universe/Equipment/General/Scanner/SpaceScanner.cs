@@ -1,11 +1,9 @@
 ﻿using System;
-using EngineCore.Session;
-using EngineCore.Universe.Equipment.Weapon;
 
 namespace EngineCore.Universe.Equipment.General.Scanner
 {
     [Serializable]
-    public class SpaceScanner : BaseModule, IModule, IScanner, IWeaponModule
+    public class SpaceScanner : BaseModule, IModule, IScanner
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }
@@ -19,9 +17,5 @@ namespace EngineCore.Universe.Equipment.General.Scanner
         }
 
         public CategoryAmmo UsedWith { get; set; } = CategoryAmmo.None;
-        public int AmmoId { get; set; }
-        public double ReloadTime { get; set; }
-        public double Reloading { get; set; }
-
     }
 }

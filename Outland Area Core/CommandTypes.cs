@@ -12,7 +12,8 @@
         Orbit = 110,
         Explosion = 800,
         ReloadWeapon = 900,
-        Scanning = 1600
+        Scanning = 1600,
+        Shot = 2001
     }
 
     public static class CommandTypesExtensions

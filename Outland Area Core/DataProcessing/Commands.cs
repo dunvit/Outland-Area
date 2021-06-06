@@ -27,7 +27,8 @@ namespace EngineCore.DataProcessing
                     case CommandTypes.Acceleration:
                         result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
                         break;
-                    case CommandTypes.Fire:
+                    case CommandTypes.Shot:
+                        result = new CommandsExecution.Shots().Execution(gameSession, settings, command);
                         break;
                     case CommandTypes.AlignTo:
                         break;

@@ -133,5 +133,27 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             Assert.AreEqual(89, spaceship.Direction);
         }
+
+        [TestMethod]
+        public void WeaponModule_Shot_Test()
+        {
+            var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Map_FirstBattle");
+
+            var gameSession = server.RefreshGameSession(server.SessionId);
+
+            var spaceship = gameSession.GetPlayerSpaceShip();
+
+            var module = spaceship.GetWeaponModules().First();
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
+
+            Assert.AreEqual(1, server.Commands.Count);
+
+            server.TurnCalculation(1);
+
+            gameSession = server.RefreshGameSession(server.SessionId);
+
+            spaceship = gameSession.GetPlayerSpaceShip();
+        }
     }
 }
