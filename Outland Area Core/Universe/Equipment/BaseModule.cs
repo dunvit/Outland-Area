@@ -30,6 +30,8 @@ namespace EngineCore.Universe.Equipment
         public double ReloadTime { get; set; }
         public double Reloading { get; set; }
 
+        public bool IsReloaded => Reloading == ReloadTime;
+
         public dynamic CreateServerCommand()
         {
             dynamic serverCommand = new JObject();

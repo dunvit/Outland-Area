@@ -27,7 +27,7 @@ namespace EngineCore.Session
             return null;
         }
 
-        public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = true)
+        public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = false)
         {
             if(isCopy)
                 return (from celestialObjects in gameSession.SpaceMap.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();

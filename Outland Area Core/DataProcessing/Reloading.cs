@@ -13,9 +13,7 @@ namespace EngineCore.DataProcessing
 
         public CelestialMap Recalculate(GameSession gameSession, TurnSettings settings)
         {
-            var result = gameSession.SpaceMap.DeepClone();
-
-            
+            var result = gameSession.SpaceMap.DeepClone();            
 
             foreach (var celestialObject in result.CelestialObjects)
             {
@@ -23,14 +21,6 @@ namespace EngineCore.DataProcessing
 
                 foreach (var module in celestialObject.ToSpaceship().Modules)
                 {
-                    if (gameSession.Turn % 150 == 0)
-                    {
-                        // Only for debug. Emulation use modules.
-                        module.Reloading = 0;
-                        continue;
-                    }
-
-
                     if ((module.Reloading == module.ReloadTime)) continue;
 
                     if (!(module.Reloading <= module.ReloadTime)) continue;

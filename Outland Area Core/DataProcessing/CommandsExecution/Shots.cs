@@ -11,10 +11,11 @@ namespace EngineCore.DataProcessing.CommandsExecution
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
         public GameSession Execution(GameSession gameSession, TurnSettings settings, Command command)
         {
             var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
+
+            
 
             Logger.Debug($"[{GetType().Name}][Execution] Execution Shot command - {command.Type} turn '{gameSession.Turn}'");
 
@@ -24,7 +25,15 @@ namespace EngineCore.DataProcessing.CommandsExecution
             var objectId = (int)jObject["ObjectId"];
             var moduleId = (int)jObject["ModuleId"];
 
+
+            var currentModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId);
+
             // TODO: Check is module reloaded
+            if (currentModule.IsReloaded == false)
+            {
+                Logger.Debug($"[{GetType().Name}][Execution] Module not reloaded. {currentModule.Reloading}/{currentModule.ReloadTime} turn '{gameSession.Turn}'");
+                return gameSession;
+            }
 
             var commandPrediction = Prediction(gameSession, command.Type, objectId, moduleId, targetId);
 
@@ -46,6 +55,9 @@ namespace EngineCore.DataProcessing.CommandsExecution
             {
                 // Miss
             }
+
+            // Reload module
+            gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).Reload();
 
             // TODO: Add message to client
 
