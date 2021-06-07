@@ -3,9 +3,9 @@ using EngineCore.Universe.Equipment.Ammunition.Missiles.LightMissiles;
 
 namespace EngineCore.Universe.Equipment.Ammunition.Missiles
 {
-    public class MissilesFactory
+    public class AmmoFactory
     {
-        public static IMissile GetMissile(int id)
+        public static IMissile GetAmmo(int id)
         {
             switch (id)
             {

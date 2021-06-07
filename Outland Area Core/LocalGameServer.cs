@@ -142,11 +142,22 @@ namespace EngineCore
 
         public void Command(int sessionId, string commandBody)
         {
+            Command(sessionId, commandBody, false);
+        }
+
+        /// <summary>
+        /// Only for integration tests
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="commandBody"></param>
+        /// <param name="isAlwaysSuccessful"></param>
+        public void Command(int sessionId, string commandBody, bool isAlwaysSuccessful)
+        {
             var typeId = (int)JObject.Parse(commandBody)["TypeId"];
 
             Logger.Debug($"[Server][{GetType().Name}][Command] Add command sessionId={sessionId} typeId={typeId} body={commandBody}");
 
-            var command = new Command(commandBody);
+            var command = new Command(commandBody, isAlwaysSuccessful);
 
             var commandKey = sessionId + "_" + command.CelestialObjectId + "_" + command.Type;
 

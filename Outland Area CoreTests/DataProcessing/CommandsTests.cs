@@ -1,6 +1,7 @@
 ﻿using EngineCore;
 using EngineCore.Session;
 using EngineCore.Universe.Equipment;
+using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -143,17 +144,75 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
+            var targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
             var module = spaceship.GetWeaponModules().First();
 
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
 
             Assert.AreEqual(1, server.Commands.Count);
+            Assert.AreEqual(200, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.TurnCalculation(1);
 
             gameSession = server.RefreshGameSession(server.SessionId);
 
             spaceship = gameSession.GetPlayerSpaceShip();
+
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(0, server.Commands.Count);
+            Assert.AreEqual(170, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            
+            Assert.AreEqual(140, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(110, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(80, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(50, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(20, targetSpacecraft.Shields);
+            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id), true);
+            server.TurnCalculation(1);
+            gameSession = server.RefreshGameSession(server.SessionId);
+            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+
+            Assert.AreEqual(true, targetSpacecraft.IsDestroyed);
         }
     }
 }

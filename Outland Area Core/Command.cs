@@ -10,13 +10,17 @@ namespace EngineCore
         public long CelestialObjectId { get; set; }
         public string Body { get; set; }
 
-        public Command(string commandBody)
+        public bool IsAlwaysSuccessful { get; private set; }
+
+        public Command(string commandBody, bool isAlwaysSuccessful = false)
         {
             CelestialObjectId = (long)JObject.Parse(commandBody)["OwnerId"];
 
             Type = (CommandTypes)(int)JObject.Parse(commandBody)["TypeId"];
 
             Body = commandBody;
+
+            IsAlwaysSuccessful = isAlwaysSuccessful;
         }
     }
 }

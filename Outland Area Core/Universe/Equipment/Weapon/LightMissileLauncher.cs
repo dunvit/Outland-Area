@@ -22,11 +22,13 @@ namespace EngineCore.Universe.Equipment.Weapon
             serverCommand.TargetId = targetId;
             serverCommand.ModuleId = moduleId;
 
-            //var x = gameSession.GetDistance(objectId, targetId);
+            
 
 
 
             return serverCommand;
         }
+
+        
     }
 }
