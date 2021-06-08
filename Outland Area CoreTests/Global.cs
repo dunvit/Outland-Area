@@ -11,12 +11,12 @@ namespace Outland_Area_CoreTests
 
         private static int sessionID = 0;
 
-        public static LocalGameServer CreateGameServer(string sessionName, EngineCore.DataProcessing.TurnSettings settings = null)
+        public static LocalGameServer CreateGameServer(string sessionName, EngineSettings settings = null)
         {
             var localServer = new LocalGameServer();
 
             if (settings == null)
-                settings = new EngineCore.DataProcessing.TurnSettings();
+                settings = new EngineSettings();
 
             localServer.Initialization(sessionName, settings);
 

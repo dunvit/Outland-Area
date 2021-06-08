@@ -67,7 +67,7 @@ namespace EngineCore.DataProcessing
             return new PointF(x, y);
         }
 
-        public CelestialMap Recalculate(CelestialMap spaceMap, TurnSettings settings)
+        public CelestialMap Recalculate(CelestialMap spaceMap, EngineSettings settings)
         {
             var result = spaceMap.DeepClone();
 

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Engine.Configuration;
 using Engine.UI.DrawEngine;
 using Engine.UI.Model;
-using EngineCore.DataProcessing;
+using EngineCore;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -61,7 +61,7 @@ namespace Engine.UI.Controls
 
         private void UpdateTrajectoryHistory(GameSession gameSession)
         {
-            var settings = new TurnSettings();
+            var settings = new EngineSettings();
 
             foreach (var currentObject in gameSession.SpaceMap.CelestialObjects)
             {

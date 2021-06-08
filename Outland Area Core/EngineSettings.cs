@@ -1,7 +1,7 @@
 ﻿
-namespace EngineCore.DataProcessing
+namespace EngineCore
 {
-    public class TurnSettings
+    public class EngineSettings
     {
         public int UnitsPerSecond { get; set; } = 20;
 

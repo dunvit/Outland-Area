@@ -139,7 +139,7 @@ namespace Outland_Area_CoreTests.DataProcessing
         [TestMethod]
         public void WeaponModule_Shot_Test()
         {
-            var settings = new TurnSettings { DebugProperties = new DebugProperties(true, true) };
+            var settings = new EngineSettings { DebugProperties = new DebugProperties(true, true) };
 
             var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Map_FirstBattle", settings);
 

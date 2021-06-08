@@ -5,7 +5,7 @@ namespace EngineCore.DataProcessing
 {
     public class Commands
     {
-        public GameSession Execute(GameSession gameSession, TurnSettings settings)
+        public GameSession Execute(GameSession gameSession, EngineSettings settings)
         {
             var result = gameSession.DeepClone();
 

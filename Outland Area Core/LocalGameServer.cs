@@ -19,13 +19,13 @@ namespace EngineCore
         public Hashtable Commands { get; set; } = new Hashtable();
         public List<Command> CommandsHistory { get; set; } = new List<Command>();
 
-        private TurnSettings _turnSettings = new TurnSettings();
+        private EngineSettings _turnSettings = new EngineSettings();
 
         public int SessionId { get; private set; }
 
         static readonly object _locker = new object();
 
-        public GameSession Initialization(string scenario, TurnSettings turnSettings)
+        public GameSession Initialization(string scenario, EngineSettings turnSettings)
         {
             _turnSettings = turnSettings;
 

@@ -11,7 +11,7 @@ namespace EngineCore.DataProcessing
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CelestialMap Recalculate(GameSession gameSession, TurnSettings settings)
+        public CelestialMap Recalculate(GameSession gameSession, EngineSettings settings)
         {
             var result = gameSession.SpaceMap.DeepClone();            
 

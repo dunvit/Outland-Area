@@ -11,7 +11,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public GameSession Execution(GameSession gameSession, TurnSettings settings, Command command)
+        public GameSession Execution(GameSession gameSession, EngineSettings settings, Command command)
         {
             var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
 
