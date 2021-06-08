@@ -19,15 +19,22 @@ namespace EngineCore
         public Hashtable Commands { get; set; } = new Hashtable();
         public List<Command> CommandsHistory { get; set; } = new List<Command>();
 
-        private TurnSettings _turnSettings;
+        private TurnSettings _turnSettings = new TurnSettings();
 
         public int SessionId { get; private set; }
+
+        static readonly object _locker = new object();
+
+        public GameSession Initialization(string scenario, TurnSettings turnSettings)
+        {
+            _turnSettings = turnSettings;
+
+            return Initialization(scenario);
+        }
 
         public GameSession Initialization(string scenario)
         {
             var stopwatch = Stopwatch.StartNew();
-
-            _turnSettings = new TurnSettings();
 
             _gameSession = ScenarioConvertor.LoadGameSession(scenario);
 
@@ -74,31 +81,34 @@ namespace EngineCore
 
         public void TurnCalculation()
         {
-            var stopwatch = Stopwatch.StartNew();
+            lock(_locker)
+            {
+                var stopwatch = Stopwatch.StartNew();
 
-            _gameSession.Turn++;
+                _gameSession.Turn++;
 
-            var turnGameSession = _gameSession.DeepClone();
+                var turnGameSession = _gameSession.DeepClone();
 
-            turnGameSession.Commands = GetCommands();
+                turnGameSession.Commands = GetCommands();
 
-            //-------------------------------------------------------------------------------------------------- Start calculations
+                //-------------------------------------------------------------------------------------------------- Start calculations
 
-            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
+                turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
 
-            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
+                turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
 
-            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
+                turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
-            turnGameSession = new SessionEvents().Execute(turnGameSession);
+                turnGameSession = new SessionEvents().Execute(turnGameSession);
 
-            //--------------------------------------------------------------------------------------------------- End calculations
+                //--------------------------------------------------------------------------------------------------- End calculations
 
-            DebugPlayerShipParameters(turnGameSession.DeepClone());
+                DebugPlayerShipParameters(turnGameSession.DeepClone());
 
-            _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
+                _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+                Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            }
         }
 
         private void DebugPlayerShipParameters(GameSession turnGameSession)
@@ -140,24 +150,19 @@ namespace EngineCore
             Logger.Info($"[Server][{GetType().Name}][PauseSession] Successed.");
         }
 
-        public void Command(int sessionId, string commandBody)
-        {
-            Command(sessionId, commandBody, false);
-        }
-
         /// <summary>
         /// Only for integration tests
         /// </summary>
         /// <param name="sessionId"></param>
         /// <param name="commandBody"></param>
         /// <param name="isAlwaysSuccessful"></param>
-        public void Command(int sessionId, string commandBody, bool isAlwaysSuccessful)
+        public void Command(int sessionId, string commandBody)
         {
             var typeId = (int)JObject.Parse(commandBody)["TypeId"];
 
             Logger.Debug($"[Server][{GetType().Name}][Command] Add command sessionId={sessionId} typeId={typeId} body={commandBody}");
 
-            var command = new Command(commandBody, isAlwaysSuccessful);
+            var command = new Command(commandBody);
 
             var commandKey = sessionId + "_" + command.CelestialObjectId + "_" + command.Type;
 

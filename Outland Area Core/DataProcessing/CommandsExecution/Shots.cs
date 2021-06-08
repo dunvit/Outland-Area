@@ -13,9 +13,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
         public GameSession Execution(GameSession gameSession, TurnSettings settings, Command command)
         {
-            var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
-
-            
+            var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);            
 
             Logger.Debug($"[{GetType().Name}][Execution] Execution Shot command - {command.Type} turn '{gameSession.Turn}'");
 
@@ -29,7 +27,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
             var currentModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId);
 
             // TODO: Check is module reloaded
-            if (currentModule.IsReloaded == false)
+            if (currentModule.IsReloaded == false && settings.DebugProperties.IsAlwaysSuccessful == false)
             {
                 Logger.Debug($"[{GetType().Name}][Execution] Module not reloaded. {currentModule.Reloading}/{currentModule.ReloadTime} turn '{gameSession.Turn}'");
                 return gameSession;
@@ -39,7 +37,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             var shotResult = Tools.RandomGenerator.GetDouble(100);
 
-            if (commandPrediction.Max < shotResult  || command.IsAlwaysSuccessful)
+            if (commandPrediction.Max < shotResult  || settings.DebugProperties.IsAlwaysSuccessful)
             {
                 // Hit
                 // TODO: Move hit calculation to separate class
