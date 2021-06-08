@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using EngineCore.DataProcessing;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -23,7 +24,7 @@ namespace EngineCore
 
         public int SessionId { get; private set; }
 
-        static readonly object _locker = new object();
+        private readonly ReaderWriterLockSlim dictionaryLock = new ReaderWriterLockSlim();
 
         public GameSession Initialization(string scenario, EngineSettings turnSettings)
         {
@@ -81,34 +82,36 @@ namespace EngineCore
 
         public void TurnCalculation()
         {
-            lock(_locker)
-            {
-                var stopwatch = Stopwatch.StartNew();
+            dictionaryLock.EnterWriteLock();
+            
+            var stopwatch = Stopwatch.StartNew();
 
-                _gameSession.Turn++;
+            _gameSession.Turn++;
 
-                var turnGameSession = _gameSession.DeepClone();
+            var turnGameSession = _gameSession.DeepClone();
 
-                turnGameSession.Commands = GetCommands();
+            turnGameSession.Commands = GetCommands();
 
-                //-------------------------------------------------------------------------------------------------- Start calculations
+            //-------------------------------------------------------------------------------------------------- Start calculations
 
-                turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
+            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
 
-                turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
+            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
 
-                turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
+            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
-                turnGameSession = new SessionEvents().Execute(turnGameSession);
+            turnGameSession = new SessionEvents().Execute(turnGameSession);
 
-                //--------------------------------------------------------------------------------------------------- End calculations
+            //--------------------------------------------------------------------------------------------------- End calculations
 
-                DebugPlayerShipParameters(turnGameSession.DeepClone());
+            DebugPlayerShipParameters(turnGameSession.DeepClone());
 
-                _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
+            _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-                Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
-            }
+            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            
+
+            dictionaryLock.ExitWriteLock();
         }
 
         private void DebugPlayerShipParameters(GameSession turnGameSession)

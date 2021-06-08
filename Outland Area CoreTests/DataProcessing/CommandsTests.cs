@@ -220,5 +220,16 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             Assert.AreEqual(true, targetSpacecraft.IsDestroyed);
         }
+
+        [TestMethod]
+        public void Microsoft_Url_Replacer()
+        {
+            var a = new EngineCore.Tools.DictionaryWithReaderWriterLock<int, int>();
+
+            a.Add(1, 2);
+            a.Add(3, 4);
+
+            
+        }
     }
 }
