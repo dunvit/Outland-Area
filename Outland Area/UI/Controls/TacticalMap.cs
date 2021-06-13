@@ -34,10 +34,21 @@ namespace Engine.UI.Controls
 
             if (Global.Game is null) return;
 
+            // TODO: Add class for generate events for map interaction (click, mouse move) with CelestialMap
+            MouseClick += new MouseEventHandler(MapClick);
+            //MouseMove += new MouseEventHandler(MapMouseMove);
+
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnStartGameSession += Event_StartGameSession;
         }
-        
+
+        private void MapClick(object sender, MouseEventArgs e)
+        {
+            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+        }
+
         private void Event_StartGameSession(GameSession gameSession)
         {
             _gameSession = gameSession.DeepClone();
@@ -48,8 +59,7 @@ namespace Engine.UI.Controls
         }
 
         private void Event_EndTurn(GameSession gameSession)
-        {
-            
+        {            
             _gameSession = gameSession.DeepClone();
 
             UpdateTrajectoryHistory(_gameSession);
@@ -158,8 +168,6 @@ namespace Engine.UI.Controls
 
             Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
-
-
 
         private void DrawTacticalMapScreen(IScreenInfo screenParameters, GameSession gameSession)
         {

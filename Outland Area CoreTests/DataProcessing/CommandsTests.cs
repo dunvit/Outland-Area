@@ -1,5 +1,4 @@
 ﻿using EngineCore;
-using EngineCore.DataProcessing;
 using EngineCore.Session;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
@@ -221,15 +220,30 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(true, targetSpacecraft.IsDestroyed);
         }
 
+
         [TestMethod]
-        public void Microsoft_Url_Replacer()
+        public void Debugger_Replacer()
         {
             var a = new EngineCore.Tools.DictionaryWithReaderWriterLock<int, int>();
 
             a.Add(1, 2);
             a.Add(3, 4);
-
-            
         }
+
+
+        //[TestMethod]
+        //public void Microsoft_Url_Replacer()
+        //{
+        //    var x1 = "https://s3.amazonaws.com/nv-p1-s3-assets-01/233396/1010/CSS/https/www.microsoft.com/onerfstatics/marketingsites-neu-prod/west-european/mscomhp/_scrf/css/themes%3Ddefault.device%3Duplevel_web_pc_webkit_chrome/32-1b5444/57-7b1339/37-e29aca/21-7d6c87/5a-e79275/2c-511e5e/65-478888%253Fver%3D2.0%26_cf%3D20210415";
+        //    //var x2 = "https://www.microsoft.com/onerfstatics/marketingsites-neu-prod/west-european/mscomhp/_scrf/css/themes%3Ddefault.device%3Duplevel_web_pc_webkit_chrome/32-1b5444/57-7b1339/37-e29aca/21-7d6c87/5a-e79275/2c-511e5e/65-478888%253Fver%3D2.0%26amp;_cf%3D20210415";
+
+        //    var urlBeforePTC = "https://s3.amazonaws.com/nv-p1-s3-assets-01/233396/1010/CSS/https/www.microsoft.com/onerfstatics/sfweusprod/west-european/store/_scrf/css/themes=store-web-default.device=uplevel_web_pc_webkit_chrome/9b-e8249b/fd-dc83dc/a9-92371e/33-5b9c81/7c-b44414/4e-fc9431/e9-4b83da/4d-131846/24-736200/15-4dced4/2d-5397d3/bf-9c867f/8f-bf0bd9/80-55f65d";
+
+        //    var urlAfterPTCUpdate = x1.
+        //    Replace("?", "%253F").
+        //    //Replace("&", "&amp;").
+        //    Replace("&", "%26").
+        //    Replace("=", "%3D");
+        //}
     }
 }

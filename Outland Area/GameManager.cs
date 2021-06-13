@@ -22,6 +22,7 @@ namespace Engine
         public event Action<GameSession> OnEndTurn;
         public event Action<GameSession> OnStartGameSession;
         public event Action<int> OnSelectModule;
+        public event Action<int> OnCancelModule;
         public event Action<GameSession> OnInitializationFinish;
 
         public List<string> AcceptedEvents = new List<string>();
@@ -151,6 +152,11 @@ namespace Engine
         public void EventActivateModule(int id)
         {
             OnSelectModule?.Invoke(id);
+        }
+
+        public void EventCancelModule(int id)
+        {
+            OnCancelModule?.Invoke(id);
         }
 
         public void ExecuteCommand(Command command)

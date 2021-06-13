@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace EngineCore.Tools
 {
-    //[DebuggerDisplay("Count = {Count}")]
+    [DebuggerDisplay("Count = {Count}")]
     //[DebuggerDisplay("{DebuggerDisplay(),nq}")]
     [DebuggerDisplay("{dictionary.value}", Name = "{dictionary.key}")]
     public class DictionaryWithReaderWriterLock<TKey, TValue>

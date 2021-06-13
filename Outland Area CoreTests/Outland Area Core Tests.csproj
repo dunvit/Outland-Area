@@ -151,6 +151,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Outland Area Core\Outland Area Core.csproj" />
+    <ProjectReference Include="..\Outland Area\Outland Area.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -224,6 +225,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Scenarios\CommandsTests_Map_FirstBattle\Events\" />
+    <Folder Include="UI\" />
   </ItemGroup>
 
 </Project>

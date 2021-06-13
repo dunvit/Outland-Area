@@ -2,11 +2,38 @@
 using System.Drawing;
 using System.Numerics;
 using EngineCore.Geometry.Trajectory;
+using EngineCore.Session;
+using EngineCore.Tools;
+using EngineCore.Universe.Model;
 
 namespace EngineCore.Geometry
 {
     public class SpaceMapTools
     {
+        public static PointF ToRelativeCoordinates(PointF mouseLocation, PointF centerPosition)
+        {
+            var relativeX = (mouseLocation.X - centerPosition.X);
+            var relativeY = (mouseLocation.Y - centerPosition.Y);
+
+            return new PointF(relativeX, relativeY);
+        }
+
+        public static PointF ToTacticalMapCoordinates(PointF currentMouseCoordinates, PointF centerPosition)
+        {
+            var relativeX = (centerPosition.X + currentMouseCoordinates.X);
+            var relativeY = (centerPosition.Y + currentMouseCoordinates.Y);
+
+            return new PointF(relativeX, relativeY);
+        }
+
+        public static PointF ToAbsoluteCoordinates(PointF centerRadarLocation, PointF centerPosition, PointF celestialObjectPosition)
+        {
+            var relativeX = (celestialObjectPosition.X - centerRadarLocation.X);
+            var relativeY = (celestialObjectPosition.Y - centerRadarLocation.Y);
+
+            return new PointF(centerPosition.X + relativeX, centerPosition.Y + relativeY);
+        }
+
         #region Move
         public static SpaceMapVector Move(Vector2 from, double speed, double angle)
         {
@@ -299,6 +326,27 @@ namespace EngineCore.Geometry
                 if (dist == radius0 + radius1) return 1;
                 return 2;
             }
+        }
+
+        public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, PointF point)
+        {
+            foreach (var celestialObjects in gameSession.SpaceMap.CelestialObjects)
+            {
+                if (IsObjectInRange(celestialObjects, distance, point))
+                {
+                    return celestialObjects.DeepClone();
+                }
+            }
+
+            return null;
+        }
+
+        public static bool IsObjectInRange(ICelestialObject celestialObject, int distance, PointF point)
+        {
+            var w = Math.Abs(celestialObject.PositionX - point.X);
+            var h = Math.Abs(celestialObject.PositionY - point.Y);
+
+            return w < distance && h < distance;
         }
     }
 
