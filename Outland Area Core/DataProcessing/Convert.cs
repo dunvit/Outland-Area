@@ -21,7 +21,7 @@ namespace EngineCore.DataProcessing
         {
             var gameSessionForClient = gameSession.DeepClone();
 
-            gameSessionForClient.SpaceMap.CelestialObjects = VisibilityAreaFilter(gameSession);
+            gameSessionForClient.CelestialObjects = VisibilityAreaFilter(gameSession);
 
             gameSessionForClient.ScenarioEvents = ScenarioEventsFilter(gameSession);
 
@@ -41,7 +41,7 @@ namespace EngineCore.DataProcessing
 
         private static List<ICelestialObject> VisibilityAreaFilter(GameSession gameSession)
         {
-            var objectsInScreen = gameSession.SpaceMap.CelestialObjects.Map(celestialObject => (celestialObject,
+            var objectsInScreen = gameSession.CelestialObjects.Map(celestialObject => (celestialObject,
                     Coordinates.GetDistance(
                         gameSession.GetPlayerSpaceShip().GetLocation(),
                         celestialObject.GetLocation())

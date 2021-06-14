@@ -25,8 +25,6 @@ namespace EngineCore.Session
 
         public int Turn { get; set; }
 
-        public CelestialMap SpaceMap { get; set; }
-
         public Rules Rules { get; set; } = new Rules();
 
         public Hashtable Commands { get; set; } = new Hashtable();
@@ -36,6 +34,8 @@ namespace EngineCore.Session
         public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
 
         public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
+
+        public List<ICelestialObject> CelestialObjects { get; set; } = new List<ICelestialObject>();
 
         public void AddEvent(GameEvent gameEvent)
         {

@@ -27,6 +27,7 @@ namespace Engine.UI.Controls
         private GameSession _gameSession;
         private bool _refreshInProgress;
         private Hashtable _history = new Hashtable();
+        
 
         public TacticalMap()
         {
@@ -40,6 +41,7 @@ namespace Engine.UI.Controls
 
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnStartGameSession += Event_StartGameSession;
+
         }
 
         private void MapClick(object sender, MouseEventArgs e)
@@ -73,7 +75,7 @@ namespace Engine.UI.Controls
         {
             var settings = new EngineSettings();
 
-            foreach (var currentObject in gameSession.SpaceMap.CelestialObjects)
+            foreach (var currentObject in gameSession.CelestialObjects)
             {
                 if (_history.ContainsKey(currentObject.Id))
                 {

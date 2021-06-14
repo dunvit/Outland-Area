@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using EngineCore.Session;
-using EngineCore.Tools;
 using EngineCore.Universe.Objects;
 using log4net;
 
@@ -11,11 +10,11 @@ namespace EngineCore.DataProcessing
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CelestialMap Recalculate(GameSession gameSession, EngineSettings settings)
+        public GameSession Recalculate(GameSession gameSession, EngineSettings settings)
         {
-            var result = gameSession.SpaceMap.DeepClone();            
+            //var result = gameSession.SpaceMap.DeepClone();            
 
-            foreach (var celestialObject in result.CelestialObjects)
+            foreach (var celestialObject in gameSession.CelestialObjects)
             {
                 if (celestialObject.IsSpaceship() == false) continue;
 
@@ -44,7 +43,7 @@ namespace EngineCore.DataProcessing
                 }
             }
 
-            return result;
+            return gameSession;
         }
     }
 }

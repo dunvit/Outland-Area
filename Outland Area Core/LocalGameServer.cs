@@ -96,9 +96,9 @@ namespace EngineCore
 
             turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
 
-            turnGameSession.SpaceMap = new Coordinates().Recalculate(turnGameSession.SpaceMap, _turnSettings);
+            turnGameSession = new Coordinates().Recalculate(turnGameSession, _turnSettings);
 
-            turnGameSession.SpaceMap = new Reloading().Recalculate(turnGameSession, _turnSettings);
+            turnGameSession = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
             turnGameSession = new SessionEvents().Execute(turnGameSession);
 

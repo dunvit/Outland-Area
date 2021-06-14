@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using EngineCore.Geometry;
+using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
 using log4net;
@@ -67,11 +68,9 @@ namespace EngineCore.DataProcessing
             return new PointF(x, y);
         }
 
-        public CelestialMap Recalculate(CelestialMap spaceMap, EngineSettings settings)
+        public GameSession Recalculate(GameSession gameSession, EngineSettings settings)
         {
-            var result = spaceMap.DeepClone();
-
-            foreach (var celestialObject in result.CelestialObjects)
+            foreach (var celestialObject in gameSession.CelestialObjects)
             {
                 var speedInTick = celestialObject.Speed / settings.UnitsPerSecond;
 
@@ -89,7 +88,7 @@ namespace EngineCore.DataProcessing
                 celestialObject.PositionY = position.Y;
             }
 
-            return result;
+            return gameSession;
         }
 
         public static bool IsLinearMotion(ObjectLocation currentLocation, PointF targetLocation)

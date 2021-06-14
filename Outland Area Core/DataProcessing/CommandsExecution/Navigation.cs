@@ -82,7 +82,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
         private GameSession TurnLeft(GameSession gameSession, ICelestialObject celestialObject, IModule module)
         {
             // TODO: Add property Mobility to Spacecraft
-            const float MobilityInDegrees = 0.5f;
+            const float MobilityInDegrees = 10.0f;
 
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver - MobilityInDegrees > 0) ? directionBeforeManeuver - MobilityInDegrees : 360 - (directionBeforeManeuver - MobilityInDegrees);
@@ -97,7 +97,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
         private GameSession TurnRight(GameSession gameSession, ICelestialObject celestialObject, IModule module)
         {
             // TODO: Add property Mobility to Spacecraft
-            const float MobilityInDegrees = 0.5f;
+            const float MobilityInDegrees = 10.0f;
 
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver + MobilityInDegrees < 360.1) ? directionBeforeManeuver + MobilityInDegrees : (directionBeforeManeuver + MobilityInDegrees) - 360;

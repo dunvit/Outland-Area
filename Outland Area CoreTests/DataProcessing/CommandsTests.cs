@@ -11,6 +11,9 @@ namespace Outland_Area_CoreTests.DataProcessing
     [TestClass()]
     public class CommandsTests
     {
+        // TODO: Add property Mobility to Spacecraft
+        const float MobilityInDegrees = 10.0f;
+
         [TestMethod()]
         public void PropulsionModule_Braking_Test()
         {
@@ -74,7 +77,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(90.5, spaceship.Direction);
+            Assert.AreEqual(90 + 1 * MobilityInDegrees, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -85,13 +88,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(91, spaceship.Direction);
+            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(91, spaceship.Direction);
+            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
         }
 
         [TestMethod()]
@@ -115,7 +118,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(89.5, spaceship.Direction);
+            Assert.AreEqual(90 - MobilityInDegrees, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -126,13 +129,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(89, spaceship.Direction);
+            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
 
-            Assert.AreEqual(89, spaceship.Direction);
+            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
         }
 
         [TestMethod]

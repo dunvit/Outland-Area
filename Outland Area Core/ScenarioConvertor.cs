@@ -66,12 +66,6 @@ namespace EngineCore
                 }
             }
 
-            var celestialMap = new CelestialMap
-            {
-                Id = (string)iCelestialMap["id"],
-                IsEnabled = (bool)iCelestialMap["isEnabled"],
-                Turn = (int)iCelestialMap["turn"]
-            };
 
             foreach (var celestialObject in iCelestialMap["celestialObjects"].ToArray())
             {
@@ -99,7 +93,7 @@ namespace EngineCore
                             IsScanned = (bool)jCelestialObject["isScanned"]
                         };
 
-                        celestialMap.CelestialObjects.Add(asteroid);
+                        gameSession.CelestialObjects.Add(asteroid);
                         break;
 
                     case 201:
@@ -219,7 +213,7 @@ namespace EngineCore
 
                         spaceship.Initialization();
 
-                        celestialMap.CelestialObjects.Add(spaceship);
+                        gameSession.CelestialObjects.Add(spaceship);
                         break;
 
                     case 300:
@@ -230,9 +224,7 @@ namespace EngineCore
 
             }
 
-            gameSession.SpaceMap = celestialMap;
-
-
+            //gameSession.SpaceMap = celestialMap;
 
             return gameSession;
         }
