@@ -16,7 +16,7 @@ namespace EngineCore.Session
 
         public static Spaceship GetPlayerSpaceShip(this GameSession session)
         {
-            foreach (var celestialObject in session.CelestialObjects)
+            foreach (var celestialObject in session.Data.CelestialObjects)
             {
                 if (celestialObject.Classification == 200)
                 {
@@ -30,9 +30,9 @@ namespace EngineCore.Session
         public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = false)
         {
             if(isCopy)
-                return (from celestialObjects in gameSession.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();
+                return (from celestialObjects in gameSession.Data.CelestialObjects where id == celestialObjects.Id select celestialObjects.DeepClone()).FirstOrDefault();
 
-            return (from celestialObjects in gameSession.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
+            return (from celestialObjects in gameSession.Data.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
         }
 
         public static double GetDistance(this GameSession session, int objectId, int targetId)

@@ -18,7 +18,7 @@ namespace EngineCore.DataProcessing
 
             var result = gameSession.DeepClone();
 
-            if (gameSession.Rules.IsEventsEnabled == false)
+            if (gameSession.Data.Rules.IsEventsEnabled == false)
             {
                 gameSession.AddHistoryMessage("SessionEvents canceled by scenario configuration.", GetType().Name, true);
 

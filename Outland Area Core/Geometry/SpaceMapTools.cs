@@ -330,7 +330,7 @@ namespace EngineCore.Geometry
 
         public static ICelestialObject GetObjectInRange(GameSession gameSession, int distance, PointF point)
         {
-            foreach (var celestialObjects in gameSession.CelestialObjects)
+            foreach (var celestialObjects in gameSession.Data.CelestialObjects)
             {
                 if (IsObjectInRange(celestialObjects, distance, point))
                 {

@@ -70,7 +70,7 @@ namespace EngineCore.DataProcessing
 
         public GameSession Recalculate(GameSession gameSession, EngineSettings settings)
         {
-            foreach (var celestialObject in gameSession.CelestialObjects)
+            foreach (var celestialObject in gameSession.Data.CelestialObjects)
             {
                 var speedInTick = celestialObject.Speed / settings.UnitsPerSecond;
 

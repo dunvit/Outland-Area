@@ -45,7 +45,7 @@ namespace EngineCore.Scenario
 
                 result.Add(generatedSpaceShip.Id.ToString());
 
-                session.CelestialObjects.Add(generatedSpaceShip);
+                session.Data.CelestialObjects.Add(generatedSpaceShip);
             }
 
             return result;

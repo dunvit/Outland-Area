@@ -16,18 +16,18 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var gameSession = server.RefreshGameSession(server.SessionId);
 
-            var spaceShip = gameSession.GetCelestialObject(gameSession.CelestialObjects[0].Id);
+            var spaceShip = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id);
 
             var position = spaceShip.GetLocation();
 
-            Assert.AreEqual(1, gameSession.CelestialObjects.Count);
+            Assert.AreEqual(1, gameSession.Data.CelestialObjects.Count);
             Assert.AreEqual(new PointF(10000, 10000), position);
 
             server.TurnCalculation();
 
             gameSession = server.RefreshGameSession(server.SessionId);
 
-            position = gameSession.GetCelestialObject(gameSession.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF((float) 10000.35, 10000), position);
 
@@ -36,7 +36,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             gameSession = server.RefreshGameSession(server.SessionId);
 
-            position = gameSession.GetCelestialObject(gameSession.CelestialObjects[0].Id).GetLocation();
+            position = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id).GetLocation();
 
             Assert.AreEqual(new PointF((float)10006.9922, 10000), position);
         }

@@ -177,7 +177,7 @@ namespace Engine
             
         }
 
-        object commandsLock = new Object();
+        object commandsLock = new object();
 
         private void CommandsSending()
         {

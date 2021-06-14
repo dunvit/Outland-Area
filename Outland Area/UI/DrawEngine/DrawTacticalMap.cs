@@ -67,7 +67,7 @@ namespace Engine.UI.DrawEngine
 
         public static void DrawCelestialObjects(IScreenInfo screenInfo, GameSession gameSession)
         {
-            foreach (var currentObject in gameSession.CelestialObjects)
+            foreach (var currentObject in gameSession.Data.CelestialObjects)
             {
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
@@ -139,7 +139,7 @@ namespace Engine.UI.DrawEngine
         {
             var color = Color.DimGray;
 
-            foreach (var currentObject in gameSession.CelestialObjects)
+            foreach (var currentObject in gameSession.Data.CelestialObjects)
             {
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
@@ -170,7 +170,7 @@ namespace Engine.UI.DrawEngine
 
         public static void DrawHistoryTrajectory(IScreenInfo screenInfo, GameSession gameSession, Hashtable history)
         {
-            foreach (var currentObject in gameSession.CelestialObjects)
+            foreach (var currentObject in gameSession.Data.CelestialObjects)
             {
                 if (!history.ContainsKey(currentObject.Id)) continue;
 

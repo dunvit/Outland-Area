@@ -15,6 +15,8 @@ namespace EngineCore.Session
     [Serializable]
     public class GameSession
     {
+        public SessionData Data { get; set; } = new SessionData();
+
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public string ScenarioName { get; set; }
@@ -23,19 +25,15 @@ namespace EngineCore.Session
 
         public int Id { get; set; }
 
-        public int Turn { get; set; }
-
-        public Rules Rules { get; set; } = new Rules();
+        public int Turn { get; set; }        
 
         public Hashtable Commands { get; set; } = new Hashtable();
 
         public List<IScenarioEvent> ScenarioEvents { get; set; }
 
-        public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();
+        
 
-        public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();
-
-        public List<ICelestialObject> CelestialObjects { get; set; } = new List<ICelestialObject>();
+        public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();        
 
         public void AddEvent(GameEvent gameEvent)
         {
@@ -43,7 +41,7 @@ namespace EngineCore.Session
 
             Logger.Info($"Add event.Turn = {gameEvent.Turn} Turn = {Turn}");
 
-            GameEvents.Add(gameEvent);
+            Data.GameEvents.Add(gameEvent);
         }
 
         //public void AddCommand(string commandBody)
@@ -58,12 +56,12 @@ namespace EngineCore.Session
 
         public List<GameEvent> GetTurnEvents(int turn)
         {
-            return GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
+            return Data.GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
         }
 
         public List<GameEvent> GetCurrentTurnEvents()
         {
-            return GameEvents.Where(_ => _.Turn + 5 > Turn).Map(message => message).ToList();
+            return Data.GameEvents.Where(_ => _.Turn + 5 > Turn).Map(message => message).ToList();
         }
 
         public List<IScenarioEvent> GetScenarioEvents()

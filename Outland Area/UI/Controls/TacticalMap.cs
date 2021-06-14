@@ -75,7 +75,7 @@ namespace Engine.UI.Controls
         {
             var settings = new EngineSettings();
 
-            foreach (var currentObject in gameSession.CelestialObjects)
+            foreach (var currentObject in gameSession.Data.CelestialObjects)
             {
                 if (_history.ContainsKey(currentObject.Id))
                 {

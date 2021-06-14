@@ -57,14 +57,15 @@ namespace EngineCore
                 {
                     var spawnRules = rules["spawn"];
 
-                    gameSession.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
+                    gameSession.Data.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
                 }
 
                 if (rules["events"] != null)
                 {
-                    gameSession.Rules.IsEventsEnabled = (bool)rules["events"];
+                    gameSession.Data.Rules.IsEventsEnabled = (bool)rules["events"];
                 }
             }
+
 
 
             foreach (var celestialObject in iCelestialMap["celestialObjects"].ToArray())
@@ -93,7 +94,7 @@ namespace EngineCore
                             IsScanned = (bool)jCelestialObject["isScanned"]
                         };
 
-                        gameSession.CelestialObjects.Add(asteroid);
+                        gameSession.Data.CelestialObjects.Add(asteroid);
                         break;
 
                     case 201:
@@ -213,7 +214,7 @@ namespace EngineCore
 
                         spaceship.Initialization();
 
-                        gameSession.CelestialObjects.Add(spaceship);
+                        gameSession.Data.CelestialObjects.Add(spaceship);
                         break;
 
                     case 300:
