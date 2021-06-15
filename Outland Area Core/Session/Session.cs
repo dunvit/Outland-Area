@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EngineCore.Events;
-using EngineCore.Scenario;
 using EngineCore.Universe.Model;
 using log4net;
-using Newtonsoft.Json.Linq;
 
 namespace EngineCore.Session
 {
@@ -31,9 +28,7 @@ namespace EngineCore.Session
 
         public List<IScenarioEvent> ScenarioEvents { get; set; }
 
-        
-
-        public List<HistoryMessage> TurnHistory { get; set; } = new List<HistoryMessage>();        
+                
 
         public void AddEvent(GameEvent gameEvent)
         {

@@ -30,13 +30,14 @@ namespace Engine.UI.Screens
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.crlModule = new Engine.UI.Controls.Module();
             this.crlCommandsContainer = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.gameSessionInformation1 = new Engine.UI.Controls.GameSessionInformation();
             this.crlTacticalMap = new Engine.UI.Controls.TacticalMap();
-            this.crlModule = new Engine.UI.Controls.Module();
+            this.controlGameSessionLog = new Engine.UI.Controls.GameSessionLog();
             this.panel1.SuspendLayout();
             this.crlCommandsContainer.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -45,6 +46,7 @@ namespace Engine.UI.Screens
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.controlGameSessionLog);
             this.panel1.Controls.Add(this.crlModule);
             this.panel1.Controls.Add(this.crlCommandsContainer);
             this.panel1.Controls.Add(this.gameSessionInformation1);
@@ -54,6 +56,16 @@ namespace Engine.UI.Screens
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1215, 734);
             this.panel1.TabIndex = 0;
+            // 
+            // crlModule
+            // 
+            this.crlModule.BackColor = System.Drawing.Color.Black;
+            this.crlModule.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crlModule.Location = new System.Drawing.Point(443, 602);
+            this.crlModule.Name = "crlModule";
+            this.crlModule.Size = new System.Drawing.Size(277, 100);
+            this.crlModule.TabIndex = 3;
+            this.crlModule.Visible = false;
             // 
             // crlCommandsContainer
             // 
@@ -112,15 +124,13 @@ namespace Engine.UI.Screens
             this.crlTacticalMap.Size = new System.Drawing.Size(274, 247);
             this.crlTacticalMap.TabIndex = 1;
             // 
-            // crlModule
+            // controlGameSessionLog
             // 
-            this.crlModule.BackColor = System.Drawing.Color.Black;
-            this.crlModule.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crlModule.Location = new System.Drawing.Point(443, 602);
-            this.crlModule.Name = "crlModule";
-            this.crlModule.Size = new System.Drawing.Size(277, 100);
-            this.crlModule.TabIndex = 3;
-            this.crlModule.Visible = false;
+            this.controlGameSessionLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlGameSessionLog.Location = new System.Drawing.Point(933, 578);
+            this.controlGameSessionLog.Name = "controlGameSessionLog";
+            this.controlGameSessionLog.Size = new System.Drawing.Size(269, 143);
+            this.controlGameSessionLog.TabIndex = 4;
             // 
             // WindowTacticalLayerContainer
             // 
@@ -150,5 +160,6 @@ namespace Engine.UI.Screens
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private Controls.Module crlModule;
+        private Controls.GameSessionLog controlGameSessionLog;
     }
 }

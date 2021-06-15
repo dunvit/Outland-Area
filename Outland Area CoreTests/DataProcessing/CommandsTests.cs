@@ -149,7 +149,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
-            var targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
+            var targetSpacecraft = gameSession.GetCelestialObject(1000348945).ToSpaceship();
 
             var module = spaceship.GetWeaponModules().First();
 

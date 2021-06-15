@@ -26,7 +26,7 @@ namespace Engine.UI.Controls
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
         private bool _refreshInProgress;
-        private Hashtable _history = new Hashtable();
+        private readonly Hashtable _history = new Hashtable();
         
 
         public TacticalMap()
@@ -36,7 +36,7 @@ namespace Engine.UI.Controls
             if (Global.Game is null) return;
 
             // TODO: Add class for generate events for map interaction (click, mouse move) with CelestialMap
-            MouseClick += new MouseEventHandler(MapClick);
+            MouseClick += MapClick;
             //MouseMove += new MouseEventHandler(MapMouseMove);
 
             Global.Game.OnEndTurn += Event_EndTurn;
