@@ -1,4 +1,5 @@
-﻿using EngineCore.Session;
+﻿using System;
+using EngineCore.Session;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
@@ -84,12 +85,16 @@ namespace EngineCore.DataProcessing.CommandsExecution
             // TODO: Add property Mobility to Spacecraft
             const float MobilityInDegrees = 10.0f;
 
+            var spacecraft = (Spaceship)celestialObject;
+
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver - MobilityInDegrees > 0) ? directionBeforeManeuver - MobilityInDegrees : 360 - (directionBeforeManeuver - MobilityInDegrees);
 
             celestialObject.Direction = directionAfterManeuver;
 
             module.Reload();
+
+            gameSession.AddHistoryMessage($"The ship '{spacecraft.Name}' changed direction {MobilityInDegrees} degrees from {Math.Round(directionBeforeManeuver,2)} to {Math.Round(directionAfterManeuver, 2)}. ");
 
             return gameSession;
         }
@@ -99,12 +104,16 @@ namespace EngineCore.DataProcessing.CommandsExecution
             // TODO: Add property Mobility to Spacecraft
             const float MobilityInDegrees = 10.0f;
 
+            var spacecraft = (Spaceship)celestialObject;
+
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver + MobilityInDegrees < 360.1) ? directionBeforeManeuver + MobilityInDegrees : (directionBeforeManeuver + MobilityInDegrees) - 360;
 
             celestialObject.Direction = directionAfterManeuver;
 
             module.Reload();
+
+            gameSession.AddHistoryMessage($"The ship '{spacecraft.Name}' changed direction {MobilityInDegrees} degrees from {Math.Round(directionBeforeManeuver, 2)} to {Math.Round(directionAfterManeuver, 2)}. ");
 
             return gameSession;
         }
