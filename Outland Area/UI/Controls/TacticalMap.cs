@@ -27,7 +27,9 @@ namespace Engine.UI.Controls
         private GameSession _gameSession;
         private bool _refreshInProgress;
         private Hashtable _history = new Hashtable();
-        
+
+        private readonly OuterSpace OuterSpaceTracker = new OuterSpace();
+
 
         public TacticalMap()
         {
@@ -49,6 +51,8 @@ namespace Engine.UI.Controls
             var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
             var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+
+            OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates);
         }
 
         private void Event_StartGameSession(GameSession gameSession)
@@ -62,7 +66,7 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {            
-            _gameSession = gameSession.DeepClone();
+            _gameSession = gameSession.DeepClone();            
 
             UpdateTrajectoryHistory(_gameSession);
 
