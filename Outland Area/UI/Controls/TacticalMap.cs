@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using Engine.Configuration;
+using Engine.Tools;
 using Engine.UI.DrawEngine;
 using Engine.UI.Model;
 using EngineCore;
@@ -28,7 +29,7 @@ namespace Engine.UI.Controls
         private bool _refreshInProgress;
         private Hashtable _history = new Hashtable();
 
-        private readonly OuterSpace OuterSpaceTracker = new OuterSpace();
+        
 
 
         public TacticalMap()
@@ -38,12 +39,20 @@ namespace Engine.UI.Controls
             if (Global.Game is null) return;
 
             // TODO: Add class for generate events for map interaction (click, mouse move) with CelestialMap
-            MouseClick += new MouseEventHandler(MapClick);
-            //MouseMove += new MouseEventHandler(MapMouseMove);
+            MouseClick += MapClick;
+            MouseMove += MapMouseMove;
 
             Global.Game.OnEndTurn += Event_EndTurn;
             Global.Game.OnStartGameSession += Event_StartGameSession;
+        }
 
+        private void MapMouseMove(object sender, MouseEventArgs e)
+        {
+            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+
+            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+
+            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, 2);
         }
 
         private void MapClick(object sender, MouseEventArgs e)
@@ -52,7 +61,7 @@ namespace Engine.UI.Controls
 
             var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates);
+            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, 1);
         }
 
         private void Event_StartGameSession(GameSession gameSession)

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Engine.Tools;
 using Engine.UI;
 using EngineCore;
 using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Model;
 using log4net;
 
 namespace Engine
@@ -28,6 +30,11 @@ namespace Engine
         public List<string> AcceptedEvents = new List<string>();
 
         public List<Command> Commands { get; set; } = new List<Command>();
+
+        private int activeCelestialObjectId;
+        private int selectedCelestialObjectId;
+
+        public OuterSpace OuterSpaceTracker = new OuterSpace();
 
         public GameManager()
         {
@@ -59,7 +66,25 @@ namespace Engine
 
             OnStartGameSession?.Invoke(_gameSession.DeepClone());
 
+            OuterSpaceTracker.OnChangeSelectedObject += Event_ChangeSelectedObject;
+            OuterSpaceTracker.OnChangeActiveObject += Event_ChangeActiveObject;
+
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
+        }
+
+        private void Event_ChangeActiveObject(int celestialObjectId)
+        {
+            activeCelestialObjectId = celestialObjectId;
+        }
+
+        private void Event_ChangeSelectedObject(int celestialObjectId)
+        {
+            selectedCelestialObjectId = celestialObjectId;
+        }
+
+        public ICelestialObject GetActiveObject()
+        {
+            return _gameSession.GetCelestialObject(activeCelestialObjectId);
         }
 
         private void GetDataFromServer()
