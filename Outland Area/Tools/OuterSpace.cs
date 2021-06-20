@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using EngineCore.DataProcessing;
 using EngineCore.Session;
-using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 
