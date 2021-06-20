@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
+using Engine.DAL;
 using Engine.Tools;
 using Engine.UI;
 using EngineCore;
@@ -89,69 +91,57 @@ namespace Engine
 
         private void GetDataFromServer()
         {
-            var timeMetricGetGameSession = Stopwatch.StartNew();
+            var refreshedGameSession = new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
 
-            var gameSession = _gameServer.RefreshGameSession(_gameSession.Id);
-
-            if(gameSession.IsPause)
+            if(refreshedGameSession != null && refreshedGameSession.IsPause == false)
             {
-                Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Pause game. Turn is ({gameSession.Turn}).");
-                return;
-            }
+                // Send to server all commands from previous turn.
+                CommandsSending();
 
-            // Send to server all commands from previous turn.
-            CommandsSending();
+                _gameSession = refreshedGameSession;
 
-            if (gameSession != null)
-            {
-                _gameSession = gameSession;
-
-                var turnEvents = gameSession.GetCurrentTurnEvents();
-
-                Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Loaded game events ({turnEvents.Count}) for turn N{_gameSession.Turn}.");
-
-                foreach (var message in turnEvents)
-                {
-                    if (AcceptedEvents.Contains(message.Id))
-                    {
-                        Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Event ({message.Id}) already exist in cach.");
-                        continue;
-                    }
-
-                    Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Event ({message.Id}) addad to cach.");
-                    AcceptedEvents.Add(message.Id);
-
-                    if (message.IsPause) SessionPause();
-
-                    if (message.Type == GameEventTypes.AnomalyFound)
-                    {
-                        //OnAnomalyFound?.Invoke(message, gameSession);
-                    }
-
-                    if (message.Type == GameEventTypes.OpenDialog)
-                    {
-                        //OnOpenDialog?.Invoke(message, gameSession);
-                    }
-
-                    // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
-                    if (message.Type == GameEventTypes.NpcSpaceShipFound)
-                    {
-                        //OnFoundSpaceship?.Invoke(message, gameSession);
-                        UiManager.OpenGameEventScreen(message, gameSession);
-                    }
-                }
+                ExecuteGameEvents(_gameSession);
 
                 OnEndTurn?.Invoke(_gameSession.DeepClone());
-            }
-            else
+            }            
+        }
+
+        private void ExecuteGameEvents(GameSession gameSession)
+        {
+            var turnEvents = gameSession.GetCurrentTurnEvents();
+
+            Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Loaded game events ({turnEvents.Count}) for turn N{gameSession.Turn}.");
+
+            foreach (var message in turnEvents)
             {
-                Logger.Error($"[Client][{GetType().Name}][GetDataFromServer] Critical error on refresh game id={_gameSession.Id}.");
-                return;
+                if (AcceptedEvents.Contains(message.Id))
+                {
+                    Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Event ({message.Id}) already exist in cach.");
+                    continue;
+                }
+
+                Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Event ({message.Id}) addad to cach.");
+                AcceptedEvents.Add(message.Id);
+
+                if (message.IsPause) SessionPause();
+
+                if (message.Type == GameEventTypes.AnomalyFound)
+                {
+                    //OnAnomalyFound?.Invoke(message, gameSession);
+                }
+
+                if (message.Type == GameEventTypes.OpenDialog)
+                {
+                    //OnOpenDialog?.Invoke(message, gameSession);
+                }
+
+                // TODO: LAST - ADD NpcSpaceShipFound logic to Container and open window with message
+                if (message.Type == GameEventTypes.NpcSpaceShipFound)
+                {
+                    //OnFoundSpaceship?.Invoke(message, gameSession);
+                    UiManager.OpenGameEventScreen(message, gameSession);
+                }
             }
-
-            timeMetricGetGameSession.Stop();
-
-            Logger.Debug($"[Client][{GetType().Name}][GetDataFromServer] Turn [{_gameSession.Turn}] Get data from server is finished {timeMetricGetGameSession.Elapsed.TotalMilliseconds} ms.");
         }
 
         public void SessionResume()
