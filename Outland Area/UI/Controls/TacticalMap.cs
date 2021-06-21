@@ -52,7 +52,7 @@ namespace Engine.UI.Controls
 
             var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, 2);
+            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.Move);
         }
 
         private void MapClick(object sender, MouseEventArgs e)
@@ -61,7 +61,7 @@ namespace Engine.UI.Controls
 
             var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, 1);
+            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.LeftClick);
         }
 
         private void Event_StartGameSession(GameSession gameSession)

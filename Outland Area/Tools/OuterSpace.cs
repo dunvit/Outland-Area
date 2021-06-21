@@ -16,7 +16,7 @@ namespace Engine.Tools
         private int activeObjectId;
         private int selectedObjectId;
 
-        public void Refresh(GameSession gameSession, System.Drawing.PointF coordinates, int type)
+        public void Refresh(GameSession gameSession, System.Drawing.PointF coordinates, MouseArguments type)
         {
             var objectsInRange = GetCelestialObjectsByDistance(gameSession, coordinates);
 
@@ -31,13 +31,13 @@ namespace Engine.Tools
 
             switch (type)
             {
-                case 1:
+                case MouseArguments.LeftClick:
                     if (selectedObjectId == id) return;
                     selectedObjectId = id;
                     OnChangeSelectedObject?.Invoke(id);
                     break;
 
-                case 2:
+                case MouseArguments.Move:
                     if (activeObjectId == id) return;
                     activeObjectId = id;
                     OnChangeActiveObject?.Invoke(id);

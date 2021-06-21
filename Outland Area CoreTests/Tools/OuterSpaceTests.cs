@@ -26,7 +26,7 @@ namespace Engine.Tools.Tests
                 isChangeSelectedObject = true;
             };
 
-            outerSpace.Refresh(gameSession, new System.Drawing.PointF(10101, 10201), 1);
+            outerSpace.Refresh(gameSession, new System.Drawing.PointF(10101, 10201), MouseArguments.LeftClick);
 
             Assert.IsTrue(isChangeSelectedObject);
 
@@ -51,7 +51,7 @@ namespace Engine.Tools.Tests
                 isChangeActiveObject = true;
             };
 
-            outerSpace.Refresh(gameSession, new System.Drawing.PointF(10101, 10201), 2);
+            outerSpace.Refresh(gameSession, new System.Drawing.PointF(10101, 10201), MouseArguments.Move);
 
             Assert.IsTrue(isChangeActiveObject);
 
@@ -76,7 +76,7 @@ namespace Engine.Tools.Tests
                 isChangeSelectedObject = true;
             };
 
-            outerSpace.Refresh(gameSession, new System.Drawing.PointF(9101, 9201), 1);
+            outerSpace.Refresh(gameSession, new System.Drawing.PointF(9101, 9201), MouseArguments.LeftClick);
 
             Assert.IsFalse(isChangeSelectedObject);
 
@@ -101,7 +101,7 @@ namespace Engine.Tools.Tests
                     isChangeActiveObject = true;
             };
 
-            outerSpace.Refresh(gameSession, new System.Drawing.PointF(9101, 9201), 2);
+            outerSpace.Refresh(gameSession, new System.Drawing.PointF(9101, 9201), MouseArguments.Move);
 
             Assert.IsFalse(isChangeActiveObject);
 
