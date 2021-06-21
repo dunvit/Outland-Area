@@ -30,6 +30,10 @@ namespace Outland_Area_CoreTests
             gameManager.SessionPause();
 
             Assert.IsTrue(server.RefreshGameSession(server.SessionId).IsPause);
+
+            gameManager.SessionPause();
+
+            Assert.IsTrue(server.RefreshGameSession(server.SessionId).IsPause);
         }
     }
 }
