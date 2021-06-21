@@ -55,6 +55,12 @@ namespace Engine
             }
         }
 
+        public GameManager(LocalGameServer gameServer)
+        {
+            _gameServer = gameServer;
+            _gameSession = _gameServer.RefreshGameSession(gameServer.SessionId);
+        }
+
         public Form ShowScreen(string screenName)
         {
             return UiManager.GetScreen(screenName);
@@ -84,12 +90,17 @@ namespace Engine
             selectedCelestialObjectId = celestialObjectId;
         }
 
+        public ICelestialObject GetSelectedObject()
+        {
+            return _gameSession.GetCelestialObject(selectedCelestialObjectId);
+        }
+
         public ICelestialObject GetActiveObject()
         {
             return _gameSession.GetCelestialObject(activeCelestialObjectId);
         }
 
-        private void GetDataFromServer()
+        public void GetDataFromServer()
         {
             var refreshedGameSession = new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
 

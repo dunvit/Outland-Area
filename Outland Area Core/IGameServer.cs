@@ -4,7 +4,7 @@ namespace EngineCore
 {
     public interface IGameServer
     {
-        GameSession Initialization(string scenario);
+        GameSession Initialization(string scenario, bool isActive = true); 
 
         GameSession RefreshGameSession(int id);
 

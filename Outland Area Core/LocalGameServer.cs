@@ -26,14 +26,14 @@ namespace EngineCore
 
         private readonly ReaderWriterLockSlim dictionaryLock = new ReaderWriterLockSlim();
 
-        public GameSession Initialization(string scenario, EngineSettings turnSettings)
+        public GameSession Initialization(string scenario, EngineSettings turnSettings, bool isActive = true)
         {
             _turnSettings = turnSettings;
 
-            return Initialization(scenario);
+            return Initialization(scenario, isActive);
         }
 
-        public GameSession Initialization(string scenario)
+        public GameSession Initialization(string scenario, bool isActive = true)
         {
             var stopwatch = Stopwatch.StartNew();
 
@@ -41,11 +41,12 @@ namespace EngineCore
 
             _gameSession.IsPause = true;
 
-            Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
+            if(isActive)
+                Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
             Logger.Info($"[Server][{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
 
-            // TODO: Get session ID in scenarion file
+            // TODO: Get session ID in scenario file
             SessionId = 0;
 
             return _gameSession.DeepClone();
