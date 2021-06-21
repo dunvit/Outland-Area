@@ -18,7 +18,7 @@ namespace Outland_Area_CoreTests
             if (settings == null)
                 settings = new EngineSettings();
 
-            localServer.Initialization(sessionName, settings);
+            localServer.Initialization(sessionName, settings, false);
 
             //localServer.ResumeSession(1);
 

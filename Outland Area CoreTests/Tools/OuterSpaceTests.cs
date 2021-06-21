@@ -10,8 +10,6 @@ namespace Engine.Tools.Tests
         [TestMethod()]
         public void MouseClickOnObjectAndChangeSelectedObject_Test()
         {
-            var receivedEvents = new List<int>();
-
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
             var gameSession = server.RefreshGameSession(server.SessionId);
@@ -29,7 +27,6 @@ namespace Engine.Tools.Tests
             outerSpace.Refresh(gameSession, new System.Drawing.PointF(10101, 10201), MouseArguments.LeftClick);
 
             Assert.IsTrue(isChangeSelectedObject);
-
         }
 
         [TestMethod()]
