@@ -155,28 +155,32 @@ namespace OutlandAreaXYZ
             {
                 var newPosition = Coordinates.MoveObject(currentLocation, 5, currentDirection);
 
-                var distance = Coordinates.GetDistance(newPosition, _rotatePoint);
+                //var distance = Coordinates.GetDistance(newPosition, _rotatePoint);
 
-                if (distance < 5)
+                //if (distance < 5)
+                //{
+                //    currentDirection = AttackAngle;
+
+                //    //result.Add(Coordinates.MoveObject(currentLocation, 500, currentDirection));
+
+                //    //return result;
+                //}
+
+                var distance = Coordinates.GetDistance(newPosition, _startTurnPoint);
+
+                if (distance < 5 || isTurnStarted)
                 {
-                    currentDirection = AttackAngle;
+                    currentDirection = currentDirection + 5;
+                    isTurnStarted = true;
+
+                    if (Math.Abs(AttackAngle - currentDirection) < 5)
+                    {
+                        isTurnStarted = false;
+                        currentDirection = AttackAngle;
+                    }
                 }
 
-                //var distance = Coordinates.GetDistance(newPosition, _startTurnPoint);
-
-                    //if (distance < 5 || isTurnStarted)
-                    //{
-                    //    currentDirection = currentDirection + 5;
-                    //    isTurnStarted = true;
-
-                    //    if (Math.Abs(AttackAngle - currentDirection) < 5)
-                    //    {
-                    //        isTurnStarted = false;
-                    //        currentDirection = AttackAngle;
-                    //    }
-                    //}
-
-                    currentLocation = newPosition;
+                currentLocation = newPosition;
 
                 result.Add(newPosition);
             }

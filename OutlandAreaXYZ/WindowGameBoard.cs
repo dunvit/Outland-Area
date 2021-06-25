@@ -18,7 +18,7 @@ namespace OutlandAreaXYZ
     {
         private Mode CurrentMode = Mode.Regular;
         PointF SpacecraftLocation = new PointF(300, 300);
-        PointF TargetLocation = new PointF(800, 450);
+        PointF TargetLocation = new PointF(800, 300);
         PointF MouseCoordinates = new PointF(0, 0);
         private int _orbitRadius = 50;
 
@@ -229,7 +229,7 @@ namespace OutlandAreaXYZ
 
             allPoint.Add(rrrr[0]);
 
-            var length = 0;
+            double length = 0;
 
             var prevPoint = rrrr[0];
 
@@ -241,7 +241,9 @@ namespace OutlandAreaXYZ
 
                 allPoint.Add(point);
 
-                length += Coordinates.GetDistance(point,)
+                length += Coordinates.GetDistance(point, prevPoint);
+
+                prevPoint = point;
 
                 screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Chartreuse)), point.X, point.Y, 1, 1);
                 //screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Magenta)), pointCast.X, pointCast.Y, 1, 1);

@@ -18,8 +18,8 @@ namespace EngineCore.DataProcessing
         {
             var angleInRadians = (angleInGraduses - 90) * (Math.PI) / 180; // (Math.PI / 180) * angleInGraduses;
 
-            var x = (int)(currentLocation.X + speed * Math.Cos(angleInRadians));
-            var y = (int)(currentLocation.Y + speed * Math.Sin(angleInRadians));
+            var x = (float)(currentLocation.X + speed * Math.Cos(angleInRadians));
+            var y = (float)(currentLocation.Y + speed * Math.Sin(angleInRadians));
 
             return new PointF(x, y);
         }
