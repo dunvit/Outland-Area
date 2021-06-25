@@ -1,7 +1,27 @@
-﻿using System.Drawing;
+﻿using EngineCore.DataProcessing;
+using System.Drawing;
 using EngineCore.Session;
 using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace EngineCore.DataProcessing.Tests
+{
+    [TestClass()]
+    public class CoordinatesTests
+    {
+        [TestMethod()]
+        public void LineLineTest()
+        {
+            //var result = Coordinates.GetCrossLineToLinePoint(new PointF(0, 0), new PointF(100, 0), new PointF(50, 50),
+            //    new PointF(50, -50));
+
+            //Assert.Fail();
+
+            var x = Coordinates.GetRotation(new PointF(0, 0), new PointF(-1, 0));
+
+        }
+    }
+}
 
 namespace Outland_Area_CoreTests.DataProcessing
 {

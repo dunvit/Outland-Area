@@ -17,7 +17,7 @@ namespace Engine
 {
     public class GameManager
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IGameServer _gameServer;
         private GameSession _gameSession;
