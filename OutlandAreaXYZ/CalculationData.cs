@@ -122,7 +122,7 @@ namespace OutlandAreaXYZ
 
             _nearestPointOnCircle = upDistance < downDistance ? upRadiusPoint : downRadiusPoint;
 
-            var rotationTime = (AttackAngle - ObjectDirection) / ObjectAgility;
+            var rotationTime = (AttackAngle - ObjectDirection) / ObjectAgility ;
 
             var turnPoint = (ObjectDirection - 180).To360Degrees();
 

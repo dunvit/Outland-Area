@@ -35,7 +35,7 @@ namespace OutlandAreaXYZ
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtAgility = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txtSpacecraftY = new System.Windows.Forms.TextBox();
             this.txtSpacecraftX = new System.Windows.Forms.TextBox();
@@ -61,6 +61,7 @@ namespace OutlandAreaXYZ
             this.txtTargetY = new System.Windows.Forms.TextBox();
             this.txtTargetX = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
+            this.cmdExecute = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -74,7 +75,7 @@ namespace OutlandAreaXYZ
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.textBox4);
+            this.panel1.Controls.Add(this.txtAgility);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txtSpacecraftY);
             this.panel1.Controls.Add(this.txtSpacecraftX);
@@ -136,13 +137,13 @@ namespace OutlandAreaXYZ
             this.label3.TabIndex = 7;
             this.label3.Text = "Agility:";
             // 
-            // textBox4
+            // txtAgility
             // 
-            this.textBox4.Location = new System.Drawing.Point(78, 47);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(34, 23);
-            this.textBox4.TabIndex = 6;
-            this.textBox4.Text = "5";
+            this.txtAgility.Location = new System.Drawing.Point(78, 47);
+            this.txtAgility.Name = "txtAgility";
+            this.txtAgility.Size = new System.Drawing.Size(34, 23);
+            this.txtAgility.TabIndex = 6;
+            this.txtAgility.Text = "5";
             // 
             // button1
             // 
@@ -384,12 +385,23 @@ namespace OutlandAreaXYZ
             this.label19.TabIndex = 2;
             this.label19.Text = "Location:";
             // 
+            // cmdExecute
+            // 
+            this.cmdExecute.Location = new System.Drawing.Point(12, 766);
+            this.cmdExecute.Name = "cmdExecute";
+            this.cmdExecute.Size = new System.Drawing.Size(109, 23);
+            this.cmdExecute.TabIndex = 12;
+            this.cmdExecute.Text = "Draw";
+            this.cmdExecute.UseVisualStyleBackColor = true;
+            this.cmdExecute.Click += new System.EventHandler(this.cmdExecute_Click);
+            // 
             // WindowGameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1335, 801);
+            this.Controls.Add(this.cmdExecute);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -419,7 +431,7 @@ namespace OutlandAreaXYZ
         private System.Windows.Forms.TextBox txtSpacecraftX;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtAgility;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -443,6 +455,7 @@ namespace OutlandAreaXYZ
         private System.Windows.Forms.TextBox txtTargetY;
         private System.Windows.Forms.TextBox txtTargetX;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button cmdExecute;
     }
 }
 

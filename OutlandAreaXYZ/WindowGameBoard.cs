@@ -72,10 +72,16 @@ namespace OutlandAreaXYZ
 
             DrawTacticalMap.DrawBackGround(screenParameters);
 
-            DrawCalculationSteps(screenParameters);
+            if (isStarted)
+            {
+                DrawCalculationSteps(screenParameters);
 
-            DrawSpacecraft(screenParameters);
-            DrawTargetPoint(screenParameters);
+                DrawSpacecraft(screenParameters);
+
+                DrawTargetPoint(screenParameters);
+            }
+
+            
             
 
             if (CurrentMode == Mode.SetSpaceShipLocation)
@@ -98,6 +104,34 @@ namespace OutlandAreaXYZ
         }
 
         public void DrawCalculationSteps(IScreenInfo screenInfo)
+        {
+            if (SpacecraftLocation == PointF.Empty) return;
+            if (TargetLocation == PointF.Empty) return;
+
+            var pointA = new CelestialObject
+            {
+                Agility = float.Parse(txtAgility.Text),
+                Direction = float.Parse(txtSpacecraftDirection.Text),
+                Location = SpacecraftLocation,
+                Speed = 10
+            };
+
+            var pointB = new CelestialObject
+            {
+                Agility = 0,
+                Direction = 90,
+                Location = TargetLocation,
+                Speed = 0
+            };
+
+            foreach (var pointF in new RouteCalculator().Execute(pointA, pointB, 50))
+            {
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.GreenYellow),
+                    pointF.X - 1, pointF.Y - 1, 2, 2);
+            }
+        }
+
+        public void DrawCalculationSteps_Old(IScreenInfo screenInfo)
         {
             if (SpacecraftLocation == PointF.Empty) return;
             if (TargetLocation == PointF.Empty) return;
@@ -227,68 +261,67 @@ namespace OutlandAreaXYZ
 
             var allPoint = new List<PointF>();
 
-            allPoint.Add(rrrr[0]);
+            //allPoint.Add(rrrr[0]);
 
-            double length = 0;
+            //double length = 0;
 
-            var prevPoint = rrrr[0];
+            //var prevPoint = rrrr[0];
 
-            for (var t = 0.01; t <= 1.0; t += 0.1)
-            {
-                var point = calculationData.GetDetailData(rrrr[0], rrrr[2], rrrr[3], t);
+            //for (var t = 0.01; t <= 1.0; t += 0.1)
+            //{
+            //    var point = calculationData.GetDetailData(rrrr[0], rrrr[2], rrrr[3], t);
 
-                //var pointCast = calculationData.GetDetailDataCastR(arr.ToArray(), t, 2, 0);
+            //    //var pointCast = calculationData.GetDetailDataCastR(arr.ToArray(), t, 2, 0);
 
-                allPoint.Add(point);
+            //    allPoint.Add(point);
 
-                length += Coordinates.GetDistance(point, prevPoint);
+            //    length += Coordinates.GetDistance(point, prevPoint);
 
-                prevPoint = point;
+            //    prevPoint = point;
 
-                screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Chartreuse)), point.X, point.Y, 1, 1);
-                //screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Magenta)), pointCast.X, pointCast.Y, 1, 1);
-            }
+            //    screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Chartreuse)), point.X, point.Y, 1, 1);
+            //    //screenInfo.GraphicSurface.DrawEllipse(new Pen(new SolidBrush(Color.Magenta)), pointCast.X, pointCast.Y, 1, 1);
+            //}
 
-            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Red), rrrr[0].X - 5, rrrr[0].Y - 5, 10, 10);
+            //screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Red), rrrr[0].X - 5, rrrr[0].Y - 5, 10, 10);
 
-            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Yellow), rrrr[2].X - 5, rrrr[2].Y - 5, 10, 10);
+            //screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Yellow), rrrr[2].X - 5, rrrr[2].Y - 5, 10, 10);
 
-            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Aquamarine), rrrr[3].X - 2, rrrr[3].Y - 5, 10, 10);
+            //screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Aquamarine), rrrr[3].X - 2, rrrr[3].Y - 5, 10, 10);
 
 
 
             // Generic calculation
             //----------------------------------------------------------------------------------------------------------------------
-            //var routeCalculator = new GenericCalculation
-            //{
-            //    ObjectLocation = SpacecraftLocation,
-            //    ObjectAgility = 5,
-            //    ObjectDirection = double.Parse(txtSpacecraftDirection.Text),
-            //    TargetLocation = TargetLocation,
-            //    Orbit = _orbitRadius
-            //};
+            var routeCalculator = new GenericCalculation
+            {
+                ObjectLocation = SpacecraftLocation,
+                ObjectAgility = 5,
+                ObjectDirection = double.Parse(txtSpacecraftDirection.Text),
+                TargetLocation = TargetLocation,
+                Orbit = _orbitRadius
+            };
 
-            //foreach (var pointF in routeCalculator.Execute())
-            //{
-            //    screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.GreenYellow),
-            //        pointF.X - 1, pointF.Y - 1, 2, 2);
-            //}
+            foreach (var pointF in routeCalculator.Execute())
+            {
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.GreenYellow),
+                    pointF.X - 1, pointF.Y - 1, 2, 2);
+            }
 
-            //screenInfo.GraphicSurface.DrawLine(
-            //    new Pen(Color.Red), routeCalculator.NearestPointOnCircle,
-            //    Coordinates.MoveObject(routeCalculator.NearestPointOnCircle, 200, routeCalculator.AttackAngle)
-            //);
-
-
-            //screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.GreenYellow),
-            //    routeCalculator.RotatePoint.X - 5, routeCalculator.RotatePoint.Y - 5, 10, 10);
-
-            //screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Orange),
-            //    routeCalculator.StartTurnPoint.X - 5, routeCalculator.StartTurnPoint.Y - 5, 10, 10);
+            screenInfo.GraphicSurface.DrawLine(
+                new Pen(Color.Red), routeCalculator.NearestPointOnCircle,
+                Coordinates.MoveObject(routeCalculator.NearestPointOnCircle, 200, routeCalculator.AttackAngle)
+            );
 
 
-            //routeCalculator.NearestPointOnCircle,
-            //Coordinates.MoveObject(routeCalculator.NearestPointOnCircle, 20, routeCalculator.AttackAngle)
+            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.GreenYellow),
+                routeCalculator.RotatePoint.X - 5, routeCalculator.RotatePoint.Y - 5, 10, 10);
+
+            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Orange),
+                routeCalculator.StartTurnPoint.X - 5, routeCalculator.StartTurnPoint.Y - 5, 10, 10);
+
+
+            
         }
 
         public void DrawTargetPoint(IScreenInfo screenInfo)
@@ -382,6 +415,21 @@ namespace OutlandAreaXYZ
             var rightArrowLine = SpaceMapTools.Move(line.PointTo.ToVector2(), arrowSize, line.Direction - 150);
             graphics.DrawLine(new Pen(color), rightArrowLine.PointFrom.X, rightArrowLine.PointFrom.Y, rightArrowLine.PointTo.X, rightArrowLine.PointTo.Y);
 
+        }
+
+        private bool isStarted = false;
+        private void cmdExecute_Click(object sender, EventArgs e)
+        {
+            if (isStarted)
+            {
+                cmdExecute.Text = "Draw";
+                isStarted = false;
+            }
+            else
+            {
+                cmdExecute.Text = "Clear";
+                isStarted = true;
+            }
         }
     }
 
