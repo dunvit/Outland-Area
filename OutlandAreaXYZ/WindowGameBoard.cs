@@ -146,7 +146,7 @@ namespace OutlandAreaXYZ
                 Orbit = _orbitRadius
             };
 
-            if (Coordinates.FindLineCircleIntersections(TargetLocation, (float)calculationData.Orbit, calculationData.ObjectLine))
+            if (GeometryTools.IsLineIntersectCircle(TargetLocation, (float)calculationData.Orbit, calculationData.ObjectLine))
             {
 
                 var data = new CalculationDataCrossOrbit
@@ -157,7 +157,7 @@ namespace OutlandAreaXYZ
                     Orbit = _orbitRadius
                 };
 
-                var middlePoint = Coordinates.GetCentrePoint(data.ObjectLocation, data.TargetLocation);
+                var middlePoint = GeometryTools.GetCentreLine(data.ObjectLocation, data.TargetLocation);
 
                 screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Chocolate),
                     middlePoint.X - 2, middlePoint.Y - 2, 4, 4);
@@ -176,19 +176,19 @@ namespace OutlandAreaXYZ
 
                 #endregion
 
-                var points = Coordinates.GetRadiusPoint(middlePoint, data.TargetLocation, (int)data.Orbit);
+                var points = GeometryTools.GetRadiusPoint(middlePoint, data.TargetLocation, (int)data.Orbit);
 
                 foreach (var pointF in points)
                 {
                     screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.Chocolate),
                         pointF.X - 2, pointF.Y - 2, 4, 4);
 
-                    var upCrossPoint = Coordinates.GetCrossLineToLinePoint(data.ObjectLine, new Line(middlePoint, pointF));
+                    var upCrossPoint = GeometryTools.GetCrossLineToLinePoint(data.ObjectLine, new Line(middlePoint, pointF));
 
                     var _route = new List<PointF>();
 
                     _route.Add(data.ObjectLocation);
-                    _route.Add(Coordinates.MoveObject(data.ObjectLocation, 5, data.ObjectDirection));
+                    _route.Add(GeometryTools.MoveObject(data.ObjectLocation, 5, data.ObjectDirection));
                     _route.Add(upCrossPoint);
                     _route.Add(pointF);
 
@@ -233,7 +233,7 @@ namespace OutlandAreaXYZ
 
             #region Point B cross lines movement and tangent to circle
 
-            var crossPoint = Coordinates.GetCrossLineToLinePoint(calculationData.ObjectLine, calculationData.TangentLine);
+            var crossPoint = GeometryTools.GetCrossLineToLinePoint(calculationData.ObjectLine, calculationData.TangentLine);
 
             if (crossPoint != PointF.Empty)
             {
@@ -275,7 +275,7 @@ namespace OutlandAreaXYZ
 
             //    allPoint.Add(point);
 
-            //    length += Coordinates.GetDistance(point, prevPoint);
+            //    length += GeometryTools.Distance(point, prevPoint);
 
             //    prevPoint = point;
 
@@ -310,7 +310,7 @@ namespace OutlandAreaXYZ
 
             screenInfo.GraphicSurface.DrawLine(
                 new Pen(Color.Red), routeCalculator.NearestPointOnCircle,
-                Coordinates.MoveObject(routeCalculator.NearestPointOnCircle, 200, routeCalculator.AttackAngle)
+                GeometryTools.MoveObject(routeCalculator.NearestPointOnCircle, 200, routeCalculator.AttackAngle)
             );
 
 
@@ -397,7 +397,7 @@ namespace OutlandAreaXYZ
         {
             var direction = int.Parse(txtSpacecraftDirection.Text);
 
-            var endArrowPoint = Coordinates.MoveObject(SpacecraftLocation, 12, direction);
+            var endArrowPoint = GeometryTools.MoveObject(SpacecraftLocation, 12, direction);
 
             DrawArrow(screenInfo.GraphicSurface, new SpaceMapVector(SpacecraftLocation, endArrowPoint, direction), color, arrowSize);
         }
@@ -408,12 +408,12 @@ namespace OutlandAreaXYZ
             graphics.DrawLine(new Pen(color), line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
 
             // Arrow left line
-            var leftArrowLine = SpaceMapTools.Move(line.PointTo.ToVector2(), arrowSize, line.Direction + 150);
-            graphics.DrawLine(new Pen(color), leftArrowLine.PointFrom.X, leftArrowLine.PointFrom.Y, leftArrowLine.PointTo.X, leftArrowLine.PointTo.Y);
+            var leftArrowLine = GeometryTools.MoveObject(line.PointTo, arrowSize, line.Direction + 150);
+            graphics.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, leftArrowLine.X, leftArrowLine.Y);
 
             // Arrow right line
-            var rightArrowLine = SpaceMapTools.Move(line.PointTo.ToVector2(), arrowSize, line.Direction - 150);
-            graphics.DrawLine(new Pen(color), rightArrowLine.PointFrom.X, rightArrowLine.PointFrom.Y, rightArrowLine.PointTo.X, rightArrowLine.PointTo.Y);
+            var rightArrowLine = GeometryTools.MoveObject(line.PointTo, arrowSize, line.Direction - 150);
+            graphics.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, rightArrowLine.X, rightArrowLine.Y);
 
         }
 

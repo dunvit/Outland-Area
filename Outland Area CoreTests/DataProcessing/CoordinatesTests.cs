@@ -1,5 +1,6 @@
 ﻿using EngineCore.DataProcessing;
 using System.Drawing;
+using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,12 +13,12 @@ namespace EngineCore.DataProcessing.Tests
         [TestMethod()]
         public void LineLineTest()
         {
-            //var result = Coordinates.GetCrossLineToLinePoint(new PointF(0, 0), new PointF(100, 0), new PointF(50, 50),
+            //var result = GeometryTools.GetCrossLineToLinePoint(new PointF(0, 0), new PointF(100, 0), new PointF(50, 50),
             //    new PointF(50, -50));
 
             //Assert.Fail();
 
-            var x = Coordinates.GetRotation(new PointF(0, 0), new PointF(-1, 0));
+            var x = GeometryTools.Azimuth(new PointF(0, 0), new PointF(-1, 0));
 
         }
     }

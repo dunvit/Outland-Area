@@ -11,6 +11,7 @@ using Engine.Tools;
 using Engine.UI.DrawEngine;
 using Engine.UI.Model;
 using EngineCore;
+using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -48,18 +49,18 @@ namespace Engine.UI.Controls
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = GeometryTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = GeometryTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.Move);
         }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = GeometryTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = GeometryTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
             Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.LeftClick);
         }
@@ -110,11 +111,11 @@ namespace Engine.UI.Controls
 
                     for (int i = 0; i < settings.UnitsPerSecond * settings.HistoryPeriodInSeconds; i++)
                     {
-                        var position = SpaceMapTools.Move(
+                        var position = GeometryTools.MoveObject(
                             previousPosition,
                             speedInTick,
                             reverseDirection
-                            ).PointTo;
+                            );
 
                         previousPosition = new PointF(position.X, position.Y);
 

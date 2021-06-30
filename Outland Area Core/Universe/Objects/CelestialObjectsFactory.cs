@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -61,7 +62,7 @@ namespace EngineCore.Universe.Objects
                 newCelestialObject.PositionY = spaceship.PositionY + Math.Abs(500 + RandomGenerator.GetInteger(-20, 20));
                 newCelestialObject.Speed = newCelestialObject.MaxSpeed;
 
-                newCelestialObject.Direction = SpaceMapTools.GetAngleBetweenPoints(newCelestialObject.GetLocation().ToVector2(), spaceship.GetLocation().ToVector2());
+                newCelestialObject.Direction = GeometryTools.Azimuth(newCelestialObject.GetLocation(), spaceship.GetLocation());
             }
 
             return newCelestialObject;

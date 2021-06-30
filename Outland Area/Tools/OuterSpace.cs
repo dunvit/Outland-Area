@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EngineCore.DataProcessing;
+using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
@@ -48,7 +49,7 @@ namespace Engine.Tools
         public List<ICelestialObject> GetCelestialObjectsByDistance(GameSession gameSession, System.Drawing.PointF coordinates)
         {
             return gameSession.Data.CelestialObjects.Map(celestialObject => (celestialObject,
-                        Coordinates.GetDistance(
+                        GeometryTools.Distance(
                             coordinates,
                             celestialObject.GetLocation())
                     )).

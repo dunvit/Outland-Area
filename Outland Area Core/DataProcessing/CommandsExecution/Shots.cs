@@ -69,7 +69,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
             switch (type)
             {
                 case CommandTypes.Shot:
-                    //var x = gameSession.GetDistance(objectId, targetId);
+                    //var x = gameSession.Distance(objectId, targetId);
                     //var weaponModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon();
                     //var usedWith = weaponModule.UsedWith;
                     //var ammoId = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon().AmmoId;

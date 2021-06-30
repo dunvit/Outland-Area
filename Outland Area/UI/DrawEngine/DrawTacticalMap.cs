@@ -20,7 +20,15 @@ namespace Engine.UI.DrawEngine
     {
         public static void DrawBackGround(IScreenInfo screenInfo)
         {
-            screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, screenInfo.Width, screenInfo.Height) );
+            try
+            {
+                screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, screenInfo.Width, screenInfo.Height));
+
+            }
+            catch 
+            {
+                
+            }
         }
 
         public static void DrawGrid(IScreenInfo screenInfo)

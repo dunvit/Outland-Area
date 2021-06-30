@@ -5,6 +5,7 @@ using EngineCore.Universe.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EngineCore.Geometry;
 
 namespace EngineCore.DataProcessing
 {
@@ -42,7 +43,7 @@ namespace EngineCore.DataProcessing
         private static List<ICelestialObject> VisibilityAreaFilter(GameSession gameSession)
         {
             var objectsInScreen = gameSession.Data.CelestialObjects.Map(celestialObject => (celestialObject,
-                    Coordinates.GetDistance(
+                    GeometryTools.Distance(
                         gameSession.GetPlayerSpaceShip().GetLocation(),
                         celestialObject.GetLocation())
                 )).

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using EngineCore.DataProcessing;
 using EngineCore.Geometry.Trajectory.Prototypes;
 
 namespace EngineCore.Geometry.Trajectory
@@ -16,7 +17,7 @@ namespace EngineCore.Geometry.Trajectory
             var orbitPoint = orbitInformation.StartLocation;
             var movementRotation = orbitInformation.Rotation;
 
-            var distance = SpaceMapTools.GetDistance(center, location);
+            var distance = Coordinates.GetDistance(center, location);
 
             if (distance > radius + 2)
             {
@@ -31,7 +32,7 @@ namespace EngineCore.Geometry.Trajectory
             {
                 var previousIteration = new SpaceMapObjectLocation
                 {
-                    Distance = SpaceMapTools.GetDistance(center, location),
+                    Distance = Coordinates.GetDistance(center, location),
                     Direction = direction,
                     Status = MovementType.Orbit,
                     Coordinates = new PointF(location.X, location.Y)
@@ -43,7 +44,7 @@ namespace EngineCore.Geometry.Trajectory
             for (var iteration = 0; iteration < 500; iteration++)
             {
                 var currentIteration = result[result.Count - 1];
-                distance = SpaceMapTools.GetDistance(center, currentIteration.Coordinates);
+                distance = Coordinates.GetDistance(center, currentIteration.Coordinates);
 
 
                 float speedOrbit = 1;
@@ -64,7 +65,7 @@ namespace EngineCore.Geometry.Trajectory
 
                 var r = OrbitPrototype.Execute(center.ToVector2(), currentIteration.Coordinates.ToVector2(), speedOrbit, 1);
 
-                var attackAzimuth = SpaceMapTools.GetAngleBetweenPoints(center.ToVector2(), r) + directionDelta;
+                var attackAzimuth = Coordinates.GetRotation(center, r.ToPointF()) + directionDelta;
 
                 if (attackAzimuth < 0) attackAzimuth = 360 + attackAzimuth;
                 if (attackAzimuth > 360) attackAzimuth = attackAzimuth - 360;

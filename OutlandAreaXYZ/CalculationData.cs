@@ -35,8 +35,8 @@ namespace OutlandAreaXYZ
             get
             {
                 _objectLine = new Line(
-                    Coordinates.MoveObject(ObjectLocation, 10000, ObjectDirection),
-                    Coordinates.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
+                    GeometryTools.MoveObject(ObjectLocation, 10000, ObjectDirection),
+                    GeometryTools.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
                 );
 
                 return _objectLine;
@@ -60,63 +60,63 @@ namespace OutlandAreaXYZ
             var result = new List<PointF>();
 
             _objectLine = new Line(
-                Coordinates.MoveObject(ObjectLocation, 10000, ObjectDirection),
-                Coordinates.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
+                GeometryTools.MoveObject(ObjectLocation, 10000, ObjectDirection),
+                GeometryTools.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
             );
 
             result.Add(ObjectLocation);
 
             
 
-            var perpendicularDirection = Coordinates.GetRotation(TargetLocation, ObjectLocation);
+            var perpendicularDirection = GeometryTools.Azimuth(TargetLocation, ObjectLocation);
 
             perpendicularDirection = (perpendicularDirection - 90).To360Degrees();
 
-            var upRadiusPoint = Coordinates.MoveObject(TargetLocation, Orbit, perpendicularDirection);
+            var upRadiusPoint = GeometryTools.MoveObject(TargetLocation, Orbit, perpendicularDirection);
 
-            AttackAngle = Coordinates.GetRotation(TargetLocation, ObjectLocation);
+            AttackAngle = GeometryTools.Azimuth(TargetLocation, ObjectLocation);
 
             perpendicularDirection = (perpendicularDirection - 180).To360Degrees();
 
-            var downRadiusPoint = Coordinates.MoveObject(TargetLocation, Orbit, perpendicularDirection);
+            var downRadiusPoint = GeometryTools.MoveObject(TargetLocation, Orbit, perpendicularDirection);
 
             #region Up line
 
-            var upLeftTangent = Coordinates.MoveObject(
+            var upLeftTangent = GeometryTools.MoveObject(
                 upRadiusPoint,
                 10000,
-                (Coordinates.GetRotation(TargetLocation, ObjectLocation) - 180).To360Degrees()
+                (GeometryTools.Azimuth(TargetLocation, ObjectLocation) - 180).To360Degrees()
             );
 
-            var upLightTangent = Coordinates.MoveObject(
+            var upLightTangent = GeometryTools.MoveObject(
                 upRadiusPoint,
                 10000,
-                (Coordinates.GetRotation(TargetLocation, ObjectLocation)).To360Degrees()
+                (GeometryTools.Azimuth(TargetLocation, ObjectLocation)).To360Degrees()
             );
 
-            var upCrossPoint = Coordinates.GetCrossLineToLinePoint(_objectLine, new Line(upLeftTangent, upLightTangent));
+            var upCrossPoint = GeometryTools.GetCrossLineToLinePoint(_objectLine, new Line(upLeftTangent, upLightTangent));
 
-            var upDistance = Coordinates.GetDistance(upRadiusPoint, upCrossPoint);
+            var upDistance = GeometryTools.Distance(upRadiusPoint, upCrossPoint);
             #endregion
 
 
             #region Up line
 
-            var downLeftTangent = Coordinates.MoveObject(
+            var downLeftTangent = GeometryTools.MoveObject(
                 downRadiusPoint,
                 10000,
-                (Coordinates.GetRotation(TargetLocation, ObjectLocation) - 180).To360Degrees()
+                (GeometryTools.Azimuth(TargetLocation, ObjectLocation) - 180).To360Degrees()
             );
 
-            var downLightTangent = Coordinates.MoveObject(
+            var downLightTangent = GeometryTools.MoveObject(
                 downRadiusPoint,
                 10000,
-                (Coordinates.GetRotation(TargetLocation, ObjectLocation)).To360Degrees()
+                (GeometryTools.Azimuth(TargetLocation, ObjectLocation)).To360Degrees()
             );
 
-            var downCrossPoint = Coordinates.GetCrossLineToLinePoint(_objectLine, new Line(downLeftTangent, downLightTangent));
+            var downCrossPoint = GeometryTools.GetCrossLineToLinePoint(_objectLine, new Line(downLeftTangent, downLightTangent));
 
-            var downDistance = Coordinates.GetDistance(downRadiusPoint, downCrossPoint);
+            var downDistance = GeometryTools.Distance(downRadiusPoint, downCrossPoint);
 
             #endregion
 
@@ -139,10 +139,10 @@ namespace OutlandAreaXYZ
                 _rotatePoint = downCrossPoint;
             }
 
-            _startTurnPoint = Coordinates.MoveObject(_rotatePoint, 5 * rotationTime, (ObjectDirection - 180).To360Degrees());
+            _startTurnPoint = GeometryTools.MoveObject(_rotatePoint, 5 * rotationTime, (ObjectDirection - 180).To360Degrees());
 
             
-            ////Set loop before distance < than > Coordinates.GetDistance(ObjectLocation, _rotatePoint)
+            ////Set loop before distance < than > GeometryTools.Distance(ObjectLocation, _rotatePoint)
             //DateAndTime start turn
 
             int maxIterations = 2000;
@@ -153,20 +153,20 @@ namespace OutlandAreaXYZ
 
             for (var iteration = 0; iteration < maxIterations; iteration++)
             {
-                var newPosition = Coordinates.MoveObject(currentLocation, 5, currentDirection);
+                var newPosition = GeometryTools.MoveObject(currentLocation, 5, currentDirection);
 
-                //var distance = Coordinates.GetDistance(newPosition, _rotatePoint);
+                //var distance = GeometryTools.Distance(newPosition, _rotatePoint);
 
                 //if (distance < 5)
                 //{
                 //    currentDirection = AttackAngle;
 
-                //    //result.Add(Coordinates.MoveObject(currentLocation, 500, currentDirection));
+                //    //result.Add(GeometryTools.MoveObject(currentLocation, 500, currentDirection));
 
                 //    //return result;
                 //}
 
-                var distance = Coordinates.GetDistance(newPosition, _startTurnPoint);
+                var distance = GeometryTools.Distance(newPosition, _startTurnPoint);
 
                 if (distance < 5 || isTurnStarted)
                 {
@@ -241,58 +241,58 @@ namespace OutlandAreaXYZ
                 _route = new List<PointF>();
 
                 _objectLine = new Line(
-                    Coordinates.MoveObject(ObjectLocation, 10000, ObjectDirection),
-                    Coordinates.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
+                    GeometryTools.MoveObject(ObjectLocation, 10000, ObjectDirection),
+                    GeometryTools.MoveObject(ObjectLocation, 10000, (ObjectDirection - 180).To360Degrees())
                 );
 
-                var perpendicularDirection = Coordinates.GetRotation(TargetLocation, ObjectLocation);
+                var perpendicularDirection = GeometryTools.Azimuth(TargetLocation, ObjectLocation);
 
                 perpendicularDirection = (perpendicularDirection - 90).To360Degrees();
 
-                var upRadiusPoint = Coordinates.MoveObject(TargetLocation, Orbit, perpendicularDirection);
+                var upRadiusPoint = GeometryTools.MoveObject(TargetLocation, Orbit, perpendicularDirection);
 
                 perpendicularDirection = (perpendicularDirection - 180).To360Degrees();
 
-                var downRadiusPoint = Coordinates.MoveObject(TargetLocation, Orbit, perpendicularDirection);
+                var downRadiusPoint = GeometryTools.MoveObject(TargetLocation, Orbit, perpendicularDirection);
 
 
                 #region Up line
 
-                var upLeftTangent = Coordinates.MoveObject(
+                var upLeftTangent = GeometryTools.MoveObject(
                     upRadiusPoint,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation) - 180).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation) - 180).To360Degrees()
                 );
 
-                var upLightTangent = Coordinates.MoveObject(
+                var upLightTangent = GeometryTools.MoveObject(
                     upRadiusPoint,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation)).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation)).To360Degrees()
                 );
 
-                var upCrossPoint = Coordinates.GetCrossLineToLinePoint(_objectLine, new Line(upLeftTangent, upLightTangent));
+                var upCrossPoint = GeometryTools.GetCrossLineToLinePoint(_objectLine, new Line(upLeftTangent, upLightTangent));
 
-                var upDistance = Coordinates.GetDistance(upRadiusPoint, upCrossPoint);
+                var upDistance = GeometryTools.Distance(upRadiusPoint, upCrossPoint);
                 #endregion
 
 
                 #region Up line
 
-                var downLeftTangent = Coordinates.MoveObject(
+                var downLeftTangent = GeometryTools.MoveObject(
                     downRadiusPoint,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation) - 180).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation) - 180).To360Degrees()
                 );
 
-                var downLightTangent = Coordinates.MoveObject(
+                var downLightTangent = GeometryTools.MoveObject(
                     downRadiusPoint,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation)).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation)).To360Degrees()
                 );
 
-                var downCrossPoint = Coordinates.GetCrossLineToLinePoint(_objectLine, new Line(downLeftTangent, downLightTangent));
+                var downCrossPoint = GeometryTools.GetCrossLineToLinePoint(_objectLine, new Line(downLeftTangent, downLightTangent));
 
-                var downDistance = Coordinates.GetDistance(downRadiusPoint, downCrossPoint);
+                var downDistance = GeometryTools.Distance(downRadiusPoint, downCrossPoint);
 
                 #endregion
 
@@ -309,26 +309,26 @@ namespace OutlandAreaXYZ
                     _farPointOnCircle = upRadiusPoint;
                 }
 
-                var leftTangent = Coordinates.MoveObject(
+                var leftTangent = GeometryTools.MoveObject(
                     _nearestPointOnCircle,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation) - 180).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation) - 180).To360Degrees()
                 );
 
-                var rightTangent = Coordinates.MoveObject(
+                var rightTangent = GeometryTools.MoveObject(
                     _nearestPointOnCircle,
                     10000,
-                    (Coordinates.GetRotation(TargetLocation, ObjectLocation)).To360Degrees()
+                    (GeometryTools.Azimuth(TargetLocation, ObjectLocation)).To360Degrees()
                 );
 
                 
 
                 _tangentLine = new Line(leftTangent, rightTangent);
 
-                var crossPoint = Coordinates.GetCrossLineToLinePoint(_objectLine, _tangentLine);
+                var crossPoint = GeometryTools.GetCrossLineToLinePoint(_objectLine, _tangentLine);
 
                 _route.Add(ObjectLocation);
-                _route.Add(Coordinates.MoveObject(ObjectLocation, 5, ObjectDirection));
+                _route.Add(GeometryTools.MoveObject(ObjectLocation, 5, ObjectDirection));
                 _route.Add(crossPoint);
                 _route.Add(_nearestPointOnCircle);
             }

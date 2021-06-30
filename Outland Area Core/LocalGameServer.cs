@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using EngineCore.DataProcessing;
+using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
 using log4net;

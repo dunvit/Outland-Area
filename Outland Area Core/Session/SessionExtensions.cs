@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using EngineCore.DataProcessing;
+using EngineCore.Geometry;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
@@ -37,7 +38,7 @@ namespace EngineCore.Session
 
         public static double GetDistance(this GameSession session, int objectId, int targetId)
         {
-            return Coordinates.GetDistance(
+            return GeometryTools.Distance(
                 session.GetCelestialObject(objectId).GetLocation(),
                 session.GetCelestialObject(targetId).GetLocation()
                 );
