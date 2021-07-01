@@ -10,25 +10,32 @@ using log4net;
 namespace EngineCore.Session
 {
     [Serializable]
-    public class GameSession
+    public class GameSession: IStatus
     {
-        public SessionData Data { get; set; } = new SessionData();
+        public SessionDTO Data { get; set; } = new SessionDTO();
 
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string ScenarioName { get; set; }
-
-        public bool IsPause { get; set; }
+        private protected StatusController Status = new StatusController();        
 
         public int Id { get; set; }
 
-        public int Turn { get; set; }        
+        public int Turn { get
+            {
+                return Data.Turn;
+            } 
+        }
+
+        public void NextTurn()
+        {
+            Data.Turn++;
+        }
 
         public Hashtable Commands { get; set; } = new Hashtable();
 
-        public List<IScenarioEvent> ScenarioEvents { get; set; }  
+        public List<IScenarioEvent> ScenarioEvents { get; set; } = new List<IScenarioEvent>();
         
-        public GameSession(SessionData data)
+        public GameSession(SessionDTO data)
         {
             Data = data;
         }
@@ -46,5 +53,15 @@ namespace EngineCore.Session
         {
             return ScenarioEvents.Where(_ => _.Turn == Turn).Map(message => message).ToList();
         }
+
+        #region IStatus implementation
+
+        public void Resume() => Status.Resume();
+
+        public void Pause() => Status.Pause();
+
+        public bool IsPause => Status.IsPause;
+
+        #endregion
     }
 }

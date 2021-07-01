@@ -16,7 +16,7 @@ namespace EngineCore.DataProcessing
         {
             gameSession.AddHistoryMessage($"SessionEvents started.", GetType().Name, true);
 
-            var result = gameSession.DeepClone();
+            var result = gameSession;
 
             if (gameSession.Data.Rules.IsEventsEnabled == false)
             {

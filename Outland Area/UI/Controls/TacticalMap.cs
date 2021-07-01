@@ -67,7 +67,7 @@ namespace Engine.UI.Controls
 
         private void Event_StartGameSession(GameSession gameSession)
         {
-            _gameSession = gameSession.DeepClone();
+            _gameSession = gameSession;
 
             Logger.Info($"[TacticalMap.Event_StartGameSession] Start game session for id '{_gameSession.Id}'.");
 
@@ -76,7 +76,7 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {            
-            _gameSession = gameSession.DeepClone();            
+            _gameSession = gameSession;            
 
             UpdateTrajectoryHistory(_gameSession);
 

@@ -18,15 +18,13 @@ namespace EngineCore.DataProcessing
         const double SonarRange = 1000;
 
 
-        public static GameSession ToClient(GameSession gameSession)
+        public static SessionDTO ToClient(GameSession gameSession)
         {
-            var gameSessionForClient = gameSession.DeepClone();
+            var data = gameSession.Data.DeepClone();
 
-            gameSessionForClient.Data.CelestialObjects = VisibilityAreaFilter(gameSession);
+            data.CelestialObjects = VisibilityAreaFilter(gameSession);
 
-            gameSessionForClient.ScenarioEvents = ScenarioEventsFilter(gameSession);
-
-            return gameSessionForClient;
+            return data;
         }
 
         private static List<IScenarioEvent> ScenarioEventsFilter(GameSession gameSession)

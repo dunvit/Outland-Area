@@ -27,7 +27,7 @@ namespace Engine.UI.Controls
 
         private void Event_EndTurn(GameSession gameSession)
         {
-            _gameSession = gameSession.DeepClone();
+            _gameSession = gameSession;
 
             Logger.Debug($"[GameSessionInformation] Refresh game information for turn '{_gameSession.Turn}'.");
 

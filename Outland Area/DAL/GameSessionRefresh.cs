@@ -10,13 +10,11 @@ namespace Engine.DAL
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public GameSession RequestGameSession(IGameServer _gameServer, int id)
+        public SessionDTO RequestGameSession(IGameServer _gameServer, int id)
         {
             var timeMetricGetGameSession = Stopwatch.StartNew();
 
-            var gameSession = _gameServer.RefreshGameSession(id);
-
-            
+            var gameSession = _gameServer.RefreshGameSession(id);            
 
             if(gameSession == null)
             {

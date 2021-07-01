@@ -1,4 +1,5 @@
 ﻿using EngineCore;
+using EngineCore.Session;
 
 namespace Outland_Area_CoreTests
 {
@@ -8,8 +9,6 @@ namespace Outland_Area_CoreTests
         {
             log4net.Config.XmlConfigurator.Configure();
         }
-
-        private static int sessionID = 0;
 
         public static LocalGameServer CreateGameServer(string sessionName, EngineSettings settings = null)
         {
@@ -25,7 +24,14 @@ namespace Outland_Area_CoreTests
             return localServer;
         }
 
-        
+        public static GameSession GetSession(LocalGameServer server)
+        {
+            return new GameSession(server.RefreshGameSession(server.SessionId));
+        }
 
+        public static GameSession GetSessionServerSide(LocalGameServer server)
+        {
+            return server.RefreshGameSessionServerSide(server.SessionId);
+        }
     }
 }

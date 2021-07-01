@@ -12,7 +12,7 @@ namespace Engine.Tools.Tests
         {
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var outerSpace = new OuterSpace();
 
@@ -36,7 +36,7 @@ namespace Engine.Tools.Tests
 
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var outerSpace = new OuterSpace();
 
@@ -61,7 +61,7 @@ namespace Engine.Tools.Tests
 
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var outerSpace = new OuterSpace();
 
@@ -86,7 +86,7 @@ namespace Engine.Tools.Tests
 
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var outerSpace = new OuterSpace();
 

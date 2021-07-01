@@ -30,10 +30,6 @@ namespace EngineCore
             var gameSession = ToGameSession(mapBody);
 
             gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\" + mapName + @"\Events").ToList();
-            
-            gameSession.ScenarioName = mapName;
-
-            //gameSession.Initialization();
 
             return gameSession;
         }
@@ -43,7 +39,7 @@ namespace EngineCore
             var jObject = JObject.Parse(body);
             var iCelestialMap = jObject["celestialMap"];
 
-            var sessionData = new SessionData();
+            var sessionData = new SessionDTO();
 
 
 
@@ -227,8 +223,7 @@ namespace EngineCore
 
             var gameSession = new GameSession(sessionData)
             {
-                Id = (int)jObject["id"],
-                Turn = (int)jObject["turn"]
+                Id = (int)jObject["id"]
             };
 
             return gameSession;

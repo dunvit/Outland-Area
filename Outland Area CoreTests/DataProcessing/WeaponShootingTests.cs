@@ -13,7 +13,7 @@ namespace Outland_Area_CoreTests.DataProcessing
         {
             var shots = new Shots();
 
-            var shotPrediction = shots.Prediction(new GameSession(new SessionData()), EngineCore.CommandTypes.Shot, 100, 200, 101);
+            var shotPrediction = shots.Prediction(new GameSession(new SessionDTO()), EngineCore.CommandTypes.Shot, 100, 200, 101);
 
             var expected = new Likeness<ActionResult, ActionResult>(new ActionResult { Min = 45, Max = 57 });
 

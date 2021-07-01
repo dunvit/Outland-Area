@@ -12,13 +12,13 @@ namespace Outland_Area_CoreTests.DAL
 
             server.TurnCalculation(1);
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             Assert.AreEqual(1, gameSession.Turn);
 
             server.TurnCalculation(5);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             Assert.AreEqual(6, gameSession.Turn);
         }
@@ -30,13 +30,13 @@ namespace Outland_Area_CoreTests.DAL
 
             server.TurnCalculation(1);
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSessionServerSide(server);
 
             Assert.AreEqual(1005302115, gameSession.Id);
 
             server.TurnCalculation(5);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSessionServerSide(server);
 
             Assert.AreEqual(1005302115, gameSession.Id);
 
@@ -44,13 +44,13 @@ namespace Outland_Area_CoreTests.DAL
 
             server.TurnCalculation(1);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSessionServerSide(server);
 
             Assert.AreEqual(1005302116, gameSession.Id);
 
             server.TurnCalculation(5);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSessionServerSide(server);
 
             Assert.AreEqual(1005302116, gameSession.Id);
         }

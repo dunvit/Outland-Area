@@ -81,14 +81,14 @@ namespace Engine.UI.Screens
 
         private void Event_EndTurn(GameSession gameSession)
         {
-            _gameSession = gameSession.DeepClone();
+            _gameSession = gameSession;
         }
 
         private void Event_StartGameSession(GameSession gameSession)
         {
             crlTacticalMap.Refresh();
 
-            _gameSession = gameSession.DeepClone();
+            _gameSession = gameSession;
 
             Initialization(_gameSession);
 

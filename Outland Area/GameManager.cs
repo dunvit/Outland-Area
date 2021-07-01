@@ -59,7 +59,7 @@ namespace Engine
         public GameManager(LocalGameServer gameServer)
         {
             _gameServer = gameServer;
-            _gameSession = _gameServer.RefreshGameSession(gameServer.SessionId);
+            _gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
         }
 
         public Form ShowScreen(string screenName)
@@ -73,7 +73,7 @@ namespace Engine
 
             UiManager.UiInitialization();
 
-            OnStartGameSession?.Invoke(_gameSession.DeepClone());
+            OnStartGameSession?.Invoke(_gameSession);
 
             OuterSpaceTracker.OnChangeSelectedObject += Event_ChangeSelectedObject;
             OuterSpaceTracker.OnChangeActiveObject += Event_ChangeActiveObject;
@@ -103,18 +103,18 @@ namespace Engine
 
         public void GetDataFromServer()
         {
-            var refreshedGameSession = new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
+            var sessionDTO = new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
 
-            if(refreshedGameSession != null && refreshedGameSession.IsPause == false)
+            if(sessionDTO != null && sessionDTO.IsPause == false)
             {
                 // Send to server all commands from previous turn.
                 CommandsSending();
 
-                _gameSession = refreshedGameSession;
+                _gameSession = new GameSession(sessionDTO);
 
                 ExecuteGameEvents(_gameSession);
 
-                OnEndTurn?.Invoke(_gameSession.DeepClone());
+                OnEndTurn?.Invoke(_gameSession);
             }            
         }
 

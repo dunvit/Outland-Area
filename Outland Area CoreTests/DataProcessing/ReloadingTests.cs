@@ -16,7 +16,7 @@ namespace Outland_Area_CoreTests.DataProcessing
         {
             var server = EnvironmentGlobal.CreateGameServer("Reloading");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
@@ -32,7 +32,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
@@ -42,7 +42,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(5);
 
-            module = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip().GetPropulsionModules().First();
+            module = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip().GetPropulsionModules().First();
 
             Assert.AreEqual(0.3, module.Reloading);
         }

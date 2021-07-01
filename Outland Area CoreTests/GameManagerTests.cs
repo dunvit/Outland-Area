@@ -15,25 +15,25 @@ namespace Outland_Area_CoreTests
 
             gameManager.SessionResume();
 
-            Assert.IsFalse(server.RefreshGameSession(server.SessionId).IsPause);
+            Assert.IsFalse(EnvironmentGlobal.GetSessionServerSide(server).IsPause);
 
             gameManager.GetDataFromServer();
 
             gameManager.SessionPause();
 
-            Assert.IsTrue(server.RefreshGameSession(server.SessionId).IsPause);
+            Assert.IsTrue(EnvironmentGlobal.GetSessionServerSide(server).IsPause);
 
             gameManager.SessionResume();
 
-            Assert.IsFalse(server.RefreshGameSession(server.SessionId).IsPause);
+            Assert.IsFalse(EnvironmentGlobal.GetSessionServerSide(server).IsPause);
 
             gameManager.SessionPause();
 
-            Assert.IsTrue(server.RefreshGameSession(server.SessionId).IsPause);
+            Assert.IsTrue(EnvironmentGlobal.GetSessionServerSide(server).IsPause);
 
             gameManager.SessionPause();
 
-            Assert.IsTrue(server.RefreshGameSession(server.SessionId).IsPause);
+            Assert.IsTrue(EnvironmentGlobal.GetSessionServerSide(server).IsPause);
         }
     }
 }

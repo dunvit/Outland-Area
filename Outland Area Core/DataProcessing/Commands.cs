@@ -7,7 +7,7 @@ namespace EngineCore.DataProcessing
     {
         public GameSession Execute(GameSession gameSession, EngineSettings settings)
         {
-            var result = gameSession.DeepClone();
+            var result = gameSession;
 
             foreach (Command command in gameSession.Commands.Values)
             {

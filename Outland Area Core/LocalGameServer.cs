@@ -40,17 +40,14 @@ namespace EngineCore
 
             _gameSession = ScenarioConvertor.LoadGameSession(scenario);
 
-            _gameSession.IsPause = true;
+            _gameSession.Pause();
 
             if(isActive)
                 Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
             Logger.Info($"[Server][{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
 
-            // TODO: Get session ID in scenario file
-            SessionId = 0;
-
-            return _gameSession.DeepClone();
+            return _gameSession;
         }
 
         private bool isDebug;
@@ -88,9 +85,12 @@ namespace EngineCore
             
             var stopwatch = Stopwatch.StartNew();
 
-            _gameSession.Turn++;
+            _gameSession.NextTurn();
 
-            var turnGameSession = _gameSession.DeepClone();
+            var turnGameSession = new GameSession(_gameSession.Data.DeepClone());
+            // TODO: Refactor it
+            turnGameSession.Id = _gameSession.Id;
+            turnGameSession.ScenarioEvents = _gameSession.ScenarioEvents.DeepClone();
 
             turnGameSession.Commands = GetCommands();
 
@@ -106,12 +106,11 @@ namespace EngineCore
 
             //--------------------------------------------------------------------------------------------------- End calculations
 
-            DebugPlayerShipParameters(turnGameSession.DeepClone());
+            DebugPlayerShipParameters(turnGameSession);
 
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
-            
+            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
 
             dictionaryLock.ExitWriteLock();
         }
@@ -128,14 +127,24 @@ namespace EngineCore
 
         private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
         {
-            calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
-            
-            return calculatedGameSession.DeepClone();
+            if (gameSessionBeforeChanges.IsPause)
+                calculatedGameSession.Pause();
+            else
+                calculatedGameSession.Resume();
+
+            calculatedGameSession.Data.IsPause = gameSessionBeforeChanges.IsPause;
+
+            return calculatedGameSession;
         }
 
-        public GameSession RefreshGameSession(int id)
+        public SessionDTO RefreshGameSession(int id)
         {
-            return Convert.ToClient(_gameSession.DeepClone());
+            return Convert.ToClient(_gameSession);
+        }
+
+        public GameSession RefreshGameSessionServerSide(int id)
+        {
+            return _gameSession;
         }
 
         public GameSession GetCurrentGameSession(int id)
@@ -145,13 +154,13 @@ namespace EngineCore
 
         public void ResumeSession(int id)
         {
-            _gameSession.IsPause = false;
+            _gameSession.Resume();
             Logger.Info($"[Server][{GetType().Name}][ResumeSession] Successed.");
         }
 
         public void PauseSession(int id)
         {
-            _gameSession.IsPause = true;
+            _gameSession.Pause();
             Logger.Info($"[Server][{GetType().Name}][PauseSession] Successed.");
         }
 

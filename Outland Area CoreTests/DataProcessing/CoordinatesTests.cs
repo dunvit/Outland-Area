@@ -35,7 +35,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var server = EnvironmentGlobal.CreateGameServer("Map_OneShip");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var spaceShip = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id);
 
@@ -46,7 +46,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation();
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             position = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id).GetLocation();
 
@@ -55,7 +55,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             for(var i = 0; i < 19; i++)
                 server.TurnCalculation();
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             position = gameSession.GetCelestialObject(gameSession.Data.CelestialObjects[0].Id).GetLocation();
 
