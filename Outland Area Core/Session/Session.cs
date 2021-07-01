@@ -26,9 +26,12 @@ namespace EngineCore.Session
 
         public Hashtable Commands { get; set; } = new Hashtable();
 
-        public List<IScenarioEvent> ScenarioEvents { get; set; }
-
-                
+        public List<IScenarioEvent> ScenarioEvents { get; set; }  
+        
+        public GameSession(SessionData data)
+        {
+            Data = data;
+        }
 
         public void AddEvent(GameEvent gameEvent)
         {
@@ -37,26 +40,6 @@ namespace EngineCore.Session
             Logger.Info($"Add event.Turn = {gameEvent.Turn} Turn = {Turn}");
 
             Data.GameEvents.Add(gameEvent);
-        }
-
-        //public void AddCommand(string commandBody)
-        //{
-        //    Commands.Add(new Command(commandBody));
-        //}
-
-        public List<Command> GetCommands(long Id)
-        {
-            return (from Command command in Commands.Values select command).ToList();
-        }
-
-        public List<GameEvent> GetTurnEvents(int turn)
-        {
-            return Data.GameEvents.Where(_ => _.Turn == turn).Map(message => message).ToList();
-        }
-
-        public List<GameEvent> GetCurrentTurnEvents()
-        {
-            return Data.GameEvents.Where(_ => _.Turn + 5 > Turn).Map(message => message).ToList();
         }
 
         public List<IScenarioEvent> GetScenarioEvents()

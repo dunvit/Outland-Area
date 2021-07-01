@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Engine.DAL;
@@ -119,7 +120,7 @@ namespace Engine
 
         private void ExecuteGameEvents(GameSession gameSession)
         {
-            var turnEvents = gameSession.GetCurrentTurnEvents();
+            var turnEvents = GetCurrentTurnEvents(gameSession);
 
             Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Loaded game events ({turnEvents.Count}) for turn N{gameSession.Turn}.");
 
@@ -153,6 +154,11 @@ namespace Engine
                     UiManager.OpenGameEventScreen(message, gameSession);
                 }
             }
+        }
+
+        private List<GameEvent> GetCurrentTurnEvents(GameSession gameSession)
+        {
+            return gameSession.Data.GameEvents.Where(_ => _.Turn + 5 > gameSession.Turn).Map(message => message).ToList();
         }
 
         public void SessionResume()

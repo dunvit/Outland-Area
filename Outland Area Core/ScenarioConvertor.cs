@@ -43,11 +43,9 @@ namespace EngineCore
             var jObject = JObject.Parse(body);
             var iCelestialMap = jObject["celestialMap"];
 
-            var gameSession = new GameSession
-            {
-                Id = (int)jObject["id"],
-                Turn = (int)jObject["turn"]
-            };
+            var sessionData = new SessionData();
+
+
 
             if (jObject["rules"] != null)
             {
@@ -57,12 +55,12 @@ namespace EngineCore
                 {
                     var spawnRules = rules["spawn"];
 
-                    gameSession.Data.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
+                    sessionData.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
                 }
 
                 if (rules["events"] != null)
                 {
-                    gameSession.Data.Rules.IsEventsEnabled = (bool)rules["events"];
+                    sessionData.Rules.IsEventsEnabled = (bool)rules["events"];
                 }
             }
 
@@ -75,6 +73,8 @@ namespace EngineCore
                 var jCelestialObject = JObject.Parse(jsonCelestialObject);
 
                 var classification = (int) jCelestialObject["classification"];
+
+                
 
                 switch (classification)
                 {
@@ -94,7 +94,7 @@ namespace EngineCore
                             IsScanned = (bool)jCelestialObject["isScanned"]
                         };
 
-                        gameSession.Data.CelestialObjects.Add(asteroid);
+                        sessionData.CelestialObjects.Add(asteroid);
                         break;
 
                     case 201:
@@ -214,7 +214,7 @@ namespace EngineCore
 
                         spaceship.Initialization();
 
-                        gameSession.Data.CelestialObjects.Add(spaceship);
+                        sessionData.CelestialObjects.Add(spaceship);
                         break;
 
                     case 300:
@@ -225,7 +225,11 @@ namespace EngineCore
 
             }
 
-            //gameSession.SpaceMap = celestialMap;
+            var gameSession = new GameSession(sessionData)
+            {
+                Id = (int)jObject["id"],
+                Turn = (int)jObject["turn"]
+            };
 
             return gameSession;
         }
