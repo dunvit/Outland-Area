@@ -5,8 +5,6 @@ using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Windows.Forms;
-
 
 namespace Outland_Area_CoreTests.DataProcessing
 {

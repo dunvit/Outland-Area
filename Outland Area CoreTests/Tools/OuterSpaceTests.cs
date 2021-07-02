@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using EngineCore.Session;
 using Outland_Area_CoreTests;
 
 namespace Engine.Tools.Tests
@@ -82,8 +83,6 @@ namespace Engine.Tools.Tests
         [TestMethod()]
         public void MouseClickOnObjectAndChangeActiveObject_Negative_Test()
         {
-            var receivedEvents = new List<int>();
-
             var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
 
             var gameSession = EnvironmentGlobal.GetSession(server);
@@ -101,6 +100,32 @@ namespace Engine.Tools.Tests
             outerSpace.Refresh(gameSession, new System.Drawing.PointF(9101, 9201), MouseArguments.Move);
 
             Assert.IsFalse(isChangeActiveObject);
+
+        }
+
+        [TestMethod()]
+        public void GameSession_GetCelestialObjectsByDistance_Test()
+        {
+
+            var server = EnvironmentGlobal.CreateGameServer("OuterSpace");
+
+            var gameSession = EnvironmentGlobal.GetSession(server);
+
+            var result = gameSession.GetCelestialObjectsByDistance(new System.Drawing.PointF(10030, 10030), 20);
+
+            Assert.AreEqual(0, result.Count);
+
+            result = gameSession.GetCelestialObjectsByDistance(new System.Drawing.PointF(10000, 10000), 20);
+
+            Assert.AreEqual(1, result.Count);
+
+            result = gameSession.GetCelestialObjectsByDistance(new System.Drawing.PointF(10030, 10030), 100);
+
+            Assert.AreEqual(1, result.Count);
+
+            result = gameSession.GetCelestialObjectsByDistance(new System.Drawing.PointF(10030, 10030), 800);
+
+            Assert.AreEqual(2, result.Count);
 
         }
     }

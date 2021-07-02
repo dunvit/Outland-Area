@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
-using LanguageExt;
 using log4net;
 
 namespace EngineCore.Session
@@ -36,26 +34,30 @@ namespace EngineCore.Session
             return (from celestialObjects in gameSession.Data.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
         }
 
-        public static double GetDistance(this GameSession session, int objectId, int targetId)
+        //public static void AddHistoryMessage(this GameSession session, string message, string className = "", bool isTechnicalLog = false)
+        //{
+        //    Logger.Debug($"[HistoryMessage]\t [{className}]\t {message} ");
+
+        //    session.Data.TurnHistory.Add(new HistoryMessage
+        //    {
+        //        Turn = session.Turn,
+        //        Class = className,
+        //        Message = message,
+        //        IsTechnicalLog = isTechnicalLog
+        //    });
+        //}
+
+        public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, System.Drawing.PointF coordinates, int range)
         {
-            return GeometryTools.Distance(
-                session.GetCelestialObject(objectId).GetLocation(),
-                session.GetCelestialObject(targetId).GetLocation()
-                );
-        }
-
-
-        public static void AddHistoryMessage(this GameSession session, string message, string className = "", bool isTechnicalLog = false)
-        {
-            Logger.Debug($"[HistoryMessage]\t [{className}]\t {message} ");
-
-            session.Data.TurnHistory.Add(new HistoryMessage
-            {
-                Turn = session.Turn,
-                Class = className,
-                Message = message,
-                IsTechnicalLog = isTechnicalLog
-            });
+            return gameSession.Data.CelestialObjects.Map(celestialObject => (celestialObject,
+                        GeometryTools.Distance(
+                            coordinates,
+                            celestialObject.GetLocation())
+                    )).
+                Where(e => e.Item2 < range).
+                OrderBy(e => e.Item2).
+                Map(e => e.celestialObject).
+                ToList();
         }
     }
 }

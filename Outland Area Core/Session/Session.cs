@@ -10,21 +10,19 @@ using log4net;
 namespace EngineCore.Session
 {
     [Serializable]
-    public class GameSession: IStatus
+    public class GameSession: IStatus, IHistory
     {
-        public SessionDTO Data { get; set; } = new SessionDTO();
+        public SessionDTO Data { get; set; }
 
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private protected StatusController Status = new StatusController();        
+        private protected StatusController Status = new StatusController();     
+        
+        private protected HistoryController History = new HistoryController();
 
         public int Id { get; set; }
 
-        public int Turn { get
-            {
-                return Data.Turn;
-            } 
-        }
+        public int Turn => Data.Turn;
 
         public void NextTurn()
         {
@@ -67,5 +65,15 @@ namespace EngineCore.Session
         public bool IsPause => Status.IsPause;
 
         #endregion
+
+        public void AddHistoryMessage(GameSession session, string message, string className = "", bool isTechnicalLog = false)
+        {
+            History.AddHistoryMessage(this, message, className, isTechnicalLog);
+        }
+
+        public void AddHistoryMessage(string message, string className = "", bool isTechnicalLog = false)
+        {
+            AddHistoryMessage(this, message, className, isTechnicalLog);
+        }
     }
 }
