@@ -7,6 +7,7 @@ using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Objects;
 using log4net;
 using Newtonsoft.Json.Linq;
 
@@ -85,14 +86,16 @@ namespace EngineCore
             
             var stopwatch = Stopwatch.StartNew();
 
-            _gameSession.NextTurn();
+            //_gameSession.NextTurn();
 
             var turnGameSession = new GameSession(_gameSession.Data.DeepClone());
             // TODO: Refactor it
             turnGameSession.Id = _gameSession.Id;
             turnGameSession.ScenarioEvents = _gameSession.ScenarioEvents.DeepClone();
 
-            turnGameSession.Commands = GetCommands();
+            
+
+            turnGameSession.Commands = GetCommands(_gameSession);
 
             //-------------------------------------------------------------------------------------------------- Start calculations
 
@@ -104,13 +107,15 @@ namespace EngineCore
 
             turnGameSession = new SessionEvents().Execute(turnGameSession);
 
+            turnGameSession.NextTurn();
+
             //--------------------------------------------------------------------------------------------------- End calculations
 
             DebugPlayerShipParameters(turnGameSession);
 
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
+            Logger.Info($"[Server][{GetType().Name}][TurnCalculation] Turn {_gameSession.Turn}/{turnGameSession.Turn} Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
 
             dictionaryLock.ExitWriteLock();
         }
@@ -147,11 +152,6 @@ namespace EngineCore
             return _gameSession;
         }
 
-        public GameSession GetCurrentGameSession(int id)
-        {
-            return _gameSession.DeepClone();
-        }
-
         public void ResumeSession(int id)
         {
             _gameSession.Resume();
@@ -178,6 +178,18 @@ namespace EngineCore
 
             var command = new Command(commandBody);
 
+            var jObject = JObject.Parse(command.Body);
+            var moduleId = int.Parse(jObject["ModuleId"].ToString());
+            var module = _gameSession.GetCelestialObject(command.CelestialObjectId).ToSpaceship().GetModule(moduleId);
+
+            if (module.Reloading < module.ReloadTime && debugSettings.IsIgnoreReload == false)
+            {
+                Logger.Info($"[{GetType().Name}][Execution] Module {module.Name} still on reloading. " +
+                            $"Progress {module.Reloading}/{module.ReloadTime} .");
+
+                return;
+            }
+
             var commandKey = sessionId + "_" + command.CelestialObjectId + "_" + command.Type;
 
             if (Commands.ContainsKey(commandKey))
@@ -192,9 +204,13 @@ namespace EngineCore
             }                
         }
 
-        private Hashtable GetCommands()
+        private Hashtable GetCommands(GameSession gameSession)
         {
+            // TODO: Split for two functions 1. - Get commands from API 2. Get unfinished commands
             Hashtable result;
+
+            Logger.Info($"[Server][{GetType().Name}][GetCommands]\t Turn {gameSession.Turn}. Commands count is {gameSession.Commands.Count}");
+
 
             lock (Commands)
             {
@@ -207,7 +223,18 @@ namespace EngineCore
 
                 Commands = new Hashtable();
 
-                Logger.Debug($"[Server][{GetType().Name}][GetCommands]\t Finished clear turn commands. Cpunt is {result.Count}");
+                foreach (Command command in gameSession.Commands.Values)
+                {
+                    if (command.UntilTurnId <= gameSession.Turn) continue;
+
+                    var commandKey = gameSession.Id + "_" + command.CelestialObjectId + "_" + command.Type;
+
+                    Logger.Info($"[Server][{GetType().Name}][GetCommands]\t Turn {gameSession.Turn} resume command execution. {command.Type}");
+
+                    result.Add(commandKey, command);
+                }
+
+                Logger.Debug($"[Server][{GetType().Name}][GetCommands]\t Finished clear turn commands. Count is {result.Count}");
             }
 
             return result;
@@ -216,6 +243,12 @@ namespace EngineCore
         public List<Command> GetHistoryCommands(int sessionId, long Id)
         {
             return CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
+        }
+
+        private IDebugProperties debugSettings = new EmptyDebugProperties();
+        public void EnableDebugMode()
+        {
+            debugSettings = new DebugProperties(true, true);
         }
     }
 }

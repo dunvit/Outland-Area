@@ -42,7 +42,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(5);
 
-            module = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip().GetPropulsionModules().First();
+            module = EnvironmentGlobal.GetSessionServerSide(server).GetPlayerSpaceShip().GetPropulsionModules().First();
 
             Assert.AreEqual(0.3, module.Reloading);
         }

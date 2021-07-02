@@ -1,9 +1,11 @@
-﻿using EngineCore;
+﻿using System;
+using EngineCore;
 using EngineCore.Session;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Windows.Forms;
 
 
 namespace Outland_Area_CoreTests.DataProcessing
@@ -13,6 +15,41 @@ namespace Outland_Area_CoreTests.DataProcessing
     {
         // TODO: Add property Mobility to Spacecraft
         const float MobilityInDegrees = 10.0f;
+
+        [TestMethod()]
+        public void AddCommandsGeneral_Test()
+        {
+            var server = EnvironmentGlobal.CreateGameServer("CommandsTests");
+
+            var gameSession = EnvironmentGlobal.GetSession(server);
+
+            var spaceship = gameSession.GetPlayerSpaceShip();
+
+            var module = spaceship.GetPropulsionModules().First();
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(1, server.Commands.Count);
+
+            server.TurnCalculation(1);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.TurnCalculation(5);
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.TurnCalculation(1);
+            server.Wait(5);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(1, server.Commands.Count);
+
+            server.TurnCalculation(1);
+        }
 
         [TestMethod()]
         public void PropulsionModule_Braking_Test()
@@ -35,7 +72,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             gameSession = EnvironmentGlobal.GetSession(server);
 
-            Assert.AreEqual(6, gameSession.GetCelestialObject(spaceship.Id).Speed);
+            Assert.AreEqual(6.975, Math.Round(gameSession.GetCelestialObject(spaceship.Id).Speed, 3));
 
             Assert.AreEqual(0, server.Commands.Count);
 
@@ -43,11 +80,20 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
+            // Add command for not reloaded module
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            server.TurnCalculation(1);
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.Wait(5);
+
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
 
             Assert.AreEqual(1, server.Commands.Count);
 
-            server.TurnCalculation(1);
+            server.Wait(5);
 
             Assert.AreEqual(0, server.Commands.Count);
 
@@ -67,6 +113,8 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var module = spaceship.GetPropulsionModules().First();
 
+            double turnRotationSpeed = MobilityInDegrees / (new EngineSettings().UnitsPerSecond * module.ReloadTime);
+
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnRight));
 
             Assert.AreEqual(1, server.Commands.Count);
@@ -77,7 +125,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 1 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(90 + 1 * turnRotationSpeed, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -88,13 +136,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(100 + turnRotationSpeed, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(100 + 2 * turnRotationSpeed, spaceship.Direction);
         }
 
         [TestMethod()]
@@ -108,6 +156,8 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             var module = spaceship.GetPropulsionModules().First();
 
+            double turnRotationSpeed = MobilityInDegrees / (new EngineSettings().UnitsPerSecond * module.ReloadTime);
+
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnLeft));
 
             Assert.AreEqual(1, server.Commands.Count);
@@ -118,7 +168,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(90 - turnRotationSpeed, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -129,13 +179,13 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(80 - 1 * turnRotationSpeed, spaceship.Direction);
 
             server.TurnCalculation(1);
 
             spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(80 - 2 * turnRotationSpeed, spaceship.Direction);
         }
 
         [TestMethod]
@@ -144,6 +194,8 @@ namespace Outland_Area_CoreTests.DataProcessing
             var settings = new EngineSettings { DebugProperties = new DebugProperties(true, true) };
 
             var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Map_FirstBattle", settings);
+
+            server.EnableDebugMode();
 
             var gameSession = EnvironmentGlobal.GetSession(server);
 
@@ -173,7 +225,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(170, targetSpacecraft.Shields);
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
-            server.TurnCalculation(5);
+            server.Wait(5);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
@@ -185,6 +237,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
+
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 
@@ -193,6 +246,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
+
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 
@@ -201,6 +255,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
+
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 
@@ -209,6 +264,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
+
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 
@@ -217,6 +273,7 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
             server.TurnCalculation(1);
+
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 

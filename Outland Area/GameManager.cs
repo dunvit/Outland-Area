@@ -103,19 +103,18 @@ namespace Engine
 
         public void GetDataFromServer()
         {
-            var sessionDTO = new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
+            var sessionData= new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
 
-            if(sessionDTO != null && sessionDTO.IsPause == false)
-            {
-                // Send to server all commands from previous turn.
-                CommandsSending();
+            if (sessionData == null || sessionData.IsPause) return;
 
-                _gameSession = new GameSession(sessionDTO);
+            // Send to server all commands from previous turn.
+            CommandsSending();
 
-                ExecuteGameEvents(_gameSession);
+            _gameSession = new GameSession(sessionData);
 
-                OnEndTurn?.Invoke(_gameSession);
-            }            
+            ExecuteGameEvents(_gameSession);
+
+            OnEndTurn?.Invoke(_gameSession);
         }
 
         private void ExecuteGameEvents(GameSession gameSession)

@@ -5,6 +5,7 @@ using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 using log4net;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace EngineCore.DataProcessing.CommandsExecution
 {
@@ -16,30 +17,33 @@ namespace EngineCore.DataProcessing.CommandsExecution
         {
             var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
 
-            Logger.Debug($"[{GetType().Name}][Execution] Execution Navigation command - {command.Type} turn '{gameSession.Turn}'");
+            
 
-            var module = gameSession.GetPlayerSpaceShip().GetPropulsionModules().First();
+            var jObject = JObject.Parse(command.Body);
+            var moduleId = int.Parse(jObject["ModuleId"].ToString());
 
-            if(module.Reloading < module.ReloadTime)
-            {
-                Logger.Info($"[{GetType().Name}][Execution] Module {module.Name} still on reloading. " +
-                    $"Progress {module.Reloading}/{module.ReloadTime} .");
+            var module = gameSession.GetCelestialObject(command.CelestialObjectId).ToSpaceship().GetModule(moduleId);
 
-                return gameSession;
-            }
+
+            if(command.UntilTurnId == 0)
+                command.UntilTurnId = (int)(gameSession.Turn + module.ReloadTime * settings.UnitsPerSecond);
+
+
+            Logger.Debug($"[{GetType().Name}][Execution] Execution Navigation command - {command.Type} turn '{gameSession.Turn}' " +
+                        $"until turn {command.UntilTurnId}");
 
             switch (command.Type)
             {
                 case CommandTypes.MoveForward:
                     break;
                 case CommandTypes.TurnLeft:
-                    return TurnLeft(gameSession, currentCelestialObject, module);
+                    return TurnLeft(gameSession, currentCelestialObject, module, settings);
                 case CommandTypes.TurnRight:
-                    return TurnRight(gameSession, currentCelestialObject, module);
+                    return TurnRight(gameSession, currentCelestialObject, module, settings);
                 case CommandTypes.StopShip:
-                    return StopShip(gameSession, currentCelestialObject, module);
+                    return StopShip(gameSession, currentCelestialObject, module, settings);
                 case CommandTypes.Acceleration:
-                    return Acceleration(gameSession, currentCelestialObject, module);
+                    return Acceleration(gameSession, currentCelestialObject, module, settings);
                     
             }
 
@@ -49,14 +53,16 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
         
 
-        private GameSession Acceleration(GameSession gameSession, ICelestialObject celestialObject, IModule module)
+        private GameSession Acceleration(GameSession gameSession, ICelestialObject celestialObject, IModule module, EngineSettings settings)
         {
             // TODO: Add property Agility to Spacecraft
             const float SpacecraftAgility = 1;
 
             var spacecraft = (Spaceship)celestialObject;
 
-            spacecraft.Speed += SpacecraftAgility;
+            double turnSpeed = SpacecraftAgility / (settings.UnitsPerSecond * module.ReloadTime);
+
+            spacecraft.Speed += (float)turnSpeed;
 
             if (spacecraft.Speed > spacecraft.MaxSpeed) spacecraft.Speed = spacecraft.MaxSpeed;
 
@@ -66,12 +72,14 @@ namespace EngineCore.DataProcessing.CommandsExecution
         }
 
 
-        private GameSession StopShip(GameSession gameSession, ICelestialObject celestialObject, IModule module)
+        private GameSession StopShip(GameSession gameSession, ICelestialObject celestialObject, IModule module, EngineSettings settings)
         {
             // TODO: Add property Agility to Spacecraft
             const float SpacecraftAgility = 1;
 
-            celestialObject.Speed = celestialObject.Speed - SpacecraftAgility;
+            double turnSpeed = SpacecraftAgility / (settings.UnitsPerSecond * module.ReloadTime);
+
+            celestialObject.Speed = celestialObject.Speed - (float)turnSpeed;
 
             if (celestialObject.Speed < 0) celestialObject.Speed = 0;
 
@@ -80,15 +88,17 @@ namespace EngineCore.DataProcessing.CommandsExecution
             return gameSession;
         }
 
-        private GameSession TurnLeft(GameSession gameSession, ICelestialObject celestialObject, IModule module)
+        private GameSession TurnLeft(GameSession gameSession, ICelestialObject celestialObject, IModule module, EngineSettings settings)
         {
             // TODO: Add property Mobility to Spacecraft
             const float MobilityInDegrees = 10.0f;
 
             var spacecraft = (Spaceship)celestialObject;
 
+            double turnRotationSpeed = MobilityInDegrees / (settings.UnitsPerSecond * module.ReloadTime);
+
             double directionBeforeManeuver = celestialObject.Direction;
-            double directionAfterManeuver = (directionBeforeManeuver - MobilityInDegrees > 0) ? directionBeforeManeuver - MobilityInDegrees : 360 - (directionBeforeManeuver - MobilityInDegrees);
+            double directionAfterManeuver = (directionBeforeManeuver - turnRotationSpeed > 0) ? directionBeforeManeuver - turnRotationSpeed : 360 - (directionBeforeManeuver - turnRotationSpeed);
 
             celestialObject.Direction = directionAfterManeuver;
 
@@ -99,15 +109,17 @@ namespace EngineCore.DataProcessing.CommandsExecution
             return gameSession;
         }
 
-        private GameSession TurnRight(GameSession gameSession, ICelestialObject celestialObject, IModule module)
+        private GameSession TurnRight(GameSession gameSession, ICelestialObject celestialObject, IModule module, EngineSettings settings)
         {
             // TODO: Add property Mobility to Spacecraft
             const float MobilityInDegrees = 10.0f;
 
+            double turnRotationSpeed = MobilityInDegrees / (settings.UnitsPerSecond * module.ReloadTime);
+
             var spacecraft = (Spaceship)celestialObject;
 
             double directionBeforeManeuver = celestialObject.Direction;
-            double directionAfterManeuver = (directionBeforeManeuver + MobilityInDegrees < 360.1) ? directionBeforeManeuver + MobilityInDegrees : (directionBeforeManeuver + MobilityInDegrees) - 360;
+            double directionAfterManeuver = (directionBeforeManeuver + turnRotationSpeed < 360.1) ? directionBeforeManeuver + turnRotationSpeed : (directionBeforeManeuver + turnRotationSpeed) - 360;
 
             celestialObject.Direction = directionAfterManeuver;
 

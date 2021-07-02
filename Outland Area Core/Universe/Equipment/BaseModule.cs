@@ -45,7 +45,8 @@ namespace EngineCore.Universe.Equipment
 
         public void Reload()
         {
-            Reloading = 0;
+            if(IsReloaded)
+                Reloading = 0;
         }
     }
 }

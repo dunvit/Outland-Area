@@ -28,7 +28,11 @@ namespace EngineCore.Session
 
         public void NextTurn()
         {
+            Logger.Debug($"[{GetType().Name}][IStatus] Before - {Turn} ");
+
             Data.Turn++;
+
+            Logger.Debug($"[{GetType().Name}][IStatus] After - {Turn} ");
         }
 
         public Hashtable Commands { get; set; } = new Hashtable();
