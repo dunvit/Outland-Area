@@ -5,9 +5,9 @@
         int Id { get; set; }
         int OwnerId { get; set; }
         string Name { get; set; }
-        double Direction { get; set; }
+        double Direction { get; }
         int Signature { get; set; }
-        float Speed { get; set; }
+        float Speed { get; }
         float PositionX { get; set; }
         float PositionY { get; set; }
 
@@ -18,6 +18,8 @@
         string ImageSmall { get; set; }
         bool IsScanned { get; set; }
 
+        void SetDirection(double direction);
 
+        void SetSpeed(float speed);
     }
 }

@@ -121,17 +121,17 @@ namespace Engine
         {
             var turnEvents = GetCurrentTurnEvents(gameSession);
 
-            Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Loaded game events ({turnEvents.Count}) for turn N{gameSession.Turn}.");
+            Logger.Debug($"Loaded game events ({turnEvents.Count}) for turn N{gameSession.Turn}.");
 
             foreach (var message in turnEvents)
             {
                 if (AcceptedEvents.Contains(message.Id))
                 {
-                    Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Event ({message.Id}) already exist in cach.");
+                    Logger.Debug($"Event ({message.Id}) already exist in cach.");
                     continue;
                 }
 
-                Logger.Debug($"[Client][{GetType().Name}][{MethodBase.GetCurrentMethod().Name}] Event ({message.Id}) addad to cach.");
+                Logger.Debug($"Event ({message.Id}) addad to cach.");
                 AcceptedEvents.Add(message.Id);
 
                 if (message.IsPause) SessionPause();
@@ -168,13 +168,13 @@ namespace Engine
 
         public void SessionResume()
         {
-            Logger.Info($"[Client][{GetType().Name}][SessionResume] Game resumed. Turn is {_gameSession.Turn}");
+            Logger.Info($"Game resumed. Turn is {_gameSession.Turn}");
             _gameServer.ResumeSession(_gameSession.Id);
         }
 
         public void SessionPause()
         {
-            Logger.Info($"[Client][{GetType().Name}][SessionPause] Game paused. Turn is {_gameSession.Turn}");
+            Logger.Info($"Game paused. Turn is {_gameSession.Turn}");
             _gameServer.PauseSession(_gameSession.Id);
         }
 
@@ -198,7 +198,7 @@ namespace Engine
 
         public void ExecuteCommand(Command command)
         {
-            Logger.Debug($"[Client][{GetType().Name}][ExecuteCommand] Command ({command.Type}) received.");
+            Logger.Debug($"Command ({command.Type}) received.");
 
             try
             {
@@ -209,7 +209,7 @@ namespace Engine
             }
             catch (Exception)
             {
-                Logger.Error($"[Client][{GetType().Name}][ExecuteCommand] Command ({command.Type}) failed.");
+                Logger.Error($"Command ({command.Type}) failed.");
             }
             
         }
@@ -222,7 +222,7 @@ namespace Engine
             {
                 foreach (var command in Commands)
                 {
-                    Logger.Debug($"[Client][{GetType().Name}][CommandsSending] Send command ({command.Type}) for turn '{_gameSession.Turn}' to server.");
+                    Logger.Debug($"Send command ({command.Type}) for turn '{_gameSession.Turn}' to server.");
                     _gameServer.Command(_gameSession.Id, command.Body);
                 }
 

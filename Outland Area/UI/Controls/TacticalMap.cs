@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Reflection;
 using System.Windows.Forms;
 using Engine.Configuration;
 using Engine.Tools;
@@ -22,8 +23,8 @@ namespace Engine.UI.Controls
 {
     public partial class TacticalMap : UserControl
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
         private GameSession _gameSession;
@@ -69,7 +70,7 @@ namespace Engine.UI.Controls
         {
             _gameSession = gameSession;
 
-            Logger.Info($"[TacticalMap.Event_StartGameSession] Start game session for id '{_gameSession.Id}'.");
+            Logger.Info($"Start game session for id '{_gameSession.Id}'.");
 
             RefreshControl();
         }
@@ -80,7 +81,7 @@ namespace Engine.UI.Controls
 
             UpdateTrajectoryHistory(_gameSession);
 
-            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"Refresh space map for turn '{_gameSession.Turn}'.");
 
             RefreshControl();
         }
@@ -141,7 +142,7 @@ namespace Engine.UI.Controls
                         }
                         catch 
                         {
-                            Logger.Error($"[TacticalMap] Error on refresh space map for turn '{_gameSession.Turn}' " +
+                            Logger.Error($"Error on refresh space map for turn '{_gameSession.Turn}' " +
                                 $"and object id '{currentObject.Id}' name '{currentObject.Name}'.");
                         }
                     }
@@ -182,7 +183,7 @@ namespace Engine.UI.Controls
 
             _refreshInProgress = false;
 
-            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
         private void DrawTacticalMapScreen(IScreenInfo screenParameters, GameSession gameSession)

@@ -3,7 +3,6 @@ using System.Reflection;
 using EngineCore.Events;
 using EngineCore.Scenario;
 using EngineCore.Session;
-using EngineCore.Tools;
 using log4net;
 
 namespace EngineCore.DataProcessing

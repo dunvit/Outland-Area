@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Reflection;
-using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects.Spaceships;
-using log4net;
 
 namespace EngineCore.Universe.Objects
 {
     public class CelestialObjectsFactory
     {
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        
-
         public static ICelestialObject GenerateAsteroid(GameSession gameSession)
         {
-            Logger.Debug($"[CelestialObjectsFactory][GenerateAsteroid] Start generate.");
-
             var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
 
             ICelestialObject newCelestialObject = new Asteroid
@@ -41,8 +32,6 @@ namespace EngineCore.Universe.Objects
 
         public static ICelestialObject GenerateNpcShip(GameSession gameSession, int spaceShipClass, int spaceShipType, int standing)
         {
-            Logger.Debug($"[CelestialObjectsFactory][GenerateNpcShip] Start generate.");
-
             var spaceship = gameSession.GetPlayerSpaceShip().ToSpaceship();
 
             Spaceship newCelestialObject = null;
@@ -62,7 +51,7 @@ namespace EngineCore.Universe.Objects
                 newCelestialObject.PositionY = spaceship.PositionY + Math.Abs(500 + RandomGenerator.GetInteger(-20, 20));
                 newCelestialObject.Speed = newCelestialObject.MaxSpeed;
 
-                newCelestialObject.Direction = GeometryTools.Azimuth(newCelestialObject.GetLocation(), spaceship.GetLocation());
+                newCelestialObject.Direction = GeometryTools.Azimuth(spaceship.GetLocation(), newCelestialObject.GetLocation());
             }
 
             return newCelestialObject;

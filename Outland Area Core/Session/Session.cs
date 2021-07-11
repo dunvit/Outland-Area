@@ -15,7 +15,7 @@ namespace EngineCore.Session
     {
         public SessionDTO Data { get; set; }
 
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private protected StatusController Status = new StatusController();     
         
@@ -31,11 +31,11 @@ namespace EngineCore.Session
 
         public void NextTurn()
         {
-            Logger.Debug($"[{GetType().Name}][IStatus] Before - {Turn} ");
+            _logger.Debug($"Before - {Turn} ");
 
             Data.Turn++;
 
-            Logger.Debug($"[{GetType().Name}][IStatus] After - {Turn} ");
+            _logger.Debug($"After - {Turn} ");
         }
 
         public Hashtable Commands { get; set; } = new Hashtable();
@@ -61,7 +61,7 @@ namespace EngineCore.Session
         {
             gameEvent.Turn = Turn + 1;
 
-            Logger.Info($"Add event.Turn = {gameEvent.Turn} Turn = {Turn}");
+            _logger.Info($"Add event.Turn = {gameEvent.Turn} Turn = {Turn}");
 
             Data.GameEvents.Add(gameEvent);
         }

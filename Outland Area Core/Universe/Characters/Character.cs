@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using EngineCore.Universe.Objects;
 using log4net;
 using Nancy.Json;
@@ -8,7 +9,7 @@ namespace EngineCore.Universe.Characters
 {
     public class Character
     {
-        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public long Id { get; set; }
 
@@ -36,7 +37,7 @@ namespace EngineCore.Universe.Characters
         {
             var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + scenarioName + @"\Characters\" + id + @"\Info.json");
 
-            Log.Info($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Read data from file {fileLocation} for character {id}");
+            Logger.Info($"Read data from file {fileLocation} for character {id}");
 
             try
             {
@@ -54,7 +55,7 @@ namespace EngineCore.Universe.Characters
             }
             catch (Exception e)
             {
-                Log.Error($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Critical error on read data from file {fileLocation} for character object {id}. Exception is {e.Message}");
+                Logger.Error($"Critical error on read data from file {fileLocation} for character object {id}. Exception is {e.Message}");
 
                 throw new InvalidOperationException("Critical error on read character data from file.");
             }
@@ -64,7 +65,7 @@ namespace EngineCore.Universe.Characters
         {
             var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + scenarioName + @"\CelestialObjects\" + celestialId + ".json");
 
-            Log.Info($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Read data from file {fileLocation} for celestial object {celestialId}");
+            Logger.Info($"Read data from file {fileLocation} for celestial object {celestialId}");
 
             try
             {
@@ -79,7 +80,7 @@ namespace EngineCore.Universe.Characters
             }
             catch (Exception e)
             {
-                Log.Error($"[{System.Reflection.MethodBase.GetCurrentMethod().Name}] Critical error on read data from file {fileLocation} for celestial object {celestialId}. Exception is {e.Message}");
+                Logger.Error($"Critical error on read data from file {fileLocation} for celestial object {celestialId}. Exception is {e.Message}");
 
                 throw new InvalidOperationException("Critical error on read celestial object data from file.");
             }

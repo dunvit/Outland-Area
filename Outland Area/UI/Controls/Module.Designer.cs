@@ -34,6 +34,7 @@ namespace Engine.UI.Controls
             this.crlReloading = new Engine.UI.Controls.ProgressBarVerticalHorizontal();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.actionsContainer = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // crlModuleName
@@ -68,9 +69,10 @@ namespace Engine.UI.Controls
             // crlReloading
             // 
             this.crlReloading.BackColor = System.Drawing.Color.DimGray;
-            this.crlReloading.BarLineColor = System.Drawing.Color.LimeGreen;
+            this.crlReloading.BarLineColor = System.Drawing.Color.DarkOliveGreen;
+            this.crlReloading.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.crlReloading.CurrentValue = 100;
-            this.crlReloading.Location = new System.Drawing.Point(13, 31);
+            this.crlReloading.Location = new System.Drawing.Point(13, 27);
             this.crlReloading.Maximum = 100;
             this.crlReloading.Name = "crlReloading";
             this.crlReloading.Size = new System.Drawing.Size(251, 10);
@@ -104,12 +106,20 @@ namespace Engine.UI.Controls
             this.button3.Text = "i";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // actionsContainer
+            // 
+            this.actionsContainer.Location = new System.Drawing.Point(13, 42);
+            this.actionsContainer.Name = "actionsContainer";
+            this.actionsContainer.Size = new System.Drawing.Size(250, 55);
+            this.actionsContainer.TabIndex = 10;
+            // 
             // Module
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.actionsContainer);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.crlReloading);
@@ -128,5 +138,6 @@ namespace Engine.UI.Controls
         private ProgressBarVerticalHorizontal crlReloading;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel actionsContainer;
     }
 }

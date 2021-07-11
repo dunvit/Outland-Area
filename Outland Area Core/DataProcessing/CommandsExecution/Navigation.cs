@@ -4,7 +4,6 @@ using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 using log4net;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace EngineCore.DataProcessing.CommandsExecution
@@ -15,9 +14,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
         public GameSession Execution(GameSession gameSession, EngineSettings settings, Command command)
         {
-            var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);
-
-            
+            var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId);
 
             var jObject = JObject.Parse(command.Body);
             var moduleId = int.Parse(jObject["ModuleId"].ToString());
@@ -62,9 +59,11 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             double turnSpeed = SpacecraftAgility / (settings.UnitsPerSecond * module.ReloadTime);
 
-            spacecraft.Speed += (float)turnSpeed;
+            var speedAfterCalculation = celestialObject.Speed + (float)turnSpeed;
 
-            if (spacecraft.Speed > spacecraft.MaxSpeed) spacecraft.Speed = spacecraft.MaxSpeed;
+            if (spacecraft.Speed > spacecraft.MaxSpeed) speedAfterCalculation = spacecraft.MaxSpeed;
+
+            celestialObject.SetSpeed(speedAfterCalculation);
 
             module.Reload();
 
@@ -79,9 +78,11 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             double turnSpeed = SpacecraftAgility / (settings.UnitsPerSecond * module.ReloadTime);
 
-            celestialObject.Speed = celestialObject.Speed - (float)turnSpeed;
+            var speedAfterCalculation = celestialObject.Speed - (float)turnSpeed;
 
-            if (celestialObject.Speed < 0) celestialObject.Speed = 0;
+            if (celestialObject.Speed < 0) speedAfterCalculation = 0;
+
+            celestialObject.SetSpeed(speedAfterCalculation);
 
             module.Reload();
 
@@ -100,7 +101,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver - turnRotationSpeed > 0) ? directionBeforeManeuver - turnRotationSpeed : 360 - (directionBeforeManeuver - turnRotationSpeed);
 
-            celestialObject.Direction = directionAfterManeuver;
+            celestialObject.SetDirection(directionAfterManeuver);
 
             module.Reload();
 
@@ -121,7 +122,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
             double directionBeforeManeuver = celestialObject.Direction;
             double directionAfterManeuver = (directionBeforeManeuver + turnRotationSpeed < 360.1) ? directionBeforeManeuver + turnRotationSpeed : (directionBeforeManeuver + turnRotationSpeed) - 360;
 
-            celestialObject.Direction = directionAfterManeuver;
+            celestialObject.SetDirection(directionAfterManeuver);
 
             module.Reload();
 

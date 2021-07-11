@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using Engine.UI.Model;
 using Engine.UI.Screens;
 using EngineCore.Events;
 using EngineCore.Session;
 using log4net;
+using log4net.Repository.Hierarchy;
 
 namespace Engine.UI
 {
     public class UiManager: IUiManager
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         private List<Form> _screens;
 
@@ -93,7 +96,7 @@ namespace Engine.UI
 
         private delegate DialogResult RefreshCallback(Form screen, GameEvent gameEvent, GameSession gameSession);
 
-        private static DialogResult OpenModalForm(Form screen, GameEvent gameEvent, GameSession gameSession)
+        private DialogResult OpenModalForm(Form screen, GameEvent gameEvent, GameSession gameSession)
         {
             Form mainForm = null;
             if (Application.OpenForms.Count > 0)
@@ -105,14 +108,14 @@ namespace Engine.UI
                 return (DialogResult)mainForm.Invoke(d, screen, gameEvent, gameSession);
             }
 
-            Logger.Info($"[Client][UiManager][OpenModalForm] Received game event ({gameEvent.Id}). Open dialog.");
+            Logger.Info($"Received game event ({gameEvent.Id}). Open dialog.");
 
             return screen.ShowDialog();
         }
 
         public void StartNewGameSession(GameSession gameSession)
         {
-            Logger.Info("[Client][UiManager][StartNewGameSession] Activated.");
+            Logger.Info("Activated.");
 
             var windowTacticalLayerContainer = GetScreen("WindowTacticalLayerContainer");
 
@@ -125,7 +128,7 @@ namespace Engine.UI
 
         public void UiInitialization()
         {
-            Logger.Info("[Client][UiManager][] Activated");
+            Logger.Info("UI activated.");
 
             var windowMenu = GetScreen("WindowMenu");
             var windowBackGround = GetScreen("WindowBackGround");

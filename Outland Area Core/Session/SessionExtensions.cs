@@ -11,8 +11,6 @@ namespace EngineCore.Session
 {
     public static class SessionExtensions
     {
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public static Spaceship GetPlayerSpaceShip(this GameSession session)
         {
             foreach (var celestialObject in session.Data.CelestialObjects)
@@ -33,19 +31,6 @@ namespace EngineCore.Session
 
             return (from celestialObjects in gameSession.Data.CelestialObjects where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
         }
-
-        //public static void AddHistoryMessage(this GameSession session, string message, string className = "", bool isTechnicalLog = false)
-        //{
-        //    Logger.Debug($"[HistoryMessage]\t [{className}]\t {message} ");
-
-        //    session.Data.TurnHistory.Add(new HistoryMessage
-        //    {
-        //        Turn = session.Turn,
-        //        Class = className,
-        //        Message = message,
-        //        IsTechnicalLog = isTechnicalLog
-        //    });
-        //}
 
         public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, System.Drawing.PointF coordinates, int range)
         {
