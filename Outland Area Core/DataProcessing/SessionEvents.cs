@@ -44,6 +44,11 @@ namespace EngineCore.DataProcessing
                         newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).DialogId;
                         newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
                         break;
+                    case GameEventTypes.WreckSpaceShipFound:
+                        newGameEvent.Type = GameEventTypes.WreckSpaceShipFound;
+                        newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).DialogId;
+                        newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

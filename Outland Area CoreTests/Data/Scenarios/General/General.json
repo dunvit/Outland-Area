@@ -1,6 +1,7 @@
 {
   "id": 1005302115,
   "turn": 0,
+  "name": "General",
   "rules": {
     "events": true,
     "spawn": {

@@ -10,6 +10,8 @@ namespace EngineCore.Events
 
         public GameEventTypes Type { get; set; }
 
+        public List<GameEventDecision> Decisions { get; set; } = new List<GameEventDecision>();
+
         public int Turn { get; set; }
 
         public bool IsPause { get; set; }
@@ -21,7 +23,5 @@ namespace EngineCore.Events
         public long DialogId { get; set; }
 
         public List<string> GenericObjects { get; set; } = new List<string>();
-
-
     }
 }

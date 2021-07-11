@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Universe.Model;
 
@@ -14,6 +15,8 @@ namespace EngineCore.Scenario
         {
             DialogId = dialogId;
         }
+
+        public List<GameEventDecision> Decisions { get; set; }
 
         public List<string> Execute(GameSession session)
         {

@@ -54,5 +54,7 @@ namespace Outland_Area_CoreTests.DAL
 
             Assert.AreEqual(1005302116, gameSession.Id);
         }
+
+        
     }
 }

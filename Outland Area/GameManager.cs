@@ -152,6 +152,12 @@ namespace Engine
                     //OnFoundSpaceship?.Invoke(message, gameSession);
                     UiManager.OpenGameEventScreen(message, gameSession);
                 }
+
+                if (message.Type == GameEventTypes.WreckSpaceShipFound)
+                {
+                    //OnFoundSpaceship?.Invoke(message, gameSession);
+                    UiManager.OpenGameGenericEventScreen(message, gameSession);
+                }
             }
         }
 

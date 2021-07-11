@@ -101,12 +101,24 @@
     <Compile Update="UI\Screens\BaseFullScreenWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="UI\Screens\WindowGenericEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UI\Screens\WindowObjectFound.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\Screens\WindowObjectFound - Copy.resx">
+      <DependentUpon>WindowObjectFound.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\Screens\WindowResumeGame - Copy.resx">
+      <DependentUpon>WindowResumeGame.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 

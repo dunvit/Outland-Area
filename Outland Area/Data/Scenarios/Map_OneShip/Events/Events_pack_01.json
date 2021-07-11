@@ -1,11 +1,17 @@
-{
+﻿{
   "events": [
     {
       "Id": 10,
       "Scene": 1,
       "Turn": 1,
-      "Type": 210,
+      "Type": 220,
       "DialogId": 7001,
+      "Decisions": [
+        {
+          "DialogId": 7002,
+          "Label": "Установить связь с кораблем" 
+        }
+      ],
       "Generation": [
         {
           "SpaceShipClass": 1,

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EngineCore.Events;
+using EngineCore.Universe.Characters;
 using EngineCore.Universe.Model;
 using log4net;
 
@@ -20,7 +21,11 @@ namespace EngineCore.Session
         
         private protected HistoryController History = new HistoryController();
 
+        private protected CharactersCollection Characters = new CharactersCollection();
+
         public int Id { get; set; }
+
+        
 
         public int Turn => Data.Turn;
 
@@ -40,6 +45,16 @@ namespace EngineCore.Session
         public GameSession(SessionDTO data)
         {
             Data = data;
+        }
+
+        public Character GetCharacter(long id)
+        {
+            if (Characters.IsExist(id) == false)
+            {
+                Characters.Add(new Character(Data.ScenarioName, id));
+            }
+
+            return Characters.Get(id);
         }
 
         public void AddEvent(GameEvent gameEvent)

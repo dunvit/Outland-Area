@@ -16,6 +16,8 @@ namespace EngineCore.Universe.Model
 
         GameEventTypes Type { get; set; }
 
+        List<GameEventDecision> Decisions { get; set; }
+
         List<string> Execute(GameSession session);
     }
 }

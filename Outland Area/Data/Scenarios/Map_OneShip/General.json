@@ -1,5 +1,6 @@
 {
   "id": 1005302115,
+  "name": "Map_OneShip",
   "turn": 0,
   "rules": {
     "events": true,

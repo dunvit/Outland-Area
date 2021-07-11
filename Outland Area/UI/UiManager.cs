@@ -55,19 +55,38 @@ namespace Engine.UI
             return null;
         }
 
+        public void OpenGameGenericEventScreen(GameEvent gameEvent, GameSession gameSession)
+        {
+            Global.Game.SessionPause();
+
+            var windowGameEvent = new WindowGenericEvent(gameEvent, gameSession)
+            {
+                ShowInTaskbar = false,
+                ShowIcon = false,
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            var result = OpenModalForm(windowGameEvent, gameEvent, gameSession);
+
+            var decision = windowGameEvent.DecisionResult;
+
+            Global.Game.SessionResume();
+        }
+
         public void OpenGameEventScreen(GameEvent gameEvent, GameSession gameSession)
         {
             Global.Game.SessionPause();
 
-            var windowGameEvent = new WindowResumeGame
+            var windowGameEvent = new WindowObjectFound(gameEvent, gameSession)
             {
                 ShowInTaskbar = false,
                 ShowIcon = false,
-                GameEvent = gameEvent,
-                Session = gameSession
+                StartPosition = FormStartPosition.CenterParent
             };
 
             var result = OpenModalForm(windowGameEvent, gameEvent, gameSession);
+
+            var decision = windowGameEvent.DecisionResult;
 
             Global.Game.SessionResume();
         }

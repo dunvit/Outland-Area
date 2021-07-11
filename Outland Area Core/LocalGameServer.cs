@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using EngineCore.DataProcessing;
-using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
@@ -138,6 +137,7 @@ namespace EngineCore
                 calculatedGameSession.Resume();
 
             calculatedGameSession.Data.IsPause = gameSessionBeforeChanges.IsPause;
+            calculatedGameSession.Data.ScenarioName = gameSessionBeforeChanges.Data.ScenarioName;
 
             return calculatedGameSession;
         }

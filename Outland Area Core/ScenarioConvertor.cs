@@ -226,6 +226,8 @@ namespace EngineCore
                 Id = (int)jObject["id"]
             };
 
+            gameSession.Data.ScenarioName = jObject["name"].ToString();
+
             return gameSession;
         }
 
@@ -306,6 +308,31 @@ namespace EngineCore
                             }
 
 
+
+                            break;
+
+                        case "220": // GameEventTypes.WreckSpaceShipFound
+                            scenarioEvent = new ScenarioEventGenerateNpcSpaceShip((int)jEvent["DialogId"])
+                            {
+                                Type = GameEventTypes.WreckSpaceShipFound
+                            };
+
+                            if (jEvent["Generation"] != null)
+                            {
+                                foreach (var jsonSpaceShip in jEvent["Generation"].ToArray())
+                                {
+                                    ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).AddSpaceShip(
+                                        (int)jsonSpaceShip["SpaceShipClass"],
+                                        (int)jsonSpaceShip["SpaceShipType"],
+                                        (int)jsonSpaceShip["Standing"],
+                                        (string)jsonSpaceShip["Message"]);
+                                }
+                            }
+
+                            foreach (var jDecision in jEvent["Decisions"].ToArray())
+                            {
+                                scenarioEvent.Decisions.Add(new GameEventDecision((int)jDecision["DialogId"], jDecision["Label"].ToString()));
+                            }
 
                             break;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
@@ -20,6 +21,8 @@ namespace EngineCore.Scenario
             DialogId = dialogId;
 
             _spaceShips = new List<NpcSpaceshipGenerationModel>();
+
+            Decisions = new List<GameEventDecision>();
         }
 
         public void AddSpaceShip(int spaceShipClass, int spaceShipType, int standing, string message)
@@ -31,6 +34,8 @@ namespace EngineCore.Scenario
         {
             return _spaceShips.DeepClone();
         }
+
+        public List<GameEventDecision> Decisions { get; set; }
 
         public List<string> Execute(GameSession session)
         {
