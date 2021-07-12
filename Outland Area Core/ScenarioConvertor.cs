@@ -226,7 +226,8 @@ namespace EngineCore
                 Id = (int)jObject["id"]
             };
 
-            gameSession.Data.ScenarioName = jObject["name"].ToString();
+            if(jObject["name"] != null)
+                gameSession.Data.ScenarioName = jObject["name"].ToString();
 
             return gameSession;
         }

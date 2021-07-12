@@ -13,7 +13,7 @@ namespace EngineCore.Session
     [Serializable]
     public class GameSession: IStatus, IHistory
     {
-        public SessionDTO Data { get; set; }
+        public SessionDTO Data { get; set; } = new SessionDTO();
 
         private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 

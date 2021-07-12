@@ -13,6 +13,7 @@ namespace EngineCore.DataProcessing
                 CommandTypes.TurnRight => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
                 CommandTypes.StopShip => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
                 CommandTypes.Acceleration => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.Shot => new CommandsExecution.Shots().Execution(gameSession, settings, command),
                 _ => throw new ArgumentException("Invalid enum value for command", nameof(command)),
             };
 

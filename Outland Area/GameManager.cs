@@ -64,6 +64,8 @@ namespace Engine
 
         public GameManager(LocalGameServer gameServer)
         {
+            Environment = new TacticalEnvironment();
+
             _gameServer = gameServer;
             var _gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
 
