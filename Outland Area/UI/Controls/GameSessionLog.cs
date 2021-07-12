@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.Tools;
-using EngineCore.Session;
-using EngineCore.Tools;
 using log4net;
 
 namespace Engine.UI.Controls
@@ -12,8 +11,8 @@ namespace Engine.UI.Controls
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private GameSession _gameSession;
-        private int lastProcessedTurn = 0;
+        private TacticalEnvironment _environment;
+        private int _lastProcessedTurn;
 
         private const int RowsInLog = 2;
 
@@ -25,18 +24,18 @@ namespace Engine.UI.Controls
                 Global.Game.OnEndTurn += Event_EndTurn;
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_EndTurn(TacticalEnvironment environment)
         {
-            _gameSession = gameSession;
+            _environment = environment;
 
-            Logger.Debug($"[GameSessionInformation] Refresh game information for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"Refresh game information for turn '{_environment.Session.Turn}'.");
 
             this.PerformSafely(RefreshControl);
         }
 
         private void RefreshControl()
         {
-            var newHistoryMessages = _gameSession.Data.TurnHistory.Where(message => message.Turn > lastProcessedTurn && message.IsTechnicalLog == false);
+            var newHistoryMessages = _environment.Session.Data.TurnHistory.Where(message => message.Turn > _lastProcessedTurn && message.IsTechnicalLog == false);
 
             foreach (var message in newHistoryMessages)
             {
@@ -45,9 +44,9 @@ namespace Engine.UI.Controls
                 LogWrite(update);
             }
 
-            crlWindowTitle.Text = $@"Game Log. Turn {_gameSession.Turn}";
+            crlWindowTitle.Text = $@"Game Log. Turn {_environment.Session.Turn}";
 
-            lastProcessedTurn = _gameSession.Turn;
+            _lastProcessedTurn = _environment.Session.Turn;
         }
 
         private delegate void SetTextCallback(string text);

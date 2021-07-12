@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.Tools;
-using EngineCore.Session;
-using EngineCore.Tools;
 using log4net;
 
 namespace Engine.UI.Controls
@@ -10,7 +9,7 @@ namespace Engine.UI.Controls
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private GameSession _gameSession;
+        private TacticalEnvironment _environment;
         private const string MessageResume = "Resume";
         private const string MessagePause = "Pause";
         public GameSessionInformation()
@@ -21,22 +20,22 @@ namespace Engine.UI.Controls
                 Global.Game.OnEndTurn += Event_EndTurn;
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_EndTurn(TacticalEnvironment environment)
         {
-            _gameSession = gameSession;
+            _environment = environment;
 
-            Logger.Debug($"[GameSessionInformation] Refresh game information for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"Refresh game information for turn '{_environment.Session.Turn}'.");
 
             this.PerformSafely(RefreshControl);
         }
 
         private void RefreshControl()
         {
-            txtTurn.Text = _gameSession.Turn + "";
+            txtTurn.Text = _environment.Session.Turn + "";
 
-            if (_gameSession.IsPause)
+            if (_environment.Session.IsPause)
             {
-                if (cmdPauseResume.Text != MessageResume)
+                if (cmdPauseResume.Text !=  MessageResume)
                 {
                     cmdPauseResume.Text = MessageResume;
                 }
@@ -52,7 +51,7 @@ namespace Engine.UI.Controls
 
         private void Event_ChangeGameStatus(object sender, System.EventArgs e)
         {
-            if (_gameSession.IsPause)
+            if (_environment.Session.IsPause)
             {
                 Global.Game.SessionResume();
             }

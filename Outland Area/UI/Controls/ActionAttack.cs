@@ -5,9 +5,19 @@ namespace Engine.UI.Controls
 {
     public partial class ActionAttack : UserControl
     {
-        public ActionAttack(int moduleId, int index, GameSession gameSession)
+        public int ModuleId { get; }
+
+        public int Id { get; }
+
+        private GameSession Session;
+
+        public ActionAttack(int moduleId, int id, GameSession gameSession)
         {
             InitializeComponent();
+
+            ModuleId = moduleId;
+            Id = id;
+            Session = gameSession;
         }
     }
 }

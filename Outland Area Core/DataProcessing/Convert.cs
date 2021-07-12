@@ -22,6 +22,7 @@ namespace EngineCore.DataProcessing
         {
             var data = gameSession.Data.DeepClone();
 
+            data.IsPause = gameSession.IsPause;
             data.CelestialObjects = VisibilityAreaFilter(gameSession);
 
             return data;

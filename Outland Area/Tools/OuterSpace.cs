@@ -19,8 +19,14 @@ namespace Engine.Tools
 
             if (objectsInRange.Count == 0)
             {
+                if (_activeObjectId != 0)
+                {
+                    // Mouse left from active celestial object
+                    OnChangeActiveObject?.Invoke(0);
+                }
+
                 _activeObjectId = 0;
-                OnChangeActiveObject?.Invoke(_activeObjectId);
+
                 return;
             }
 

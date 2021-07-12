@@ -7,7 +7,6 @@ using Engine.UI.Screens;
 using EngineCore.Events;
 using EngineCore.Session;
 using log4net;
-using log4net.Repository.Hierarchy;
 
 namespace Engine.UI
 {
@@ -18,7 +17,7 @@ namespace Engine.UI
 
         private List<Form> _screens;
 
-        private WindowTacticalLayerContainer _tacticalLayerContainer = new WindowTacticalLayerContainer();
+        private readonly WindowTacticalLayerContainer _tacticalLayerContainer = new WindowTacticalLayerContainer();
 
         public UiManager()
         {

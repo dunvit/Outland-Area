@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms.VisualStyles;
-using Engine.Configuration;
+using Engine.Layers.Tactical;
 using Engine.UI.Model;
 using Engine.UI.ScreenDrawing;
-using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -73,9 +71,9 @@ namespace Engine.UI.DrawEngine
             }
         }
 
-        public static void DrawCelestialObjects(IScreenInfo screenInfo, GameSession gameSession)
+        public static void DrawCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.Data.CelestialObjects)
             {
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
@@ -143,11 +141,11 @@ namespace Engine.UI.DrawEngine
             screenInfo.GraphicSurface.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
-        public static void DrawDirections(IScreenInfo screenInfo, GameSession gameSession)
+        public static void DrawDirections(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
             var color = Color.DimGray;
 
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.Data.CelestialObjects)
             {
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
@@ -176,9 +174,9 @@ namespace Engine.UI.DrawEngine
             }
         }
 
-        public static void DrawHistoryTrajectory(IScreenInfo screenInfo, GameSession gameSession, Hashtable history)
+        public static void DrawHistoryTrajectory(IScreenInfo screenInfo, TacticalEnvironment environment, Hashtable history)
         {
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.Data.CelestialObjects)
             {
                 if (!history.ContainsKey(currentObject.Id)) continue;
 
@@ -196,6 +194,50 @@ namespace Engine.UI.DrawEngine
                 var pen = new Pen(Color.FromArgb(77, 77, 77)){DashStyle = DashStyle.Dot};
 
                 screenInfo.GraphicSurface.DrawCurve(pen, points.ToArray());
+            }
+        }
+
+        private static void DrawSelectingTarget(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var pen = new Pen(Color.BurlyWood);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.MouseLocation);
+
+            screenInfo.GraphicSurface.DrawLine(pen, spaceshipScreenLocation.X, spaceshipScreenLocation.Y, mouseScreenLocation.X, mouseScreenLocation.Y);
+        }
+
+        private static void DrawSelectingTargetWithActive(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var pen = new Pen(Color.DarkOliveGreen);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.GetActiveObject().GetLocation());
+
+            var distance = GeometryTools.Distance(spaceshipScreenLocation, mouseScreenLocation);
+            var direction = GeometryTools.Azimuth(mouseScreenLocation, spaceshipScreenLocation);
+
+            var destinationPoint = GeometryTools.MoveObject(spaceshipScreenLocation, distance - 15, direction);
+
+            screenInfo.GraphicSurface.DrawLine(pen, spaceshipScreenLocation.X, spaceshipScreenLocation.Y, destinationPoint.X, destinationPoint.Y);
+
+            screenInfo.GraphicSurface.DrawEllipse(pen, mouseScreenLocation.X - 15, mouseScreenLocation.Y - 15, 30, 30);
+        }
+
+        public static void DrawAction(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            switch (environment.Mode)
+            {
+                case TacticalMode.General:
+                    break;
+                case TacticalMode.SelectingSpaceObject:
+                    DrawSelectingTarget(screenInfo, environment);
+                    break;
+                case TacticalMode.SelectingSpaceObjectWithActive:
+                    DrawSelectingTargetWithActive(screenInfo, environment);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

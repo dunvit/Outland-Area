@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.Tools;
-using EngineCore.Session;
-using EngineCore.Tools;
 using log4net;
 
 namespace Engine.UI.Controls
@@ -17,8 +9,7 @@ namespace Engine.UI.Controls
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private GameSession _gameSession;
-
+        private TacticalEnvironment _environment;
 
         public ActiveCelestialObject()
         {
@@ -28,20 +19,20 @@ namespace Engine.UI.Controls
                 Global.Game.OnEndTurn += Event_EndTurn;
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_EndTurn(TacticalEnvironment environment)
         {
-            _gameSession = gameSession;
+            _environment = environment;
 
-            Logger.Debug($"[GameSessionInformation] Refresh game information for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"Refresh game information for turn '{_environment.Session.Turn}'.");
 
             this.PerformSafely(RefreshControl);
         }
 
         private void RefreshControl()
         {
-            var activeCelestialObject = Global.Game.GetActiveObject();
+            var activeCelestialObject = _environment.GetActiveObject();
 
-            txtInfo.Text = activeCelestialObject != null ? $@"Active object id is {Global.Game.GetActiveObject().Id}" : "";
+            txtInfo.Text = activeCelestialObject != null ? $@"Active object id is {_environment.GetActiveObject().Id}" : "";
         }
     }
 }

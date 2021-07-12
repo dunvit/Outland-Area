@@ -22,9 +22,6 @@ namespace EngineCore.Universe.Characters
         // TODO: Add ranks classification
         public string Rank { get; set; }
 
-        // TODO: Add ranks relations
-        public string Relation { get; set; } = "Дружелюбие";
-
         public Character(string scenarioName, long id)
         {
             Id = id;
@@ -37,7 +34,7 @@ namespace EngineCore.Universe.Characters
         {
             var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + scenarioName + @"\Characters\" + id + @"\Info.json");
 
-            Logger.Info($"Read data from file {fileLocation} for character {id}");
+            Logger.Debug($"Read data from file {fileLocation} for character {id}");
 
             try
             {
@@ -65,7 +62,7 @@ namespace EngineCore.Universe.Characters
         {
             var fileLocation = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\" + scenarioName + @"\CelestialObjects\" + celestialId + ".json");
 
-            Logger.Info($"Read data from file {fileLocation} for celestial object {celestialId}");
+            Logger.Debug($"Read data from file {fileLocation} for celestial object {celestialId}");
 
             try
             {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using Engine.DAL;
+using Engine.Layers.Tactical;
 using Engine.Tools;
 using Engine.UI;
 using EngineCore;
@@ -21,26 +22,31 @@ namespace Engine
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IGameServer _gameServer;
-        private GameSession _gameSession;
+        //private GameSession _gameSession;
         public UiManager UiManager { get; set; }
 
-        public event Action<GameSession> OnEndTurn;
-        public event Action<GameSession> OnStartGameSession;
+        public TacticalEnvironment Environment { get;}
+
+        public event Action<TacticalEnvironment> OnEndTurn;
+        public event Action<TacticalEnvironment> OnStartGameSession;
         public event Action<int> OnSelectModule;
-        public event Action<int> OnCancelModule;
-        public event Action<GameSession> OnInitializationFinish;
+        public event Action<int, int> OnCancelModuleAction;
+        //public event Action<int> OnCancelModule; CancelModuleAction
+        public event Action<TacticalEnvironment> OnInitializationFinish;
 
         public List<string> AcceptedEvents = new List<string>();
 
         public List<Command> Commands { get; set; } = new List<Command>();
 
-        private int activeCelestialObjectId;
+        
         private int selectedCelestialObjectId;
 
-        public OuterSpace OuterSpaceTracker = new OuterSpace();
+        
 
         public GameManager()
         {
+            Environment = new TacticalEnvironment();
+
             switch (Global.ApplicationSettings.ServerType)
             {
                 case 1:
@@ -59,7 +65,9 @@ namespace Engine
         public GameManager(LocalGameServer gameServer)
         {
             _gameServer = gameServer;
-            _gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
+            var _gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
+
+            Environment.RefreshGameSession(_gameSession);
         }
 
         public Form ShowScreen(string screenName)
@@ -69,52 +77,58 @@ namespace Engine
 
         public void StartNewGameSession(string scenario)
         {
-            _gameSession = _gameServer.Initialization(scenario);
+            var _gameSession = _gameServer.Initialization(scenario);
+
+            Environment.RefreshGameSession(_gameSession);
 
             UiManager.UiInitialization();
 
-            OnStartGameSession?.Invoke(_gameSession);
+            OnStartGameSession?.Invoke(Environment);
 
-            OuterSpaceTracker.OnChangeSelectedObject += Event_ChangeSelectedObject;
-            OuterSpaceTracker.OnChangeActiveObject += Event_ChangeActiveObject;
+            Environment.OuterSpaceTracker.OnChangeSelectedObject += Event_ChangeSelectedObject;
 
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
         }
 
-        private void Event_ChangeActiveObject(int celestialObjectId)
-        {
-            activeCelestialObjectId = celestialObjectId;
-        }
+
 
         private void Event_ChangeSelectedObject(int celestialObjectId)
         {
             selectedCelestialObjectId = celestialObjectId;
         }
 
-        public ICelestialObject GetSelectedObject()
-        {
-            return _gameSession.GetCelestialObject(selectedCelestialObjectId);
-        }
-
-        public ICelestialObject GetActiveObject()
-        {
-            return _gameSession.GetCelestialObject(activeCelestialObjectId);
-        }
+        private bool _inProgress;
 
         public void GetDataFromServer()
         {
-            var sessionData= new GameSessionRefresh().RequestGameSession(_gameServer, _gameSession.Id);
+            if (_inProgress) return;
 
-            if (sessionData == null || sessionData.IsPause) return;
+            _inProgress = true;
+
+            var sessionData= new GameSessionRefresh().RequestGameSession(_gameServer, Environment.Session.Id);
+
+            Logger.Info($"Is pause = {sessionData.IsPause} .");
+
+            var gameSession = new GameSession(sessionData);
+
+            Environment.RefreshGameSession(gameSession);
+
+            OnEndTurn?.Invoke(Environment);
+
+            if (sessionData.IsPause)
+            {
+                _inProgress = false;
+                return;
+            }
 
             // Send to server all commands from previous turn.
             CommandsSending();
 
-            _gameSession = new GameSession(sessionData);
+            ExecuteGameEvents(Environment.Session);
 
-            ExecuteGameEvents(_gameSession);
+            Logger.Debug($"Game is pause: '{Environment.Session.IsPause}'. Turn is {Environment.Session.Turn}");
 
-            OnEndTurn?.Invoke(_gameSession);
+            _inProgress = false;
         }
 
         private void ExecuteGameEvents(GameSession gameSession)
@@ -168,20 +182,20 @@ namespace Engine
 
         public void SessionResume()
         {
-            Logger.Info($"Game resumed. Turn is {_gameSession.Turn}");
-            _gameServer.ResumeSession(_gameSession.Id);
+            Logger.Info($"Game resumed. Turn is {Environment.Session.Turn}");
+            _gameServer.ResumeSession(Environment.Session.Id);
         }
 
         public void SessionPause()
         {
-            Logger.Info($"Game paused. Turn is {_gameSession.Turn}");
-            _gameServer.PauseSession(_gameSession.Id);
+            Logger.Info($"Game paused. Turn is {Environment.Session.Turn}");
+            _gameServer.PauseSession(Environment.Session.Id);
         }
 
         public void InitializationFinish()
         {
-            UiManager.StartNewGameSession(_gameSession);
-            OnInitializationFinish?.Invoke(_gameSession);
+            UiManager.StartNewGameSession(Environment.Session);
+            OnInitializationFinish?.Invoke(Environment);
 
             SessionResume();
         }
@@ -191,9 +205,10 @@ namespace Engine
             OnSelectModule?.Invoke(id);
         }
 
-        public void EventCancelModule(int id)
+        public void EventCancelModuleAction()
         {
-            OnCancelModule?.Invoke(id);
+            OnCancelModuleAction?.Invoke(Environment.Action.ModuleId, Environment.Action.ActionId);
+            Environment.CancelAction();
         }
 
         public void ExecuteCommand(Command command)
@@ -202,7 +217,7 @@ namespace Engine
 
             try
             {
-                lock (commandsLock)
+                lock (_commandsLock)
                 {
                     Commands.Add(command);
                 }
@@ -211,19 +226,18 @@ namespace Engine
             {
                 Logger.Error($"Command ({command.Type}) failed.");
             }
-            
         }
 
-        object commandsLock = new object();
+        readonly object _commandsLock = new object();
 
         private void CommandsSending()
         {
-            lock (commandsLock)
+            lock (_commandsLock)
             {
                 foreach (var command in Commands)
                 {
-                    Logger.Debug($"Send command ({command.Type}) for turn '{_gameSession.Turn}' to server.");
-                    _gameServer.Command(_gameSession.Id, command.Body);
+                    Logger.Debug($"Send command ({command.Type}) for turn '{Environment.Session.Turn}' to server.");
+                    _gameServer.Command(Environment.Session.Id, command.Body);
                 }
 
                 Commands = new List<Command>();

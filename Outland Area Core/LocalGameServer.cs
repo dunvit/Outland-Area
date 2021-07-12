@@ -110,7 +110,7 @@ namespace EngineCore
 
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            _logger.Info($"Turn {_gameSession.Turn}/{turnGameSession.Turn} Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
+            _logger.Debug($"Turn {_gameSession.Turn}/{turnGameSession.Turn} Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
 
             dictionaryLock.ExitWriteLock();
         }
@@ -139,7 +139,9 @@ namespace EngineCore
 
         public SessionDTO RefreshGameSession(int id)
         {
-            return Convert.ToClient(_gameSession);
+            var sessionDto = Convert.ToClient(_gameSession);
+
+            return sessionDto;
         }
 
         public GameSession RefreshGameSessionServerSide(int id)

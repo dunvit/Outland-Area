@@ -45,6 +45,15 @@ namespace EngineCore.Session
         public GameSession(SessionDTO data)
         {
             Data = data;
+
+            if (Data.IsPause)
+            {
+                Status.Pause();
+            }
+            else
+            {
+                Status.Resume();
+            }
         }
 
         public Character GetCharacter(long id)
