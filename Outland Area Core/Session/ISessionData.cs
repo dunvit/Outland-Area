@@ -7,9 +7,12 @@ namespace EngineCore.Session
 {
     public interface ISessionData
     {
-        Rules Rules { get; set; }
-        List<GameEvent> GameEvents { get; set; }
-        List<HistoryMessage> TurnHistory { get; set; }
-        List<ICelestialObject> CelestialObjects { get; set; }
+        int Turn { get; }
+        bool IsPause { get; }
+        string ScenarioName { get; }
+        Rules Rules { get; }
+        List<GameEvent> GameEvents { get; }
+        List<HistoryMessage> TurnHistory { get; }
+        List<ICelestialObject> CelestialObjects { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace EngineCore.DataProcessing
         {
             //var result = gameSession.SpaceMap.DeepClone();            
 
-            foreach (var celestialObject in gameSession.Data.CelestialObjects)
+            foreach (var celestialObject in gameSession.GetCelestialObjects())
             {
                 if (celestialObject.IsSpaceship() == false) continue;
 

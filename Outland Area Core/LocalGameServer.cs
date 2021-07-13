@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using EngineCore.DataProcessing;
+using EngineCore.DTO;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
@@ -86,7 +87,7 @@ namespace EngineCore
             
             var stopwatch = Stopwatch.StartNew();
 
-            var turnGameSession = new GameSession(_gameSession.Data.DeepClone());
+            var turnGameSession = new GameSession(_gameSession.Clone());
             // TODO: Refactor it
             turnGameSession.Id = _gameSession.Id;
             turnGameSession.ScenarioEvents = _gameSession.ScenarioEvents.DeepClone();
@@ -131,17 +132,15 @@ namespace EngineCore
             else
                 calculatedGameSession.Resume();
 
-            calculatedGameSession.Data.IsPause = gameSessionBeforeChanges.IsPause;
-            calculatedGameSession.Data.ScenarioName = gameSessionBeforeChanges.Data.ScenarioName;
+            //calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
+            //calculatedGameSession.ScenarioName = gameSessionBeforeChanges.ScenarioName;
 
             return calculatedGameSession;
         }
 
-        public SessionDTO RefreshGameSession(int id)
+        public SessionDataDto RefreshGameSession(int id)
         {
-            var sessionDto = Convert.ToClient(_gameSession);
-
-            return sessionDto;
+            return _gameSession.ToSessionTransfer();
         }
 
         public GameSession RefreshGameSessionServerSide(int id)

@@ -11,11 +11,11 @@ namespace EngineCore.DataProcessing.Tests
         {
             var server = EnvironmentGlobal.CreateGameServer("ConvertTests");
 
-            Assert.AreEqual(2, EnvironmentGlobal.GetSession(server).Data.CelestialObjects.Count);
+            Assert.AreEqual(2, EnvironmentGlobal.GetSession(server).GetCelestialObjects().Count);
 
             var gameSession = EnvironmentGlobal.GetSession(server);
 
-            Assert.AreEqual(2, gameSession.Data.CelestialObjects.Count);
+            Assert.AreEqual(2, gameSession.GetCelestialObjects().Count);
 
             server.TurnCalculation(2);
 

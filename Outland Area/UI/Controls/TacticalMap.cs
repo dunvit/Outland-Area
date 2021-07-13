@@ -89,7 +89,7 @@ namespace Engine.UI.Controls
         {
             var settings = new EngineSettings();
 
-            foreach (var currentObject in environment.Session.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
                 if (_history.ContainsKey(currentObject.Id))
                 {

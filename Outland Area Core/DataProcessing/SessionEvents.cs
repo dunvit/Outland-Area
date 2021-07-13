@@ -17,7 +17,7 @@ namespace EngineCore.DataProcessing
 
             var result = gameSession;
 
-            if (gameSession.Data.Rules.IsEventsEnabled == false)
+            if (gameSession.Rules.IsEventsEnabled == false)
             {
                 gameSession.AddHistoryMessage("SessionEvents canceled by scenario configuration.", GetType().Name, true);
 

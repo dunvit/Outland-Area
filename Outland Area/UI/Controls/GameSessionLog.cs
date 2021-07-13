@@ -35,7 +35,7 @@ namespace Engine.UI.Controls
 
         private void RefreshControl()
         {
-            var newHistoryMessages = _environment.Session.Data.TurnHistory.Where(message => message.Turn > _lastProcessedTurn && message.IsTechnicalLog == false);
+            var newHistoryMessages = _environment.Session.TurnHistory.Where(message => message.Turn > _lastProcessedTurn && message.IsTechnicalLog == false);
 
             foreach (var message in newHistoryMessages)
             {

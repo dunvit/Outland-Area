@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using Engine.DAL;
 using Engine.Layers.Tactical;
-using Engine.Tools;
 using Engine.UI;
 using EngineCore;
 using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
-using EngineCore.Universe.Model;
 using log4net;
 
 namespace Engine
@@ -109,7 +106,7 @@ namespace Engine
 
             var sessionData= new GameSessionRefresh().RequestGameSession(_gameServer, Environment.Session.Id);
 
-            Logger.Info($"Is pause = {sessionData.IsPause} .");
+            Logger.Info($"sessionData {sessionData.Turn} = {sessionData.CelestialObjects.Count} - {sessionData.GameEvents.Count}.");
 
             var gameSession = new GameSession(sessionData);
 
@@ -126,9 +123,9 @@ namespace Engine
             // Send to server all commands from previous turn.
             CommandsSending();
 
-            ExecuteGameEvents(Environment.Session);
+            Logger.Info($"sessionData {Environment.Session.Turn} = {Environment.Session.CelestialObjects.Count} - {Environment.Session.GameEvents.Count}.");
 
-            Logger.Debug($"Game is pause: '{Environment.Session.IsPause}'. Turn is {Environment.Session.Turn}");
+            ExecuteGameEvents(Environment.Session);
 
             _inProgress = false;
         }
@@ -179,7 +176,7 @@ namespace Engine
 
         private List<GameEvent> GetCurrentTurnEvents(GameSession gameSession)
         {
-            return gameSession.Data.GameEvents.Where(_ => _.Turn + 5 > gameSession.Turn).Map(message => message).ToList();
+            return gameSession.GameEvents.Where(_ => _.Turn + 5 > gameSession.Turn).Map(message => message).ToList();
         }
 
         public void SessionResume()

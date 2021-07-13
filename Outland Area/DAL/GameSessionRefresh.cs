@@ -1,7 +1,7 @@
 ﻿using EngineCore;
-using EngineCore.Session;
 using System.Diagnostics;
 using System.Reflection;
+using EngineCore.DTO;
 using log4net;
 
 namespace Engine.DAL
@@ -10,17 +10,11 @@ namespace Engine.DAL
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public SessionDTO RequestGameSession(IGameServer gameServer, int id)
+        public SessionDataDto RequestGameSession(IGameServer gameServer, int id)
         {
             var timeMetricGetGameSession = Stopwatch.StartNew();
 
             var gameSession = gameServer.RefreshGameSession(id);            
-
-            if(gameSession == null)
-            {
-                Logger.Error($"Critical error on refresh game id={id}.");
-                return null;
-            }
 
             timeMetricGetGameSession.Stop();
 

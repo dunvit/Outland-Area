@@ -6,8 +6,9 @@ using System.Collections.Generic;
 
 namespace EngineCore.Session
 {
+
     [Serializable]
-    public class SessionDTO
+    public class SessionData : ISessionData
     {
         public int Turn { get; set; }
 

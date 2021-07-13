@@ -10,7 +10,7 @@ namespace EngineCore.Session
         {
             Logger.Debug($"[HistoryMessage]\t [{className}]\t {message} ");
 
-            session.Data.TurnHistory.Add(new HistoryMessage
+            session.TurnHistory.Add(new HistoryMessage
             {
                 Turn = session.Turn,
                 Class = className,

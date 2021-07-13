@@ -11,7 +11,7 @@ namespace Engine.DAL.Tests
         {
             var server = EnvironmentGlobal.CreateGameServer("General");
 
-            Assert.AreEqual(1, EnvironmentGlobal.GetSession(server).Data.CelestialObjects.Count);
+            Assert.AreEqual(1, EnvironmentGlobal.GetSession(server).GetCelestialObjects().Count);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Outland_Area_CoreTests.DAL
 
             var gameSession = EnvironmentGlobal.GetSessionServerSide(server);
 
-            Assert.AreEqual("General", gameSession.Data.ScenarioName);
+            Assert.AreEqual("General", gameSession.ScenarioName);
         }
     }
 }

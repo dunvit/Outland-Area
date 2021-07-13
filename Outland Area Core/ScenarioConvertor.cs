@@ -39,7 +39,7 @@ namespace EngineCore
             var jObject = JObject.Parse(body);
             var iCelestialMap = jObject["celestialMap"];
 
-            var sessionData = new SessionDTO();
+            var sessionData = new SessionData();
 
 
 
@@ -227,7 +227,7 @@ namespace EngineCore
             };
 
             if(jObject["name"] != null)
-                gameSession.Data.ScenarioName = jObject["name"].ToString();
+                gameSession.SetScenarioName(jObject["name"].ToString());
 
             return gameSession;
         }

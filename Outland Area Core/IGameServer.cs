@@ -1,4 +1,5 @@
-﻿using EngineCore.Session;
+﻿using EngineCore.DTO;
+using EngineCore.Session;
 
 namespace EngineCore
 {
@@ -6,7 +7,7 @@ namespace EngineCore
     {
         GameSession Initialization(string scenario, bool isActive = true);
 
-        SessionDTO RefreshGameSession(int id);
+        SessionDataDto RefreshGameSession(int id);
 
         void ResumeSession(int id);
 
