@@ -192,6 +192,8 @@ namespace Engine.UI.Controls
 
             DrawTacticalMap.DrawCelestialObjects(screenParameters, environment);
 
+            DrawTacticalMap.DrawActiveCelestialObjects(screenParameters, environment);
+
             DrawTacticalMap.DrawDirections(screenParameters, environment);
 
             DrawTacticalMap.DrawHistoryTrajectory(screenParameters, environment, _history);

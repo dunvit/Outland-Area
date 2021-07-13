@@ -67,6 +67,11 @@ namespace Engine.Layers.Tactical
             return Session.GetCelestialObject(activeCelestialObjectId);
         }
 
+        public PointF GetMouseCoordinates()
+        {
+            return OuterSpaceTracker.MouseCoordinates;
+        }
+
         public void RefreshGameSession(GameSession session) => Session = session;
 
         public void SetAction(int moduleId, int actionId, TacticalMode mode)

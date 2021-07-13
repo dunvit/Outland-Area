@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using EngineCore.Session;
 
@@ -12,8 +13,12 @@ namespace Engine.Tools
         private int _activeObjectId;
         private int _selectedObjectId;
 
-        public void Refresh(GameSession gameSession, System.Drawing.PointF coordinates, MouseArguments type)
+        public PointF MouseCoordinates { get; private set; }
+
+        public void Refresh(GameSession gameSession, PointF coordinates, MouseArguments type)
         {
+            MouseCoordinates = coordinates;
+
             var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
                 celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).ToList();
 

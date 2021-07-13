@@ -71,6 +71,30 @@ namespace Engine.UI.DrawEngine
             }
         }
 
+        
+        public static void DrawActiveCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var activeObject = environment.GetActiveObject();
+
+            if (activeObject is null) return;
+
+            var pen = new Pen(Color.Gray);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, activeObject.GetLocation());
+
+            screenInfo.GraphicSurface.DrawEllipse(pen, spaceshipScreenLocation.X - 20, spaceshipScreenLocation.Y - 20, 40, 40);
+
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.GetMouseCoordinates());
+
+            var distance = GeometryTools.Distance(spaceshipScreenLocation, mouseScreenLocation);
+            var direction = GeometryTools.Azimuth(spaceshipScreenLocation, mouseScreenLocation);
+
+            var destinationPoint = GeometryTools.MoveObject(mouseScreenLocation, distance - 20, direction);
+
+            if(distance  > 20)
+                screenInfo.GraphicSurface.DrawLine(pen, mouseScreenLocation.X, mouseScreenLocation.Y, destinationPoint.X, destinationPoint.Y);
+        }
+
         public static void DrawCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
             foreach (var currentObject in environment.Session.GetCelestialObjects())

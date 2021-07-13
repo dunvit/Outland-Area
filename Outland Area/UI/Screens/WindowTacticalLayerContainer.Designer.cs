@@ -30,6 +30,7 @@ namespace Engine.UI.Screens
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.showShipInfo1 = new Engine.UI.Controls.ShowShipInfo();
             this.controlGameSessionLog = new Engine.UI.Controls.GameSessionLog();
             this.crlModule = new Engine.UI.Controls.Module();
             this.crlCommandsContainer = new System.Windows.Forms.Panel();
@@ -38,7 +39,6 @@ namespace Engine.UI.Screens
             this.label2 = new System.Windows.Forms.Label();
             this.gameSessionInformation1 = new Engine.UI.Controls.GameSessionInformation();
             this.crlTacticalMap = new Engine.UI.Controls.TacticalMap();
-            this.activeCelestialObject1 = new Engine.UI.Controls.ActiveCelestialObject();
             this.panel1.SuspendLayout();
             this.crlCommandsContainer.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -47,7 +47,7 @@ namespace Engine.UI.Screens
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.activeCelestialObject1);
+            this.panel1.Controls.Add(this.showShipInfo1);
             this.panel1.Controls.Add(this.controlGameSessionLog);
             this.panel1.Controls.Add(this.crlModule);
             this.panel1.Controls.Add(this.crlCommandsContainer);
@@ -58,6 +58,16 @@ namespace Engine.UI.Screens
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1215, 734);
             this.panel1.TabIndex = 0;
+            // 
+            // showShipInfo1
+            // 
+            this.showShipInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.showShipInfo1.BackColor = System.Drawing.Color.Black;
+            this.showShipInfo1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.showShipInfo1.Location = new System.Drawing.Point(1024, 11);
+            this.showShipInfo1.Name = "showShipInfo1";
+            this.showShipInfo1.Size = new System.Drawing.Size(178, 128);
+            this.showShipInfo1.TabIndex = 5;
             // 
             // controlGameSessionLog
             // 
@@ -134,14 +144,6 @@ namespace Engine.UI.Screens
             this.crlTacticalMap.Size = new System.Drawing.Size(274, 247);
             this.crlTacticalMap.TabIndex = 1;
             // 
-            // activeCelestialObject1
-            // 
-            this.activeCelestialObject1.BackColor = System.Drawing.Color.Black;
-            this.activeCelestialObject1.Location = new System.Drawing.Point(1052, 11);
-            this.activeCelestialObject1.Name = "activeCelestialObject1";
-            this.activeCelestialObject1.Size = new System.Drawing.Size(150, 150);
-            this.activeCelestialObject1.TabIndex = 5;
-            // 
             // WindowTacticalLayerContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -171,6 +173,6 @@ namespace Engine.UI.Screens
         private System.Windows.Forms.Label label2;
         private Controls.Module crlModule;
         private Controls.GameSessionLog controlGameSessionLog;
-        private Controls.ActiveCelestialObject activeCelestialObject1;
+        private Controls.ShowShipInfo showShipInfo1;
     }
 }

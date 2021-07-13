@@ -34,6 +34,9 @@ namespace Engine.UI.Controls
             txtTurn.Text = _environment.Session.Turn + "";
             txtMode.Text = _environment.Mode.ToString();
 
+            var activeObject = _environment.GetActiveObject();
+            txtActiveCelestialObjectID.Text = activeObject is null ? "N/A" : activeObject.Id.ToString();
+
             if (_environment.Session.IsPause)
             {
                 if (cmdPauseResume.Text !=  MessageResume)

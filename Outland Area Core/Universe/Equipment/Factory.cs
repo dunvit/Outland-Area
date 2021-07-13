@@ -52,6 +52,20 @@ namespace EngineCore.Universe.Equipment
                         Name = "Light Missile Launcher I"
                     };
                     break;
+
+                case "WRS5003":
+                    resultModule = new LightMissileLauncher
+                    {
+                        Id = RandomGenerator.GetId(),
+                        OwnerId = ownerId,
+                        ActivationCost = 100,
+                        Category = Category.Weapon,
+                        ReloadTime = 12 * ticksInSecond,
+                        Reloading = 12 * ticksInSecond,
+                        AmmoId = 101,
+                        Name = "Light Missile Launcher Ia"
+                    };
+                    break;
             }
 
             return resultModule;
