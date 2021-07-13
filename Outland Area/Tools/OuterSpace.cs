@@ -35,7 +35,7 @@ namespace Engine.Tools
             switch (type)
             {
                 case MouseArguments.LeftClick:
-                    if (_selectedObjectId == id) return;
+                    //if (_selectedObjectId == id) return;
                     _selectedObjectId = id;
                     OnChangeSelectedObject?.Invoke(id);
                     break;

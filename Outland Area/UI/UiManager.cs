@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.UI.Model;
 using Engine.UI.Screens;
 using EngineCore.Events;
@@ -30,6 +31,7 @@ namespace Engine.UI
             {
                 new WindowMenu(),
                 new WindowBackGround(),
+                new WindowOpenFire(),
                 _tacticalLayerContainer
             };
 
@@ -48,6 +50,8 @@ namespace Engine.UI
             foreach (var screen in _screens)
             {
                 if (screen is WindowMenu && key == "WindowMenu") return screen;
+
+                if (screen is WindowOpenFire && key == "WindowOpenFire") return screen;
 
                 if (screen is WindowBackGround && key == "WindowBackGround") return screen;
 
@@ -93,7 +97,34 @@ namespace Engine.UI
             Global.Game.SessionResume();
         }
 
+        public void OpenScreen(string window, TacticalEnvironment environment)
+        {
+            var form = GetScreen(window);
+
+            form.ShowInTaskbar = false;
+            form.ShowIcon = false;
+            form.StartPosition = FormStartPosition.CenterParent;
+
+            var result = OpenModalForm(form, environment.Session);
+        }
+
         private delegate DialogResult RefreshCallback(Form screen, GameEvent gameEvent, GameSession gameSession);
+
+        private DialogResult OpenModalForm(Form screen, GameSession gameSession)
+        {
+            Form mainForm = null;
+            if (Application.OpenForms.Count > 0)
+                mainForm = Application.OpenForms[0];
+
+            if (mainForm != null && mainForm.InvokeRequired)
+            {
+                RefreshCallback d = OpenModalForm;
+                return (DialogResult)mainForm.Invoke(d, screen, gameSession);
+            }
+
+
+            return screen.ShowDialog();
+        }
 
         private DialogResult OpenModalForm(Form screen, GameEvent gameEvent, GameSession gameSession)
         {

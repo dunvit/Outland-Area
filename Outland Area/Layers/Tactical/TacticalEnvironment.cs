@@ -35,7 +35,11 @@ namespace Engine.Layers.Tactical
 
         private void Event_SetSelectedObject(int obj)
         {
-            
+            if (Mode == TacticalMode.SelectingSpaceObjectWithActive)
+            {
+                Global.Game.ShowScreen("WindowOpenFire");
+            }
+
         }
 
         private void Event_SetActiveObject(int celestialObjectId)

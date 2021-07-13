@@ -19,7 +19,7 @@ namespace Engine
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IGameServer _gameServer;
-        //private GameSession _gameSession;
+
         public UiManager UiManager { get; set; }
 
         public TacticalEnvironment Environment { get;}
@@ -28,17 +28,10 @@ namespace Engine
         public event Action<TacticalEnvironment> OnStartGameSession;
         public event Action<int> OnSelectModule;
         public event Action<int, int> OnCancelModuleAction;
-        //public event Action<int> OnCancelModule; CancelModuleAction
         public event Action<TacticalEnvironment> OnInitializationFinish;
 
         public List<string> AcceptedEvents = new List<string>();
-
         public List<Command> Commands { get; set; } = new List<Command>();
-
-        
-        private int selectedCelestialObjectId;
-
-        
 
         public GameManager()
         {
@@ -64,12 +57,17 @@ namespace Engine
             Environment = new TacticalEnvironment();
 
             _gameServer = gameServer;
-            var _gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
+            var gameSession = new GameSession( _gameServer.RefreshGameSession(gameServer.SessionId) );
 
-            Environment.RefreshGameSession(_gameSession);
+            Environment.RefreshGameSession(gameSession);
         }
 
-        public Form ShowScreen(string screenName)
+        public void ShowScreen(string screenName)
+        {
+            UiManager.OpenScreen(screenName, Environment);
+        }
+
+        public Form GetScreen(string screenName)
         {
             return UiManager.GetScreen(screenName);
         }
@@ -84,16 +82,7 @@ namespace Engine
 
             OnStartGameSession?.Invoke(Environment);
 
-            Environment.OuterSpaceTracker.OnChangeSelectedObject += Event_ChangeSelectedObject;
-
             Scheduler.Instance.ScheduleTask(50, 50, GetDataFromServer, null);
-        }
-
-
-
-        private void Event_ChangeSelectedObject(int celestialObjectId)
-        {
-            selectedCelestialObjectId = celestialObjectId;
         }
 
         private bool _inProgress;

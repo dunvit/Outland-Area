@@ -32,6 +32,7 @@ namespace Engine.UI.Controls
         private void RefreshControl()
         {
             txtTurn.Text = _environment.Session.Turn + "";
+            txtMode.Text = _environment.Mode.ToString();
 
             if (_environment.Session.IsPause)
             {

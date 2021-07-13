@@ -38,8 +38,6 @@ namespace Engine.UI.Screens
         {
             Logger.Debug($"Window_KeyDown - Handle the KeyDown event {e.KeyCode} ");
 
-            if (_environment.Session.IsPause) return;
-
             var spacecraft = _environment.Session.GetPlayerSpaceShip();
 
             string commandBody;
@@ -47,34 +45,48 @@ namespace Engine.UI.Screens
             switch (e.KeyCode)
             {
                 case Keys.S:
+                    if (_environment.Session.IsPause) return;
                     commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Braking);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));                    
                     break;
 
                 case Keys.D:
+                    if (_environment.Session.IsPause) return;
                     commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnRight);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
                 case Keys.A:
+                    if (_environment.Session.IsPause) return;
                     commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnLeft);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
                 case Keys.W:
+                    if (_environment.Session.IsPause) return;
                     commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Acceleration);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
                 case Keys.Escape:
                     _environment.CancelAction();
-                    Global.Game.SessionResume();
+                    if(_environment.Session.IsPause)
+                        Global.Game.SessionResume();
                     break;
             }
         }
 
         private void Event_SelectModule(int moduleId)
         {
+            // Resume game if it was on pause by module action
+            if (_environment.Mode != TacticalMode.General && _environment.Session.IsPause)
+            {
+                Global.Game.SessionResume();
+            }
+
+            // Cancel previous action
+            Global.Game.EventCancelModuleAction();
+
             crlModule.Initialization(moduleId, _environment);
             crlModule.Visible = true;
         }
