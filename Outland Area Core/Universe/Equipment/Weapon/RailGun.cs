@@ -16,7 +16,7 @@ namespace EngineCore.Universe.Equipment.Weapon
             throw new NotImplementedException();
         }
 
-        public dynamic Shot(int objectId, int targetId, int moduleId)
+        public dynamic Shot(int objectId, int targetId, int moduleId, int actionId)
         {
             throw new NotImplementedException();
         }

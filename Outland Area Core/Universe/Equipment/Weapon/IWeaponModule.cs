@@ -7,6 +7,6 @@ namespace EngineCore.Universe.Equipment.Weapon
         CategoryAmmo UsedWith { get; set; }
         int AmmoId { get; set; }
 
-        dynamic Shot(int objectId, int targetId, int moduleId);
+        dynamic Shot(int objectId, int targetId, int moduleId, int actionId);
     }
 }

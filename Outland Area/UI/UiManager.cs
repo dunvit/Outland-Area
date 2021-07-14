@@ -105,12 +105,12 @@ namespace Engine.UI
             form.ShowIcon = false;
             form.StartPosition = FormStartPosition.CenterParent;
 
-            var result = OpenModalForm(form, environment.Session);
+            var result = OpenModalForm(form, environment);
         }
 
         private delegate DialogResult RefreshCallback(Form screen, GameEvent gameEvent, GameSession gameSession);
 
-        private DialogResult OpenModalForm(Form screen, GameSession gameSession)
+        private DialogResult OpenModalForm(Form screen, TacticalEnvironment environment)
         {
             Form mainForm = null;
             if (Application.OpenForms.Count > 0)
@@ -119,9 +119,10 @@ namespace Engine.UI
             if (mainForm != null && mainForm.InvokeRequired)
             {
                 RefreshCallback d = OpenModalForm;
-                return (DialogResult)mainForm.Invoke(d, screen, gameSession);
+                return (DialogResult)mainForm.Invoke(d, screen, environment);
             }
 
+            screen.Tag = environment;
 
             return screen.ShowDialog();
         }

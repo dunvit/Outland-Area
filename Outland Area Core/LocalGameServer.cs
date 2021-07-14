@@ -197,6 +197,7 @@ namespace EngineCore
             lock (Commands)
             {
                  Commands.Add(commandKey,  command);
+                 _logger.Debug($"Command sessionId={sessionId} typeId={typeId} added to turn commands.");
             }                
         }
 

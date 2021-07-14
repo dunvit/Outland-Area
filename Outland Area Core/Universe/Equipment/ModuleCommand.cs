@@ -16,9 +16,9 @@ namespace EngineCore.Universe.Equipment
             return commandJObject.ToString(Formatting.None);
         }
 
-        public static string ToJson(GameSession gameSession, Func<int, int, int, dynamic> action, int targetId, int moduleId)
+        public static string ToJson(GameSession gameSession, Func<int, int, int, int, dynamic> action, int targetId, int moduleId, int actionId)
         {
-            var commandJObject = action(gameSession.GetPlayerSpaceShip().Id, targetId, moduleId);
+            var commandJObject = action(gameSession.GetPlayerSpaceShip().Id, targetId, moduleId, actionId);
 
             commandJObject.TypeId = commandJObject.TypeId;
             commandJObject.Turn = gameSession.Turn;

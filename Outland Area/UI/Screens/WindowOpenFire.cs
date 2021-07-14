@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
+using Engine.Layers.Tactical;
+using EngineCore.Session;
+using EngineCore.Universe.Equipment;
 
 namespace Engine.UI.Screens
 {
@@ -22,6 +21,29 @@ namespace Engine.UI.Screens
 
         private void label3_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void Event_OpenFire(object sender, EventArgs e)
+        {
+            var environment = (TacticalEnvironment)Tag;
+
+            var targetId = environment.GetActiveObject().Id;
+
+            var moduleId = environment.Action.ModuleId;
+
+            var actionId = environment.Action.ActionId;
+
+            var spacecraft = environment.Session.GetPlayerSpaceShip();
+
+            var module = spacecraft.GetWeaponModules().First();
+
+            var commandBody = ModuleCommand.ToJson(environment.Session, module.Shot, targetId, moduleId, actionId);
+
+            Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+
+            Global.Game.SessionResume();
+
             Close();
         }
     }
