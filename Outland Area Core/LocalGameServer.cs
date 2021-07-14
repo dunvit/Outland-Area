@@ -95,9 +95,12 @@ namespace EngineCore
 
             //-------------------------------------------------------------------------------------------------- Start calculations
 
-            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
+            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings, Command);
 
             turnGameSession = new Coordinates().Recalculate(turnGameSession, _turnSettings);
+
+            
+            turnGameSession = new Explosions().Execute(turnGameSession, _turnSettings);
 
             turnGameSession = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
@@ -160,12 +163,6 @@ namespace EngineCore
             _logger.Info($"Succeeded.");
         }
 
-        /// <summary>
-        /// Only for integration tests
-        /// </summary>
-        /// <param name="sessionId"></param>
-        /// <param name="commandBody"></param>
-        /// <param name="isAlwaysSuccessful"></param>
         public void Command(int sessionId, string commandBody)
         {
             var typeId = (int)JObject.Parse(commandBody)["TypeId"];

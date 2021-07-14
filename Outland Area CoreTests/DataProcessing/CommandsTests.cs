@@ -191,7 +191,7 @@ namespace Outland_Area_CoreTests.DataProcessing
         {
             var settings = new EngineSettings { DebugProperties = new DebugProperties(true, true) };
 
-            var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Map_FirstBattle", settings);
+            var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Weapon", settings);
 
             server.EnableDebugMode();
 
@@ -211,7 +211,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(200, targetSpacecraft.Shields);
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
 
@@ -226,7 +226,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             server.Wait(5);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
 
@@ -234,7 +234,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
@@ -243,7 +243,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
@@ -252,7 +252,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
@@ -261,7 +261,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
@@ -270,7 +270,7 @@ namespace Outland_Area_CoreTests.DataProcessing
             Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id, 1));
-            server.TurnCalculation(1);
+            server.TurnCalculation(10);
 
             gameSession = EnvironmentGlobal.GetSession(server);
             targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();

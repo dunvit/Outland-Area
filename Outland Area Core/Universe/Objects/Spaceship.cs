@@ -62,6 +62,16 @@ namespace EngineCore.Universe.Objects
             return result;
         }
 
+        public IWeaponModule GetWeaponModule(int moduleId)
+        {
+            foreach (var weapon in Modules.Where(module => module.Category == Category.Weapon && module.Id == moduleId).Cast<IWeaponModule>())
+            {
+                return weapon;
+            }
+
+            throw new Exception($"Critical error. Module {moduleId} for spaceship {Id} not found.");
+        }
+
         public List<SpaceScanner> GetScanningModules()
         {
             return Modules.Where(module => module.Category == Category.SpaceScanner).Cast<SpaceScanner>().ToList();

@@ -10,6 +10,8 @@ namespace EngineCore.Universe.Objects
         public float Damage { get; set; }
         public float Radius { get; set; }
 
+        public int TargetId { get; set; }
+
         public Missile()
         {
             Id = RandomGenerator.GetId();

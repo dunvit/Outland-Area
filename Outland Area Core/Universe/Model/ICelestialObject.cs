@@ -5,7 +5,7 @@
         int Id { get; set; }
         int OwnerId { get; set; }
         string Name { get; set; }
-        double Direction { get; }
+        double Direction { get; set; }
         int Signature { get; set; }
         float Speed { get; }
         float PositionX { get; set; }

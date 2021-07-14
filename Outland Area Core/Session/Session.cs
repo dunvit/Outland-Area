@@ -127,7 +127,6 @@ namespace EngineCore.Session
         }
 
         public void SetScenarioName(string name) => Data.ScenarioName = name;
-        
 
         public SessionDataDto ToSessionTransfer()
         {

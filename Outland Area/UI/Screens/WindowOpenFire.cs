@@ -41,7 +41,7 @@ namespace Engine.UI.Screens
             var commandBody = ModuleCommand.ToJson(environment.Session, module.Shot, targetId, moduleId, actionId);
 
             Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
-
+            environment.CancelAction();
             Global.Game.SessionResume();
 
             Close();

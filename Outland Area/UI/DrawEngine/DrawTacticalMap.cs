@@ -102,6 +102,7 @@ namespace Engine.UI.DrawEngine
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
                     case CelestialObjectTypes.Missile:
+                        DrawMissile(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.SpaceshipPlayer:
                         DrawSpaceship(screenInfo, currentObject);
@@ -123,6 +124,18 @@ namespace Engine.UI.DrawEngine
                 }
 
             }
+        }
+
+        private static void DrawMissile(IScreenInfo screenInfo, ICelestialObject celestialObject)
+        {
+            var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(celestialObject.PositionX, celestialObject.PositionY));
+
+            var missile = celestialObject as Missile;
+
+            var color = Color.Blue;
+
+            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            screenInfo.GraphicSurface.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         private static void DrawAsteroid(IScreenInfo screenInfo, ICelestialObject spaceShip)
@@ -167,34 +180,37 @@ namespace Engine.UI.DrawEngine
 
         public static void DrawDirections(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
-            var color = Color.DimGray;
-
             foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
+                Color color;
+
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
                     case CelestialObjectTypes.Missile:
                         break;
                     case CelestialObjectTypes.SpaceshipPlayer:
                         color = Color.DarkOliveGreen;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcNeutral:
                         color = Color.DarkGray;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcEnemy:
                         color = Color.DarkRed;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcFriend:
                         color = Color.SeaGreen;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Asteroid:
                         color = Color.DimGray;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;
                 }
-
-                SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
             }
         }
 
@@ -203,6 +219,8 @@ namespace Engine.UI.DrawEngine
             foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
                 if (!history.ContainsKey(currentObject.Id)) continue;
+
+                if(currentObject is Missile) continue;
 
                 var results = ((FixedSizedQueue<PointF>)history[currentObject.Id]).GetData();
 

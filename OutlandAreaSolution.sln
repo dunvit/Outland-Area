@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OutlandAreaXYZ", "OutlandAr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaCommon", "OutlandAreaCommon\OutlandAreaCommon.csproj", "{EC750C9B-68C5-40D6-8B98-5058EF786DA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlandAreaLocalServer", "OutlandAreaLocalServer\OutlandAreaLocalServer.csproj", "{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC750C9B-68C5-40D6-8B98-5058EF786DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{277B4D7E-A2F1-4DF9-A615-FB411C59DBF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
