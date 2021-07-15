@@ -167,5 +167,21 @@ namespace Engine.UI
             windowBackGround.Show();
             windowMenu.Hide();
         }
+
+        public void OpenExplosionResultScreen(GameEvent message, GameSession gameSession)
+        {
+            Global.Game.SessionPause();
+
+            var windowGameEvent = new WindowExplosionResult(message, gameSession)
+            {
+                ShowInTaskbar = false,
+                ShowIcon = false,
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            var result = OpenModalForm(windowGameEvent, message, gameSession);
+
+            Global.Game.SessionResume();
+        }
     }
 }

@@ -37,12 +37,12 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             var commandPrediction = Prediction(gameSession, command.Type, objectId, moduleId, targetId);
 
-            var shotResult = Tools.RandomGenerator.GetDouble(100);
+            var shotResult = RandomGenerator.GetDouble(100);
 
 
             float damage = 0;
             
-            if (commandPrediction.Max < shotResult || settings.DebugProperties.IsAlwaysSuccessful)
+            if (commandPrediction.Max > shotResult || settings.DebugProperties.IsAlwaysSuccessful)
             {
                 // Hit
                 // TODO: Move hit calculation to separate class
@@ -58,7 +58,11 @@ namespace EngineCore.DataProcessing.CommandsExecution
             var celestialObject = new Missile
             {
                 Id = RandomGenerator.GetId(),
+                Chance = commandPrediction.Max,
                 Damage = damage,
+                ModuleId = moduleId,
+                ActionId = actionId,
+                Dice = (int)shotResult,
                 OwnerId = spaceship.Id,
                 TargetId = targetId,
                 PositionX = spaceship.PositionX,

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using EngineCore.Events;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Universe.Model;
@@ -71,6 +72,34 @@ namespace EngineCore.DataProcessing
                 target.Damage(missile.Damage);
 
                 _explodedMissiles.Add(celestialObject);
+
+                var newGameEvent = new GameEvent
+                {
+                    Type = GameEventTypes.ExplosionResult,
+                    Turn = gameSession.Turn + 1,
+                    IsPause = true,
+                    IsOpenWindow = true
+                };
+
+                newGameEvent.GenericObjects.Add("" + missile.OwnerId);
+                newGameEvent.GenericObjects.Add("" + missile.TargetId);
+                newGameEvent.GenericObjects.Add("" + missile.ModuleId);
+                newGameEvent.GenericObjects.Add("" + missile.ActionId);
+                newGameEvent.GenericObjects.Add("" + missile.Dice);
+                newGameEvent.GenericObjects.Add("" + missile.Damage);
+                newGameEvent.GenericObjects.Add("" + missile.Chance);
+
+                if ((int)missile.Damage == 0)
+                {
+                    newGameEvent.GenericObjects.Add("MISS");
+                }
+
+                if (missile.Damage > 0)
+                {
+                    newGameEvent.GenericObjects.Add(target.Shields > 0 ? "HIT" : "DESTROYED");
+                }
+
+                gameSession.AddEvent(newGameEvent);
             }
         }
     }
