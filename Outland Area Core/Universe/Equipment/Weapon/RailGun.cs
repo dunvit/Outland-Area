@@ -20,5 +20,7 @@ namespace EngineCore.Universe.Equipment.Weapon
         {
             throw new NotImplementedException();
         }
+
+        public int BaseAccuracy { get; set; }
     }
 }

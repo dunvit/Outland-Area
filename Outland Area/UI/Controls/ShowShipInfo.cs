@@ -4,6 +4,7 @@ using Engine.Layers.Tactical;
 using Engine.Tools;
 using EngineCore.Geometry;
 using EngineCore.Session;
+using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 using log4net;
 
@@ -19,7 +20,7 @@ namespace Engine.UI.Controls
         {
             InitializeComponent();
 
-            txtCelestialObjectName.Text = "";
+            //txtCelestialObjectName.Text = "";
 
             if (Global.Game is null) return;
 
@@ -46,19 +47,37 @@ namespace Engine.UI.Controls
                 return;
             }
 
-            var playerShip = _environment.Session.GetPlayerSpaceShip();
-            var spacecraft = activeObject.ToSpaceship();
-
-            txtCelestialObjectName.Text = activeObject.Name;
-
-            crlShields.Maximum = (int) spacecraft.ShieldsMax;
-            crlShields.CurrentValue = (int)spacecraft.Shields;
-
-            txtDirection.Text = Math.Round(spacecraft.Direction, 2) + "";
-            txtSpeed.Text = Math.Round(spacecraft.Speed, 2) + "";
-            txtDistance.Text = Math.Round(GeometryTools.Distance(spacecraft.GetLocation(), playerShip.GetLocation()), 2) + "";
+            FillControls(activeObject.ToSpaceship(), _environment.Session.GetPlayerSpaceShip());
 
             containerData.Visible = true;
+        }
+
+        private void FillControls(Spaceship targetSpaceship, ICelestialObject playerSpaceship)
+        {
+            txtCelestialObjectName.Text = targetSpaceship.Name;
+
+            var shieldsMax = (int)targetSpaceship.ShieldsMax;
+            var shieldCurrent = (int)targetSpaceship.Shields;
+
+            //if(crlShields.Maximum != shieldsMax)
+                crlShields.Maximum = shieldsMax;
+
+            //if (crlShields.CurrentValue != shieldCurrent)
+            {
+
+
+                crlShields.CurrentValue = shieldCurrent;
+                crlShields.Refresh();
+            }
+
+            if (txtDirection.Text != Math.Round(targetSpaceship.Direction, 2) + "")
+                txtDirection.Text = Math.Round(targetSpaceship.Direction, 2) + "";
+
+            if (txtSpeed.Text != Math.Round(targetSpaceship.Speed, 2) + "")
+                txtSpeed.Text = Math.Round(targetSpaceship.Speed, 2) + "";
+
+            if (txtDistance.Text != Math.Round(GeometryTools.Distance(targetSpaceship.GetLocation(), playerSpaceship.GetLocation()), 2) + "")
+                txtDistance.Text = Math.Round(GeometryTools.Distance(targetSpaceship.GetLocation(), playerSpaceship.GetLocation()), 2) + "";
         }
     }
 }

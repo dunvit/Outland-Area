@@ -90,14 +90,14 @@ namespace EngineCore.DataProcessing.CommandsExecution
             {
                 case CommandTypes.Shot:
                     //var x = gameSession.Distance(objectId, targetId);
-                    //var weaponModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon();
+                    var weaponModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon();
                     //var usedWith = weaponModule.UsedWith;
                     //var ammoId = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon().AmmoId;
                     //var ammo = AmmoFactory.GetAmmo(ammoId);
 
                     // TODO: Add formula get hit change by distance and weapon and ammo properties + pilot skills.
                     result.Min = 45;
-                    result.Max = 57;
+                    result.Max = weaponModule.BaseAccuracy;
                     break;
             }
 

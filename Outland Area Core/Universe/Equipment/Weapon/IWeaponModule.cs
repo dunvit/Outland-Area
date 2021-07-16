@@ -1,6 +1,4 @@
-﻿using EngineCore.Session;
-
-namespace EngineCore.Universe.Equipment.Weapon
+﻿namespace EngineCore.Universe.Equipment.Weapon
 {
     public interface IWeaponModule
     {
@@ -8,5 +6,7 @@ namespace EngineCore.Universe.Equipment.Weapon
         int AmmoId { get; set; }
 
         dynamic Shot(int objectId, int targetId, int moduleId, int actionId);
+
+        int BaseAccuracy { get; set; }
     }
 }

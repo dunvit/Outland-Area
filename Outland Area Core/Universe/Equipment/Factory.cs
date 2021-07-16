@@ -46,9 +46,10 @@ namespace EngineCore.Universe.Equipment
                         OwnerId = ownerId,
                         ActivationCost = 100,
                         Category = Category.Weapon,
-                        ReloadTime = 12 * ticksInSecond,
-                        Reloading = 12 * ticksInSecond,
+                        ReloadTime = 5 * ticksInSecond,
+                        Reloading = 5 * ticksInSecond,
                         AmmoId = 101,
+                        BaseAccuracy = 100,
                         Name = "Light Missile Launcher I"
                     };
                     break;
@@ -63,6 +64,7 @@ namespace EngineCore.Universe.Equipment
                         ReloadTime = 12 * ticksInSecond,
                         Reloading = 12 * ticksInSecond,
                         AmmoId = 101,
+                        BaseAccuracy = 100,
                         Name = "Light Missile Launcher Ia"
                     };
                     break;

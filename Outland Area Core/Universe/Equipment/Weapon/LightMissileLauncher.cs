@@ -23,13 +23,9 @@ namespace EngineCore.Universe.Equipment.Weapon
             serverCommand.ModuleId = moduleId;
             serverCommand.ActionId = actionId;
 
-
-
-
-
             return serverCommand;
         }
 
-        
+        public int BaseAccuracy { get; set; }
     }
 }

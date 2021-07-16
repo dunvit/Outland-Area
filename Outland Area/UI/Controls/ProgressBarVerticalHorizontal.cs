@@ -4,17 +4,32 @@ using System.Windows.Forms;
 
 namespace Engine.UI.Controls
 {
-    public partial class ProgressBarVerticalHorizontal : UserControl
+    public sealed partial class ProgressBarVerticalHorizontal : UserControl
     {
         public ProgressBarVerticalHorizontal()
         {
             InitializeComponent();
-
+            
             SetStyle(ControlStyles.UserPaint, true);
 
-            crlFilledSurface.BackColor = _barLineColor;
+            DoubleBuffered = true;
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // Call the OnPaint method of the base class.
+            base.OnPaint(e);
+
+            var background = new Rectangle(new Point(0, 0), new Size(Size.Width, Size.Height));
+            e.Graphics.FillRectangle(new SolidBrush(BackColor), background);
+
+            var currentWidth = (int)(Width * ((double)_currentValue / _maximum));
+            // Create a rectangle that represents the size of the control, minus 1 pixel.
+            var area = new Rectangle(new Point(0, 0), new Size(currentWidth, Size.Height));
+
+            // Draw an aqua rectangle in the rectangle represented by the control.
+            e.Graphics.FillRectangle(new SolidBrush(_barLineColor), area);
+        }
 
         private int _maximum = 100;
         [Category("Flash"),
@@ -49,7 +64,8 @@ namespace Engine.UI.Controls
             set
             {
                 _currentValue = value;
-                crlFilledSurface.Width = (int)(Width * ((double)_currentValue / _maximum));
+                //var currentWidth = (int)(Width * ((double)_currentValue / _maximum));
+                //crlFilledSurface.Width = currentWidth;
                 Invalidate();
             }
         }
@@ -67,7 +83,7 @@ namespace Engine.UI.Controls
             set
             {
                 _barLineColor = value;
-                crlFilledSurface.BackColor = _barLineColor;
+                //crlFilledSurface.BackColor = _barLineColor;
                 // The Invalidate method calls the OnPaint method, which redraws
                 // the control.  
                 Invalidate();
