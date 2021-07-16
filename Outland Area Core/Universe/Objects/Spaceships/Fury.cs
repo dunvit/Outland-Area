@@ -10,7 +10,7 @@ namespace EngineCore.Universe.Objects.Spaceships
             var spaceShip = new Spaceship
             {
                 Id = RandomGenerator.GetId(), 
-                Name = "Fury - A" + RandomGenerator.RandomString(6), 
+                Name = "Fury - A" + RandomGenerator.RandomName(), 
                 MaxSpeed = 6,
                 Speed = 6,
                 Classification = CelestialObjectTypes.SpaceshipNpcEnemy.ToInt(),

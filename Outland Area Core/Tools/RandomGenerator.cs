@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Net.NetworkInformation;
+using RandomNameGeneratorLibrary;
 
 namespace EngineCore.Tools
 {
     public static class RandomGenerator
     {
         private static readonly Random RandomBase = new Random((int)DateTime.UtcNow.Ticks);
+
+        private static readonly PersonNameGenerator PersonGenerator = new PersonNameGenerator(new Random((int)DateTime.UtcNow.Ticks));
 
         public static int GetInteger(int min = 0, int max = 0)
         {
@@ -52,6 +56,11 @@ namespace EngineCore.Tools
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[RandomBase.Next(s.Length)]).ToArray());
+        }
+
+        public static string RandomName()
+        {
+            return PersonGenerator.GenerateRandomFemaleFirstAndLastName();
         }
 
         public static string RandomNumber(int length)
