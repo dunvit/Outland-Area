@@ -7,6 +7,7 @@ using Engine.UI.Model;
 using Engine.UI.Screens;
 using EngineCore.Events;
 using EngineCore.Session;
+using EngineCore.Universe.Equipment;
 using log4net;
 
 namespace Engine.UI
@@ -108,6 +109,15 @@ namespace Engine.UI
             var result = OpenModalForm(form, environment);
         }
 
+        public void OpenScreen(Form window, TacticalEnvironment environment)
+        {
+            window.ShowInTaskbar = false;
+            window.ShowIcon = false;
+            window.StartPosition = FormStartPosition.CenterParent;
+
+            var result = OpenModalForm(window, environment);
+        }
+
         private delegate DialogResult RefreshCallback(Form screen, GameEvent gameEvent, GameSession gameSession);
 
         private DialogResult OpenModalForm(Form screen, TacticalEnvironment environment)
@@ -182,6 +192,24 @@ namespace Engine.UI
             var result = OpenModalForm(windowGameEvent, message, gameSession);
 
             Global.Game.SessionResume();
+        }
+
+        public void HideBackGround()
+        {
+            GetScreen("WindowBackGround").Visible = false;
+        }
+
+        public void ShowAlertOnReloadingModule(IModule module, TacticalEnvironment environment)
+        {
+            //WindowAlertModuleReloadingInProgress
+            var windowGameEvent = new WindowAlertModuleReloadingInProgress(module, environment.Session)
+            {
+                ShowInTaskbar = false,
+                ShowIcon = false,
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            OpenScreen(windowGameEvent, environment);
         }
     }
 }

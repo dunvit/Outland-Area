@@ -105,6 +105,8 @@ namespace Engine.UI.Screens
             Initialization(_environment);
 
             Global.Game.InitializationFinish();
+
+            Global.Game.UiManager.HideBackGround();
         }
 
         private void Initialization(TacticalEnvironment environment)

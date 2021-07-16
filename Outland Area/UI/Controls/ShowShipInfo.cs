@@ -59,16 +59,9 @@ namespace Engine.UI.Controls
             var shieldsMax = (int)targetSpaceship.ShieldsMax;
             var shieldCurrent = (int)targetSpaceship.Shields;
 
-            //if(crlShields.Maximum != shieldsMax)
-                crlShields.Maximum = shieldsMax;
-
-            //if (crlShields.CurrentValue != shieldCurrent)
-            {
-
-
-                crlShields.CurrentValue = shieldCurrent;
-                crlShields.Refresh();
-            }
+            crlShields.Maximum = shieldsMax;
+            crlShields.CurrentValue = shieldCurrent;
+            crlShields.Refresh();
 
             if (txtDirection.Text != Math.Round(targetSpaceship.Direction, 2) + "")
                 txtDirection.Text = Math.Round(targetSpaceship.Direction, 2) + "";

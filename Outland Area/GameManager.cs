@@ -10,6 +10,7 @@ using EngineCore;
 using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Equipment;
 using log4net;
 
 namespace Engine
@@ -237,6 +238,15 @@ namespace Engine
 
                 Commands = new List<Command>();
             }
+        }
+
+        public void ShowAlertOnReloadingModule(IModule module)
+        {
+            SessionPause();
+
+            UiManager.ShowAlertOnReloadingModule(module, Environment);
+
+            SessionResume();
         }
     }
 }

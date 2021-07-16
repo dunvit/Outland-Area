@@ -62,6 +62,14 @@ namespace Engine.UI.Controls
             var moduleId = action.ModuleId;
             var actionId = action.Id;
 
+            var module = _environment.Session.GetPlayerSpaceShip().GetModule(moduleId);
+
+            if (module.IsReloaded == false)
+            {
+                Global.Game.ShowAlertOnReloadingModule(module);
+                return;
+            }
+
             _environment.SetAction(moduleId, actionId, TacticalMode.SelectingSpaceObject);
             Global.Game.SessionPause();
         }

@@ -42,7 +42,7 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             float damage = 0;
             
-            if (commandPrediction.Max > shotResult || settings.DebugProperties.IsAlwaysSuccessful)
+            if (commandPrediction.Max >= shotResult || settings.DebugProperties.IsAlwaysSuccessful)
             {
                 // Hit
                 // TODO: Move hit calculation to separate class

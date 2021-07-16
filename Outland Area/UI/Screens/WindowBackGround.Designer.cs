@@ -28,10 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // WindowBackGround
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "WindowBackGround";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "WindowBackGround";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
