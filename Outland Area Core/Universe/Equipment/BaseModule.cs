@@ -5,7 +5,7 @@ using System;
 namespace EngineCore.Universe.Equipment
 {
     [Serializable]
-    public class BaseModule
+    public abstract class BaseModule
     {
         [NonSerialized()]
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

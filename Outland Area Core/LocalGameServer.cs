@@ -99,8 +99,7 @@ namespace EngineCore
 
             turnGameSession = new Coordinates().Recalculate(turnGameSession, _turnSettings);
 
-            
-            turnGameSession = new Explosions().Execute(turnGameSession, _turnSettings);
+            turnGameSession = new MissilesActivation().Execute(turnGameSession, _turnSettings);
 
             turnGameSession = new Reloading().Recalculate(turnGameSession, _turnSettings);
 

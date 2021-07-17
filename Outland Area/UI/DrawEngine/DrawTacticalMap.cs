@@ -282,5 +282,18 @@ namespace Engine.UI.DrawEngine
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public static void DrawExplosions(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
+            {
+                if (!(currentObject is Explosion missile)) continue;
+
+                var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
+
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - missile.Radius/2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - missile.Radius / 2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
+            }
+        }
     }
 }

@@ -186,6 +186,8 @@ namespace Engine.UI.Controls
             // TODO: - Draw back ground only once
             DrawTacticalMap.DrawBackGround(screenParameters);
 
+            DrawTacticalMap.DrawExplosions(screenParameters, environment);
+
             DrawTacticalMap.DrawGrid(screenParameters);
 
             DrawTacticalMap.DrawAction(screenParameters, environment);

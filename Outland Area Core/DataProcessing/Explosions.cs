@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Reflection;
 using EngineCore.Events;
 using EngineCore.Geometry;
@@ -10,11 +9,12 @@ using log4net;
 
 namespace EngineCore.DataProcessing
 {
-    public class Explosions
+    public class MissilesActivation
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly List<ICelestialObject> _explodedMissiles = new List<ICelestialObject>();
+        private readonly List<ICelestialObject> _addedExplosions = new List<ICelestialObject>();
 
         public GameSession Execute(GameSession gameSession, EngineSettings settings)
         {
@@ -29,78 +29,98 @@ namespace EngineCore.DataProcessing
 
             foreach (var explodedMissile in _explodedMissiles)
             {
-                // TODO: Refactor it - create Add Celestial object method on Game Session level
+                // TODO: Refactor it - create Remove Celestial object method on Game Session level
                 gameSession.CelestialObjects.Remove(explodedMissile);
+            }
+
+            foreach (var explosion in _addedExplosions)
+            {
+                // TODO: Refactor it - create Add Celestial object method on Game Session level
+                gameSession.CelestialObjects.Add(explosion);
+            }
+
+            // Remove overdue explosion
+            foreach (var explodedExplosion in ExplosionsRemove(gameSession))
+            {
+                // TODO: Refactor it - create Remove Celestial object method on Game Session level
+                gameSession.CelestialObjects.Remove(explodedExplosion);
             }
 
             return gameSession;
         }
 
+        private IEnumerable<ICelestialObject> ExplosionsRemove(GameSession gameSession)
+        {
+            var result = new List<ICelestialObject>();
+
+            foreach (var celestialObject in gameSession.GetCelestialObjects())
+            {
+                if (!(celestialObject is Explosion explosion)) continue;
+
+                if (explosion.RemoveTurn < gameSession.Turn)
+                {
+                    result.Add(celestialObject);
+                }
+            }
+
+            return result;
+        }
+
         private void ExplosionCalculate(ICelestialObject celestialObject, GameSession gameSession, EngineSettings settings)
         {
-            var missile = celestialObject as Missile;
-
-            if (missile is null) return;
+            if (!(celestialObject is Missile missile)) return;
 
             Logger.Debug($"Missile {missile.Id} from spaceship {missile.OwnerId}");
 
-            var speedInTick = celestialObject.Speed / settings.UnitsPerSecond;
-
             var target = gameSession.GetCelestialObject(missile.TargetId).ToSpaceship();
-
-            var direction = GeometryTools.Azimuth(target.GetLocation(), celestialObject.GetLocation());
-
-            var position = GeometryTools.MoveObject(
-                new PointF(celestialObject.PositionX, celestialObject.PositionY),
-                speedInTick,
-                direction);
-
-            Logger.Debug($"Missile '{celestialObject.Name}' id='{celestialObject.Id}' moved from {celestialObject.GetLocation()} to {position}");
-
-            celestialObject.PreviousPositionX = celestialObject.PositionX;
-            celestialObject.PreviousPositionY = celestialObject.PositionY;
-            celestialObject.Direction = direction;
-            celestialObject.PositionX = position.X;
-            celestialObject.PositionY = position.Y;
 
             var distance = GeometryTools.Distance(celestialObject.GetLocation(), target.GetLocation());
 
-            if (distance < celestialObject.Speed)
+            if (!(distance < celestialObject.Speed)) return;
+
+            Logger.Info($"Missile {missile.Id} from spaceship {missile.OwnerId} hit to spaceship {target.Id}");
+
+            target.Damage(missile.Damage);
+
+            _explodedMissiles.Add(celestialObject);
+
+            var explosion = new Explosion(gameSession.Turn, target.Id)
             {
-                Logger.Info($"Missile {missile.Id} from spaceship {missile.OwnerId} hit to spaceship {target.Id}");
+                OwnerId = celestialObject.OwnerId,
+                PositionX = target.PositionX,
+                PositionY = target.PositionY
+            };
 
-                target.Damage(missile.Damage);
+            _addedExplosions.Add(explosion);
 
-                _explodedMissiles.Add(celestialObject);
+            var newGameEvent = new GameEvent
+            {
+                Type = GameEventTypes.ExplosionResult,
+                Turn = gameSession.Turn + 1,
+                IsPause = true,
+                IsOpenWindow = true
+            };
 
-                var newGameEvent = new GameEvent
-                {
-                    Type = GameEventTypes.ExplosionResult,
-                    Turn = gameSession.Turn + 1,
-                    IsPause = true,
-                    IsOpenWindow = true
-                };
+            // TODO: Refactor it [OAE-67]
+            newGameEvent.GenericObjects.Add("" + missile.OwnerId);
+            newGameEvent.GenericObjects.Add("" + missile.TargetId);
+            newGameEvent.GenericObjects.Add("" + missile.ModuleId);
+            newGameEvent.GenericObjects.Add("" + missile.ActionId);
+            newGameEvent.GenericObjects.Add("" + missile.Dice);
+            newGameEvent.GenericObjects.Add("" + missile.Damage);
+            newGameEvent.GenericObjects.Add("" + missile.Chance);
 
-                newGameEvent.GenericObjects.Add("" + missile.OwnerId);
-                newGameEvent.GenericObjects.Add("" + missile.TargetId);
-                newGameEvent.GenericObjects.Add("" + missile.ModuleId);
-                newGameEvent.GenericObjects.Add("" + missile.ActionId);
-                newGameEvent.GenericObjects.Add("" + missile.Dice);
-                newGameEvent.GenericObjects.Add("" + missile.Damage);
-                newGameEvent.GenericObjects.Add("" + missile.Chance);
-
-                if ((int)missile.Damage == 0)
-                {
-                    newGameEvent.GenericObjects.Add("MISS");
-                }
-
-                if (missile.Damage > 0)
-                {
-                    newGameEvent.GenericObjects.Add(target.Shields > 0 ? "HIT" : "DESTROYED");
-                }
-
-                gameSession.AddEvent(newGameEvent);
+            if ((int)missile.Damage == 0)
+            {
+                newGameEvent.GenericObjects.Add("MISS");
             }
+
+            if (missile.Damage > 0)
+            {
+                newGameEvent.GenericObjects.Add(target.Shields > 0 ? "HIT" : "DESTROYED");
+            }
+
+            gameSession.AddEvent(newGameEvent);
         }
     }
 }

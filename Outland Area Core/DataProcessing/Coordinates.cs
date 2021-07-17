@@ -16,13 +16,13 @@ namespace EngineCore.DataProcessing
         {
             foreach (var celestialObject in gameSession.GetCelestialObjects())
             {
-                RecalculateGeneralObjectLocation(celestialObject, settings);
+                RecalculateGeneralObjectLocation(gameSession, celestialObject, settings);
             }
 
             return gameSession;
         }
 
-        private void RecalculateGeneralObjectLocation(ICelestialObject celestialObject, EngineSettings settings)
+        private void RecalculateGeneralObjectLocation(GameSession gameSession, ICelestialObject celestialObject, EngineSettings settings)
         {
             var speedInTick = celestialObject.Speed / settings.UnitsPerSecond;
 
@@ -30,6 +30,16 @@ namespace EngineCore.DataProcessing
                 new PointF(celestialObject.PositionX, celestialObject.PositionY),
                 speedInTick,
                 celestialObject.Direction);
+
+
+            if (celestialObject is Missile missile)
+            {
+                var target = gameSession.GetCelestialObject(missile.TargetId).ToSpaceship();
+
+                var direction = GeometryTools.Azimuth(target.GetLocation(), missile.GetLocation());
+
+                position = GeometryTools.MoveObject( new PointF(celestialObject.PositionX, celestialObject.PositionY), speedInTick, direction);
+            }
 
             Logger.Debug($"Object '{celestialObject.Name}' id='{celestialObject.Id}' moved from {celestialObject.GetLocation()} to {position}");
 
