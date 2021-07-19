@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using EngineCore.DataProcessing;
+using EngineCore.DTO;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Objects;
 using log4net;
 using Newtonsoft.Json.Linq;
 
@@ -13,7 +16,7 @@ namespace EngineCore
 {
     public class LocalGameServer : IGameServer
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private GameSession _gameSession;
 
@@ -39,17 +42,14 @@ namespace EngineCore
 
             _gameSession = ScenarioConvertor.LoadGameSession(scenario);
 
-            _gameSession.IsPause = true;
+            _gameSession.Pause();
 
             if(isActive)
                 Scheduler.Instance.ScheduleTask(50, 50, ExecuteTurnCalculation, null);
 
-            Logger.Info($"[Server][{GetType().Name}] Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
+            _logger.Info($"Initialization finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
 
-            // TODO: Get session ID in scenario file
-            SessionId = 0;
-
-            return _gameSession.DeepClone();
+            return _gameSession;
         }
 
         private bool isDebug;
@@ -87,30 +87,33 @@ namespace EngineCore
             
             var stopwatch = Stopwatch.StartNew();
 
-            _gameSession.Turn++;
-
-            var turnGameSession = _gameSession.DeepClone();
-
-            turnGameSession.Commands = GetCommands();
+            var turnGameSession = new GameSession(_gameSession.Clone());
+            // TODO: Refactor it
+            turnGameSession.Id = _gameSession.Id;
+            turnGameSession.ScenarioEvents = _gameSession.ScenarioEvents.DeepClone();
+            turnGameSession.Commands = GetCommands(_gameSession);
 
             //-------------------------------------------------------------------------------------------------- Start calculations
 
-            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings);
+            turnGameSession = new Commands().Execute(turnGameSession, _turnSettings, Command);
 
             turnGameSession = new Coordinates().Recalculate(turnGameSession, _turnSettings);
+
+            turnGameSession = new MissilesActivation().Execute(turnGameSession, _turnSettings);
 
             turnGameSession = new Reloading().Recalculate(turnGameSession, _turnSettings);
 
             turnGameSession = new SessionEvents().Execute(turnGameSession);
 
+            turnGameSession.NextTurn();
+
             //--------------------------------------------------------------------------------------------------- End calculations
 
-            DebugPlayerShipParameters(turnGameSession.DeepClone());
+            DebugPlayerShipParameters(turnGameSession);
 
             _gameSession = GameSessionTransfer(turnGameSession, _gameSession);
 
-            Logger.Debug($"[Server][{GetType().Name}][TurnCalculation] Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");
-            
+            _logger.Debug($"Turn {_gameSession.Turn}/{turnGameSession.Turn} Calculation finished {stopwatch.Elapsed.TotalMilliseconds} ms.");            
 
             dictionaryLock.ExitWriteLock();
         }
@@ -119,72 +122,88 @@ namespace EngineCore
         {
             var spacecraft = turnGameSession.GetPlayerSpaceShip();
 
-            Logger.Debug($"[Server][{GetType().Name}][DebugPlayerShipParameters] " +
-                $"Speed {spacecraft.Speed}/{spacecraft.MaxSpeed} ms. " +
+            _logger.Debug($"Speed {spacecraft.Speed}/{spacecraft.MaxSpeed} ms. " +
                 $"Location ({spacecraft.PositionX};{spacecraft.PositionY}) " +
                 $"Direction {spacecraft.Direction} degree.");
         }
 
         private GameSession GameSessionTransfer(GameSession calculatedGameSession, GameSession gameSessionBeforeChanges)
         {
-            calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
-            
-            return calculatedGameSession.DeepClone();
+            if (gameSessionBeforeChanges.IsPause)
+                calculatedGameSession.Pause();
+            else
+                calculatedGameSession.Resume();
+
+            //calculatedGameSession.IsPause = gameSessionBeforeChanges.IsPause;
+            //calculatedGameSession.ScenarioName = gameSessionBeforeChanges.ScenarioName;
+
+            return calculatedGameSession;
         }
 
-        public GameSession RefreshGameSession(int id)
+        public SessionDataDto RefreshGameSession(int id)
         {
-            return Convert.ToClient(_gameSession.DeepClone());
+            return _gameSession.ToSessionTransfer();
         }
 
-        public GameSession GetCurrentGameSession(int id)
+        public GameSession RefreshGameSessionServerSide(int id)
         {
-            return _gameSession.DeepClone();
+            return _gameSession;
         }
 
         public void ResumeSession(int id)
         {
-            _gameSession.IsPause = false;
-            Logger.Info($"[Server][{GetType().Name}][ResumeSession] Successed.");
+            _gameSession.Resume();
+            _logger.Info($"Succeeded.");
         }
 
         public void PauseSession(int id)
         {
-            _gameSession.IsPause = true;
-            Logger.Info($"[Server][{GetType().Name}][PauseSession] Successed.");
+            _gameSession.Pause();
+            _logger.Info($"Succeeded.");
         }
 
-        /// <summary>
-        /// Only for integration tests
-        /// </summary>
-        /// <param name="sessionId"></param>
-        /// <param name="commandBody"></param>
-        /// <param name="isAlwaysSuccessful"></param>
         public void Command(int sessionId, string commandBody)
         {
             var typeId = (int)JObject.Parse(commandBody)["TypeId"];
 
-            Logger.Debug($"[Server][{GetType().Name}][Command] Add command sessionId={sessionId} typeId={typeId} body={commandBody}");
+            _logger.Debug($"Add command sessionId={sessionId} typeId={typeId} body={commandBody}");
 
             var command = new Command(commandBody);
+
+            var jObject = JObject.Parse(command.Body);
+            var moduleId = int.Parse(jObject["ModuleId"].ToString());
+            var module = _gameSession.GetCelestialObject(command.CelestialObjectId).ToSpaceship().GetModule(moduleId);
+
+            if (module.Reloading < module.ReloadTime && debugSettings.IsIgnoreReload == false)
+            {
+                _logger.Info($"Module {module.Name} still on reloading. " +
+                            $"Progress {module.Reloading}/{module.ReloadTime} .");
+
+                return;
+            }
 
             var commandKey = sessionId + "_" + command.CelestialObjectId + "_" + command.Type;
 
             if (Commands.ContainsKey(commandKey))
             {
-                Logger.Debug($"[Server][{GetType().Name}][Command] Command sessionId={sessionId} typeId={typeId} already added to turn commands.");
+                _logger.Debug($"Command sessionId={sessionId} typeId={typeId} already added to turn commands.");
                 return;
             }
 
             lock (Commands)
             {
                  Commands.Add(commandKey,  command);
+                 _logger.Debug($"Command sessionId={sessionId} typeId={typeId} added to turn commands.");
             }                
         }
 
-        private Hashtable GetCommands()
+        private Hashtable GetCommands(GameSession gameSession)
         {
+            // TODO: Split for two functions 1. - Get commands from API 2. Get unfinished commands
             Hashtable result;
+
+            _logger.Debug($"Turn {gameSession.Turn}. Commands count is {gameSession.Commands.Count}");
+
 
             lock (Commands)
             {
@@ -197,7 +216,18 @@ namespace EngineCore
 
                 Commands = new Hashtable();
 
-                Logger.Debug($"[Server][{GetType().Name}][GetCommands]\t Finished clear turn commands. Cpunt is {result.Count}");
+                foreach (Command command in gameSession.Commands.Values)
+                {
+                    if (command.UntilTurnId <= gameSession.Turn) continue;
+
+                    var commandKey = gameSession.Id + "_" + command.CelestialObjectId + "_" + command.Type;
+
+                    _logger.Info($"Turn {gameSession.Turn} resume command execution. {command.Type}");
+
+                    result.Add(commandKey, command);
+                }
+
+                _logger.Debug($"Finished clear turn commands. Count is {result.Count}");
             }
 
             return result;
@@ -206,6 +236,12 @@ namespace EngineCore
         public List<Command> GetHistoryCommands(int sessionId, long Id)
         {
             return CommandsHistory.Where(_ => _.CelestialObjectId == Id).ToList();
+        }
+
+        private IDebugProperties debugSettings = new EmptyDebugProperties();
+        public void EnableDebugMode()
+        {
+            debugSettings = new DebugProperties(true, true);
         }
     }
 }

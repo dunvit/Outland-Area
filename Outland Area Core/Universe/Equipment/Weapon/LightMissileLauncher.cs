@@ -11,7 +11,7 @@ namespace EngineCore.Universe.Equipment.Weapon
         public CategoryAmmo UsedWith { get; set; } = CategoryAmmo.LightMissile;
         public int AmmoId { get; set; }
 
-        public dynamic Shot(int objectId, int targetId, int moduleId)
+        public dynamic Shot(int objectId, int targetId, int moduleId, int actionId)
         {
             Logger.Debug($"[{GetType().Name}]\t Execute command 'Shot'");
 
@@ -21,14 +21,11 @@ namespace EngineCore.Universe.Equipment.Weapon
             serverCommand.ObjectId = objectId;
             serverCommand.TargetId = targetId;
             serverCommand.ModuleId = moduleId;
-
-            
-
-
+            serverCommand.ActionId = actionId;
 
             return serverCommand;
         }
 
-        
+        public int BaseAccuracy { get; set; }
     }
 }

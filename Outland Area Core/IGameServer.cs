@@ -1,12 +1,13 @@
-﻿using EngineCore.Session;
+﻿using EngineCore.DTO;
+using EngineCore.Session;
 
 namespace EngineCore
 {
     public interface IGameServer
     {
-        GameSession Initialization(string scenario, bool isActive = true); 
+        GameSession Initialization(string scenario, bool isActive = true);
 
-        GameSession RefreshGameSession(int id);
+        SessionDataDto RefreshGameSession(int id);
 
         void ResumeSession(int id);
 

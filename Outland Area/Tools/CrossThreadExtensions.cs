@@ -9,7 +9,15 @@ namespace Engine.Tools
         {
             if (target.InvokeRequired)
             {
-                target.Invoke(action);
+                try
+                {
+                    target.Invoke(action);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+                
             }
             else
             {

@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.UI.Controls;
 using EngineCore.Session;
-using EngineCore.Tools;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
 using log4net;
@@ -13,7 +13,7 @@ namespace Engine.UI.Screens
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private GameSession _gameSession;
+        private TacticalEnvironment _environment;
 
         public WindowTacticalLayerContainer()
         {
@@ -36,68 +36,82 @@ namespace Engine.UI.Screens
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Logger.Debug($"[{GetType().Name}][Window_KeyDown]\t Handle the KeyDown event {e.KeyCode} ");
+            Logger.Debug($"Window_KeyDown - Handle the KeyDown event {e.KeyCode} ");
 
-            if (_gameSession.IsPause) return;
+            var spacecraft = _environment.Session.GetPlayerSpaceShip();
 
-            var spacecraft = _gameSession.GetPlayerSpaceShip();
-
-            var commandBody = string.Empty;
+            string commandBody;
 
             switch (e.KeyCode)
             {
                 case Keys.S:
-                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].Braking);
+                    if (_environment.Session.IsPause) return;
+                    commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Braking);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));                    
                     break;
 
                 case Keys.D:
-                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].TurnRight);
+                    if (_environment.Session.IsPause) return;
+                    commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnRight);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
                 case Keys.A:
-                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].TurnLeft);
+                    if (_environment.Session.IsPause) return;
+                    commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnLeft);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
                 case Keys.W:
-                    commandBody = ModuleCommand.ToJson(_gameSession, spacecraft.GetPropulsionModules()[0].Acceleration);
+                    if (_environment.Session.IsPause) return;
+                    commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Acceleration);
                     Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                     break;
 
-                default:
+                case Keys.Escape:
+                    _environment.CancelAction();
+                    if(_environment.Session.IsPause)
+                        Global.Game.SessionResume();
                     break;
             }
         }
 
-
-
         private void Event_SelectModule(int moduleId)
         {
-            crlModule.Initialization(moduleId, _gameSession);
+            // Resume game if it was on pause by module action
+            if (_environment.Mode != TacticalMode.General && _environment.Session.IsPause)
+            {
+                Global.Game.SessionResume();
+            }
+
+            // Cancel previous action
+            Global.Game.EventCancelModuleAction();
+
+            crlModule.Initialization(moduleId, _environment);
             crlModule.Visible = true;
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_EndTurn(TacticalEnvironment environment)
         {
-            _gameSession = gameSession.DeepClone();
+            _environment = environment;
         }
 
-        private void Event_StartGameSession(GameSession gameSession)
+        private void Event_StartGameSession(TacticalEnvironment environment)
         {
             crlTacticalMap.Refresh();
 
-            _gameSession = gameSession.DeepClone();
+            _environment = environment;
 
-            Initialization(_gameSession);
+            Initialization(_environment);
 
             Global.Game.InitializationFinish();
+
+            Global.Game.UiManager.HideBackGround();
         }
 
-        private void Initialization(GameSession gameSession)
+        private void Initialization(TacticalEnvironment environment)
         {
-            var spaceShip = _gameSession.GetPlayerSpaceShip().ToSpaceship();
+            var spaceShip = _environment.Session.GetPlayerSpaceShip().ToSpaceship();
 
             var countModulesPreview = 0;
 
@@ -119,7 +133,7 @@ namespace Engine.UI.Screens
 
             crlModule.Location = new Point((Width / 2) - (crlModule.Width / 2), Height - crlModule.Height - 20);
 
-            Logger.Info("[TacticalLayerContainer][Initialization]\t Initialization finished successful.");
+            Logger.Info("Initialization finished successful.");
         }
     }
 }

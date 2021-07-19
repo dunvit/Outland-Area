@@ -5,7 +5,9 @@
     {
         AnomalyFound = 200,
         OpenDialog = 300,
-        NpcSpaceShipFound = 210
+        NpcSpaceShipFound = 210,
+        WreckSpaceShipFound = 220,
+        ExplosionResult = 500
     }
 
     public static class GameEventTypesExtensions

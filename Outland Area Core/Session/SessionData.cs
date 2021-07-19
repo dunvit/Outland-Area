@@ -6,9 +6,16 @@ using System.Collections.Generic;
 
 namespace EngineCore.Session
 {
+
     [Serializable]
-    public class SessionData
+    public class SessionData : ISessionData
     {
+        public int Turn { get; set; }
+
+        public bool IsPause { get; set; }
+
+        public string ScenarioName { get; set; }
+
         public Rules Rules { get; set; } = new Rules();
 
         public List<GameEvent> GameEvents { get; set; } = new List<GameEvent>();

@@ -234,6 +234,12 @@
     <None Update="Data\Scenarios\CommandsTests\General.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Scenarios\CommandsTests_Weapon\CelestialObjects\637066561468043700.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Scenarios\CommandsTests_Weapon\General.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Scenarios\ConvertTests\CelestialObjects\637066561468043700.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -318,6 +324,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Scenarios\CommandsTests_Weapon\Events\" />
     <Folder Include="Data\Scenarios\CommandsTests_Map_FirstBattle\Events\" />
     <Folder Include="UI\" />
   </ItemGroup>

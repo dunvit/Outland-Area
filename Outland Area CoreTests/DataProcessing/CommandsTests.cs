@@ -1,10 +1,10 @@
-﻿using EngineCore;
+﻿using System;
+using EngineCore;
 using EngineCore.Session;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Objects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-
 
 namespace Outland_Area_CoreTests.DataProcessing
 {
@@ -15,11 +15,46 @@ namespace Outland_Area_CoreTests.DataProcessing
         const float MobilityInDegrees = 10.0f;
 
         [TestMethod()]
+        public void AddCommandsGeneral_Test()
+        {
+            var server = EnvironmentGlobal.CreateGameServer("CommandsTests");
+
+            var gameSession = EnvironmentGlobal.GetSession(server);
+
+            var spaceship = gameSession.GetPlayerSpaceShip();
+
+            var module = spaceship.GetPropulsionModules().First();
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(1, server.Commands.Count);
+
+            server.TurnCalculation(1);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.TurnCalculation(5);
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.TurnCalculation(1);
+            server.Wait(5);
+
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            Assert.AreEqual(1, server.Commands.Count);
+
+            server.TurnCalculation(1);
+        }
+
+        [TestMethod()]
         public void PropulsionModule_Braking_Test()
         {
             var server = EnvironmentGlobal.CreateGameServer("CommandsTests");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
@@ -33,9 +68,9 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
-            Assert.AreEqual(6, gameSession.GetCelestialObject(spaceship.Id).Speed);
+            Assert.AreEqual(6.975, Math.Round(gameSession.GetCelestialObject(spaceship.Id).Speed, 3));
 
             Assert.AreEqual(0, server.Commands.Count);
 
@@ -43,11 +78,20 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
+            // Add command for not reloaded module
+            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
+
+            server.TurnCalculation(1);
+
+            Assert.AreEqual(0, server.Commands.Count);
+
+            server.Wait(5);
+
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Braking));
 
             Assert.AreEqual(1, server.Commands.Count);
 
-            server.TurnCalculation(1);
+            server.Wait(5);
 
             Assert.AreEqual(0, server.Commands.Count);
 
@@ -61,11 +105,13 @@ namespace Outland_Area_CoreTests.DataProcessing
         {
             var server = EnvironmentGlobal.CreateGameServer("CommandsTests");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
             var module = spaceship.GetPropulsionModules().First();
+
+            double turnRotationSpeed = MobilityInDegrees / (new EngineSettings().UnitsPerSecond * module.ReloadTime);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnRight));
 
@@ -73,11 +119,11 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 1 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(90 + 1 * turnRotationSpeed, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -86,15 +132,15 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
+            spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(100 + turnRotationSpeed, spaceship.Direction);
 
             server.TurnCalculation(1);
 
-            spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
+            spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 + 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(100 + 2 * turnRotationSpeed, spaceship.Direction);
         }
 
         [TestMethod()]
@@ -102,11 +148,13 @@ namespace Outland_Area_CoreTests.DataProcessing
         {
             var server = EnvironmentGlobal.CreateGameServer("CommandsTests");
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
             var spaceship = gameSession.GetPlayerSpaceShip();
 
             var module = spaceship.GetPropulsionModules().First();
+
+            double turnRotationSpeed = MobilityInDegrees / (new EngineSettings().UnitsPerSecond * module.ReloadTime);
 
             server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.TurnLeft));
 
@@ -114,11 +162,11 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            gameSession = server.RefreshGameSession(server.SessionId);
+            gameSession = EnvironmentGlobal.GetSession(server);
 
             spaceship = gameSession.GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(90 - turnRotationSpeed, spaceship.Direction);
 
             // Reloading time
             server.Wait(3);
@@ -127,102 +175,16 @@ namespace Outland_Area_CoreTests.DataProcessing
 
             server.TurnCalculation(1);
 
-            spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
+            spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(80 - 1 * turnRotationSpeed, spaceship.Direction);
 
             server.TurnCalculation(1);
 
-            spaceship = server.RefreshGameSession(server.SessionId).GetPlayerSpaceShip();
+            spaceship = EnvironmentGlobal.GetSession(server).GetPlayerSpaceShip();
 
-            Assert.AreEqual(90 - 2 * MobilityInDegrees, spaceship.Direction);
+            Assert.AreEqual(80 - 2 * turnRotationSpeed, spaceship.Direction);
         }
-
-        [TestMethod]
-        public void WeaponModule_Shot_Test()
-        {
-            var settings = new EngineSettings { DebugProperties = new DebugProperties(true, true) };
-
-            var server = EnvironmentGlobal.CreateGameServer("CommandsTests_Map_FirstBattle", settings);
-
-            var gameSession = server.RefreshGameSession(server.SessionId);
-
-            var spaceship = gameSession.GetPlayerSpaceShip();
-
-            var targetSpacecraft = gameSession.GetCelestialObject(1000348945).ToSpaceship();
-
-            var module = spaceship.GetWeaponModules().First();
-
-            IDebugProperties debug = new DebugProperties(true, true);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-
-            Assert.AreEqual(1, server.Commands.Count);
-            Assert.AreEqual(200, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.TurnCalculation(1);
-
-            gameSession = server.RefreshGameSession(server.SessionId);
-
-            spaceship = gameSession.GetPlayerSpaceShip();
-
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(0, server.Commands.Count);
-            Assert.AreEqual(170, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.TurnCalculation(5);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(140, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(110, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(80, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(50, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(20, targetSpacecraft.Shields);
-            Assert.AreEqual(false, targetSpacecraft.IsDestroyed);
-
-            server.Command(server.SessionId, ModuleCommand.ToJson(gameSession, module.Shot, 1000348945, ((IModule)module).Id));
-            server.TurnCalculation(1);
-            gameSession = server.RefreshGameSession(server.SessionId);
-            targetSpacecraft = gameSession.GetCelestialObject(1000348945, false).ToSpaceship();
-
-            Assert.AreEqual(true, targetSpacecraft.IsDestroyed);
-        }
-
 
         [TestMethod]
         public void Debugger_Replacer()

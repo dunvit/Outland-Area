@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using Engine.Layers.Tactical;
 using Engine.Tools;
 using EngineCore.Session;
+using EngineCore.Universe.Equipment.Weapon;
 using log4net;
 
 namespace Engine.UI.Controls
 {
     public partial class Module : UserControl
     {
-        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private int _moduleId;
+
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private TacticalEnvironment _environment;
 
         public Module()
         {
@@ -22,24 +27,63 @@ namespace Engine.UI.Controls
             Global.Game.OnEndTurn += Event_EndTurn;
         }
 
-
-        public void Initialization(int moduleId, GameSession gameSession)
+        public void Initialization(int moduleId, TacticalEnvironment gameSession)
         {
+            _environment = gameSession;
             _moduleId = moduleId;
 
-            var module = gameSession.GetPlayerSpaceShip().GetModule(_moduleId);
+            var module = gameSession.Session.GetPlayerSpaceShip().GetModule(_moduleId);
+
+            actionsContainer.Controls.Clear();
+
+            if (module is IWeaponModule)
+            {
+                // TODO: Get actions list from module
+                for (var i = 1; i < 4; i++)
+                {
+                    var attackAction = new ActionAttack(moduleId, i, gameSession.Session)
+                    {
+                        Location = new Point((i - 1) * 55, 0)
+                    };
+
+                    _logger.Info($"Add action '{i}' to module '{module.Id}'");
+                    attackAction.Tag = module.Id;
+                    attackAction.Click += Event_SelectAction;
+
+                    actionsContainer.Controls.Add(attackAction);
+                }
+            }
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_SelectAction(object? sender, EventArgs e)
+        {
+            var action = (ActionAttack) sender;
+
+            var moduleId = action.ModuleId;
+            var actionId = action.Id;
+
+            var module = _environment.Session.GetPlayerSpaceShip().GetModule(moduleId);
+
+            if (module.IsReloaded == false)
+            {
+                Global.Game.ShowAlertOnReloadingModule(module);
+                return;
+            }
+
+            _environment.SetAction(moduleId, actionId, TacticalMode.SelectingSpaceObject);
+            Global.Game.SessionPause();
+        }
+
+        private void Event_EndTurn(TacticalEnvironment gameSession)
         {
             if (_moduleId == 0) return;
 
             this.PerformSafely(RefreshControl, gameSession);
         }
 
-        private void RefreshControl(GameSession gameSession)
+        private void RefreshControl(TacticalEnvironment gameSession)
         {
-            var module = gameSession.GetPlayerSpaceShip().GetModule(_moduleId);
+            var module = gameSession.Session.GetPlayerSpaceShip().GetModule(_moduleId);
 
             crlModuleName.Text = module.Name;
 

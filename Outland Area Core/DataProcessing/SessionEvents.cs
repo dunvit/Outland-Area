@@ -3,7 +3,6 @@ using System.Reflection;
 using EngineCore.Events;
 using EngineCore.Scenario;
 using EngineCore.Session;
-using EngineCore.Tools;
 using log4net;
 
 namespace EngineCore.DataProcessing
@@ -16,9 +15,9 @@ namespace EngineCore.DataProcessing
         {
             gameSession.AddHistoryMessage($"SessionEvents started.", GetType().Name, true);
 
-            var result = gameSession.DeepClone();
+            var result = gameSession;
 
-            if (gameSession.Data.Rules.IsEventsEnabled == false)
+            if (gameSession.Rules.IsEventsEnabled == false)
             {
                 gameSession.AddHistoryMessage("SessionEvents canceled by scenario configuration.", GetType().Name, true);
 
@@ -41,6 +40,11 @@ namespace EngineCore.DataProcessing
                         break;
                     case GameEventTypes.NpcSpaceShipFound:
                         newGameEvent.Type = GameEventTypes.NpcSpaceShipFound;
+                        newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).DialogId;
+                        newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
+                        break;
+                    case GameEventTypes.WreckSpaceShipFound:
+                        newGameEvent.Type = GameEventTypes.WreckSpaceShipFound;
                         newGameEvent.DialogId = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).DialogId;
                         newGameEvent.GenericObjects = ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).Execute(result);
                         break;

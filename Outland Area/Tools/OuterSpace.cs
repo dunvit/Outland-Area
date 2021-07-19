@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using EngineCore.DataProcessing;
 using EngineCore.Session;
-using EngineCore.Universe.Model;
-using EngineCore.Universe.Objects;
 
 namespace Engine.Tools
 {
@@ -13,17 +10,28 @@ namespace Engine.Tools
         public event Action<int> OnChangeActiveObject;
         public event Action<int> OnChangeSelectedObject;
 
-        private int activeObjectId;
-        private int selectedObjectId;
+        private int _activeObjectId;
+        private int _selectedObjectId;
 
-        public void Refresh(GameSession gameSession, System.Drawing.PointF coordinates, MouseArguments type)
+        public PointF MouseCoordinates { get; private set; }
+
+        public void Refresh(GameSession gameSession, PointF coordinates, MouseArguments type)
         {
-            var objectsInRange = GetCelestialObjectsByDistance(gameSession, coordinates);
+            MouseCoordinates = coordinates;
+
+            var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
+                celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).ToList();
 
             if (objectsInRange.Count == 0)
             {
-                activeObjectId = 0;
-                OnChangeActiveObject?.Invoke(activeObjectId);
+                if (_activeObjectId != 0)
+                {
+                    // Mouse left from active celestial object
+                    OnChangeActiveObject?.Invoke(0);
+                }
+
+                _activeObjectId = 0;
+
                 return;
             }
 
@@ -32,31 +40,17 @@ namespace Engine.Tools
             switch (type)
             {
                 case MouseArguments.LeftClick:
-                    if (selectedObjectId == id) return;
-                    selectedObjectId = id;
+                    //if (_selectedObjectId == id) return;
+                    _selectedObjectId = id;
                     OnChangeSelectedObject?.Invoke(id);
                     break;
 
                 case MouseArguments.Move:
-                    if (activeObjectId == id) return;
-                    activeObjectId = id;
+                    if (_activeObjectId == id) return;
+                    _activeObjectId = id;
                     OnChangeActiveObject?.Invoke(id);
                     break;
             }
-        }
-
-        public List<ICelestialObject> GetCelestialObjectsByDistance(GameSession gameSession, System.Drawing.PointF coordinates)
-        {
-            return gameSession.Data.CelestialObjects.Map(celestialObject => (celestialObject,
-                        Coordinates.GetDistance(
-                            coordinates,
-                            celestialObject.GetLocation())
-                    )).
-                Where(e => e.Item2 < 20).
-                OrderBy(e => e.Item2).
-                Map(e => e.celestialObject).
-                Where(celestialObject => celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).
-                ToList();
         }
     }
 }

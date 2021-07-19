@@ -10,7 +10,7 @@ namespace EngineCore
         public long CelestialObjectId { get; set; }
         public string Body { get; set; }
 
-        
+        public int UntilTurnId { get; set; }
 
         public Command(string commandBody)
         {

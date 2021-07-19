@@ -7,7 +7,7 @@
         string Name { get; set; }
         double Direction { get; set; }
         int Signature { get; set; }
-        float Speed { get; set; }
+        float Speed { get; }
         float PositionX { get; set; }
         float PositionY { get; set; }
 
@@ -18,6 +18,8 @@
         string ImageSmall { get; set; }
         bool IsScanned { get; set; }
 
+        void SetDirection(double direction);
 
+        void SetSpeed(float speed);
     }
 }

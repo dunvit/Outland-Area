@@ -14,7 +14,7 @@ namespace EngineCore.DataProcessing
         {
             //var result = gameSession.SpaceMap.DeepClone();            
 
-            foreach (var celestialObject in gameSession.Data.CelestialObjects)
+            foreach (var celestialObject in gameSession.GetCelestialObjects())
             {
                 if (celestialObject.IsSpaceship() == false) continue;
 
@@ -24,7 +24,7 @@ namespace EngineCore.DataProcessing
 
                     if (!(module.Reloading <= module.ReloadTime)) continue;
 
-                    Logger.Info($"Object {celestialObject.Name} reload module {module.Name} from {module.Reloading} to {1 / settings.UnitsPerSecond} second.");
+                    Logger.Debug($"Object {celestialObject.Name} reload module {module.Name} from {module.Reloading} to {1 / settings.UnitsPerSecond} second.");
 
                     var reloadingprogress = Math.Round((1.0 / settings.UnitsPerSecond), 2);
 
@@ -33,6 +33,7 @@ namespace EngineCore.DataProcessing
                     if (module.Reloading == module.ReloadTime)
                     {
                         module.Reloading = module.ReloadTime;
+                        Logger.Info($"'{celestialObject.Name}' finished reload module '{module.Name}'");
                         gameSession.AddHistoryMessage($"'{celestialObject.Name}' finished reload module '{module.Name}'", GetType().Name);
                     }
 

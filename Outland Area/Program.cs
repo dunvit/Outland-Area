@@ -23,7 +23,7 @@ namespace Engine
 
             Logger.Info("Start game desktop client.");
 
-            Application.Run(Global.Game.ShowScreen("WindowMenu"));
+            Application.Run(Global.Game.GetScreen("WindowMenu"));
         }
     }
 }

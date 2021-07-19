@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
@@ -20,6 +22,8 @@ namespace EngineCore.Scenario
             DialogId = dialogId;
 
             _spaceShips = new List<NpcSpaceshipGenerationModel>();
+
+            Decisions = new List<GameEventDecision>();
         }
 
         public void AddSpaceShip(int spaceShipClass, int spaceShipType, int standing, string message)
@@ -32,9 +36,11 @@ namespace EngineCore.Scenario
             return _spaceShips.DeepClone();
         }
 
-        public List<string> Execute(GameSession session)
+        public List<GameEventDecision> Decisions { get; set; }
+
+        public List<GameEventParameter> Execute(GameSession session)
         {
-            var result = new List<string>();
+            var result = new List<GameEventParameter>();
 
             foreach (var spaceShip in _spaceShips)
             {
@@ -43,9 +49,9 @@ namespace EngineCore.Scenario
 
                 spaceShip.Message = $"Found spaceship. Engine signature is '{generatedSpaceShip.Id}'";
 
-                result.Add(generatedSpaceShip.Id.ToString());
+                result.Add( new GameEventParameter(GameEventParameterTypes.CelestialObjectId, generatedSpaceShip.Id.ToString())); 
 
-                session.Data.CelestialObjects.Add(generatedSpaceShip);
+                session.GetCelestialObjects().Add(generatedSpaceShip);
             }
 
             return result;

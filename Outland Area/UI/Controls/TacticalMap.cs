@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Reflection;
 using System.Windows.Forms;
 using Engine.Configuration;
+using Engine.Layers.Tactical;
 using Engine.Tools;
 using Engine.UI.DrawEngine;
 using Engine.UI.Model;
 using EngineCore;
 using EngineCore.Geometry;
-using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
 using log4net;
@@ -21,16 +21,14 @@ namespace Engine.UI.Controls
 {
     public partial class TacticalMap : UserControl
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly Point _centerScreenPosition = new Point(10000, 10000);
         private ScreenParameters _screenParameters;
-        private GameSession _gameSession;
+        private TacticalEnvironment _environment;
         private bool _refreshInProgress;
-        private Hashtable _history = new Hashtable();
-
+        private readonly Hashtable _history = new Hashtable();
         
-
 
         public TacticalMap()
         {
@@ -48,47 +46,50 @@ namespace Engine.UI.Controls
 
         private void MapMouseMove(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = GeometryTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseLocation = GeometryTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.Move);
+            _environment.SetMouseLocation(mouseLocation); 
+
+            _environment.OuterSpaceTracker.Refresh(_environment.Session, _environment.MouseLocation, MouseArguments.Move);
         }
 
         private void MapClick(object sender, MouseEventArgs e)
         {
-            var mouseScreenCoordinates = SpaceMapTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
+            var mouseScreenCoordinates = GeometryTools.ToRelativeCoordinates(e.Location, _screenParameters.Center);
 
-            var mouseMapCoordinates = SpaceMapTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
+            var mouseMapCoordinates = GeometryTools.ToTacticalMapCoordinates(mouseScreenCoordinates, _screenParameters.CenterScreenOnMap);
 
-            Global.Game.OuterSpaceTracker.Refresh(_gameSession, mouseMapCoordinates, MouseArguments.LeftClick);
+            _environment.OuterSpaceTracker.Refresh(_environment.Session, mouseMapCoordinates, MouseArguments.LeftClick);
         }
 
-        private void Event_StartGameSession(GameSession gameSession)
+        private void Event_StartGameSession(TacticalEnvironment environment)
         {
-            _gameSession = gameSession.DeepClone();
+            _environment = environment;
 
-            Logger.Info($"[TacticalMap.Event_StartGameSession] Start game session for id '{_gameSession.Id}'.");
+            Logger.Info($"Start game session for id '{_environment.Session.Id}'.");
 
             RefreshControl();
         }
 
-        private void Event_EndTurn(GameSession gameSession)
+        private void Event_EndTurn(TacticalEnvironment environment)
         {            
-            _gameSession = gameSession.DeepClone();            
+            _environment = environment;            
 
-            UpdateTrajectoryHistory(_gameSession);
+            UpdateTrajectoryHistory(_environment);
 
-            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}'.");
+            Logger.Debug($"Refresh space map for turn '{_environment.Session.Turn}'.");
 
             RefreshControl();
         }
 
-        private void UpdateTrajectoryHistory(GameSession gameSession)
+        // TODO: Refactor it
+        private void UpdateTrajectoryHistory(TacticalEnvironment environment)
         {
             var settings = new EngineSettings();
 
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
                 if (_history.ContainsKey(currentObject.Id))
                 {
@@ -110,11 +111,11 @@ namespace Engine.UI.Controls
 
                     for (int i = 0; i < settings.UnitsPerSecond * settings.HistoryPeriodInSeconds; i++)
                     {
-                        var position = SpaceMapTools.Move(
+                        var position = GeometryTools.MoveObject(
                             previousPosition,
                             speedInTick,
                             reverseDirection
-                            ).PointTo;
+                            );
 
                         previousPosition = new PointF(position.X, position.Y);
 
@@ -140,12 +141,10 @@ namespace Engine.UI.Controls
                         }
                         catch 
                         {
-                            Logger.Error($"[TacticalMap] Error on refresh space map for turn '{_gameSession.Turn}' " +
+                            Logger.Error($"Error on refresh space map for turn '{environment.Session.Turn}' " +
                                 $"and object id '{currentObject.Id}' name '{currentObject.Name}'.");
                         }
                     }
-
-                    
                 }
             }
         }
@@ -157,8 +156,6 @@ namespace Engine.UI.Controls
             var timeDrawScreen = Stopwatch.StartNew();
 
             _refreshInProgress = true;
-
-            //UpdateTrajectoryHistory(_gameSession);
 
             Image image = new Bitmap(Width, Height);
 
@@ -175,27 +172,33 @@ namespace Engine.UI.Controls
                     GraphicSurface = graphics
                 };
 
-            DrawTacticalMapScreen(_screenParameters, _gameSession);
+            DrawTacticalMapScreen(_screenParameters, _environment);
 
             BackgroundImage = image; 
 
             _refreshInProgress = false;
 
-            Logger.Debug($"[TacticalMap] Refresh space map for turn '{_gameSession.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
+            Logger.Debug($"Refresh space map for turn '{_environment.Session.Turn}' was finished successful. Time {timeDrawScreen.Elapsed.TotalMilliseconds} ms.");
         }
 
-        private void DrawTacticalMapScreen(IScreenInfo screenParameters, GameSession gameSession)
+        private void DrawTacticalMapScreen(IScreenInfo screenParameters, TacticalEnvironment environment)
         {
             // TODO: - Draw back ground only once
             DrawTacticalMap.DrawBackGround(screenParameters);
 
+            DrawTacticalMap.DrawExplosions(screenParameters, environment);
+
             DrawTacticalMap.DrawGrid(screenParameters);
 
-            DrawTacticalMap.DrawCelestialObjects(screenParameters, gameSession);
+            DrawTacticalMap.DrawAction(screenParameters, environment);
 
-            DrawTacticalMap.DrawDirections(screenParameters, gameSession);
+            DrawTacticalMap.DrawCelestialObjects(screenParameters, environment);
 
-            DrawTacticalMap.DrawHistoryTrajectory(screenParameters, gameSession, _history);
+            DrawTacticalMap.DrawActiveCelestialObjects(screenParameters, environment);
+
+            DrawTacticalMap.DrawDirections(screenParameters, environment);
+
+            DrawTacticalMap.DrawHistoryTrajectory(screenParameters, environment, _history);
         }
     }
 }

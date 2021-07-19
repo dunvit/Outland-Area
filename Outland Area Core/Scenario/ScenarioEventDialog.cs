@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EngineCore.Events;
 using EngineCore.Session;
 using EngineCore.Universe.Model;
 
@@ -15,11 +16,13 @@ namespace EngineCore.Scenario
             DialogId = dialogId;
         }
 
-        public List<string> Execute(GameSession session)
+        public List<GameEventDecision> Decisions { get; set; }
+
+        public List<GameEventParameter> Execute(GameSession session)
         {
             IsEnabled = false;
 
-            return new List<string>();
+            return new List<GameEventParameter>();
         }
     }
 }

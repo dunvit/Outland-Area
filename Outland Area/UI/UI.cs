@@ -48,7 +48,7 @@ namespace Engine.UI
 
         public static Bitmap LoadCharacterImage(string file, string image = "Front")
         {
-            var images = Path.Combine(Environment.CurrentDirectory, @"Data\Characters\" + file);
+            var images = Path.Combine(Environment.CurrentDirectory, @"Data\Scenarios\Map_OneShip\Characters\" + file);
 
             var fileFullName = Path.Combine(images, image.Replace("/", "\\") + ".png");
 

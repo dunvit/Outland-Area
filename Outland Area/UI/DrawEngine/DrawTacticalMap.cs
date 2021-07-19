@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms.VisualStyles;
-using Engine.Configuration;
+using Engine.Layers.Tactical;
 using Engine.UI.Model;
 using Engine.UI.ScreenDrawing;
-using EngineCore.DataProcessing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
@@ -20,7 +18,15 @@ namespace Engine.UI.DrawEngine
     {
         public static void DrawBackGround(IScreenInfo screenInfo)
         {
-            screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, screenInfo.Width, screenInfo.Height) );
+            try
+            {
+                screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, screenInfo.Width, screenInfo.Height));
+
+            }
+            catch 
+            {
+                
+            }
         }
 
         public static void DrawGrid(IScreenInfo screenInfo)
@@ -65,13 +71,38 @@ namespace Engine.UI.DrawEngine
             }
         }
 
-        public static void DrawCelestialObjects(IScreenInfo screenInfo, GameSession gameSession)
+        
+        public static void DrawActiveCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            var activeObject = environment.GetActiveObject();
+
+            if (activeObject is null) return;
+
+            var pen = new Pen(Color.Gray);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, activeObject.GetLocation());
+
+            screenInfo.GraphicSurface.DrawEllipse(pen, spaceshipScreenLocation.X - 20, spaceshipScreenLocation.Y - 20, 40, 40);
+
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.GetMouseCoordinates());
+
+            var distance = GeometryTools.Distance(spaceshipScreenLocation, mouseScreenLocation);
+            var direction = GeometryTools.Azimuth(spaceshipScreenLocation, mouseScreenLocation);
+
+            var destinationPoint = GeometryTools.MoveObject(mouseScreenLocation, distance - 20, direction);
+
+            if(distance  > 20)
+                screenInfo.GraphicSurface.DrawLine(pen, mouseScreenLocation.X, mouseScreenLocation.Y, destinationPoint.X, destinationPoint.Y);
+        }
+
+        public static void DrawCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
                     case CelestialObjectTypes.Missile:
+                        DrawMissile(screenInfo, currentObject);
                         break;
                     case CelestialObjectTypes.SpaceshipPlayer:
                         DrawSpaceship(screenInfo, currentObject);
@@ -93,6 +124,18 @@ namespace Engine.UI.DrawEngine
                 }
 
             }
+        }
+
+        private static void DrawMissile(IScreenInfo screenInfo, ICelestialObject celestialObject)
+        {
+            var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(celestialObject.PositionX, celestialObject.PositionY));
+
+            var missile = celestialObject as Missile;
+
+            var color = Color.Blue;
+
+            screenInfo.GraphicSurface.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
+            screenInfo.GraphicSurface.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
         private static void DrawAsteroid(IScreenInfo screenInfo, ICelestialObject spaceShip)
@@ -135,44 +178,49 @@ namespace Engine.UI.DrawEngine
             screenInfo.GraphicSurface.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         }
 
-        public static void DrawDirections(IScreenInfo screenInfo, GameSession gameSession)
+        public static void DrawDirections(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
-            var color = Color.DimGray;
-
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
+                Color color;
+
                 switch ((CelestialObjectTypes)currentObject.Classification)
                 {
                     case CelestialObjectTypes.Missile:
                         break;
                     case CelestialObjectTypes.SpaceshipPlayer:
                         color = Color.DarkOliveGreen;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcNeutral:
                         color = Color.DarkGray;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcEnemy:
                         color = Color.DarkRed;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcFriend:
                         color = Color.SeaGreen;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Asteroid:
                         color = Color.DimGray;
+                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;
                 }
-
-                SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
             }
         }
 
-        public static void DrawHistoryTrajectory(IScreenInfo screenInfo, GameSession gameSession, Hashtable history)
+        public static void DrawHistoryTrajectory(IScreenInfo screenInfo, TacticalEnvironment environment, Hashtable history)
         {
-            foreach (var currentObject in gameSession.Data.CelestialObjects)
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
             {
                 if (!history.ContainsKey(currentObject.Id)) continue;
+
+                if(currentObject is Missile) continue;
 
                 var results = ((FixedSizedQueue<PointF>)history[currentObject.Id]).GetData();
 
@@ -188,6 +236,63 @@ namespace Engine.UI.DrawEngine
                 var pen = new Pen(Color.FromArgb(77, 77, 77)){DashStyle = DashStyle.Dot};
 
                 screenInfo.GraphicSurface.DrawCurve(pen, points.ToArray());
+            }
+        }
+
+        private static void DrawSelectingTarget(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var pen = new Pen(Color.BurlyWood);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.MouseLocation);
+
+            screenInfo.GraphicSurface.DrawLine(pen, spaceshipScreenLocation.X, spaceshipScreenLocation.Y, mouseScreenLocation.X, mouseScreenLocation.Y);
+        }
+
+        private static void DrawSelectingTargetWithActive(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var pen = new Pen(Color.DarkOliveGreen);
+
+            var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+            var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.GetActiveObject().GetLocation());
+
+            var distance = GeometryTools.Distance(spaceshipScreenLocation, mouseScreenLocation);
+            var direction = GeometryTools.Azimuth(mouseScreenLocation, spaceshipScreenLocation);
+
+            var destinationPoint = GeometryTools.MoveObject(spaceshipScreenLocation, distance - 15, direction);
+
+            screenInfo.GraphicSurface.DrawLine(pen, spaceshipScreenLocation.X, spaceshipScreenLocation.Y, destinationPoint.X, destinationPoint.Y);
+
+            screenInfo.GraphicSurface.DrawEllipse(pen, mouseScreenLocation.X - 15, mouseScreenLocation.Y - 15, 30, 30);
+        }
+
+        public static void DrawAction(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            switch (environment.Mode)
+            {
+                case TacticalMode.General:
+                    break;
+                case TacticalMode.SelectingSpaceObject:
+                    DrawSelectingTarget(screenInfo, environment);
+                    break;
+                case TacticalMode.SelectingSpaceObjectWithActive:
+                    DrawSelectingTargetWithActive(screenInfo, environment);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public static void DrawExplosions(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            foreach (var currentObject in environment.Session.GetCelestialObjects())
+            {
+                if (!(currentObject is Explosion missile)) continue;
+
+                var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
+
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - missile.Radius/2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - missile.Radius / 2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
             }
         }
     }

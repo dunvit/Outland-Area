@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using EngineCore.DataProcessing;
 
 namespace EngineCore.Geometry.Trajectory
 {
@@ -15,7 +16,7 @@ namespace EngineCore.Geometry.Trajectory
             // In this case first iteration - start position for calculation.
             var previousIteration = new SpaceMapObjectLocation
             {
-                Distance = SpaceMapTools.GetDistance(targetLocation, currentLocation),
+                Distance = Coordinates.GetDistance(targetLocation, currentLocation),
                 Direction = direction,
                 Status = MovementType.Default,
                 Coordinates = new PointF(currentLocation.X, currentLocation.Y)
@@ -25,20 +26,20 @@ namespace EngineCore.Geometry.Trajectory
 
             for (var iteration = 0; iteration < maxIterations; iteration++)
             {
-                var location = SpaceMapTools.Move(previousIteration.Coordinates.ToVector2(), 1, previousIteration.Direction);
+                var location = Coordinates.MoveObject(previousIteration.Coordinates, 1, previousIteration.Direction);
 
                 var iterationResult = new SpaceMapObjectLocation
                 {
                     Direction = previousIteration.Direction,
                     Iteration = iteration,
-                    Coordinates = location.PointTo,
-                    Distance = SpaceMapTools.GetDistance(targetLocation, location.PointTo)
+                    Coordinates = location,
+                    Distance = Coordinates.GetDistance(targetLocation, location)
                 };
 
                 // 0 - 360 degree 
-                var attackAzimuth = SpaceMapTools.GetAngleBetweenPoints(location.PointTo.ToVector2(), targetLocation.ToVector2());
+                var attackAzimuth = Coordinates.GetRotation(location, targetLocation);
                 // Turn angle
-                var attackAngle = SpaceMapTools.GetRotateDirection(iterationResult.Direction, attackAzimuth);
+                var attackAngle = Coordinates.GetRotateDirection(iterationResult.Direction, attackAzimuth);
 
                 var currentAgility = 0;
 
@@ -108,7 +109,7 @@ namespace EngineCore.Geometry.Trajectory
                         result.Trajectory.Add(new SpaceMapObjectLocation
                         {
                             Coordinates = points,
-                            Distance = SpaceMapTools.GetDistance(targetLocation, points),
+                            Distance = Coordinates.GetDistance(targetLocation, points),
                             Direction = iterationResult.Direction.To360Degrees(),
                             Status = MovementType.Linear,
                             Iteration = iterationResult.Iteration + linearIteration
@@ -127,7 +128,7 @@ namespace EngineCore.Geometry.Trajectory
         {
             var result = new List<PointF>();
 
-            var distance = SpaceMapTools.GetDistance(currentLocation, targetLocation);
+            var distance = Coordinates.GetDistance(currentLocation, targetLocation);
 
             for (var i = 0; i < distance; i++)
             {
@@ -149,7 +150,7 @@ namespace EngineCore.Geometry.Trajectory
             // In this case first iteration - start position for calculation.
             var previousIteration = new SpaceMapObjectLocation
             {
-                Distance = SpaceMapTools.GetDistance(targetLocation, currentLocation),
+                Distance = Coordinates.GetDistance(targetLocation, currentLocation),
                 Direction = direction,
                 Status = MovementType.Default,
                 Coordinates = new PointF(currentLocation.X, currentLocation.Y)
@@ -159,20 +160,20 @@ namespace EngineCore.Geometry.Trajectory
 
             for (var iteration = 0; iteration < maxIterations; iteration++)
             {
-                var location = SpaceMapTools.Move(previousIteration.Coordinates.ToVector2(), 1, previousIteration.Direction);
+                var location = Coordinates.MoveObject(previousIteration.Coordinates, 1, previousIteration.Direction);
 
                 var iterationResult = new SpaceMapObjectLocation
                 {
                     Direction = previousIteration.Direction,
                     Iteration = iteration,
-                    Coordinates = location.PointTo,
-                    Distance = SpaceMapTools.GetDistance(targetLocation, location.PointTo)
+                    Coordinates = location,
+                    Distance = Coordinates.GetDistance(targetLocation, location)
                 };
 
                 // 0 - 360 degree 
-                var attackAzimuth = SpaceMapTools.GetAngleBetweenPoints(location.PointTo.ToVector2(), targetLocation.ToVector2());
+                var attackAzimuth = Coordinates.GetRotation(location, targetLocation);
                 // Turn angle
-                var attackAngle = (int)SpaceMapTools.GetRotateDirection(iterationResult.Direction, attackAzimuth);
+                var attackAngle = (int)Coordinates.GetRotateDirection(iterationResult.Direction, attackAzimuth);
 
                 var currentAgility = 0;
 

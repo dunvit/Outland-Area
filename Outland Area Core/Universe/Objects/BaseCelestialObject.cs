@@ -23,5 +23,8 @@ namespace EngineCore.Universe.Objects
         public int Classification { get; set; }
         public string ImageSmall { get; set; }
 
+        public void SetDirection(double direction) => Direction = direction;
+
+        public void SetSpeed(float speed) => Speed = speed;
     }
 }

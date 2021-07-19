@@ -2,9 +2,9 @@
 using EngineCore.Tools;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using EngineCore.Geometry;
 
 namespace EngineCore.DataProcessing
 {
@@ -16,33 +16,10 @@ namespace EngineCore.DataProcessing
         //TODO: Replace constant to value from player spacecraft sonars.
         const double SonarRange = 1000;
 
-
-        public static GameSession ToClient(GameSession gameSession)
+        public static List<ICelestialObject> VisibilityAreaFilter(GameSession gameSession)
         {
-            var gameSessionForClient = gameSession.DeepClone();
-
-            gameSessionForClient.Data.CelestialObjects = VisibilityAreaFilter(gameSession);
-
-            gameSessionForClient.ScenarioEvents = ScenarioEventsFilter(gameSession);
-
-            return gameSessionForClient;
-        }
-
-        private static List<IScenarioEvent> ScenarioEventsFilter(GameSession gameSession)
-        {
-            
-
-            var result = gameSession.ScenarioEvents.
-                Where(e => e.Turn > gameSession.Turn - historyRange).
-                ToList();
-
-            return result;
-        }
-
-        private static List<ICelestialObject> VisibilityAreaFilter(GameSession gameSession)
-        {
-            var objectsInScreen = gameSession.Data.CelestialObjects.Map(celestialObject => (celestialObject,
-                    Coordinates.GetDistance(
+            var objectsInScreen = gameSession.GetCelestialObjects().Map(celestialObject => (celestialObject,
+                    GeometryTools.Distance(
                         gameSession.GetPlayerSpaceShip().GetLocation(),
                         celestialObject.GetLocation())
                 )).

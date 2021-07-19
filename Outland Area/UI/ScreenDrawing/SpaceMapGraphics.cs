@@ -14,12 +14,12 @@ namespace Engine.UI.ScreenDrawing
             graphics.DrawLine(new Pen(color), line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
 
             // Arrow left line
-            var leftArrowLine = SpaceMapTools.Move(line.PointTo.ToVector2(), arrowSize, line.Direction + 150);
-            graphics.DrawLine(new Pen(color), leftArrowLine.PointFrom.X, leftArrowLine.PointFrom.Y, leftArrowLine.PointTo.X, leftArrowLine.PointTo.Y);
+            var leftArrowLine = GeometryTools.MoveObject(line.PointTo, arrowSize, line.Direction + 150);
+            graphics.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, leftArrowLine.X, leftArrowLine.Y);
 
             // Arrow right line
-            var rightArrowLine = SpaceMapTools.Move(line.PointTo.ToVector2(), arrowSize, line.Direction - 150);
-            graphics.DrawLine(new Pen(color), rightArrowLine.PointFrom.X, rightArrowLine.PointFrom.Y, rightArrowLine.PointTo.X, rightArrowLine.PointTo.Y);
+            var rightArrowLine = GeometryTools.MoveObject(line.PointTo, arrowSize, line.Direction - 150);
+            graphics.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, rightArrowLine.X, rightArrowLine.Y);
 
         }
 
@@ -27,7 +27,7 @@ namespace Engine.UI.ScreenDrawing
         {
             var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
 
-            var endArrowPoint = Coordinates.MoveObject(screenCoordinates, 12, currentObject.Direction);
+            var endArrowPoint = GeometryTools.MoveObject(screenCoordinates, 12, currentObject.Direction);
 
             DrawArrow(screenInfo.GraphicSurface, new SpaceMapVector(screenCoordinates, endArrowPoint, currentObject.Direction), color, arrowSize);
 

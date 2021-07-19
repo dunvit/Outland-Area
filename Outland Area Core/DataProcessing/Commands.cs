@@ -1,46 +1,29 @@
-﻿using EngineCore.Session;
-using EngineCore.Tools;
+﻿using System;
+using EngineCore.Session;
 
 namespace EngineCore.DataProcessing
 {
     public class Commands
     {
-        public GameSession Execute(GameSession gameSession, EngineSettings settings)
+        public GameSession ExecuteCommand(GameSession gameSession, EngineSettings settings, Command command, Action<int, string> addCommand) =>
+            command.Type switch
+            {
+                CommandTypes.MoveForward => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.TurnLeft => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.TurnRight => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.StopShip => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.Acceleration => new CommandsExecution.Navigation().Execution(gameSession, settings, command),
+                CommandTypes.Shot => new CommandsExecution.Shots().Execution(gameSession, settings, command, addCommand),
+                _ => throw new ArgumentException("Invalid enum value for command", nameof(command)),
+            };
+
+        public GameSession Execute(GameSession gameSession, EngineSettings settings, Action<int, string> addCommand)
         {
-            var result = gameSession.DeepClone();
+            var result = gameSession;
 
             foreach (Command command in gameSession.Commands.Values)
             {
-                switch (command.Type)
-                {
-                    case CommandTypes.MoveForward:
-                        break;
-                    case CommandTypes.TurnLeft:
-                        result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
-                        break;
-                    case CommandTypes.TurnRight:
-                        result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
-                        break;
-                    case CommandTypes.StopShip:
-                        result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
-                        break;
-                    case CommandTypes.Acceleration:
-                        result = new CommandsExecution.Navigation().Execution(gameSession, settings, command);
-                        break;
-                    case CommandTypes.Shot:
-                        result = new CommandsExecution.Shots().Execution(gameSession, settings, command);
-                        break;
-                    case CommandTypes.AlignTo:
-                        break;
-                    case CommandTypes.Orbit:
-                        break;
-                    case CommandTypes.Explosion:
-                        break;
-                    case CommandTypes.ReloadWeapon:
-                        break;
-                    case CommandTypes.Scanning:
-                        break;
-                }
+                result = ExecuteCommand(gameSession, settings, command, addCommand);
             }
 
             return result;

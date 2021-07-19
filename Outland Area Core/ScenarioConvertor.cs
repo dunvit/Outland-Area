@@ -30,10 +30,6 @@ namespace EngineCore
             var gameSession = ToGameSession(mapBody);
 
             gameSession.ScenarioEvents = LoadScenarioEvents(@"Data\Scenarios\" + mapName + @"\Events").ToList();
-            
-            gameSession.ScenarioName = mapName;
-
-            //gameSession.Initialization();
 
             return gameSession;
         }
@@ -43,11 +39,9 @@ namespace EngineCore
             var jObject = JObject.Parse(body);
             var iCelestialMap = jObject["celestialMap"];
 
-            var gameSession = new GameSession
-            {
-                Id = (int)jObject["id"],
-                Turn = (int)jObject["turn"]
-            };
+            var sessionData = new SessionData();
+
+
 
             if (jObject["rules"] != null)
             {
@@ -57,12 +51,12 @@ namespace EngineCore
                 {
                     var spawnRules = rules["spawn"];
 
-                    gameSession.Data.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
+                    sessionData.Rules.Spawn.AsteroidSmallSize = (double)spawnRules["asteroidSmall"];
                 }
 
                 if (rules["events"] != null)
                 {
-                    gameSession.Data.Rules.IsEventsEnabled = (bool)rules["events"];
+                    sessionData.Rules.IsEventsEnabled = (bool)rules["events"];
                 }
             }
 
@@ -75,6 +69,8 @@ namespace EngineCore
                 var jCelestialObject = JObject.Parse(jsonCelestialObject);
 
                 var classification = (int) jCelestialObject["classification"];
+
+                
 
                 switch (classification)
                 {
@@ -94,7 +90,7 @@ namespace EngineCore
                             IsScanned = (bool)jCelestialObject["isScanned"]
                         };
 
-                        gameSession.Data.CelestialObjects.Add(asteroid);
+                        sessionData.CelestialObjects.Add(asteroid);
                         break;
 
                     case 201:
@@ -214,7 +210,7 @@ namespace EngineCore
 
                         spaceship.Initialization();
 
-                        gameSession.Data.CelestialObjects.Add(spaceship);
+                        sessionData.CelestialObjects.Add(spaceship);
                         break;
 
                     case 300:
@@ -225,7 +221,13 @@ namespace EngineCore
 
             }
 
-            //gameSession.SpaceMap = celestialMap;
+            var gameSession = new GameSession(sessionData)
+            {
+                Id = (int)jObject["id"]
+            };
+
+            if(jObject["name"] != null)
+                gameSession.SetScenarioName(jObject["name"].ToString());
 
             return gameSession;
         }
@@ -307,6 +309,31 @@ namespace EngineCore
                             }
 
 
+
+                            break;
+
+                        case "220": // GameEventTypes.WreckSpaceShipFound
+                            scenarioEvent = new ScenarioEventGenerateNpcSpaceShip((int)jEvent["DialogId"])
+                            {
+                                Type = GameEventTypes.WreckSpaceShipFound
+                            };
+
+                            if (jEvent["Generation"] != null)
+                            {
+                                foreach (var jsonSpaceShip in jEvent["Generation"].ToArray())
+                                {
+                                    ((ScenarioEventGenerateNpcSpaceShip)scenarioEvent).AddSpaceShip(
+                                        (int)jsonSpaceShip["SpaceShipClass"],
+                                        (int)jsonSpaceShip["SpaceShipType"],
+                                        (int)jsonSpaceShip["Standing"],
+                                        (string)jsonSpaceShip["Message"]);
+                                }
+                            }
+
+                            foreach (var jDecision in jEvent["Decisions"].ToArray())
+                            {
+                                scenarioEvent.Decisions.Add(new GameEventDecision((int)jDecision["DialogId"], jDecision["Label"].ToString()));
+                            }
 
                             break;
 

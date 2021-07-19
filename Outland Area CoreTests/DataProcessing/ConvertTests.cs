@@ -9,22 +9,21 @@ namespace EngineCore.DataProcessing.Tests
         [TestMethod()]
         public void ToClientTest()
         {
-
             var server = EnvironmentGlobal.CreateGameServer("ConvertTests");
 
-            Assert.AreEqual(3, server.GetCurrentGameSession(server.SessionId).Data.CelestialObjects.Count);
+            Assert.AreEqual(2, EnvironmentGlobal.GetSession(server).GetCelestialObjects().Count);
 
-            var gameSession = server.RefreshGameSession(server.SessionId);
+            var gameSession = EnvironmentGlobal.GetSession(server);
 
-            Assert.AreEqual(2, gameSession.Data.CelestialObjects.Count);
+            Assert.AreEqual(2, gameSession.GetCelestialObjects().Count);
 
             server.TurnCalculation(2);
 
-            Assert.AreEqual(1, server.RefreshGameSession(server.SessionId).ScenarioEvents.Count);
+            Assert.AreEqual(1, EnvironmentGlobal.GetSessionServerSide(server).ScenarioEvents.Count);
 
             server.TurnCalculation(10);
 
-            Assert.AreEqual(0, server.RefreshGameSession(server.SessionId).ScenarioEvents.Count);
+            Assert.AreEqual(0, EnvironmentGlobal.GetSession(server).ScenarioEvents.Count);
         }
     }
 }

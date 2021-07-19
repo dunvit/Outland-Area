@@ -32,11 +32,15 @@ namespace Engine.UI.Controls
             this.label1 = new System.Windows.Forms.Label();
             this.txtTurn = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.cmdPauseResume = new System.Windows.Forms.Button();
             this.cmdExitGame = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.txtMode = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtActiveCelestialObjectID = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -46,14 +50,14 @@ namespace Engine.UI.Controls
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(12, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 15);
+            this.label1.Size = new System.Drawing.Size(138, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Turn...................";
+            this.label1.Text = "Turn....................................";
             // 
             // txtTurn
             // 
             this.txtTurn.ForeColor = System.Drawing.Color.White;
-            this.txtTurn.Location = new System.Drawing.Point(101, 38);
+            this.txtTurn.Location = new System.Drawing.Point(156, 38);
             this.txtTurn.Name = "txtTurn";
             this.txtTurn.Size = new System.Drawing.Size(38, 15);
             this.txtTurn.TabIndex = 1;
@@ -70,6 +74,25 @@ namespace Engine.UI.Controls
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(244, 26);
             this.panel1.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(226, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(11, 16);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "x";
+            // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.Color.DarkGray;
+            this.label2.Location = new System.Drawing.Point(3, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(165, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Information";
             // 
             // cmdPauseResume
             // 
@@ -108,6 +131,10 @@ namespace Engine.UI.Controls
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.txtActiveCelestialObjectID);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.txtMode);
+            this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.cmdExitGame);
             this.panel2.Controls.Add(this.label1);
@@ -119,24 +146,41 @@ namespace Engine.UI.Controls
             this.panel2.Size = new System.Drawing.Size(246, 148);
             this.panel2.TabIndex = 5;
             // 
-            // label2
+            // txtMode
             // 
-            this.label2.ForeColor = System.Drawing.Color.DarkGray;
-            this.label2.Location = new System.Drawing.Point(3, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 15);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Information";
+            this.txtMode.ForeColor = System.Drawing.Color.White;
+            this.txtMode.Location = new System.Drawing.Point(156, 53);
+            this.txtMode.Name = "txtMode";
+            this.txtMode.Size = new System.Drawing.Size(68, 15);
+            this.txtMode.TabIndex = 6;
+            this.txtMode.Text = "0";
             // 
-            // label3
+            // label4
             // 
-            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(226, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(11, 16);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "x";
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(12, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 15);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Mode.................................";
+            // 
+            // label5
+            // 
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(12, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(138, 15);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Active celestial object.....";
+            // 
+            // txtActiveCelestialObjectID
+            // 
+            this.txtActiveCelestialObjectID.ForeColor = System.Drawing.Color.White;
+            this.txtActiveCelestialObjectID.Location = new System.Drawing.Point(156, 68);
+            this.txtActiveCelestialObjectID.Name = "txtActiveCelestialObjectID";
+            this.txtActiveCelestialObjectID.Size = new System.Drawing.Size(82, 15);
+            this.txtActiveCelestialObjectID.TabIndex = 8;
+            this.txtActiveCelestialObjectID.Text = "0";
             // 
             // GameSessionInformation
             // 
@@ -163,5 +207,9 @@ namespace Engine.UI.Controls
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label txtMode;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label txtActiveCelestialObjectID;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -1,4 +1,6 @@
-﻿using EngineCore.Session;
+﻿using System;
+using EngineCore.Session;
+using EngineCore.Tools;
 using EngineCore.Universe.Equipment;
 using EngineCore.Universe.Equipment.Ammunition.Missiles;
 using EngineCore.Universe.Objects;
@@ -11,9 +13,9 @@ namespace EngineCore.DataProcessing.CommandsExecution
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public GameSession Execution(GameSession gameSession, EngineSettings settings, Command command)
+        public GameSession Execution(GameSession gameSession, EngineSettings settings, Command command, Action<int, string> addCommand)
         {
-            var currentCelestialObject = gameSession.GetCelestialObject(command.CelestialObjectId, false);            
+            var spaceship = gameSession.GetCelestialObject(command.CelestialObjectId).ToSpaceship();
 
             Logger.Debug($"[{GetType().Name}][Execution] Execution Shot command - {command.Type} turn '{gameSession.Turn}'");
 
@@ -22,9 +24,9 @@ namespace EngineCore.DataProcessing.CommandsExecution
             var targetId = (int)jObject["TargetId"];
             var objectId = (int)jObject["ObjectId"];
             var moduleId = (int)jObject["ModuleId"];
+            var actionId = (int)jObject["ActionId"];
 
-
-            var currentModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId);
+            var currentModule = spaceship.GetModule(moduleId);
 
             // TODO: Check is module reloaded
             if (currentModule.IsReloaded == false && settings.DebugProperties.IsAlwaysSuccessful == false)
@@ -35,29 +37,47 @@ namespace EngineCore.DataProcessing.CommandsExecution
 
             var commandPrediction = Prediction(gameSession, command.Type, objectId, moduleId, targetId);
 
-            var shotResult = Tools.RandomGenerator.GetDouble(100);
+            var shotResult = RandomGenerator.GetDouble(100);
 
-            if (commandPrediction.Max < shotResult  || settings.DebugProperties.IsAlwaysSuccessful)
+
+            float damage = 0;
+            
+            if (commandPrediction.Max >= shotResult || settings.DebugProperties.IsAlwaysSuccessful)
             {
                 // Hit
                 // TODO: Move hit calculation to separate class
-                var targetSpacecraft = gameSession.GetCelestialObject(targetId, false).ToSpaceship();
 
-                var ammoId = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon().AmmoId;
+                var ammoId = spaceship.GetModule(moduleId).ToWeapon().AmmoId;
 
-                var ammo = AmmoFactory.GetAmmo(ammoId);
+                damage = AmmoFactory.GetAmmo(ammoId).Damage;
 
-                targetSpacecraft.Damage(ammo.Damage);
             }
-            else
+
+            var module = spaceship.GetWeaponModule(moduleId);
+
+            var celestialObject = new Missile
             {
-                // Miss
-            }
+                Id = RandomGenerator.GetId(),
+                Chance = commandPrediction.Max,
+                Damage = damage,
+                ModuleId = moduleId,
+                ActionId = actionId,
+                Dice = (int)shotResult,
+                OwnerId = spaceship.Id,
+                TargetId = targetId,
+                PositionX = spaceship.PositionX,
+                PositionY = spaceship.PositionY,
+                Classification = CelestialObjectTypes.Missile.ToInt(),
+                Direction = 0,
+                Speed = 50,
+                Name = module.AmmoId.ToString()
+            };
+
+            // TODO: Refactor it - create Add Celestial object method on Game Session level
+            gameSession.CelestialObjects.Add(celestialObject);
 
             // Reload module
             gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).Reload();
-
-            // TODO: Add message to client
 
             return gameSession;
         }
@@ -69,15 +89,15 @@ namespace EngineCore.DataProcessing.CommandsExecution
             switch (type)
             {
                 case CommandTypes.Shot:
-                    //var x = gameSession.GetDistance(objectId, targetId);
-                    //var weaponModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon();
+                    //var x = gameSession.Distance(objectId, targetId);
+                    var weaponModule = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon();
                     //var usedWith = weaponModule.UsedWith;
                     //var ammoId = gameSession.GetCelestialObject(objectId).ToSpaceship().GetModule(moduleId).ToWeapon().AmmoId;
                     //var ammo = AmmoFactory.GetAmmo(ammoId);
 
                     // TODO: Add formula get hit change by distance and weapon and ammo properties + pilot skills.
                     result.Min = 45;
-                    result.Max = 57;
+                    result.Max = weaponModule.BaseAccuracy;
                     break;
             }
 
