@@ -18,11 +18,11 @@ namespace EngineCore.Scenario
 
         public List<GameEventDecision> Decisions { get; set; }
 
-        public List<string> Execute(GameSession session)
+        public List<GameEventParameter> Execute(GameSession session)
         {
             IsEnabled = false;
 
-            return new List<string>();
+            return new List<GameEventParameter>();
         }
     }
 }

@@ -18,6 +18,6 @@ namespace EngineCore.Universe.Model
 
         List<GameEventDecision> Decisions { get; set; }
 
-        List<string> Execute(GameSession session);
+        List<GameEventParameter> Execute(GameSession session);
     }
 }

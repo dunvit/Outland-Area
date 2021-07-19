@@ -56,7 +56,7 @@ namespace Engine.UI.Screens
 
             foreach (var gameEventGenericObject in gameEvent.GenericObjects)
             {
-                var celestialObject = session.GetCelestialObject(Convert.ToInt64(gameEventGenericObject));
+                var celestialObject = session.GetCelestialObject(Convert.ToInt64(gameEventGenericObject.Value));
 
                 message += Environment.NewLine + Environment.NewLine + foundNewSpaceshipDetailsMessage.
                     Replace("{ID}", celestialObject.Id.ToString()).

@@ -15,7 +15,7 @@ namespace Engine.UI.Screens
 
             var color = Color.DarkOliveGreen;
 
-            switch (gameEvent.GenericObjects[7])
+            switch (gameEvent.GetParameter(GameEventParameterTypes.Result))
             {
                 case "MISS":
                     color = Color.Crimson;
@@ -26,18 +26,17 @@ namespace Engine.UI.Screens
                 case "DESTROYED":
                     color = Color.DarkRed;
                     break;
-
             }
 
             txtResult.ForeColor = color;
-            txtResult.Text = gameEvent.GenericObjects[7];
+            txtResult.Text = gameEvent.GetParameter(GameEventParameterTypes.Result);
 
-            txtDamage.Text = gameEvent.GenericObjects[5];
+            txtDamage.Text = gameEvent.GetParameter(GameEventParameterTypes.Damage);
 
-            txtDice.Text = gameEvent.GenericObjects[4];
-            txtChance.Text = gameEvent.GenericObjects[6];
+            txtDice.Text = gameEvent.GetParameter(GameEventParameterTypes.Dice);
+            txtChance.Text = gameEvent.GetParameter(GameEventParameterTypes.Chance);
 
-            var targetId = long.Parse(gameEvent.GenericObjects[1]);
+            var targetId = long.Parse(gameEvent.GetParameter(GameEventParameterTypes.TargetId));
             var targetSpaceship = session.GetCelestialObject(targetId).ToSpaceship();
 
             txtShields.Text = targetSpaceship.Shields + @"/" + targetSpaceship.ShieldsMax;

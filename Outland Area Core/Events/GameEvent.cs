@@ -22,6 +22,22 @@ namespace EngineCore.Events
 
         public long DialogId { get; set; }
 
-        public List<string> GenericObjects { get; set; } = new List<string>();
+        public List<GameEventParameter> GenericObjects { get; set; } = new List<GameEventParameter>();
+    }
+
+    public static class GameEventExtensions
+    {
+        public static string GetParameter(this GameEvent gameEvent, GameEventParameterTypes parameter)
+        {
+            foreach (var gameEventGenericObject in gameEvent.GenericObjects)
+            {
+                if (gameEventGenericObject.Type == parameter)
+                {
+                    return gameEventGenericObject.Value;
+                }
+            }
+
+            return string.Empty;
+        }
     }
 }
