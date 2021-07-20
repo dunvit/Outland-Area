@@ -1,4 +1,7 @@
-﻿namespace EngineCore.Universe.Equipment.Weapon
+﻿using System.Collections.Generic;
+using LanguageExt;
+
+namespace EngineCore.Universe.Equipment.Weapon
 {
     public interface IWeaponModule
     {
@@ -8,5 +11,7 @@
         dynamic Shot(int objectId, int targetId, int moduleId, int actionId);
 
         int BaseAccuracy { get; set; }
+
+        
     }
 }

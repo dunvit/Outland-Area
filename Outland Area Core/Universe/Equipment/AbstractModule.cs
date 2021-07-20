@@ -1,11 +1,13 @@
 ﻿using log4net;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using EngineCore.Universe.Equipment.Weapon;
 
 namespace EngineCore.Universe.Equipment
 {
     [Serializable]
-    public abstract class BaseModule
+    public abstract class AbstractModule
     {
         [NonSerialized()]
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -31,6 +33,13 @@ namespace EngineCore.Universe.Equipment
         public double Reloading { get; set; }
 
         public bool IsReloaded => Reloading == ReloadTime;
+
+        public List<ISkill> Skills { get; set; } = new List<ISkill>();
+
+        public void AddSkill(ISkill skill)
+        {
+            Skills.Add(skill);
+        }
 
         public dynamic CreateServerCommand()
         {

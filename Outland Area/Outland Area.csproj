@@ -24,6 +24,8 @@
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Full.png" />
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Left.png" />
     <None Remove="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Right.png" />
+    <None Remove="Images\Equipment\Skills\Aimed_Shot.png" />
+    <None Remove="Images\Equipment\Skills\Quick_Shot.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +75,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Scenarios\Map_OneShip\Characters\637066561468099898\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Equipment\Skills\Aimed_Shot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Equipment\Skills\Quick_Shot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

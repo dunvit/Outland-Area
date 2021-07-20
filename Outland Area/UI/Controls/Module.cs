@@ -38,15 +38,18 @@ namespace Engine.UI.Controls
 
             if (module is IWeaponModule)
             {
-                // TODO: Get actions list from module
-                for (var i = 1; i < 4; i++)
+                var i = 0;
+
+                foreach (var moduleSkill in module.Skills)
                 {
-                    var attackAction = new ActionAttack(moduleId, i, gameSession.Session)
+                    i++;
+
+                    var attackAction = new ActionAttack(moduleId, moduleSkill.Id, gameSession.Session)
                     {
                         Location = new Point((i - 1) * 55, 0)
                     };
 
-                    _logger.Info($"Add action '{i}' to module '{module.Id}'");
+                    _logger.Info($"Add action '{moduleSkill.Id}' to module '{module.Id}'");
                     attackAction.Tag = module.Id;
                     attackAction.Click += Event_SelectAction;
 

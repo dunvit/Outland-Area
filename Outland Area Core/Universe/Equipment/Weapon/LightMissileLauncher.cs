@@ -1,15 +1,21 @@
 ﻿using EngineCore.Session;
 using System;
+using System.Collections.Generic;
 
 namespace EngineCore.Universe.Equipment.Weapon
 {
     [Serializable]
-    public class LightMissileLauncher : BaseModule, IModule, IWeaponModule
+    public class LightMissileLauncher : AbstractModule, IModule, IWeaponModule
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }
         public CategoryAmmo UsedWith { get; set; } = CategoryAmmo.LightMissile;
         public int AmmoId { get; set; }
+
+        public LightMissileLauncher()
+        {
+            Skills = SkillFactory.GetLightMissileSkills();
+        }
 
         public dynamic Shot(int objectId, int targetId, int moduleId, int actionId)
         {
@@ -27,5 +33,6 @@ namespace EngineCore.Universe.Equipment.Weapon
         }
 
         public int BaseAccuracy { get; set; }
+        
     }
 }

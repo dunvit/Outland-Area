@@ -291,8 +291,10 @@ namespace Engine.UI.DrawEngine
 
                 var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
 
-                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - missile.Radius/2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
-                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - missile.Radius / 2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
+                var radius = missile.RemoveTurn - environment.Session.Turn + missile.Radius;
+
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
             }
         }
     }
