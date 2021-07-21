@@ -73,7 +73,11 @@ namespace Engine.UI.Controls
                 return;
             }
 
-            _environment.SetAction(moduleId, actionId, TacticalMode.SelectingSpaceObject);
+            var mode = TacticalMode.SelectingSpaceObject;
+
+            if (module is IWeaponModule) mode = TacticalMode.SelectingSpaceObjectForShot;
+
+            _environment.SetAction(moduleId, actionId, mode);
             Global.Game.SessionPause();
         }
 

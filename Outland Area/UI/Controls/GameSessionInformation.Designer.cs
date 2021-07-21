@@ -37,10 +37,10 @@ namespace Engine.UI.Controls
             this.cmdPauseResume = new System.Windows.Forms.Button();
             this.cmdExitGame = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtActiveCelestialObjectID = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtMode = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtActiveCelestialObjectID = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -146,12 +146,30 @@ namespace Engine.UI.Controls
             this.panel2.Size = new System.Drawing.Size(246, 148);
             this.panel2.TabIndex = 5;
             // 
+            // txtActiveCelestialObjectID
+            // 
+            this.txtActiveCelestialObjectID.ForeColor = System.Drawing.Color.White;
+            this.txtActiveCelestialObjectID.Location = new System.Drawing.Point(156, 68);
+            this.txtActiveCelestialObjectID.Name = "txtActiveCelestialObjectID";
+            this.txtActiveCelestialObjectID.Size = new System.Drawing.Size(82, 15);
+            this.txtActiveCelestialObjectID.TabIndex = 8;
+            this.txtActiveCelestialObjectID.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(12, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(138, 15);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Active celestial object.....";
+            // 
             // txtMode
             // 
             this.txtMode.ForeColor = System.Drawing.Color.White;
-            this.txtMode.Location = new System.Drawing.Point(156, 53);
+            this.txtMode.Location = new System.Drawing.Point(61, 53);
             this.txtMode.Name = "txtMode";
-            this.txtMode.Size = new System.Drawing.Size(68, 15);
+            this.txtMode.Size = new System.Drawing.Size(171, 15);
             this.txtMode.TabIndex = 6;
             this.txtMode.Text = "0";
             // 
@@ -163,24 +181,6 @@ namespace Engine.UI.Controls
             this.label4.Size = new System.Drawing.Size(138, 15);
             this.label4.TabIndex = 5;
             this.label4.Text = "Mode.................................";
-            // 
-            // label5
-            // 
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(12, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(138, 15);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Active celestial object.....";
-            // 
-            // txtActiveCelestialObjectID
-            // 
-            this.txtActiveCelestialObjectID.ForeColor = System.Drawing.Color.White;
-            this.txtActiveCelestialObjectID.Location = new System.Drawing.Point(156, 68);
-            this.txtActiveCelestialObjectID.Name = "txtActiveCelestialObjectID";
-            this.txtActiveCelestialObjectID.Size = new System.Drawing.Size(82, 15);
-            this.txtActiveCelestialObjectID.TabIndex = 8;
-            this.txtActiveCelestialObjectID.Text = "0";
             // 
             // GameSessionInformation
             // 

@@ -9,6 +9,8 @@ using Engine.UI.ScreenDrawing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Equipment;
+using EngineCore.Universe.Equipment.Weapon;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 
@@ -272,10 +274,15 @@ namespace Engine.UI.DrawEngine
             {
                 case TacticalMode.General:
                     break;
+                case TacticalMode.SelectingSpaceObjectForShot:
+                    DrawWeaponAffectedAreaBorder(screenInfo, environment);
+                    DrawSelectingTarget(screenInfo, environment);
+                    break;
                 case TacticalMode.SelectingSpaceObject:
                     DrawSelectingTarget(screenInfo, environment);
                     break;
                 case TacticalMode.SelectingSpaceObjectWithActive:
+                    DrawWeaponAffectedAreaBorder(screenInfo, environment);
                     DrawSelectingTargetWithActive(screenInfo, environment);
                     break;
                 default:
@@ -296,6 +303,51 @@ namespace Engine.UI.DrawEngine
                 screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
                 screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
             }
+        }
+
+        public static void DrawWeaponAffectedArea(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            if (environment.Action is null) return;
+
+            var activeModule = environment.Session.GetPlayerSpaceShip().GetWeaponModule(environment.Action.ModuleId);
+
+            if (activeModule is null) return;
+            if (activeModule is IWeaponModule)
+            {
+                if (activeModule is IRange x)
+                {
+                    var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+                    var radius = x.Range;
+
+                    screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.FromArgb(4,4,4)), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius  * 2, radius * 2);
+                    screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius * 2, radius * 2);
+
+                }
+            }
+        }
+        public static void DrawWeaponAffectedAreaBorder(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            if (environment.Action is null) return;
+
+            var activeModule = environment.Session.GetPlayerSpaceShip().GetWeaponModule(environment.Action.ModuleId);
+
+            if (activeModule is null) return;
+            
+            if (activeModule is IRange x)
+            {
+                var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+                var radius = x.Range;
+
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius * 2, radius * 2);
+
+                var efficiency = (int)(x.Efficiency * x.Range);
+
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - efficiency, screenCoordinates.Y - efficiency, efficiency * 2, efficiency * 2);
+
+            }
+
         }
     }
 }
