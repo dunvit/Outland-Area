@@ -100,8 +100,10 @@ namespace Engine.UI.Controls
 
         private void Event_CloseModule(object sender, EventArgs e)
         {
+            _environment.SetAction(0, 0, TacticalMode.General);
             _moduleId = 0;
             Visible = false;
+            Global.Game.SessionResume();
         }
     }
 }

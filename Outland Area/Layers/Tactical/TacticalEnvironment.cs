@@ -38,6 +38,7 @@ namespace Engine.Layers.Tactical
         {
             if (Mode == TacticalMode.SelectingSpaceObjectWithActive)
             {
+                Mode = TacticalMode.OpenFireScreen;
                 Global.Game.ShowScreen("WindowOpenFire");
             }
 
