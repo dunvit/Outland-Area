@@ -4,7 +4,7 @@ using System;
 namespace EngineCore.Universe.Equipment.Shield
 {
     [Serializable]
-    public class ShieldModule : BaseModule, IModule, IShieldModule
+    public class ShieldModule : AbstractModule, IModule, IShieldModule
     {
         public int Id { get; set; }
         public string Name { get; set; }

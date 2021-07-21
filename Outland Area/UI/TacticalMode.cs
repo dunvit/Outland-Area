@@ -5,6 +5,8 @@ namespace Engine.UI
     {
         General,
         SelectingSpaceObject,
-        SelectingSpaceObjectWithActive
+        SelectingSpaceObjectWithActive,
+        SelectingSpaceObjectForShot,
+        OpenFireScreen
     }
 }

@@ -9,6 +9,8 @@ using Engine.UI.ScreenDrawing;
 using EngineCore.Geometry;
 using EngineCore.Session;
 using EngineCore.Tools;
+using EngineCore.Universe.Equipment;
+using EngineCore.Universe.Equipment.Weapon;
 using EngineCore.Universe.Model;
 using EngineCore.Universe.Objects;
 
@@ -254,6 +256,9 @@ namespace Engine.UI.DrawEngine
             var pen = new Pen(Color.DarkOliveGreen);
 
             var spaceshipScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+            if (environment.GetActiveObject() is null) return;
+            
             var mouseScreenLocation = UITools.ToScreenCoordinates(screenInfo, environment.GetActiveObject().GetLocation());
 
             var distance = GeometryTools.Distance(spaceshipScreenLocation, mouseScreenLocation);
@@ -272,10 +277,16 @@ namespace Engine.UI.DrawEngine
             {
                 case TacticalMode.General:
                     break;
+                case TacticalMode.SelectingSpaceObjectForShot:
+                    DrawWeaponAffectedAreaBorder(screenInfo, environment);
+                    DrawSelectingTarget(screenInfo, environment);
+                    break;
                 case TacticalMode.SelectingSpaceObject:
                     DrawSelectingTarget(screenInfo, environment);
                     break;
                 case TacticalMode.SelectingSpaceObjectWithActive:
+                case TacticalMode.OpenFireScreen:
+                    DrawWeaponAffectedAreaBorder(screenInfo, environment);
                     DrawSelectingTargetWithActive(screenInfo, environment);
                     break;
                 default:
@@ -291,9 +302,242 @@ namespace Engine.UI.DrawEngine
 
                 var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
 
-                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - missile.Radius/2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
-                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - missile.Radius / 2, screenCoordinates.Y - missile.Radius / 2, missile.Radius, missile.Radius);
+                var radius = missile.RemoveTurn - environment.Session.Turn + missile.Radius;
+
+                screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.OrangeRed), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.Brown), screenCoordinates.X - radius / 2, screenCoordinates.Y - radius / 2, radius, radius);
             }
+        }
+
+        public static void DrawWeaponAffectedArea(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            if (environment.Action is null) return;
+            if (environment.Action.ModuleId == 0) return;
+
+            var activeModule = environment.Session.GetPlayerSpaceShip().GetWeaponModule(environment.Action.ModuleId);
+
+            if (activeModule is null) return;
+            if (activeModule is IWeaponModule)
+            {
+                if (activeModule is IRange x)
+                {
+                    var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+                    var radius = x.Range;
+
+                    screenInfo.GraphicSurface.FillEllipse(new SolidBrush(Color.FromArgb(4,4,4)), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius  * 2, radius * 2);
+                    screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius * 2, radius * 2);
+
+                }
+            }
+        }
+        public static void DrawWeaponAffectedAreaBorder(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            if (environment.Action is null) return;
+
+            var activeModule = environment.Session.GetPlayerSpaceShip().GetWeaponModule(environment.Action.ModuleId);
+
+            if (activeModule is null) return;
+            
+            if (activeModule is IRange x)
+            {
+                var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+                var radius = x.Range;
+
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - radius, screenCoordinates.Y - radius, radius * 2, radius * 2);
+
+                var efficiency = (int)(x.Efficiency * x.Range);
+
+                screenInfo.GraphicSurface.DrawEllipse(new Pen(Color.DimGray), screenCoordinates.X - efficiency, screenCoordinates.Y - efficiency, efficiency * 2, efficiency * 2);
+
+
+                #region Efficiency Cross
+                var efficiencyCrossLineColor = new Pen(Color.DimGray);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyCrossLineColor,
+                    GeometryTools.MoveObject(screenCoordinates, 12, 0),
+                    GeometryTools.MoveObject(screenCoordinates, x.Range + 12, 0));
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyCrossLineColor,
+                    GeometryTools.MoveObject(screenCoordinates, 12, 180),
+                    GeometryTools.MoveObject(screenCoordinates, x.Range + 12, 180));
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyCrossLineColor,
+                    GeometryTools.MoveObject(screenCoordinates, 12, 90),
+                    GeometryTools.MoveObject(screenCoordinates, x.Range + 12, 90));
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyCrossLineColor,
+                    GeometryTools.MoveObject(screenCoordinates, 12, 270),
+                    GeometryTools.MoveObject(screenCoordinates, x.Range + 12, 270));
+
+                #endregion
+
+
+                #region Efficiency Labels
+
+                var efficiencyLineColor = new Pen(Color.Orange);
+                var efficiencyTextColor = Color.Orange;
+
+                #region 0% EFFICIENCY
+
+                #region 90 degree
+
+                var point1 = GeometryTools.MoveObject(screenCoordinates, x.Range, 90);
+
+                var point2 = GeometryTools.MoveObject(point1, 50, 135);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                var point3 = GeometryTools.MoveObject(point2, 110, 90);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                var pointLabel = new PointF(point2.X + 5, point2.Y - 15);
+
+                using var font1 = new Font("Times New Roman", 10, FontStyle.Bold, GraphicsUnit.Pixel);
+
+                screenInfo.GraphicSurface.DrawString("0% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 180 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, x.Range, 180);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("0% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 270 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, x.Range, 270);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("0% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 0 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, x.Range, 0);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("0% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #endregion
+
+                #region 0% EFFICIENCY
+
+                #region 90 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, efficiency, 90);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 135);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 90);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X + 5, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("100% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 180 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, efficiency, 180);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("100% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 270 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, efficiency, 270);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("100% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #region 0 degree
+
+                point1 = GeometryTools.MoveObject(screenCoordinates, efficiency, 0);
+
+                point2 = GeometryTools.MoveObject(point1, 50, 225);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point1, point2);
+
+                point3 = GeometryTools.MoveObject(point2, 110, 270);
+
+                screenInfo.GraphicSurface.DrawLine(efficiencyLineColor, point2, point3);
+
+                pointLabel = new PointF(point2.X - 105, point2.Y - 15);
+
+                screenInfo.GraphicSurface.DrawString("100% EFFICIENCY", font1, new SolidBrush(efficiencyTextColor), pointLabel);
+
+                #endregion
+
+                #endregion
+
+                #endregion
+
+
+            }
+
         }
     }
 }

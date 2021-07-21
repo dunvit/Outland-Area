@@ -51,6 +51,11 @@ namespace Engine.UI.Controls
                     cmdPauseResume.Text = MessagePause;
                 }
             }
+
+            if (_environment.Mode == TacticalMode.SelectingSpaceObjectWithActive)
+            {
+                var a = "";
+            }
         }
 
         private void Event_ChangeGameStatus(object sender, System.EventArgs e)

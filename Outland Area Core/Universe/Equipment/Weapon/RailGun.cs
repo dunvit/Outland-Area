@@ -4,7 +4,7 @@ using System;
 namespace EngineCore.Universe.Equipment.Weapon
 {
     [Serializable]
-    public class RailGun : BaseModule, IModule, IWeaponModule
+    public class RailGun : AbstractModule, IModule, IWeaponModule
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }

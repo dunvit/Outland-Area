@@ -4,7 +4,7 @@ using System;
 namespace EngineCore.Universe.Equipment.General.Reactor
 {
     [Serializable]
-    public class Reactor : BaseModule, IModule, IReactor
+    public class Reactor : AbstractModule, IModule, IReactor
     {
         public string Name { get; set; }
         public Category Category { get; set; }

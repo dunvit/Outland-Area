@@ -188,6 +188,8 @@ namespace Engine.UI.Controls
 
             DrawTacticalMap.DrawExplosions(screenParameters, environment);
 
+            DrawTacticalMap.DrawWeaponAffectedArea(screenParameters, environment);
+
             DrawTacticalMap.DrawGrid(screenParameters);
 
             DrawTacticalMap.DrawAction(screenParameters, environment);

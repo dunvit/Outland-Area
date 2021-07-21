@@ -5,7 +5,7 @@ using EngineCore.Universe.Equipment.Weapon;
 namespace EngineCore.Universe.Equipment.General.Scanner
 {
     [Serializable]
-    public class DeepScanner: BaseModule, IModule, IScanner
+    public class DeepScanner: AbstractModule, IModule, IScanner
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }

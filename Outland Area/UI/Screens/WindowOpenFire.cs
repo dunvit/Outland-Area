@@ -36,11 +36,12 @@ namespace Engine.UI.Screens
 
             var spacecraft = environment.Session.GetPlayerSpaceShip();
 
-            var module = spacecraft.GetWeaponModules().First();
+            var module = spacecraft.GetWeaponModule(moduleId);
 
             var commandBody = ModuleCommand.ToJson(environment.Session, module.Shot, targetId, moduleId, actionId);
 
             Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+            environment.SetAction(0, 0, TacticalMode.General);
             environment.CancelAction();
             Global.Game.SessionResume();
 

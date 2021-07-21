@@ -1,4 +1,5 @@
-﻿using EngineCore.Session;
+﻿using System.Collections.Generic;
+using EngineCore.Session;
 
 namespace EngineCore.Universe.Equipment
 {
@@ -30,6 +31,9 @@ namespace EngineCore.Universe.Equipment
         #endregion
 
         void Reload();
-        
+
+        List<ISkill> Skills { get; set; }
+
+        void AddSkill(ISkill skill);
     }
 }

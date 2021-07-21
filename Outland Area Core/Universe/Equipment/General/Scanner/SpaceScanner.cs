@@ -3,7 +3,7 @@
 namespace EngineCore.Universe.Equipment.General.Scanner
 {
     [Serializable]
-    public class SpaceScanner : BaseModule, IModule, IScanner
+    public class SpaceScanner : AbstractModule, IModule, IScanner
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }

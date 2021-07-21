@@ -4,7 +4,7 @@ using System;
 namespace EngineCore.Universe.Equipment.Propulsion
 {
     [Serializable]
-    public class MicroWarpDrive: BaseModule, IModule, IPropulsionModule
+    public class MicroWarpDrive: AbstractModule, IModule, IPropulsionModule
     {
         public Category Category { get; set; }
         public double ActivationCost { get; set; }
