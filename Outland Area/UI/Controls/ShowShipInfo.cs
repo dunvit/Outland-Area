@@ -47,7 +47,10 @@ namespace Engine.UI.Controls
                 return;
             }
 
-            FillControls(activeObject.ToSpaceship(), _environment.Session.GetPlayerSpaceShip());
+            if (activeObject is Spaceship)
+            {
+                FillControls(activeObject.ToSpaceship(), _environment.Session.GetPlayerSpaceShip());
+            }
 
             containerData.Visible = true;
         }

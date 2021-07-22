@@ -282,6 +282,7 @@ namespace Engine.UI.DrawEngine
                     DrawSelectingTarget(screenInfo, environment);
                     break;
                 case TacticalMode.SelectingSpaceObject:
+                    DrawWeaponAffectedAreaBorder(screenInfo, environment);
                     DrawSelectingTarget(screenInfo, environment);
                     break;
                 case TacticalMode.SelectingSpaceObjectWithActive:

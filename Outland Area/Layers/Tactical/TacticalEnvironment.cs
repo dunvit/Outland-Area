@@ -22,7 +22,6 @@ namespace Engine.Layers.Tactical
         public PointF MouseLocation { get; private set; } = new PointF(10000, 10000);
 
         public TacticalMode Mode { get; private set; } = TacticalMode.General;
-        public TacticalMode PreviousMode { get; private set; } = TacticalMode.General;
 
         #region Local variables
         private int activeCelestialObjectId;
@@ -38,10 +37,9 @@ namespace Engine.Layers.Tactical
         {
             if (Mode == TacticalMode.SelectingSpaceObjectWithActive)
             {
-                Mode = TacticalMode.OpenFireScreen;
+                Global.Game.SessionPause();
                 Global.Game.ShowScreen("WindowOpenFire");
             }
-
         }
 
         private void Event_SetActiveObject(int celestialObjectId)
@@ -50,19 +48,15 @@ namespace Engine.Layers.Tactical
 
             activeCelestialObjectId = celestialObjectId;
 
-            
-
             if (Mode != TacticalMode.General)
             {
                 if (celestialObjectId > 0)
                 {
-                    PreviousMode = Mode;
-
                     Mode = TacticalMode.SelectingSpaceObjectWithActive;
                 }
                 else
                 {
-                    Mode = PreviousMode;
+                    Mode = TacticalMode.SelectingSpaceObject;
                 }
             }
             
@@ -86,7 +80,6 @@ namespace Engine.Layers.Tactical
             Action = new ModuleAction(moduleId, actionId);
 
             Mode = mode;
-            PreviousMode = mode;
         }
 
         public void SetMouseLocation(PointF location)
