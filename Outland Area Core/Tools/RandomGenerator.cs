@@ -63,6 +63,32 @@ namespace EngineCore.Tools
             return PersonGenerator.GenerateRandomFemaleFirstAndLastName();
         }
 
+        public static string FemaleFirstAndLastName()
+        {
+            return PersonGenerator.GenerateRandomFemaleFirstAndLastName();
+        }
+
+        public static string MaleFirstAndLastName()
+        {
+            return PersonGenerator.GenerateRandomMaleFirstAndLastName();
+        }
+
+        public static string FemaleFirstName()
+        {
+            return PersonGenerator.GenerateRandomFemaleFirstName();
+        }
+
+        public static string MaleFirstName()
+        {
+            return PersonGenerator.GenerateRandomMaleFirstName();
+        }
+
+        public static string LastName()
+        {
+            return PersonGenerator.GenerateRandomLastName();
+        }
+
+
         public static string RandomNumber(int length)
         {
             const string chars = "1234567890";
