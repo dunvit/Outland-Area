@@ -73,7 +73,6 @@ namespace Engine.UI.DrawEngine
             }
         }
 
-        
         public static void DrawActiveCelestialObjects(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
             var activeObject = environment.GetActiveObject();
@@ -332,6 +331,7 @@ namespace Engine.UI.DrawEngine
                 }
             }
         }
+
         public static void DrawWeaponAffectedAreaBorder(IScreenInfo screenInfo, TacticalEnvironment environment)
         {
             if (environment.Action is null) return;
@@ -539,6 +539,62 @@ namespace Engine.UI.DrawEngine
 
             }
 
+        }
+
+        public static void DrawRadar(IScreenInfo screenInfo, TacticalEnvironment environment)
+        {
+            var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
+
+            var color = Color.FromArgb(18, 18, 18);
+
+            var colorLight = Color.FromArgb(28, 28, 28);
+
+            var radarDelta = 5;
+
+            var radarStep = 75;
+
+            var radarSteps = 12;
+
+            var radarSize = radarStep * radarSteps + radarDelta;
+
+            for (var i = 0; i <= radarSteps; i++)
+            {
+                DrawEllipse(color, screenCoordinates.X, screenCoordinates.Y,  i * radarStep, screenInfo);
+            }
+
+            var segments = 16;
+
+            for (var i = 0; i < segments; i++)
+            {
+                DrawBrokenLine(color, screenCoordinates, radarSize, radarStep - radarDelta,  i * (180/ segments), screenInfo);
+            }
+        }
+
+        private static void DrawEllipse(Color color, float x, float y, int radius, IScreenInfo screenInfo)
+        {
+            screenInfo.GraphicSurface.DrawEllipse(new Pen(color), x - radius, y - radius, radius * 2, radius * 2);
+        }
+
+        public static Line CalculateLineByAngle(PointF center, float direction, float length)
+        {
+            var result = new Line(
+                GeometryTools.MoveObject(center, length, direction.To360Degrees()),
+                GeometryTools.MoveObject(center, length, (direction-180).To360Degrees())
+                );
+
+            return result;
+        }
+
+        private static void DrawBrokenLine(Color color, PointF center, int radius, int brokenLength, int direction, IScreenInfo screenInfo)
+        {
+            var pen = new Pen(color);
+
+            var externalLine = CalculateLineByAngle(center, direction, radius);
+            var internalLine = CalculateLineByAngle(center, direction, brokenLength);
+
+            screenInfo.GraphicSurface.DrawLine(pen, externalLine.To, internalLine.To);
+
+            screenInfo.GraphicSurface.DrawLine(pen, externalLine.From, internalLine.From);
         }
     }
 }

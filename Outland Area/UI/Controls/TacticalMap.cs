@@ -192,6 +192,8 @@ namespace Engine.UI.Controls
 
             DrawTacticalMap.DrawGrid(screenParameters);
 
+            DrawTacticalMap.DrawRadar(screenParameters, environment);
+
             DrawTacticalMap.DrawAction(screenParameters, environment);
 
             DrawTacticalMap.DrawCelestialObjects(screenParameters, environment);
