@@ -191,28 +191,34 @@ namespace Engine.UI.DrawEngine
                         break;
                     case CelestialObjectTypes.SpaceshipPlayer:
                         color = Color.DarkOliveGreen;
-                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+                        DrawDirection(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcNeutral:
                         color = Color.DarkGray;
-                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+                        DrawDirection(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcEnemy:
                         color = Color.DarkRed;
-                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+                        DrawDirection(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.SpaceshipNpcFriend:
                         color = Color.SeaGreen;
-                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+                        DrawDirection(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Asteroid:
                         color = Color.DimGray;
-                        SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
+                        DrawDirection(screenInfo, currentObject, color);
                         break;
                     case CelestialObjectTypes.Explosion:
                         break;
                 }
             }
+        }
+
+        private static void DrawDirection(IScreenInfo screenInfo, ICelestialObject currentObject, Color color)
+        {
+            SpaceMapGraphics.DrawLongLine(screenInfo, currentObject, Color.FromArgb(22, 22, 22));
+            SpaceMapGraphics.DrawArrow(screenInfo, currentObject, color);
         }
 
         public static void DrawHistoryTrajectory(IScreenInfo screenInfo, TacticalEnvironment environment, Hashtable history)
@@ -545,7 +551,7 @@ namespace Engine.UI.DrawEngine
         {
             var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, environment.Session.GetPlayerSpaceShip().GetLocation());
 
-            var color = Color.FromArgb(18, 18, 18);
+            var color = Color.FromArgb(12, 12, 12);
 
             var colorLight = Color.FromArgb(28, 28, 28);
 
@@ -559,14 +565,26 @@ namespace Engine.UI.DrawEngine
 
             for (var i = 0; i <= radarSteps; i++)
             {
-                DrawEllipse(color, screenCoordinates.X, screenCoordinates.Y,  i * radarStep, screenInfo);
+                if (i % 2 != 0)
+                {
+                    DrawEllipse(colorLight, screenCoordinates.X, screenCoordinates.Y, i * radarStep, screenInfo);
+                }
+                else
+                {
+                    DrawEllipse(color, screenCoordinates.X, screenCoordinates.Y, i * radarStep, screenInfo);
+                }
             }
 
-            var segments = 16;
+            const int segments = 16;
 
             for (var i = 0; i < segments; i++)
             {
-                DrawBrokenLine(color, screenCoordinates, radarSize, radarStep - radarDelta,  i * (180/ segments), screenInfo);
+                DrawBrokenLine(color, screenCoordinates, radarSize, radarStep - radarDelta, i * (180 / segments), screenInfo);
+            }
+
+            for (var i = 0; i < 4; i++)
+            {
+                DrawBrokenLine(colorLight, screenCoordinates, radarSize, radarStep - radarDelta, i * (180 / 4), screenInfo);
             }
         }
 

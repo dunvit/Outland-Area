@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using Engine.UI.Model;
 using EngineCore.DataProcessing;
 using EngineCore.Geometry;
@@ -30,7 +31,20 @@ namespace Engine.UI.ScreenDrawing
             var endArrowPoint = GeometryTools.MoveObject(screenCoordinates, 12, currentObject.Direction);
 
             DrawArrow(screenInfo.GraphicSurface, new SpaceMapVector(screenCoordinates, endArrowPoint, currentObject.Direction), color, arrowSize);
+        }
 
+        public static void DrawLongLine(IScreenInfo screenInfo, ICelestialObject currentObject, Color color)
+        {
+            var screenCoordinates = UITools.ToScreenCoordinates(screenInfo, new PointF(currentObject.PositionX, currentObject.PositionY));
+
+            var line = new SpaceMapVector(
+                screenCoordinates, 
+                GeometryTools.MoveObject(screenCoordinates, 4000, currentObject.Direction), 
+                currentObject.Direction);
+
+            using var dashedPen = new Pen(color, 2) {DashStyle = DashStyle.DashDot};
+
+            screenInfo.GraphicSurface.DrawLine(dashedPen, line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
         }
     }
 }
