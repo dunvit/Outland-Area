@@ -7,28 +7,28 @@ namespace Engine.Configuration
 {
     public class ScreenParameters : IScreenInfo
     {
-        public Point Center { get; }
-        public int Width { get; }
-        public int Height { get; }
+        public PointF Center { get; }
+        public float Width { get; }
+        public float Height { get; }
         public int DrawInterval { get; set; }
-        public Point CenterScreenOnMap { get; set; }
+        public PointF CenterScreenOnMap { get; set; }
         public Graphics GraphicSurface { get; set; }
         public IMapDrawSettings Settings { get; set; } = new MapSettings();
 
-        public ScreenParameters(int width, int height, int centerScreenX = 10000, int centerScreenY = 10000)
+        public ScreenParameters(float width, float height, int centerScreenX = 10000, int centerScreenY = 10000)
         {
-            Center = new Point(width / 2, height / 2);
+            Center = new PointF(width / 2, height / 2);
 
             // Start player ship coordinates in each battle (10000, 10000)
-            CenterScreenOnMap = new Point(centerScreenX, centerScreenY);
+            CenterScreenOnMap = new PointF(centerScreenX, centerScreenY);
 
             Width = width;
             Height = height;
         }
 
-        public Rectangle VisibleScreen()
+        public RectangleF VisibleScreen()
         {
-            return new Rectangle(CenterScreenOnMap.X - Width / 2,
+            return new RectangleF(CenterScreenOnMap.X - Width / 2,
                 CenterScreenOnMap.Y - Height / 2,
                 Width, Height);
         }

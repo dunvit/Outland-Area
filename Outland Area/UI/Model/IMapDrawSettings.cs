@@ -8,5 +8,7 @@ namespace Engine.Gui.Model
         bool IsDrawCelestialObjectDirections { get; set; }
 
         bool IsDrawSpaceshipInformation { get; set; } 
+
+        bool IsCenterOnSpaceship { get; set; }
     }
 }

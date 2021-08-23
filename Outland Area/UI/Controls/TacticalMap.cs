@@ -13,6 +13,7 @@ using Engine.UI.DrawEngine;
 using Engine.UI.Model;
 using EngineCore;
 using EngineCore.Geometry;
+using EngineCore.Session;
 using EngineCore.Tools;
 using EngineCore.Universe.Objects;
 using log4net;
@@ -23,7 +24,7 @@ namespace Engine.UI.Controls
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly Point _centerScreenPosition = new Point(10000, 10000);
+        private PointF _centerScreenPosition = new PointF(10000, 10000);
         private ScreenParameters _screenParameters;
         private TacticalEnvironment _environment;
         private bool _refreshInProgress;
@@ -80,6 +81,12 @@ namespace Engine.UI.Controls
             UpdateTrajectoryHistory(_environment);
 
             Logger.Debug($"Refresh space map for turn '{_environment.Session.Turn}'.");
+
+            if (_screenParameters.Settings.IsCenterOnSpaceship)
+            {
+                var spaceshipLocation = environment.Session.GetPlayerSpaceShip().GetLocation();
+                _centerScreenPosition = new PointF(spaceshipLocation.X, spaceshipLocation.Y);
+            }
 
             RefreshControl();
         }
@@ -167,7 +174,7 @@ namespace Engine.UI.Controls
             graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             _screenParameters =
-                new ScreenParameters(Width, Height, _centerScreenPosition.X, _centerScreenPosition.Y)
+                new ScreenParameters(Width, Height, (int) _centerScreenPosition.X, (int) _centerScreenPosition.Y)
                 {
                     GraphicSurface = graphics
                 };
@@ -183,7 +190,6 @@ namespace Engine.UI.Controls
 
         private void DrawTacticalMapScreen(IScreenInfo screenParameters, TacticalEnvironment environment)
         {
-            // TODO: - Draw back ground only once
             DrawTacticalMap.DrawBackGround(screenParameters);
 
             DrawTacticalMap.DrawExplosions(screenParameters, environment);

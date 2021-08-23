@@ -22,7 +22,7 @@ namespace Engine.UI.DrawEngine
         {
             try
             {
-                screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, screenInfo.Width, screenInfo.Height));
+                screenInfo.GraphicSurface.FillRectangle(new SolidBrush(Color.Black), new RectangleF(0, 0, screenInfo.Width, screenInfo.Height));
 
             }
             catch 

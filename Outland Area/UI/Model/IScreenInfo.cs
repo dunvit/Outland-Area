@@ -5,11 +5,11 @@ namespace Engine.UI.Model
 {
     public interface IScreenInfo
     {
-        Point Center { get; }
-        int Width { get; }
-        int Height { get; }
+        PointF Center { get; }
+        float Width { get; }
+        float Height { get; }
         int DrawInterval { get; set; }
-        Point CenterScreenOnMap { get; set; }
+        PointF CenterScreenOnMap { get; set; }
 
         Graphics GraphicSurface { get; set; }
 
