@@ -9,5 +9,7 @@ namespace Engine.Layers.Tactical
         public bool IsDrawCelestialObjectDirections { get; set; } = true;
 
         public bool IsDrawSpaceshipInformation { get; set; } = true;
+
+        public bool IsCenterOnSpaceship { get; set; } = true;
     }
 }

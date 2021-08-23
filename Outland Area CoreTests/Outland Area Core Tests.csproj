@@ -326,7 +326,6 @@
   <ItemGroup>
     <Folder Include="Data\Scenarios\CommandsTests_Weapon\Events\" />
     <Folder Include="Data\Scenarios\CommandsTests_Map_FirstBattle\Events\" />
-    <Folder Include="UI\" />
   </ItemGroup>
 
 </Project>
